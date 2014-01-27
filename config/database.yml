@@ -26,7 +26,7 @@ test:
   database: sec_test
   pool: 5
   username: root
-  password:
+  password: root
   host: localhost
 
 production:

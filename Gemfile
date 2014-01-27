@@ -24,8 +24,11 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
-gem 'debugger' 
-gem 'awesome_print'
+group :development, :test do
+	gem 'rspec-rails', '~> 2.0'
+	gem 'debugger' 
+	gem 'awesome_print'
+end
 
 gem 'smarter_csv'
 gem 'chronic'
@@ -34,8 +37,8 @@ gem 'chronic'
 gem 'jbuilder', '~> 1.2'
 
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+	# bundle exec rake doc:rails generates the API under doc/api.
+	gem 'sdoc', require: false
 end
 
 # Use ActiveModel has_secure_password
