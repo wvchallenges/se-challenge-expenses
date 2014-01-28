@@ -1,26 +1,30 @@
-<h2> Import Expenses </h2>
+<div class="jumbotron">
+  <div class="container">
+    <h2> Import Expenses </h2>
 
-<%= form_tag import_expenses_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-<% end %>
+    <%= form_tag import_expenses_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Import" %>
+    <% end %>
 
- 
-<% if @monthly_expenses.any? %>
-  <h2>Last Import</h2>
-  <table>
-    <tr>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Expense Total</th>
-    </tr>
-   
-  <% @monthly_expenses.each do |expense| %>
-    <tr>
-      <td><%= year(expense) %></td>
-      <td><%= month(expense) %></td>
-      <td><%= total(expense) %></td>
-    </tr>
-  <% end %>
-  </table>
-<% end %>
+     
+    <% if @monthly_expenses.any? %>
+      <h2>Last Import</h2>
+      <table class="table table-condensed">
+	<tr>
+	  <th>Year</th>
+	  <th>Month</th>
+	  <th>Expense Total</th>
+	</tr>
+       
+      <% @monthly_expenses.each do |expense| %>
+	<tr>
+	  <td><%= year(expense) %></td>
+	  <td><%= month(expense) %></td>
+	  <td><%= total(expense) %></td>
+	</tr>
+      <% end %>
+      </table>
+    <% end %>
+  </div>
+</div>
