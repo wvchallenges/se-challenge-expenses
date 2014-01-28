@@ -31,7 +31,9 @@ group :development, :test do
 end
 
 gem 'smarter_csv'
-gem 'chronic'
+gem 'chronic' 
+gem 'chartkick' 
+
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
