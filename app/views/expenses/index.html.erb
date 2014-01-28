@@ -6,17 +6,21 @@
 <% end %>
 
  
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Address</th>
-  </tr>
- 
-<% @expenses.each do |expense| %>
-  <tr>
-    <td><%= expense.employee.name %></td>
-    <td><%= expense.employee.address %></td>
-  </tr>
+<% if @monthly_expenses.any? %>
+  <h2>Last Import</h2>
+  <table>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Expense Total</th>
+    </tr>
+   
+  <% @monthly_expenses.each do |expense| %>
+    <tr>
+      <td><%= year(expense) %></td>
+      <td><%= month(expense) %></td>
+      <td><%= total(expense) %></td>
+    </tr>
+  <% end %>
+  </table>
 <% end %>
-</table>
-

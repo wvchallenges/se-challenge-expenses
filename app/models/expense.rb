@@ -3,15 +3,16 @@ class Expense < ActiveRecord::Base
   belongs_to :category
 
   def self.import(file)
-    ids = []
-    SmarterCSV.process(file.tempfile).each do |row|
-      ids << import_row(row)
+    unless file.nil?
+      ids = []
+      SmarterCSV.process(file.tempfile).each do |row|
+	ids << import_row(row)
+      end
+      ids
     end
-    ids
   end
 
   def self.import_row(row)
-
     category = Category.find_or_create_by({name: row[:category]})
     employee = Employee.find_or_create_by({name: row[:employee_name], address: row[:employee_address]})
 
