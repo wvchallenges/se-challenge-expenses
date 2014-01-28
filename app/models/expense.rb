@@ -1,11 +1,13 @@
 class Expense < ActiveRecord::Base
-  belongs_to :customer
+  belongs_to :employee
   belongs_to :category
 
   def self.import(file)
+    ids = []
     SmarterCSV.process(file.tempfile).each do |row|
-      import_row(row)
+      ids << import_row(row)
     end
+    ids
   end
 
   def self.import_row(row)
@@ -23,6 +25,7 @@ class Expense < ActiveRecord::Base
       date: Chronic.parse(row[:date], :endian_precedence => [:little, :median])
     }
 
-    Expense.create(attribs)
+    expense = Expense.create(attribs)
+    expense.id
   end
 end

@@ -1,9 +1,12 @@
 class ExpensesController < ApplicationController
-	def index
-	end
+  def index 
+    @expenses = Expense.where(id: session[:ids])
+    render :index
+    session[:ids] = []
+  end
 
-	def import
-		Expense.import(params[:file])
-		redirect_to root_url, notice: "Expenses imported."
-	end
+  def import
+    session[:ids] = Expense.import(params[:file])
+    redirect_to root_url
+  end
 end

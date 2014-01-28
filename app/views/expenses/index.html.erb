@@ -4,3 +4,19 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>
+
+ 
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+  </tr>
+ 
+<% @expenses.each do |expense| %>
+  <tr>
+    <td><%= expense.employee.name %></td>
+    <td><%= expense.employee.address %></td>
+  </tr>
+<% end %>
+</table>
+
