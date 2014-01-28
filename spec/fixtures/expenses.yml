@@ -1,0 +1,9 @@
+one:
+  date: 1/6/2014
+  category: Computer - Hardware
+  employee_name: Eric Schmidt 
+  employee_address: 1600 Amphitheatre Parkway, Mountain View, CA 94043
+  expense_description: iPhone 
+  pre-tax_amount: 200.0 
+  tax_name: CA Sales tax 
+  tax_amount: 15.0
