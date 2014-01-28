@@ -10,4 +10,11 @@ module ExpensesHelper
   def total(expense)
     number_to_currency(expense[1])
   end
+
+  def pretty(hash)
+    hash.inject({}) do |result, expense|
+      result[[year(expense), month(expense)]] = sprintf( "%0.02f", expense[1]).to_f
+      result
+    end
+  end
 end

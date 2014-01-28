@@ -9,7 +9,7 @@
 
      
     <% if @monthly_expenses.any? %>
-      <h2>Last Import</h2>
+      <h2>Last Import By Month</h2>
       <table class="table table-condensed">
 	<tr>
 	  <th>Year</th>
@@ -26,7 +26,7 @@
       <% end %>
       </table>
 
-      <%= pie_chart @monthly_expenses %>
+      <%= pie_chart pretty(@monthly_expenses) %>
     <% end %>
   </div>
 </div>
