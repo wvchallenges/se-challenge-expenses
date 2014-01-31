@@ -7,3 +7,4 @@ default:
   pre_tax_amount_cents: 20000
   tax_name: Sales Tax
   tax_amount_cents: 2000
+  expense_sheet: default

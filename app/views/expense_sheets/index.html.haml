@@ -1,0 +1,17 @@
+%h1 Expense Sheets
+
+%table
+  %thead
+    %tr
+      %th Sheet ID
+      %th Uploaded At
+
+  %tbody
+    - @expense_sheets.each do |expense_sheet|
+      %tr
+        %td= expense_sheet.id
+        %td= expense_sheet.created_at
+
+%br
+
+= link_to 'New Expense Sheet', new_expense_sheet_path

@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131175019) do
+ActiveRecord::Schema.define(version: 20140131194453) do
+
+  create_table "expense_sheets", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "expenses", force: true do |t|
     t.datetime "date"
@@ -24,6 +29,9 @@ ActiveRecord::Schema.define(version: 20140131175019) do
     t.integer  "tax_amount_cents"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "expense_sheet_id"
   end
+
+  add_index "expenses", ["expense_sheet_id"], name: "index_expenses_on_expense_sheet_id"
 
 end

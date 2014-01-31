@@ -8,14 +8,24 @@ class ExpenseTest < ActiveSupport::TestCase
     end
   end
 
-  def test_pre_tax_dollars
-    expense = Expense.create({ pre_tax_amount_cents: 1000 })
-    assert_equal 10.00, expense.pre_tax_amount_dollars
-  end
+  def test_monthly_totals_cents
+    Expense.delete_all
 
-  def test_tax_amount_dollars
-    expense = Expense.create({ tax_amount_cents: 1000 })
-    assert_equal 10.00, expense.tax_amount_dollars
+    first_date = Time.parse('2014-01-30')
+    (0..4).each do |add|
+      2.times do
+        Expense.create!({
+          date: first_date + add.months,
+          pre_tax_amount_cents: 10000,
+          tax_amount_cents: 1000,
+          expense_sheet: expense_sheets(:default)
+        })
+      end
+    end
+
+    Expense.monthly_totals_cents.each do |total|
+      assert_equal 22000, total[:total]
+    end
   end
 
 end

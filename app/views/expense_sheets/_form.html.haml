@@ -1,0 +1,3 @@
+= form_tag upload_expense_sheets_path, multipart: true do
+  = file_field_tag :file, accept: 'text/csv'
+  = submit_tag "Upload"

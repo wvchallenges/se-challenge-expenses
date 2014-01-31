@@ -1,11 +1,10 @@
 class Expense < ActiveRecord::Base
 
-  def pre_tax_amount_dollars
-    self.pre_tax_amount_cents.to_d / 100
-  end
+  belongs_to :expense_sheet
 
-  def tax_amount_dollars
-    self.tax_amount_cents.to_d / 100
+  def self.monthly_totals_cents
+    select("strftime('%m', date) as month, sum(pre_tax_amount_cents + tax_amount_cents) as total")
+      .group("strftime('%m', date)")
   end
 
 end

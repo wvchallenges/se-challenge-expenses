@@ -1,0 +1,12 @@
+%h1 Monthly Breakdown
+%h2= "Expense Sheet #{@expense_sheet.id}"
+
+%table
+  %thead
+    %tr
+      %th Month
+      %th Total
+    - @expense_sheet.expenses.monthly_totals_cents.each do |listing|
+      %tr
+        %td= listing.month
+        %td= listing.total
