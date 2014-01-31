@@ -1,21 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
+default:
   date: 2014-01-31 12:50:19
-  category: MyString
-  employee_name: MyString
-  employee_address: MyText
-  expense_description: MyText
-  pre_tax_amount_cents: 1
-  tax_name: MyString
-  tax_amount_cents: 1
-
-two:
-  date: 2014-01-31 12:50:19
-  category: MyString
-  employee_name: MyString
-  employee_address: MyText
-  expense_description: MyText
-  pre_tax_amount_cents: 1
-  tax_name: MyString
-  tax_amount_cents: 1
+  category: Some Category
+  employee_name: Mr. Mann
+  employee_address: 3 Overthere Lane, Toronto, Ontario
+  expense_description: Some Expense
+  pre_tax_amount_cents: 20000
+  tax_name: Sales Tax
+  tax_amount_cents: 2000
