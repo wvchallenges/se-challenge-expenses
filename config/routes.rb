@@ -5,8 +5,11 @@ SeChallenge::Application.routes.draw do
     collection do
       post :upload
     end
+    member do
+      get :splash
+    end
   end
 
-  root to: 'expense_sheets#index'
+  root to: 'expense_sheets#splash'
 
 end

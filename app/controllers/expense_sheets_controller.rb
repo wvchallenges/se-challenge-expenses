@@ -2,6 +2,9 @@ require 'csv'
 
 class ExpenseSheetsController < ApplicationController
 
+  def splash
+  end
+
   def index
     @expense_sheets = ExpenseSheet.all
   end

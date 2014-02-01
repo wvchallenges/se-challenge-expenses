@@ -6,6 +6,12 @@ class ExpenseSheetsControllerTest < ActionController::TestCase
     @expense_sheet = expense_sheets(:default)
   end
 
+  def test_splash
+    get :splash
+    assert_response :success
+    assert_template :splash
+  end
+
   def test_new
     get :new
     assert_response :success
