@@ -40,7 +40,7 @@ class ExpenseSheetsController < ApplicationController
 
     respond_to do |format|
       format.html {
-        redirect_to show_expense_sheet_path(new_sheet), notice: "Expense sheet uploaded"
+        redirect_to expense_sheet_path(new_sheet), notice: "Expense sheet uploaded"
       }
     end
   end
