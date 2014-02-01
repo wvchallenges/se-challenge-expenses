@@ -1,15 +1,5 @@
-.header
-  %ul.nav.nav-pills.pull-right
-    %li.active
-      = link_to 'Home', root_path
-    %li
-      = link_to 'About', '#'
-    %li
-      = link_to 'Contact', '#'
-  %h3.text-muted Expensatron 5000
-
-  .jumbotron
-    %h1 Welcome to the Expensatron
-    %p.lead This might be the <i>greatest piece of software ever written</i>. It's time to start feeling the exhileration of uploading your expense sheet.
-    %p
-      = link_to "Let's do this", new_expense_sheet_path, class: 'btn btn-lg btn-success', role: 'button'
+.jumbotron
+  %h1 Welcome to the Expensatron
+  %p.lead This might be the <i>greatest piece of software ever written</i>. It's time to start feeling the exhileration of uploading your expense sheet.
+  %p
+    = link_to "Let's do this", new_expense_sheet_path, class: 'btn btn-lg btn-success', role: 'button'
