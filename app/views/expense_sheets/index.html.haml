@@ -10,10 +10,6 @@
 
   %tbody
     - @expense_sheets.each do |expense_sheet|
-      %tr
+      %tr(data-link="#{expense_sheet_path(expense_sheet)}")
         %td= expense_sheet.id
         %td= expense_sheet.created_at
-
-%br
-
-= link_to 'New Expense Sheet', new_expense_sheet_path
