@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Expensatron 5000</title>
+  <title>Expense-o-tron 5000</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,12 +9,13 @@
 </head>
 <body>
   <div class="container">
+    <div class="notice"></div>
     <div class="header">
       <ul class="nav nav-pills pull-right">
         <li><%= link_to 'Home', root_path %></li>
         <li><%= link_to 'Expense Sheets', expense_sheets_path %></li>
       </ul>
-      <h3 class="text-muted">Expensatron 5000</h3>
+      <h3 class="text-muted">Expense-o-tron 5000</h3>
     </div>
     <%= yield %>
   </div>
