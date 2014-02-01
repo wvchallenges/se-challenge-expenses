@@ -30,15 +30,17 @@ EOS
     file.write(csv_rows)
     file.rewind
 
-    assert_difference "Expense.count", 3 do
-      post :upload, file: Rack::Test::UploadedFile.new(file, 'text/csv')
+    assert_difference "ExpenseSheet.count", 1 do
+      assert_difference "Expense.count", 3 do
+        post :upload, file: Rack::Test::UploadedFile.new(file, 'text/csv')
+      end
     end
     expense = Expense.last
     assert_equal Date.new(2013,12,31), expense.date
     assert_equal 'Jonathan Ive', expense.employee_name
     assert_equal 99900, expense.pre_tax_amount_cents
     assert_equal 7493, expense.tax_amount_cents
-    assert_redirected_to expense_sheets_path
+    assert_redirected_to expense_sheet_path(ExpenseSheet.last)
     assert_equal "Expense sheet uploaded", flash[:notice]
   end
 
