@@ -10,11 +10,13 @@
   %thead
     %tr
       %th Month
-      %th Total
+      %th
+        .text-right Total
     - @monthly.each do |listing|
       %tr
         %td= number_to_month(listing.month)
-        %td.text-right= cents_to_dollars(listing.total)
+        %td
+          .text-right= cents_to_dollars(listing.total)
 
 #chart
   %svg(style='height:500px')
