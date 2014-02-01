@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 gem 'twitter-bootstrap-rails'
+gem "nvd3-rails", github: "adeven/nvd3-rails", submodules: true
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
