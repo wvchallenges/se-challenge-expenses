@@ -6,7 +6,7 @@
     %tr
       %th Month
       %th Total
-    - @expense_sheet.expenses.monthly_totals_cents.each do |listing|
+    - @monthly.each do |listing|
       %tr
         %td= listing.month
         %td= listing.total

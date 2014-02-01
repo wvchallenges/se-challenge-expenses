@@ -8,7 +8,8 @@ class ExpenseSheetsController < ApplicationController
 
   def show
     @expense_sheet = ExpenseSheet.find(params[:id])
-  rescue AoctiveRecord::RecordNotFound
+    @monthly = @expense_sheet.expenses.monthly_totals_cents
+  rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Expense sheet not found'
     redirect_to expense_sheets_path
   end
@@ -36,8 +37,7 @@ class ExpenseSheetsController < ApplicationController
 
     respond_to do |format|
       format.html {
-        redirect_to expense_sheets_path,
-        notice: "Expense sheet uploaded"
+        redirect_to show_expense_sheet_path(new_sheet), notice: "Expense sheet uploaded"
       }
     end
   end
