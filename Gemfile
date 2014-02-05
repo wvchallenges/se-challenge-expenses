@@ -34,6 +34,7 @@ gem 'smarter_csv'
 gem 'chronic' 
 gem 'chartkick' 
 
+gem "omniauth-google-oauth2"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'

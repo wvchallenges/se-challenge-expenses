@@ -9,6 +9,9 @@ Sec::Application.routes.draw do
 	     collection { post :import }
    end
 
+  get "/auth/:provider/callback" => "sessions#create"
+  get "/signout" => "sessions#destroy", :as => :signout
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
