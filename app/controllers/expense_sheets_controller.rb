@@ -1,5 +1,3 @@
-require 'csv'
-
 class ExpenseSheetsController < ApplicationController
 
   def splash
