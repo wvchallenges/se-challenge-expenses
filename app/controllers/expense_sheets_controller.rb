@@ -16,7 +16,7 @@ class ExpenseSheetsController < ApplicationController
   end
 
   def upload
-    new_sheet = ExpenseSheet.from_file(params[:file].read)
+    new_sheet = ExpenseSheet.import_csv_file!(params[:file])
 
     respond_to do |format|
       format.html {

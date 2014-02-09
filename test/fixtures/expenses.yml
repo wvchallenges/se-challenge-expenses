@@ -1,8 +1,6 @@
 default:
   date: 2014-01-31 12:50:19
   category: Some Category
-  employee_name: Mr. Mann
-  employee_address: 3 Overthere Lane, Toronto, Ontario
   expense_description: Some Expense
   pre_tax_amount_cents: 20000
   tax_name: Sales Tax
