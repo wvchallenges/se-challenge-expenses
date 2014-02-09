@@ -18,25 +18,7 @@ class ExpenseSheetsController < ApplicationController
   end
 
   def upload
-    new_sheet = ExpenseSheet.create!
-
-    file_data = params[:file].read
-    csv_rows = CSV.new(file_data, headers: true, header_converters: :symbol)
-    csv_hashes = csv_rows.to_a.map {|row| row.to_hash }
-
-    csv_hashes.each do |row|
-      Expense.create!({
-          date: Date.strptime(row[:date], '%m/%d/%Y'),
-          category: row[:category],
-          employee_name: row[:employee_name],
-          employee_address: row[:employee_address],
-          expense_description: row[:expense_description],
-          pre_tax_amount_cents: row[:pretax_amount].to_d * 100,
-          tax_name: row[:tax_name],
-          tax_amount_cents: row[:tax_amount].to_d * 100,
-          expense_sheet: new_sheet
-        })
-    end
+    new_sheet = ExpenseSheet.from_file(params[:file].read)
 
     respond_to do |format|
       format.html {
