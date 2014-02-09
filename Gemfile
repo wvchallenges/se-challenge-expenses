@@ -13,16 +13,15 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
+gem 'smarter_csv', '~> 1.0.17'
 gem 'twitter-bootstrap-rails'
-gem "nvd3-rails", github: "adeven/nvd3-rails", submodules: true
+gem 'nvd3-rails', github: 'adeven/nvd3-rails', submodules: true
+gem 'money-rails', '~> 0.9.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
 gem 'unicorn'
@@ -30,6 +29,3 @@ gem 'unicorn'
 group :development do
   gem 'capistrano', group: :development
 end
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
