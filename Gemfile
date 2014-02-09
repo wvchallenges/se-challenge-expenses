@@ -27,5 +27,9 @@ end
 gem 'unicorn'
 
 group :development do
-  gem 'capistrano', group: :development
+  gem 'capistrano'
+end
+
+group :test do
+  gem 'turn'
 end
