@@ -2,6 +2,7 @@ class Expense < ActiveRecord::Base
 
   belongs_to :expense_sheet
   belongs_to :employee
+  belongs_to :category
 
   monetize :pre_tax_amount_cents
   monetize :tax_amount_cents
