@@ -17,6 +17,7 @@ gem 'smarter_csv', '~> 1.0.17'
 gem 'twitter-bootstrap-rails'
 gem 'nvd3-rails', github: 'adeven/nvd3-rails', submodules: true
 gem 'money-rails', '~> 0.9.0'
+gem 'kaminari', '~> 0.15.1'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
