@@ -15,7 +15,7 @@ class ExpenseSheetTest < ActiveSupport::TestCase
 
     sheet = expense_sheets(:default)
     assert_difference %w[ Expense.count Employee.count ] do
-      ExpenseSheet.import_csv_row!(row, sheet.id)
+      ExpenseSheet.import_csv_row(row, sheet.id)
     end
 
     row.each do |attribute|
@@ -39,7 +39,7 @@ EOS
 
     assert_difference 'ExpenseSheet.count' do
       assert_difference 'Employee.count', 3 do
-        ExpenseSheet.import_csv_file!(file)
+        ExpenseSheet.import_csv_file(file)
       end
     end
   end

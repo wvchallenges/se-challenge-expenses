@@ -16,7 +16,7 @@ class ExpenseSheetsController < ApplicationController
   end
 
   def upload
-    @new_sheet = ExpenseSheet.import_csv_file!(params[:file])
+    @new_sheet = ExpenseSheet.import_csv_file(params[:file])
     flash[:success] = 'Expense sheet uploaded'
     redirect_to expense_sheet_path(@new_sheet)
   end

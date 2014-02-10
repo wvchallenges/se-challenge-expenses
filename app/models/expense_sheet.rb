@@ -2,9 +2,9 @@ require 'smarter_csv'
 
 class ExpenseSheet < ActiveRecord::Base
 
-  has_many :expenses, dependent: :destroy
+  has_many :expenses, :dependent => :destroy
 
-  def self.import_csv_row!(row, sheet_id)
+  def self.import_csv_row(row, sheet_id)
     employee = Employee.find_or_create_by!({
       :name => row[:employee_name],
       :address => row[:employee_address]
@@ -23,11 +23,11 @@ class ExpenseSheet < ActiveRecord::Base
       })
   end
 
-  def self.import_csv_file!(file)
+  def self.import_csv_file(file)
     new_sheet = ExpenseSheet.create!
     SmarterCSV.process(file.path, :chunk_size => 5) do |chunk|
       chunk.each do |row|
-        import_csv_row!(row, new_sheet.id)
+        import_csv_row(row, new_sheet.id)
       end
     end
     new_sheet
