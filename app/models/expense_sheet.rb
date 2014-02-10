@@ -9,11 +9,12 @@ class ExpenseSheet < ActiveRecord::Base
       :name => row[:employee_name],
       :address => row[:employee_address]
     })
+    category = Category.find_or_create_by!({ :name => row[:category] })
 
     Expense.create!({
-        date: Date.strptime(row[:date], '%m/%d/%Y'),
-        :category => row[:category],
-        :employee_id => employee.id,
+        :date => Date.strptime(row[:date], '%m/%d/%Y'),
+        :category => category,
+        :employee => employee,
         :expense_description => row[:expense_description],
         :pre_tax_amount_cents => row[:"pre-tax_amount"].to_d * 100,
         :tax_name => row[:tax_name],
