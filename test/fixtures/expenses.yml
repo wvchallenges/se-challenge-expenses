@@ -1,6 +1,8 @@
 default:
   date: 2014-01-31 12:50:19
   category: Some Category
+  employee: default
+  category: default
   expense_description: Some Expense
   pre_tax_amount_cents: 20000
   tax_name: Sales Tax

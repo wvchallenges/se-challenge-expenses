@@ -1,9 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  description: MyText
-
-two:
-  name: MyString
-  description: MyText
+default:
+  name: ACat
+  description: The cat

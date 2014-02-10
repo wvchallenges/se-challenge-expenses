@@ -16,6 +16,8 @@ class ExpenseTest < ActiveSupport::TestCase
       2.times do
         Expense.create!({
           date: first_date + add.months,
+          employee: employees(:default),
+          category: categories(:default),
           pre_tax_amount_cents: 10000,
           tax_amount_cents: 1000,
           expense_sheet: expense_sheets(:default)
