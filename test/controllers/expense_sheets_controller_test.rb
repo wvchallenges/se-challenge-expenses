@@ -19,6 +19,13 @@ class ExpenseSheetsControllerTest < ActionController::TestCase
   end
 
   def test_upload
+    assert_difference 'ExpenseSheet.count' do
+      post :upload, {
+        :file => fixture_file_upload("files/data_example.csv")
+      }
+    end
+    assert_redirected_to expense_sheet_path(ExpenseSheet.last)
+    assert_equal 'Expense sheet uploaded', flash[:success]
   end
 
   def test_index
@@ -30,7 +37,7 @@ class ExpenseSheetsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, id: @expense_sheet
+    get :show, :id => @expense_sheet
     assert_response :success
     assert_template :show
     assert_equal @expense_sheet, assigns(:expense_sheet)
