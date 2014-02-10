@@ -1,0 +1,16 @@
+%h1 Employees
+
+%table.table.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th
+        .text-right
+          Total Expenses
+  %tbody
+    - @employees.each do |employee|
+      %tr
+        %td= employee.name
+        %td
+          .text-right
+            = cents_to_dollars(employee.total_expenses)
