@@ -24,6 +24,7 @@ class ExpenseSheetsControllerTest < ActionController::TestCase
         :file => fixture_file_upload("files/data_example.csv")
       }
     end
+    assert assigns(:new_sheet)
     assert_redirected_to expense_sheet_path(ExpenseSheet.last)
     assert_equal 'Expense sheet uploaded', flash[:success]
   end
