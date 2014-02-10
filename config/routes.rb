@@ -1,7 +1,8 @@
 SeChallenge::Application.routes.draw do
 
-  resources :expenses, only: [:index]
-  resources :expense_sheets, only: [:index, :show, :new] do
+  resources :expenses, :only => [:index]
+  resources :categories, :only => [:index]
+  resources :expense_sheets, :only => [:index, :show, :new] do
     collection do
       post :upload
     end
@@ -10,6 +11,6 @@ SeChallenge::Application.routes.draw do
     end
   end
 
-  root to: 'expense_sheets#splash'
+  root :to => 'expense_sheets#splash'
 
 end
