@@ -1,0 +1,15 @@
+.pull-right
+  = link_to 'New Expense Sheet', new_expense_sheet_path, class: 'btn btn-success'
+%h1 Expense Sheets
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th Sheet ID
+      %th Uploaded At
+
+  %tbody
+    - @expense_sheets.each do |expense_sheet|
+      %tr(data-link="#{expense_sheet_path(expense_sheet)}")
+        %td= expense_sheet.id
+        %td= expense_sheet.created_at

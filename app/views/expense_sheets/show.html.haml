@@ -1,0 +1,24 @@
+- content_for :head do
+  :javascript
+    var monthly_totals = #{@monthly.to_json};
+
+%h1 Monthly Breakdown
+%h2= "Expense Sheet #{@expense_sheet.id}"
+%p= "Uploaded #{@expense_sheet.created_at}"
+
+%table.table
+  %thead
+    %tr
+      %th Month
+      %th
+        .text-right Total
+    - @monthly.each do |listing|
+      %tr
+        %td= number_to_month(listing.month)
+        %td
+          .text-right= cents_to_dollars(listing.total)
+
+#chart
+  %svg(style='height:500px')
+
+= link_to 'Back', expense_sheets_path
