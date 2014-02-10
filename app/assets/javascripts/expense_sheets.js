@@ -3,7 +3,7 @@ $(function () {
     window.location = $(this).data("link")
   })
 
-  function monthly() {
+ function monthly() {
     return [
       {
         key: "Monthly Totals",
