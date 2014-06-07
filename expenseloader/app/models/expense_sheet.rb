@@ -10,14 +10,27 @@ class ExpenseSheet < ActiveRecord::Base
   TAX_NAME = 6
   TAX_AMOUNT = 7
 
+  def parse_expense_file
+    CSV.foreach(expense_file.current_path, headers: true) do |row|
+      create_models(row)
+    end
+  end
+
+  def create_models(line)
+    new_expense = expense(line)
+    new_expense.employee = employee(line)
+    new_expense.category = category(line)
+    new_expense.save!
+  end
+
   def employee(line)
-    Employee.find_or_create_by(name: line[NAME]) do |employee|
+    Employee.find_or_create_by!(name: line[NAME]) do |employee|
       employee.set_address(line[ADDRESS])
     end
   end
 
   def category(line)
-    Category.find_or_create_by(name: line[CATEGORY])
+    Category.find_or_create_by!(name: line[CATEGORY])
   end
 
   def expense(line)

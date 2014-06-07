@@ -41,6 +41,11 @@ describe ExpenseSheet do
     expect(expense.pre_tax_amount).to eq(350)
   end
 
+  it 'should associate all models together correctly' do
+    expense_sheet.create_models(line)
+
+    expect(Employee.first.expenses.count).to eq(1)
+  end
 end
 
 =begin
