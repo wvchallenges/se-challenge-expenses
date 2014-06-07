@@ -11,14 +11,13 @@ class ExpenseSheet < ActiveRecord::Base
   TAX_AMOUNT = 7
 
   def employee(line)
-    employee = Employee.new
-    employee.name = line[NAME]
-    employee.set_address(line[ADDRESS])
-    employee
+    Employee.find_or_create_by(name: line[NAME]) do |employee|
+      employee.set_address(line[ADDRESS])
+    end
   end
 
   def category(line)
-    Category.new name: line[CATEGORY]
+    Category.find_or_create_by(name: line[CATEGORY])
   end
 
   def expense(line)

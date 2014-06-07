@@ -2,24 +2,40 @@ require 'spec_helper'
 
 describe ExpenseSheet do
   let(:line) { ["12/1/2013", "Travel", "Don Draper", "783 Park Ave, New York, NY 10021", "Taxi ride", " 350.00 ", "NY Sales tax", " 31.06 "] }
+  let(:expense_sheet) { ExpenseSheet.new }
 
   it 'should create an employee with the name filled in' do
-    employee = ExpenseSheet.new.employee(line)
+    employee = expense_sheet.employee(line)
     expect(employee.name).to eq('Don Draper')
   end
 
   it 'should create an employee with the address properly filled in' do
-    employee = ExpenseSheet.new.employee(line)
+    employee = expense_sheet.employee(line)
     expect(employee.address).to eq('783 Park Ave')
   end
 
+  it 'should retrieve employee if they exist already' do
+    second_line = ["10/12/2013", "Computer - Hardware", "Don Draper", "783 Park Ave, New York, NY 10021", "Macbook Air", " 1,999.00 ", "NY Sales tax", " 177.41 "]
+    employee1 = expense_sheet.employee(line)
+    employee2 = expense_sheet.employee(second_line)
+
+    expect(employee1).to eq(employee2)
+  end
+
   it 'should create a category' do
-    category = ExpenseSheet.new.category(line)
+    category = expense_sheet.category(line)
     expect(category.name).to eq('Travel')
   end
 
+  it 'should retrieve category if one already exists' do
+    category = expense_sheet.category(line)
+    category2 = expense_sheet.category(line)
+
+    expect(category).to eq(category2)
+  end
+
   it 'should create an expense' do
-    expense = ExpenseSheet.new.expense(line)
+    expense = expense_sheet.expense(line)
     expect(expense.purchase_date).to eq(Date.new(2013, 01, 12))
     expect(expense.description).to eq('Taxi ride')
     expect(expense.pre_tax_amount).to eq(350)
