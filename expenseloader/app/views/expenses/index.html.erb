@@ -19,9 +19,9 @@
       <td><%= expense.employee.name %></td>
       <td><%= expense.employee.address %></td>
       <td><%= expense.description %></td>
-      <td><%= expense.pre_tax_amount %></td>
+      <td><%= number_to_currency(expense.pre_tax_amount / 100.0) %></td>
       <td><%= expense.tax_name %></td>
-      <td><%= expense.tax_amount %></td>
+      <td><%= number_to_currency(expense.tax_amount / 100.0) %></td>
     </tr>
   <% end %>
 </table>
