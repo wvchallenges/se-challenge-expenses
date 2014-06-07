@@ -1,0 +1,15 @@
+<div>
+  <%= link_to 'Monthly Expenses', expenses_path %>
+</div>
+
+<h1>Upload a New Expense Sheet</h1>
+
+<p>Use this form to upload a new expense sheet in CSV format.</p>
+
+<%= form_for @expense_sheet do |f| %>
+  <%= f.label :expense_file %>
+  <%= f.file_field :expense_file %>
+
+  <br/>
+  <%= f.submit "Process Expense Sheet" %>
+<% end %>

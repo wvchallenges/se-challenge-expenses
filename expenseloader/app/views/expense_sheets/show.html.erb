@@ -1,0 +1,23 @@
+<div>
+  <%= link_to 'Upload Expenses Sheet', new_expense_sheet_path %>
+</div>
+
+<h1>Monthly Expenses for Expense Sheet <%= @expense_sheet.id %></h1>
+
+<table>
+  <tr>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Total Pre-Tax Amount</th>
+    <th>Total Tax Amount</th>
+  </tr>
+
+  <% @monthly_expenses.rows.each do |expense| %>
+    <tr>
+      <td><%= expense[2] %></td>
+      <td><%= Date::MONTHNAMES[expense[3].to_i] %></td>
+      <td class="text-right"><%= number_to_currency(expense[0] / 100.0) %></td>
+      <td class="text-right"><%= number_to_currency(expense[1] / 100.0) %></td>
+    </tr>
+  <% end %>
+</table>
