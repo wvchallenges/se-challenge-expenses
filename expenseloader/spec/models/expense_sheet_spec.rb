@@ -36,9 +36,28 @@ describe ExpenseSheet do
 
   it 'should create an expense' do
     expense = expense_sheet.expense(line)
-    expect(expense.purchase_date).to eq(Date.new(2013, 01, 12))
+
+    expect(expense.purchase_date).to eq(Date.new(2013, 12, 1))
     expect(expense.description).to eq('Taxi ride')
-    expect(expense.pre_tax_amount).to eq(350)
+  end
+
+  it 'should convert dollar amounts to integers' do
+    expense = expense_sheet.expense(line)
+    expect(expense.pre_tax_amount).to eq(35000)
+    expect(expense.tax_amount).to eq(3106)
+  end
+
+  it 'should handle amounts with commas correctly' do
+    line = ["10/12/2013", "Computer - Hardware", "Don Draper", "783 Park Ave, New York, NY 10021", "Macbook Air", " 1,999.00 ", "NY Sales tax", " 177.41 "]
+    expense = expense_sheet.expense(line)
+    expect(expense.pre_tax_amount).to eq(199900)
+    expect(expense.tax_amount).to eq(17741)
+  end
+
+  it 'should parse the date correct for mm/dd/yyyy' do
+    line = ["11/20/2013", "Meals and Entertainment", "Don Draper", "783 Park Ave, New York, NY 10021", "Client dinner", " 200.00 ", "NY Sales tax", " 15.00 "]
+    expense = expense_sheet.expense(line)
+    expect(expense.purchase_date).to eq(Date.new(2013, 11, 20))
   end
 
   it 'should associate all models together correctly' do

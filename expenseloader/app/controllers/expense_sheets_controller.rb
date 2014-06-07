@@ -8,7 +8,7 @@ class ExpenseSheetsController < ApplicationController
   def create
     expense_sheet = ExpenseSheet.new(expense_sheet_params)
     expense_sheet.parse_expense_file
-    redirect_to new_expense_sheet_path, notice: 'Expense Sheet was successfully uploaded and parsed'
+    redirect_to expenses_path, notice: 'Expense Sheet was successfully uploaded and parsed'
   end
 
   private

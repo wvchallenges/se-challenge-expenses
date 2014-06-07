@@ -35,9 +35,11 @@ class ExpenseSheet < ActiveRecord::Base
 
   def expense(line)
     expense = Expense.new
-    expense.purchase_date = line[PURCHASE_DATE]
+    expense.purchase_date = Date.strptime(line[PURCHASE_DATE], "%m/%d/%Y")
     expense.description = line[DESCRIPTION]
-    expense.pre_tax_amount = line[PRE_TAX]
+    expense.pre_tax_amount = line[PRE_TAX].gsub(',', '').to_f * 100
+    expense.tax_name = line[TAX_NAME]
+    expense.tax_amount = line[TAX_AMOUNT].gsub(',', '').to_f * 100
     expense
   end
 end
