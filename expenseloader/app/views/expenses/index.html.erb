@@ -1,27 +1,19 @@
-<h1>Expenses</h1>
+<h1>Monthly Expenses</h1>
 
 <table>
   <tr>
-    <th>Date</th>
-    <th>Category</th>
-    <th>Employee Name</th>
-    <th>Employee Address</th>
-    <th>Expense Description</th>
-    <th>Pre-Tax Amount</th>
-    <th>Tax Name</th>
-    <th>Tax Amount</th>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Total Pre-Tax Amount</th>
+    <th>Total Tax Amount</th>
   </tr>
 
-  <% @expenses.each do |expense| %>
+  <% @monthly_expenses.rows.each do |expense| %>
     <tr>
-      <td><%= expense.purchase_date %></td>
-      <td><%= expense.category.name %></td>
-      <td><%= expense.employee.name %></td>
-      <td><%= expense.employee.address %></td>
-      <td><%= expense.description %></td>
-      <td><%= number_to_currency(expense.pre_tax_amount / 100.0) %></td>
-      <td><%= expense.tax_name %></td>
-      <td><%= number_to_currency(expense.tax_amount / 100.0) %></td>
+      <td><%= expense[2] %></td>
+      <td><%= Date::MONTHNAMES[expense[3].to_i] %></td>
+      <td><%= number_to_currency(expense[0] / 100.0) %></td>
+      <td><%= number_to_currency(expense[1] / 100.0) %></td>
     </tr>
   <% end %>
 </table>
