@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    background-color: gainsboro;
+    font-family: "Proxima Nova", "helvetica neue", Helvetica, Arial, sans-serif;
+}
+
+#container {
+    width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid grey;
+}
+
+.text-right {
+    text-align: right;
+}
+
+table {
+    width: 100%;
+    border: 1px solid gainsboro;
+}
+th {
+    background-color: gainsboro;
+}

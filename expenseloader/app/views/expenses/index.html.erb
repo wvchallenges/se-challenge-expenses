@@ -1,3 +1,7 @@
+<div>
+  <%= link_to 'Upload Expenses Sheet', new_expense_sheet_path %>
+</div>
+
 <h1>Monthly Expenses</h1>
 
 <table>
@@ -12,8 +16,8 @@
     <tr>
       <td><%= expense[2] %></td>
       <td><%= Date::MONTHNAMES[expense[3].to_i] %></td>
-      <td><%= number_to_currency(expense[0] / 100.0) %></td>
-      <td><%= number_to_currency(expense[1] / 100.0) %></td>
+      <td class="text-right"><%= number_to_currency(expense[0] / 100.0) %></td>
+      <td class="text-right"><%= number_to_currency(expense[1] / 100.0) %></td>
     </tr>
   <% end %>
 </table>
