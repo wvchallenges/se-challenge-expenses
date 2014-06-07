@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607022919) do
+ActiveRecord::Schema.define(version: 20140607204736) do
 
   create_table "categories", force: true do |t|
     t.string   "name",       null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20140607022919) do
     t.datetime "updated_at"
     t.integer  "employee_id"
     t.integer  "category_id"
+    t.integer  "expense_sheet_id"
   end
 
 end

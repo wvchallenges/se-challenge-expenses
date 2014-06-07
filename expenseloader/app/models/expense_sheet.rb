@@ -1,4 +1,5 @@
 class ExpenseSheet < ActiveRecord::Base
+  has_many :expenses
   mount_uploader :expense_file, ExpenseSheetUploader
 
   PURCHASE_DATE = 0
@@ -20,6 +21,7 @@ class ExpenseSheet < ActiveRecord::Base
     new_expense = expense(line)
     new_expense.employee = employee(line)
     new_expense.category = category(line)
+    new_expense.expense_sheet = self
     new_expense.save!
   end
 
