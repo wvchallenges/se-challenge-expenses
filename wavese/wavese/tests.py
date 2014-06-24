@@ -6,6 +6,7 @@ from wavese.app.forms import UploadFileForm
 from wavese.app.models import SubsidiaryData
 from wavese.app.views import home, parse_company_data, report
 
+
 class FormsTests(TestCase):
 
     def test_normal_case(self):
@@ -23,7 +24,6 @@ class FormsTests(TestCase):
 
 
 class ModelsTests(TestCase):
-
 
     def test_normal_case(self):
         """
@@ -47,7 +47,6 @@ class ModelsTests(TestCase):
         self.assertEqual(model.tax_amount, Decimal('31.06'))
         self.assertEqual(model.tax_name, "NY Sales tax")
 
-
     def test_empty_case(self):
         """
         Empty constructor should return default values
@@ -62,20 +61,24 @@ class ModelsTests(TestCase):
         self.assertEqual(model.tax_amount, None)
         self.assertEqual(model.tax_name, "")
 
-    def test_bad_case(self):
-        """
-        Problematic case should fail
-        """
-        pass
-
 
 class ViewsTests(TestCase):
 
-    def test_normal_case(self):
+    def test_normal_home_page(self):
         """
         Normal case should pass
         """
-        pass
+        response = self.client.get('/home/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/home.html')
+
+    def test_normal_report_page(self):
+        """
+        Normal case should pass
+        """
+        response = self.client.get('/report/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/report.html')
 
     def test_bad_case(self):
         """
