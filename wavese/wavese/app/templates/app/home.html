@@ -15,6 +15,11 @@
 			<p>{{ form.non_field_errors }}</p>
 			<p>{{ form.uploaded_file.label_tag }} {{ form.uploaded_file.help_text }}</p>
 			<p>{{ form.uploaded_file }} {{ form.uploaded_file.errors }}</p>
+            {% if errors %}
+                <div class="errors">
+                <p>Unable to parse and import data: {{ errors }}</p>
+                </div>
+            {% endif %}
 			<input type="submit" value="Upload" />
 		</form>
     </body>

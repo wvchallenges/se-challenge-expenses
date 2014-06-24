@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, connection
 from datetime import datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 import csv
 import codecs
 
@@ -21,11 +21,16 @@ def home(request):
         Create an empty form that accepts an uploaded file, and render the form and some other HTML
     """
     # Handle file upload
+    errors = None
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            parse_company_data(request.FILES['uploaded_file'])
-            return HttpResponseRedirect(reverse('wavese.app.views.report'))
+            try:
+                parse_company_data(request.FILES['uploaded_file'])
+                return HttpResponseRedirect(reverse('wavese.app.views.report'))
+            except (IndexError, InvalidOperation, ValueError) as e:
+                errors = e
+
     else:
         # A empty, unbound form
         form = UploadFileForm()
@@ -33,7 +38,7 @@ def home(request):
     # Render home page
     return render_to_response(
         'app/home.html',
-        {'form': form},
+        {'form': form, 'errors': errors},
         context_instance=RequestContext(request)
     )
 
