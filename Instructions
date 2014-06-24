@@ -1,0 +1,12 @@
+Instructions
+
+Requirements:
+	Python 3
+	Django 1.6.5
+
+1. Clone or download the repository, and extract it
+2. Via command line, change directory to the 'wavese' folder within the extracted directory
+3. Use Python to run manage.py, or make manage.py executable (chmod +x manage.py) and launch with ./manage.py
+4. Set up the database with either 'python manage.py syncdb' or './manage.py syncdb'
+5. Launch the server with either 'python manage.py runserver' or './manage.py runserver'
+6. Using the default settings, navigate to http://127.0.0.1:8000/home/ and follow the instructions on the page to import a subsidiary's data and view the generate expense reports for it.
