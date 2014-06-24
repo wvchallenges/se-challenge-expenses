@@ -83,3 +83,4 @@ def report(request):
         {'data': data},
         context_instance=RequestContext(request)
     )
+

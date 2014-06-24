@@ -91,13 +91,6 @@ class ViewsTests(TestCase):
         except Exception:
             self.fail("No errors should have been encountered")
 
-    def test_parse_invalid_header_csv(self):
-        """
-        Parsing a file with an invalid row (not enough values) returns an IndexError
-        """
-        file = open('wavese/app/static/test/testInvalidHeader', 'rb')
-        self.assertRaises(Exception, parse_company_data, SimpleUploadedFile(file.name, file.read()))
-
     def test_parse_invalid_row_csv(self):
         """
         Parsing a file with an invalid row (not enough values) returns an IndexError
