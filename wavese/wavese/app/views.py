@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db.models import Sum, connection
 from datetime import datetime
 from decimal import Decimal
 import csv
@@ -63,7 +64,17 @@ def report(request):
     """
     Return HTML for report page
     """
+    # Generate results for result page
+    truncate_date = connection.ops.date_trunc_sql('month', 'date')
+    qs = SubsidiaryData.objects.extra({'month': truncate_date})
+    data = qs.values('month').annotate(Sum('tax_amount'), Sum('pre_tax_amount')).order_by('month')
+
+    for row in data:
+        row['dateMonth'] = datetime.strptime(row['month'], '%Y-%m-%d').date()
+        row['total'] = row.get('tax_amount__sum') + row.get('pre_tax_amount__sum')
+
     return render_to_response(
         'app/report.html',
+        {'data': data},
         context_instance=RequestContext(request)
     )

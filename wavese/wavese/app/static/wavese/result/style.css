@@ -1,0 +1,27 @@
+table,th,td {
+    border:1px solid black;
+    border-collapse:collapse;
+    padding:5px;
+}
+
+table.sortable thead {
+    background-color:#66CCFF;
+    font-weight: bold;
+    cursor: default;
+}
+
+table {
+    width:500px;
+}
+
+td {
+    text-align:center;
+}
+
+caption {
+    display: none;
+}
+
+html * {
+    font-family:"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif !important;
+}
