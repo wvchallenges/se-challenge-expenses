@@ -65,13 +65,18 @@ def parse_company_data(file):
         company_data.save()
 
 
-def report(request):
+def report(request, filters):
     """
     Return HTML for report page
     """
     # Generate results for result page
     truncate_date = connection.ops.date_trunc_sql('month', 'date')
-    qs = SubsidiaryData.objects.extra({'month': truncate_date})
+    filter = ''
+
+    for key in filters:
+        filter += "%s=%s" % key, filters[key]
+
+    qs = SubsidiaryData.objects.extra({'month': truncate_date}).filters(filter)
     data = qs.values('month').annotate(Sum('tax_amount'), Sum('pre_tax_amount')).order_by('month')
 
     for row in data:
