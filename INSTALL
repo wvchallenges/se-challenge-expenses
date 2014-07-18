@@ -1,0 +1,12 @@
+DEPENDENCIES
+
+django-bootstrap3
+chartit
+simplejson (needed by chartit)
+python-social-auth
+
+
+In order to test the oauth system, please add this line to your host file
+127.0.0.1 gregov.com
+and use http://gregov.com:8000/manual-import to access the test server
+

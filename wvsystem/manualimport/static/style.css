@@ -1,0 +1,29 @@
+body {
+    background-color: #eee;
+}
+
+#chartcontainer {
+    width:100%
+}
+
+.form-upload {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    border:1px solid #ddd;
+    text-align:center;
+    background-color: #f9f9f9;
+}
+
+.form-upload label {
+    padding: 10px;
+    font-size: 16px;
+}
+.form-upload .form-control:focus {
+    z-index: 2;
+}
+.form-upload input[type="file"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}

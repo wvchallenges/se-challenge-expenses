@@ -1,0 +1,37 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% block bootstrap3_title %}{% block title %} SEChallenge - Gregov 2014 {% endblock %}{% endblock %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_extra_head %}
+<link href="/static/style.css" rel="stylesheet">
+<script src="http://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
+
+{% block bootstrap3_content %}
+{% include "manualimport/header.html" %}
+{% bootstrap_messages %}
+
+<div class="container">
+{% if user and not user.is_anonymous %}
+    <p>Hello {{ user.get_full_name|default:user.username }}!
+    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+    </p>
+    <form method="POST" action="{% url 'form' %}" enctype="multipart/form-data" role="form" class="form-upload">
+        <div class="form-group">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input class="btn btn-default" type="submit"/>
+        </div>
+    </form>
+{% else %}
+    <p>
+    <h2> Restricted access </h2>
+    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a><br />
+    <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a><br />
+    <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a><br />
+    </p>
+{% endif %}
+</div>
+
+{% endblock %}
