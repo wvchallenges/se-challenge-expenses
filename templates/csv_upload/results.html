@@ -1,0 +1,37 @@
+{% extends 'base.html' %}                                                                                                                 {% block content %}
+    <h2>Upload completed. Thank you!</h2>
+{% endblock %}
+
+{% block results %}
+{% load render_table from django_tables2 %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+    </head>
+    <body>
+    <h3>Total expenses amount per-month.</h3>
+
+    {% if sum_cost %}
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Expense</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for key, value in sum_cost.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+    {% endif %}
+
+    <h3>Data you have uploaded so far.</h3>
+        {% render_table results %}
+    </body>
+</html>
+{% endblock %}
