@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-3">
+    <h1>Welcome!</h1>
+    <p>
+      Upload your company's expense CSV files into database for quick info.
+
+      <%= form_tag({:action => 'upload_csv'}, :multipart => true) do %>
+        <label for="file">Select File</label>
+        <%= file_field_tag :file %><br>
+        <%= submit_tag "Upload", :class => "btn btn-primary" %>
+      <% end %>
+
+    </p>
+  </div>
+  <div class="col-md-9">
+    <h1>Your Expenses</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Employee</th>
+            <th>Employee Address</th>
+            <th>Sub-Total</th>
+            <th>Tax Type</th>
+            <th>Tax</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.id %></td>
+            <td><%= expense.date %></td>
+            <td><%= expense.description %></td>
+            <td><%= expense.category %></td>
+            <td><%= expense.employee_name %></td>
+            <td><%= expense.employee_addr %></td>
+            <td><%= number_to_currency(expense.amount) %></td>
+            <td><%= expense.tax_type %></td>
+            <td><%= number_to_currency(expense.tax) %></td>
+            <td><%= number_to_currency(expense.total_amount) %></td>
+          </tr>
+          <% end -%>
+        </tbody>
+      </table>
+    </div>
+
+    <h1>Monthly Expense Totals</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @monthly_expense.each do |months| %>
+          <% months[1].each do |month| %>
+            <tr>
+              <td><%= months[0]%> </td>
+              <td> <%= month[0]%></td>
+              <td> <%= number_to_currency( month[1])%></td>
+            </tr>
+            <% end -%>
+          <% end -%>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+    <h3>Total: <%= number_to_currency(@total) %></h3>
+  </div>
+</div>
