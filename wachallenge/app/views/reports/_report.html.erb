@@ -1,14 +1,7 @@
-<!-- Report information -->
-<div class="container top-container" >
-	<div class="row">
-		<div class="col-md-5">
-			<h2><%= @report.name%>'s employees' expenses</h2>
-		</div>
-	</div>
-</div>
+
 
 <!-- Employee expenses -->
-<div class="container">
+<div class="container report-show">
 	<div class="row">
 		<div class="col-md-12">
 			<!-- Nav tabs -->
@@ -22,30 +15,27 @@
 			  <div class="tab-pane " id="table">
 			  	<table class="table table-hover">
 			  		<tr>
-			  			<td>
-			  				Date
-			  			</td>
-			  			<td>
-			  				Category
-			  			</td>
-			  			<td>
-			  				Name of employee
-			  			</td>
-			  			<td>
-			  				Address of employee
-			  			</td>
-			  			<td>
-			  				Description
-			  			</td>
-			  			<td>
-			  				Pre-tax amount
-			  			</td>
-			  			<td>
-			  				Tax name
-			  			</td>
-			  			<td>
-			  				Tax Amount
-			  			</td>
+			  			
+			  				
+			  				<%= content_tag :td, sort_link(@q, :date, 'Date', default_order: :desc) %>
+			  			
+			  			
+			  				<%= content_tag :td, sort_link(@q, :category, 'Category', default_order: :desc) %>
+			  			
+			  			
+			  				<%= content_tag :td, sort_link(@q, :name, 'Name of employee', default_order: :desc) %>
+			  			
+			  				<%= content_tag :td, sort_link(@q, :address, 'Address of employee', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :description, 'Description', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :pre_tax_amount, 'Pre-tax amount', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :tax_name, 'Tax name', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :tax_amount, 'Tax amount', default_order: :desc) %>
+			  				
+			  			
 			  		</tr>
 			  		<% @employees.each do |employee| %>
 						<tr>

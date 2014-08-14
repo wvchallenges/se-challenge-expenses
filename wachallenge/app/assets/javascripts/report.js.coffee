@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # On page load, trigger functions
-ready;
+ready
 ready = ->
 	$ -> 
 		
@@ -14,5 +14,15 @@ ready = ->
 			# The label tag's text will be replaced by the name of the file.
 			$(@).parent().find(" label[for='file'] ").text $(@).val().split("\\").pop()
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+		$("#search_form").keyup ->
+			console.log($(@).parents("form").serialize())
+			$.get( $(@).parents("form").attr("action"), $(@).parents("form").serialize(), null, 'script')
+
+		$(".sort_link").click (e)->
+			ready
+			e.preventDefault()
+			$.get( $(@).attr("href"), null, null, 'script')
+			
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

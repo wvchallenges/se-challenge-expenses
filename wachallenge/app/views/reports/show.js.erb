@@ -1,2 +1,8 @@
+if ( $("form.new-form") ){
+	$("form.new-form").hide().parents(".container").replaceWith("<%= j render('report') %>")
+	$(".report-show").css("paddingTop", "5%")
+}else{
+	$(".report-show").replaceWith("<%= j render('report') %>")	
+}
 
-$("form").hide().parents(".container").replaceWith("<%= j render('report') %>")
+

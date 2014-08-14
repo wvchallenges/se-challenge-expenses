@@ -11,7 +11,9 @@ class ReportsController < ApplicationController
 
   def show
     @report = Report.find(params[:id])
-    @employees = @report.employees.order(:date)
+    # @employees = @report.employees.order(:date)
+    @q = @report.employees.search(params[:q])
+    @employees = @q.result
     # If you want to display per month tables, could have done a group by sql query 
     # but for the sake of rendering both all expenses and monthly, will not.
     @per_month = @employees.group_by{|tax| tax.date.beginning_of_month}
