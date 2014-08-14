@@ -10,7 +10,7 @@
 		<div class="col-md-5">
 			<%= search_form_for @q, url: report_path(@report), method: :get, remote: true do |f| %>
 				<div class="form-group">
-					<%= f.text_field :name_or_description_or_tax_amount_or_pre_tax_amount_or_address_cont, class: "form-control", id: "search_form" %>
+					<%= f.text_field :employee_name_or_description_or_tax_amount_or_pre_tax_amount_or_employee_address_cont, class: "form-control", id: "search_form" %>
 				</div>
 				
 			<%end%>

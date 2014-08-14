@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20140813211901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "employees", force: true do |t|
+  create_table "expenses", force: true do |t|
     t.date     "date"
     t.string   "category"
-    t.string   "name"
-    t.string   "address"
+    t.string   "employee_name"
+    t.string   "employee_address"
     t.string   "description"
     t.string   "pre_tax_amount"
     t.string   "tax_name"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140813211901) do
     t.datetime "updated_at"
   end
 
-  add_index "employees", ["report_id"], name: "index_employees_on_report_id", using: :btree
+  add_index "expenses", ["report_id"], name: "index_expenses_on_report_id", using: :btree
 
   create_table "reports", force: true do |t|
     t.string   "name"

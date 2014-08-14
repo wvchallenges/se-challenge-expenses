@@ -1,6 +1,6 @@
 
 
-<!-- Employee expenses -->
+<!-- expenses expenses -->
 <div class="container report-show">
 	<div class="row">
 		<div class="col-md-12">
@@ -23,9 +23,9 @@
 			  				<%= content_tag :td, sort_link(@q, :category, 'Category', default_order: :desc) %>
 			  			
 			  			
-			  				<%= content_tag :td, sort_link(@q, :name, 'Name of employee', default_order: :desc) %>
+			  				<%= content_tag :td, sort_link(@q, :employee_name, 'Name of employee', default_order: :desc) %>
 			  			
-			  				<%= content_tag :td, sort_link(@q, :address, 'Address of employee', default_order: :desc) %>
+			  				<%= content_tag :td, sort_link(@q, :employee_address, 'Address of employee', default_order: :desc) %>
 
 			  				<%= content_tag :td, sort_link(@q, :description, 'Description', default_order: :desc) %>
 
@@ -37,31 +37,31 @@
 			  				
 			  			
 			  		</tr>
-			  		<% @employees.each do |employee| %>
+			  		<% @expenses.each do |expenses| %>
 						<tr>
 							<td>
-								<%= employee.date%>
+								<%= expenses.date%>
 							</td>
 							<td>
-								<%= employee.category%>
+								<%= expenses.category%>
 							</td>
 							<td>
-								<%= employee.name%>
+								<%= expenses.employee_name%>
 							</td>
 							<td>
-								<%= employee.address%>
+								<%= expenses.employee_address%>
 							</td>
 							<td>
-								<%= employee.description%>
+								<%= expenses.description%>
 							</td>
 							<td>
-								$<%= employee.pre_tax_amount%>
+								$<%= expenses.pre_tax_amount%>
 							</td>
 							<td>
-								<%= employee.tax_name%>
+								<%= expenses.tax_name%>
 							</td>
 							<td>
-								$<%= employee.tax_amount%>
+								$<%= expenses.tax_amount%>
 							</td>
 						</tr>
 						
