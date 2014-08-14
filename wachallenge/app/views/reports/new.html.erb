@@ -4,7 +4,7 @@
 			<h2>
 				New report
 			</h2>
-			<%= form_tag import_reports_path, multipart: true, remote: true do %>
+			<%= form_tag import_reports_path, multipart: true, remote: true, class: "new-form" do %>
 				<div class="form-group">
 					<%= text_field_tag :report_name, nil, class: "form-control text-center", placeholder: "Name of report" %>	
 				</div>
