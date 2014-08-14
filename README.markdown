@@ -1,46 +1,16 @@
 # Wave Software Development Challenge
-Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
+Attached is the Wave Accounting Softward Development Challenge Rails application and a test CSV which may be used for the application.
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+## Installation
+Simply clone the repo onto local machine. Must have postgresql installed as it is the relational database used in this application. Run `bundle install` to add all required gems followed by `rake db:create db:migrate` to create the database and the corresponding migrations.
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one
-1. Complete the project as described below within your fork
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
+## Usage
+The purpose of the application is to accept CSV files with employees' tax history. A CSV file can be uploaded with a given report name to assist with organization of CSVs. Upon completion of the upload, you will be rendered to a path with two tables and a graph. Search and sortability features have been implemented to the all employees table, while the second table displays a month by month breakdown of expenses and a corresponding graph using Morrisjs.
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository
-1. Complete your project as described below within your local repository
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+## Implmentation awesomeness
+I am fairly proud of the progress done on this challenge for a number of things. I previously have very good understanding of working with CSV files and manipulation with their data, but I attempted to push my limit with this challenge and my comfort zone to increase my learnings - after all, if I am not the best fit for Wave, at least I learnt something new going through the process about myself (being interviewed) and my skills (implementing new things). With this challenge, I implemented AJAX for file upload and AJAX with search and sortability. 
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
 
-### What your web-based application must do:
+Coming from an Angularjs tendency to do anything that is heavy on Javascript, it was quite the challenge to try to flavor AJAX in everything. Thinking in a 'non-Angular' to do my searching (which is lightening fast and easy with Angularjs) allowed me to dig deeper into working with ujs and jquery ajax which I don't have very much appreciation for. In addition, the AJAX file upload gave me a chance to learn more about forgery protection and new gems to use to help with formatting. Also, I did not know until now that I can pass arguments into my `redirect_to` function to trigger different formatting between controllers; cool eh? Overall, all through-out the way, given my heavy Angularjs recent work, I had to learn and remind myself more of the 'jquery and Rails' way of doing which I appreciate.
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions
- 1. Columns will always be in that order
- 2. There will always be data in each column
- 3. There will always be a header line
-
- An example input file named `data_example.csv` is included in this repo.
-
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
-
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
-
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
-
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
-
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
