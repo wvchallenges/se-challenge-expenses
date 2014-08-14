@@ -52,3 +52,6 @@ gem 'raphael-rails'
 
 # Remote true for files
 gem 'remotipart'
+	
+# Searching gem
+gem 'ransack'
