@@ -1,0 +1,23 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+.top-container{
+	padding-top: 5%;
+}
+// Placeholder texts should be centered
+::-webkit-input-placeholder {
+   text-align:center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align:center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align:center;  
+}
+
+:-ms-input-placeholder {  
+   text-align:center; 
+}
