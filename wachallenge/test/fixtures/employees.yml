@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2014-08-13 17:19:01
+  category: MyString
+  name: MyString
+  address: MyString
+  description: MyString
+  pre_tax_amount: MyString
+  tax_name: MyString
+  tax_amount: MyString
+  report_id: 
+
+two:
+  date: 2014-08-13 17:19:01
+  category: MyString
+  name: MyString
+  address: MyString
+  description: MyString
+  pre_tax_amount: MyString
+  tax_name: MyString
+  tax_amount: MyString
+  report_id: 

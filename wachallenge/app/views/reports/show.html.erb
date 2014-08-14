@@ -1,0 +1,23 @@
+
+<!-- Report information -->
+<div class="container top-container" >
+	<div class="row">
+		<div class="col-md-5">
+			<h2><%= @report.name%>'s employees' expenses</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5">
+			<%= search_form_for @q, url: report_path(@report), method: :get, remote: true do |f| %>
+				<div class="form-group">
+					<%= f.text_field :employee_name_or_description_or_tax_amount_or_pre_tax_amount_or_employee_address_cont, class: "form-control", id: "search_form" %>
+				</div>
+				
+			<%end%>
+		</div>
+	</div>
+	
+</div>
+
+
+<%= render 'report' %>

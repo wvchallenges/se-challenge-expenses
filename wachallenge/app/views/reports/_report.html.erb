@@ -1,0 +1,125 @@
+
+
+<!-- expenses expenses -->
+<div class="container report-show">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="#monthly" role="tab" data-toggle="tab">Monthly</a></li>
+				<li ><a href="#table" role="tab" data-toggle="tab">All</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane " id="table">
+			  	<table class="table table-hover">
+			  		<tr>
+			  			
+			  				
+			  				<%= content_tag :td, sort_link(@q, :date, 'Date', default_order: :desc) %>
+			  			
+			  			
+			  				<%= content_tag :td, sort_link(@q, :category, 'Category', default_order: :desc) %>
+			  			
+			  			
+			  				<%= content_tag :td, sort_link(@q, :employee_name, 'Name of employee', default_order: :desc) %>
+			  			
+			  				<%= content_tag :td, sort_link(@q, :employee_address, 'Address of employee', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :description, 'Description', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :pre_tax_amount, 'Pre-tax amount', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :tax_name, 'Tax name', default_order: :desc) %>
+
+			  				<%= content_tag :td, sort_link(@q, :tax_amount, 'Tax amount', default_order: :desc) %>
+			  				
+			  			
+			  		</tr>
+			  		<% @expenses.each do |expenses| %>
+						<tr>
+							<td>
+								<%= expenses.date%>
+							</td>
+							<td>
+								<%= expenses.category%>
+							</td>
+							<td>
+								<%= expenses.employee_name%>
+							</td>
+							<td>
+								<%= expenses.employee_address%>
+							</td>
+							<td>
+								<%= expenses.description%>
+							</td>
+							<td>
+								$<%= expenses.pre_tax_amount%>
+							</td>
+							<td>
+								<%= expenses.tax_name%>
+							</td>
+							<td>
+								$<%= expenses.tax_amount%>
+							</td>
+						</tr>
+						
+
+					<%end%>
+			  	</table>
+			  </div>
+
+			  <div class="tab-pane active" id="monthly">
+			  	<table class="table">
+			  		<tr>
+			  			<td>Month</td>
+			  			<td>Total pre-tax amount</td>
+			  			<td>Total tax amount</td>
+
+			  		</tr>
+			  		<!-- Group by beginning of the month to act as 'per month' then loop through -->
+			  		<!-- each month and their expenses -->
+				  	<% @per_month.each do |month, taxes| %>
+						<tr>
+							<td>
+								<%= month %>
+							</td>
+							<td>
+								$<%= taxes.map{|tax| tax.pre_tax_amount.to_i}.inject(:+) %>
+							</td>
+							<td>
+								$<%= taxes.map{|tax| tax.tax_amount.to_i}.inject(:+) %>
+							</td>
+						</tr>		
+				  	<% end%>
+			  	</table>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-bottom:5%">
+		<div class="col-md-12">
+			<h2>Monthly graph</h2>
+			<div id="line-tax"></div>
+			  	<script>  
+			  		// Using Morrisjs open-source library.
+			  		// See http://morrisjs.github.io/morris.js/lines.html for options
+				  	Morris.Line({
+					  	element: 'line-tax',
+					  	preUnits: "$",
+					  	data: [
+					    	<% @per_month.each do |month, taxes| %>
+					      		{y: '<%= month %>', a: <%= taxes.map{|tax| tax.tax_amount.to_i}.inject(:+) %>},
+					    	<% end %>
+					  	],
+					  	xkey: 'y',
+					  	ykeys: ['a'],
+					  	labels: ['Tax amount']
+					});
+				
+
+				</script>
+		</div>
+	</div>
+</div>
