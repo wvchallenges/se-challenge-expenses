@@ -1,28 +1,20 @@
-== README
+I choose Ruby on Rails for this project because I have some experience with it 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Steps To Set up the system: 
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+After pulling in the github repo: 
+Run the Following commands 
+ 
+ bundle install // installs all gyms that are necessary for the project 
+ // my database depend on the existing database that is sqlite3 if that which is installed by default with Ruby on Rails 
+ rake db:migrate // run the migration for the application which will create two tables - employees and expenses 
+ rails server // runs the rails server which makes your application accessible  by we browser  on your local machine 
+ visit the IP address  that is indicated on your rails running 
+ you will land on the first page of the app that asks you to upload a file
+ after you upload the file you will get to the result page
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+What I'm most proud of in this application is 
+1- the database design which makes this design scalable for bigger projects 
+2- the application routing and event handling because I still kept the original functionality while making it abide to the rules 
+3- achieving the goal while keeping the code clear and precise to what needs to be done

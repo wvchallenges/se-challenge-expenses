@@ -32,7 +32,7 @@ class Expense < ActiveRecord::Base
                 expense.employee_id = employee_info.id
                 expense.save
 
-                total_expense = total_expense + expense.pre_tax_amount
+                total_expense = total_expense + expense.pre_tax_amount +  expense.tax_amount 
             end
             # returns total expenses I know ruby returns the last assigned variable but I'd rather be safe than sorry 
             return total_expense

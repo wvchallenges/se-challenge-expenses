@@ -1,4 +1,10 @@
 <%= form_for(@employee) do |f| %>
+    <div class="form-group">
+        <%= f.label :name, "Name" %>
+        <%= f.text_field :name, class: "form-control" %>    <br/>
+        <%= f.label :address, "Address" %>
+        <%= f.text_field :address, class: "form-control" %><br/>     
+    </div>
   <% if @employee.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
