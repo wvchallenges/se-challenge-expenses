@@ -24,14 +24,12 @@ ActiveRecord::Schema.define(version: 20140822133951) do
     t.date     "date"
     t.string   "category"
     t.string   "expense_description"
-    t.float    "pre_tax_income"
+    t.float    "pre_tax_amount"
     t.string   "tax_name"
     t.float    "tax_amount"
-    t.integer  "employees_id"
+    t.integer  "employee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "expenses", ["employees_id"], name: "index_expenses_on_employees_id"
 
 end

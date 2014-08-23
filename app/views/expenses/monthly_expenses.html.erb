@@ -1,0 +1,64 @@
+<div style="position: absolute;top: 25%;left: 20%;width: 600px;height: 400px;margin: -100px 0 0 -100px;text-align:center;"> 
+
+    <h1>Listing expenses</h1>
+
+    <table style="text-align:center;">
+      <thead>
+        <tr>    
+          <th>Month-Year</th>
+          <th>Expense</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @year_month_expenses.each do |expense| %>
+          <tr>
+            <td><%= expense[:time] %></td>
+            <td><%= expense[:expense] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table style="text-align:center;">
+      <thead>
+        <tr>    
+          <th>Month</th>
+          <th>Expense</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @monthly_expenses.each do |expense| %>
+          <tr>
+            <td><%= expense[:time] %></td>
+            <td><%= expense[:expense] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+   <table style="text-align:center;">
+      <thead>
+        <tr>    
+          <th>Pre Tax Amount</th>
+          <th>Tax Amount</th>
+          <th>Total Expenses</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          <tr>          
+              <td> <%= @total_pre_tax_amount.round(2) %></td>
+              <td> <%= @total_tax_amount.round(2) %></td>
+              <td> <%= @total_expenses.round(2) %></td>
+          </tr>
+      </tbody>
+    </table>
+    <br>
+
+  <%= link_to 'New Expense File', application_index_path %> | 
+
+  <%= link_to 'List all expenses ', expenses_path %>
+</div>
+

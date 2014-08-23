@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
 
   resources :application
-  resources :expenses
 
   resources :employees
 
   resources :expenses do
     collection do 
       post :import_info
+      get :monthly_expenses
     end
   end
 

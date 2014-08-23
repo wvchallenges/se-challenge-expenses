@@ -4,10 +4,10 @@ class CreateExpenses < ActiveRecord::Migration
         t.date :date
         t.string :category
         t.string :expense_description
-        t.float :pre_tax_income
+        t.float :pre_tax_amount
         t.string :tax_name
         t.float :tax_amount
-        t.references :employees , index: true
+        t.belongs_to :employee
 
         t.timestamps
     end

@@ -5,6 +5,12 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     @expenses = Expense.all
+    # getting all the expenses for all employees
+    @total_expenses = Expense.get_expenses
+    # getting all expenses for taxes only
+    @total_tax_amount = Expense.tax_amount_total
+    # getting all expesne 
+    @total_pre_tax_amount = Expense.get_pre_tax_amount_total
   end
 
   # GET /expenses/1
@@ -62,19 +68,40 @@ class ExpensesController < ApplicationController
   end
 
   def  import_info
+    #checks if there was a file  otherwise returns user to upload page
     if params[:file]
-      csv_document = CSV.read( params[:file].path )
+      csv_document = CSV.read( params[:file].path , headers: true )
+      # shows the total for the csv document just uploaded 
+      session[:current_total] = Expense.add_expenses_from_csv( csv_document )
+      redirect_to expenses_url
+    else
+        #redirects and lets the user know that they forgot file
+        redirect_to "application#{index}", notice: 'You forgot to select a file.'
     end
-    redirect_to "application#{index}"
   end 
 
+  #lists expenses in two formats first is year month and second is month only 
+  # I did not know which on of them you meant so I implemented both
+  def monthly_expenses
+    # gets expense based on year month 
+    # gets expenses based on month 
+    @year_month_expenses = Expense.get_monthly_and_year_expenses
+    @monthly_expenses = Expense.get_monthly_expenses
+
+    # getting all the expenses 
+    @total_expenses = Expense.get_expenses
+    # getting all expenses for taxes only
+    @total_tax_amount = Expense.tax_amount_total
+    # getting all expense  before taxes apply 
+    @total_pre_tax_amount = Expense.get_pre_tax_amount_total
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_expense
       @expense = Expense.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary Internet, only allow the white list through.
     def expense_params
       params[:expense]
     end
