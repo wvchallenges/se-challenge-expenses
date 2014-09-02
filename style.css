@@ -1,0 +1,25 @@
+body{
+    background:#fdfeff;
+}
+
+.container{
+    width:700px;
+    height:100vh;
+    border-right:1px solid #e7e7e7;
+    border-left:1px solid #e7e7e7;
+    padding:50px;
+    background:white;
+}
+
+h1{
+    color:#94e887;
+    font-family: 'Lobster', sans-serif;
+}
+
+.error-msg{
+    color: #d9534f;
+}
+
+.success-msg{
+    color: #5cb85c;
+}
