@@ -25,3 +25,5 @@ class Expense(models.Model):
     pre_tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
     tax_name = models.CharField(max_length=50)
     tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
+
+    imported = models.ForeignKey(Import, null=True)
