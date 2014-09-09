@@ -14,6 +14,12 @@ class Import(models.Model):
     imported_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     raw_data = models.TextField()
 
+    # Memoize this to avoid requerying a bunch when manging expenses.
+    _expenses = False
+    def expenses(self):
+        if not self._expenses:
+            self._expenses = self.expense_set.all()
+        return self._expenses
 
 class Expense(models.Model):
     """
@@ -70,3 +76,19 @@ class Expense(models.Model):
         expense = Expense(**args)
         expense.save()
         return expense
+
+
+    class Meta:
+        ordering=['date']
+
+    @property
+    def total_amount(self):
+        return self.pre_tax_amount + self.tax_amount
+
+    @property
+    def year(self):
+        return self.date.year
+
+    @property
+    def month_name(self):
+        return self.date.strftime("%B")

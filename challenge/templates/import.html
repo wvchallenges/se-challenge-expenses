@@ -1,6 +1,41 @@
 {% extends 'base.html' %}
-{% load humanize %}
+{% load humanize csvloader %}
 {% block maincontent %}
+
+<h4>By Month</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th class="currency">Pre-Tax Amount</th>
+            <th class="currency">Tax Amount</th>
+            <th class="currency">Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% regroup import.expenses by year as by_year %}
+        {% for year in by_year %}
+            {% regroup year.list by month_name as by_month %}
+            {% for month in by_month %}
+                <tr>
+                    <td class="date-label">{{ month.grouper }} {{ year.grouper }}</td>
+                    <td class="currency">{{ month.list|sum_field:'pre_tax_amount'|floatformat:2|intcomma }}</td>
+                    <td class="currency">{{ month.list|sum_field:'tax_amount'|floatformat:2|intcomma }}</td>
+                    <td class="currency">{{ month.list|sum_field:'total_amount'|floatformat:2|intcomma }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Total</th>
+            <th class="currency">{{ import.expenses|sum_field:'pre_tax_amount'|floatformat:2|intcomma }}</th>
+            <th class="currency">{{ import.expenses|sum_field:'tax_amount'|floatformat:2|intcomma }}</th>
+            <th class="currency">{{ import.expenses|sum_field:'total_amount'|floatformat:2|intcomma }}</th>
+        </tr>
+    </tfoot>
+</table>
+
 <h4>All Expenses</h4>
 <table class="table table-striped">
     <thead>
@@ -16,7 +51,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for exp in import.expense_set.all %}
+        {% for exp in import.expenses %}
         <tr class="row-{{ exp.year }}-{{ exp.month_name }}">
             <td class="date">{{ exp.date }}</td>
             <td>{{ exp.category_name }}</td>
