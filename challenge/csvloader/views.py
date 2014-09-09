@@ -7,7 +7,17 @@ from csvloader.forms import UploadForm
 from csvloader.models import Import
 
 
-class UploadView(View):
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+
+class ProtectedView(View):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProtectedView, self).dispatch(*args, **kwargs)
+
+
+class UploadView(ProtectedView):
     def get(self, request, form=UploadForm()):
         ctx = {
             'title': 'Upload',
@@ -24,7 +34,7 @@ class UploadView(View):
             return self.get(request, form)
 
 
-class ImportView(View):
+class ImportView(ProtectedView):
     def get(self, request, id):
         imported = get_object_or_404(Import, id=id)
         ctx = {

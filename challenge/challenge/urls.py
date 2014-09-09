@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^upload/', UploadView.as_view(), name='upload'),
-    url(r'^import/(?P<id>\d+)/', ImportView.as_view(), name='show_import')
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^import/(?P<id>\d+)/$', ImportView.as_view(), name='show_import'),
+    url(r'^$', UploadView.as_view(), name='upload'),
 )
