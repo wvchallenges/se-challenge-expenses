@@ -33,7 +33,6 @@ class Import(models.Model):
         ).get('tax_amount__sum')
 
 
-
 class Expense(models.Model):
     """
     Extremely direct modeling of the source CSV data.
@@ -47,7 +46,7 @@ class Expense(models.Model):
     tax_name = models.CharField(max_length=50)
     tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
 
-    imported = models.ForeignKey(Import, null=True)
+    imported = models.ForeignKey(Import, null=True, editable=False)
 
     # A collection of lambda functions for tidying various data values
     # Start off with precisely the values in the provided CSV.
