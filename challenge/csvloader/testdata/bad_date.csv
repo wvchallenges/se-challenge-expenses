@@ -1,0 +1,3 @@
+date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+1/15/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
+15/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 

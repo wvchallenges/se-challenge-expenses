@@ -18,7 +18,7 @@ class UploadForm(forms.Form):
     ]
 
     def clean_imported_file(self):
-        # Use csv.Sniffer to do cursory checks.
+        # XXXX: Use csv.Sniffer to do cursory checks.
         reader = csv.reader(self.cleaned_data.get('imported_file'))
         header_row = next(reader, [])
 
@@ -39,19 +39,20 @@ class UploadForm(forms.Form):
 
 
     def save(self, user):
-        self.cleaned_data.get('imported_file').seek(0)
-        raw_data = self.cleaned_data.get('imported_file').read()
+        with self.cleaned_data.get('imported_file') as csv_data:
+            csv_data.seek(0)
+            raw_data = csv_data.read()
 
-        imported = Import(
-            imported_by=user,
-            raw_data=raw_data
-        )
-        imported.save()
+            imported = Import(
+                imported_by=user,
+                raw_data=raw_data
+            )
+            imported.save()
 
-        self.cleaned_data.get('imported_file').seek(0)
-        reader = csv.reader(self.cleaned_data.get('imported_file'))
-        header_row = next(reader, [])
-        for row in reader:
-            Expense.import_row(imported, row)
+            csv_data.seek(0)
+            reader = csv.reader(csv_data)
+            header_row = next(reader, [])
+            for row in reader:
+                Expense.import_row(imported, row)
 
-        return imported
+            return imported

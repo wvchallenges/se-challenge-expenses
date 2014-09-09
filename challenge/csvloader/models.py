@@ -4,6 +4,7 @@ from decimal import Decimal, InvalidOperation
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Sum
 
 
 class Import(models.Model):
@@ -20,6 +21,18 @@ class Import(models.Model):
         if not self._expenses:
             self._expenses = self.expense_set.all()
         return self._expenses
+
+    def total_pre_tax(self):
+        return self.expense_set.aggregate(
+            Sum('pre_tax_amount')
+        ).get('pre_tax_amount__sum')
+
+    def total_tax(self):
+        return self.expense_set.aggregate(
+            Sum('tax_amount')
+        ).get('tax_amount__sum')
+
+
 
 class Expense(models.Model):
     """
@@ -39,7 +52,7 @@ class Expense(models.Model):
     # A collection of lambda functions for tidying various data values
     # Start off with precisely the values in the provided CSV.
     tidy_dates = lambda d: dateutil.parser.parse(d)
-    noop = lambda x: x
+    noop = lambda x: x or 'not provided'
     tidy_decimal = lambda amt: Decimal(amt.strip().replace(',', ''))
 
     # nth column in the row => (name of model field, data cleaning lambda)

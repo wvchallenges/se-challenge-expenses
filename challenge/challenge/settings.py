@@ -88,3 +88,4 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+TEST_DATA_DIR = os.path.join(BASE_DIR, 'csvloader', 'testdata')
