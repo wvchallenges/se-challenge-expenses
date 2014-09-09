@@ -36,8 +36,11 @@
     </tfoot>
 </table>
 
-<h4>All Expenses</h4>
-<table class="table table-striped">
+<div class="clearfix">
+	<h4 class="pull-left">All Expenses</h4>
+	<a class="pull-right btn btn-primary toggle" data-toggle="collapse" data-target="#expenses">Toggle</a>
+</div>
+<table id="expenses" class="table table-striped collapse out">
     <thead>
         <tr>
             <th>Date</th>
@@ -54,7 +57,7 @@
         {% for exp in import.expenses %}
         <tr class="row-{{ exp.year }}-{{ exp.month_name }}">
             <td class="date">{{ exp.date }}</td>
-            <td>{{ exp.category_name }}</td>
+            <td>{{ exp.category }}</td>
             <td>{{ exp.employee_name }}</td>
             <td>{{ exp.employee_address }}</td>
             <td class="currency">{{ exp.pre_tax_amount|floatformat:2|intcomma }}</td>
@@ -65,8 +68,11 @@
         {% endfor %}
     </tbody>
 </table>
-<h4>Raw Data</h4>
-<xmp>
+<div class="clearfix">
+	<h4 class="pull-left">Raw Data</h4>
+	<a class="pull-right btn btn-primary toggle" data-toggle="collapse" data-target="#raw-data">Toggle</a>
+</div>
+<xmp id="raw-data" class="collapse out">
 {{ import.raw_data }}
 </xmp>
 {% endblock %}
