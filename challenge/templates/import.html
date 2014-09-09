@@ -1,5 +1,36 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block maincontent %}
+<h4>All Expenses</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Employee</th>
+            <th>Employee Address</th>
+            <th class="currency">Pre-Tax Amount</th>
+            <th>Tax Type</th>
+            <th class="currency">Tax Amount</th>
+            <th class="currency">Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for exp in import.expense_set.all %}
+        <tr class="row-{{ exp.year }}-{{ exp.month_name }}">
+            <td class="date">{{ exp.date }}</td>
+            <td>{{ exp.category_name }}</td>
+            <td>{{ exp.employee_name }}</td>
+            <td>{{ exp.employee_address }}</td>
+            <td class="currency">{{ exp.pre_tax_amount|floatformat:2|intcomma }}</td>
+            <td>{{ exp.tax_name }}</td>
+            <td class="currency">{{ exp.tax_amount|floatformat:2|intcomma }}</td>
+            <td class="currency">{{ exp.total_amount|floatformat:2|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4>Raw Data</h4>
 <xmp>
 {{ import.raw_data }}
 </xmp>

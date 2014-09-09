@@ -1,4 +1,6 @@
+import dateutil.parser
 from datetime import datetime
+from decimal import Decimal, InvalidOperation
 
 from django.conf import settings
 from django.db import models
@@ -27,3 +29,44 @@ class Expense(models.Model):
     tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
 
     imported = models.ForeignKey(Import, null=True)
+
+    # A collection of lambda functions for tidying various data values
+    # Start off with precisely the values in the provided CSV.
+    tidy_dates = lambda d: dateutil.parser.parse(d)
+    noop = lambda x: x
+    tidy_decimal = lambda amt: Decimal(amt.strip().replace(',', ''))
+
+    # nth column in the row => (name of model field, data cleaning lambda)
+    column_spec = [
+        ('date', tidy_dates),
+        ('category', noop),
+        ('employee_name', noop),
+        ('employee_address', noop),
+        ('expense_description', noop),
+        ('pre_tax_amount', tidy_decimal),
+        ('tax_name', noop),
+        ('tax_amount', tidy_decimal)
+    ]
+
+    @staticmethod
+    def check_row(row):
+        for i, spec in enumerate(Expense.column_spec):
+            try:
+                spec[1](row[i])
+            except InvalidOperation:
+                return False
+            except ValueError:
+                return False
+        return True
+
+    @staticmethod
+    def import_row(imported, row):
+        args = {
+            'imported_id': imported.id
+        }
+        for i, spec in enumerate(Expense.column_spec):
+            args[spec[0]] = spec[1](row[i])
+
+        expense = Expense(**args)
+        expense.save()
+        return expense
