@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from csvloader.views import UploadView, ImportView
+from csvloader.views import UploadView, ImportView, ImportListView
 
 urlpatterns = patterns('',
     # Examples:
@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^import/$', ImportListView.as_view(), name='list_imports'),
     url(r'^import/(?P<id>\d+)/$', ImportView.as_view(), name='show_import'),
     url(r'^$', UploadView.as_view(), name='upload'),
 )

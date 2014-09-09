@@ -42,3 +42,12 @@ class ImportView(ProtectedView):
             'title': 'View Import'
         }
         return render_to_response('import.html', ctx, RequestContext(request))
+
+
+class ImportListView(ProtectedView):
+    def get(self, request):
+        ctx = {
+            'title': 'Imports',
+            'imports': Import.objects.all().order_by('-date')
+        }
+        return render_to_response('imports.html', ctx, RequestContext(request))

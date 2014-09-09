@@ -15,7 +15,13 @@
     </head>
     <body>
         <div class="container">
-            <h3>{{ title }}</h3>
+            <div class="clearfix">
+                <h3 class="pull-left">{{ title }}</h3>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="{% url 'upload' %}">Upload Another</a>
+                    <a class="btn btn-primary" href="{% url 'list_imports' %}">List All</a>
+                </div>
+            </div>
             {% block maincontent %}
             {% endblock %}
         </div>
