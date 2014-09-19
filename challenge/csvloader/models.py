@@ -29,8 +29,13 @@ class Import(models.Model):
 
     def total_tax(self):
         return self.expense_set.aggregate(
-            Sum('tax_amount')
-        ).get('tax_amount__sum')
+            Sum('tax__tax_amount')
+        ).get('tax__tax_amount__sum')
+
+
+class Tax(models.Model):
+    tax_name = models.CharField(max_length=50)
+    tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
 
 
 class Expense(models.Model):
@@ -43,8 +48,7 @@ class Expense(models.Model):
     employee_address = models.TextField()
     expense_description = models.CharField(max_length=200)
     pre_tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
-    tax_name = models.CharField(max_length=50)
-    tax_amount = models.DecimalField(max_digits=20, decimal_places=2)
+    tax = models.ForeignKey('Tax')
 
     imported = models.ForeignKey(Import, null=True, editable=False)
 
@@ -85,6 +89,19 @@ class Expense(models.Model):
         for i, spec in enumerate(Expense.column_spec):
             args[spec[0]] = spec[1](row[i])
 
+        tax_args = {
+            'tax_name': args.get('tax_name'),
+            'tax_amount': args.get('tax_amount')
+        }
+
+        tax = Tax(**tax_args)
+        tax.save()
+
+        del args['tax_name']
+        del args['tax_amount']
+
+        args['tax'] = tax
+
         expense = Expense(**args)
         expense.save()
         return expense
@@ -104,3 +121,8 @@ class Expense(models.Model):
     @property
     def month_name(self):
         return self.date.strftime("%B")
+
+    @property
+    def tax_amount(self):
+        return self.tax.tax_amount
+

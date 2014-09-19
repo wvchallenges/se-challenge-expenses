@@ -39,8 +39,8 @@ class ImportTests(TestCase):
         self.assertEqual(exp.employee_address, "783 Park Ave, New York, NY 10021")
         self.assertEqual(exp.expense_description, 'Taxi ride')
         self.assertEqual(exp.pre_tax_amount, Decimal('350.00'))
-        self.assertEqual(exp.tax_name, 'NY Sales tax')
-        self.assertEqual(exp.tax_amount, Decimal('31.06'))
+        self.assertEqual(exp.tax.tax_name, 'NY Sales tax')
+        self.assertEqual(exp.tax.tax_amount, Decimal('31.06'))
 
     def test_repo_data(self):
         """
@@ -98,5 +98,5 @@ class ImportTests(TestCase):
         self.assertTrue(form.is_valid())
         imported = form.save(self.user)
         row = imported.expense_set.get(id=1)
-        self.assertEqual(row.tax_name, 'not provided')
+        self.assertEqual(row.tax.tax_name, 'not provided')
 

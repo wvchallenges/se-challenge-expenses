@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from csvloader.views import UploadView, ImportView, ImportListView
+from csvloader.views import UploadView, ImportView, ImportListView, ExpenseListView
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^import/$', ImportListView.as_view(), name='list_imports'),
     url(r'^import/(?P<id>\d+)/$', ImportView.as_view(), name='show_import'),
+    url(r'^expenses/$', ExpenseListView.as_view(), name='list_expenses'),
     url(r'^$', UploadView.as_view(), name='upload'),
 )

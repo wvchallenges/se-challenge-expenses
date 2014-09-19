@@ -1,10 +1,12 @@
+from collections import defaultdict
+
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.views.generic import View
 
 from csvloader.forms import UploadForm
-from csvloader.models import Import
+from csvloader.models import Import, Expense, Tax
 
 
 from django.contrib.auth.decorators import login_required
@@ -39,6 +41,7 @@ class ImportView(ProtectedView):
         imported = get_object_or_404(Import, id=id)
         ctx = {
             'import': imported,
+            'expenses': imported.expenses(),
             'title': 'View Import'
         }
         return render_to_response('import.html', ctx, RequestContext(request))
@@ -51,3 +54,19 @@ class ImportListView(ProtectedView):
             'imports': Import.objects.all().order_by('-date')
         }
         return render_to_response('imports.html', ctx, RequestContext(request))
+
+
+class ExpenseListView(ProtectedView):
+    def get(self, request):
+        aggregated_taxes = defaultdict(lambda: 0)
+
+        for tax in Tax.objects.all():
+            aggregated_taxes[tax.tax_name] += tax.tax_amount
+
+        ctx = {
+            'expenses': Expense.objects.all(),
+            'title': 'Expenses',
+            'taxes': dict(aggregated_taxes),
+            'tax_types': sorted(list(set(Tax.objects.values_list('tax_name', flat=True))))
+        }
+        return render_to_response('expenses.html', ctx, RequestContext(request))
