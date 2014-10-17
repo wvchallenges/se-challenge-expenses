@@ -4,7 +4,8 @@ This app was developed using Ruby 2.1.2p95, Rails 4.1.1 and SQLite 3 for the bac
 
 == Getting Started
 
-1. At the command prompt, navigate to the application's directory:
+1. At the command prompt, navigate to the application's directory. If this is the first time you're running the app you must perform a migration to set up the database.
+       "~$ rake db:migrate"
 
 2. Start the web server:
        "~$ rails server"
