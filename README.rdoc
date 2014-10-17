@@ -7,7 +7,7 @@ This app was developed using Ruby 2.1.2p95, Rails 4.1.1 and SQLite 3 for the bac
 1. At the command prompt, navigate to the application's directory:
 
 2. Start the web server:
-       Run "rails server" command
+       "~$ rails server"
 
 3. Go to http://localhost:3000/ and you'll see the app
 
