@@ -1,0 +1,29 @@
+.drag_over { 
+  background-color: red;
+}
+
+.panel-heading { 
+  cursor: pointer;
+}
+
+@media (min-width: 500px) { 
+  #content { 
+    width: 100%;
+    margin-left: 0;
+  } 
+}
+@media (min-width: 600px) { 
+  #content { 
+    margin-top: 20px;
+    width: 90%;
+    margin-left: 5%; 
+  } 
+}
+
+@media (min-width: 884px) { 
+  #content { 
+    margin-top: 20px;
+    width: 70%;
+    margin-left: 15%; 
+  } 
+}
