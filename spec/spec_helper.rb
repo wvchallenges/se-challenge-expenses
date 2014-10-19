@@ -1,3 +1,4 @@
+require_relative "./support/csvfile_context.rb"
 RSpec.configure do |config|
 
   config.expect_with :rspec do |expectations|
@@ -9,3 +10,4 @@ RSpec.configure do |config|
   end
 
 end
+

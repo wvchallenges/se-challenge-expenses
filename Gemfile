@@ -16,6 +16,7 @@ gem 'protected_attributes'
 group :development, :test do
   gem 'fuubar'
   gem 'rspec-rails'
+  gem 'rspec-its'
   gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
