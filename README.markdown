@@ -39,13 +39,14 @@ Run the following commands, line by line, in your terminal:
 
 ## Strong Areas
 1. The application has been built using angular.js, to be a `Single Page Application`. It is extremely fast and dynamic. 
-1. The `UX design` has been taken into consideration. The call to action is clear, the interface is intuitive, and it doesn't look terrible. 
+1. The `UX design` has been taken into consideration. The call to action is clear, the interface is intuitive, and it doesn't look terrible. [read more...](https://github.com/kosz/se-challenge/wiki/UX-and-Responsive-Design)
 1. `Responsive Design` has also been taken into consideration, the app scales and reacts to all screen sizes. This has been achieved without the Bootstrap Grid.
-1. The rails controller as well as the angular resources have been implemented in a `REST-full` manner. 
-1. The code supporting the basic requirements has `full spec coverage` on the server side. `Travis CI and CodeClimate` were used to uncover issues before they become problems.   
-1. The database has been designed `taking into consideration potential hidden requirements`, spotted on the initial datastructure.  
+1. The rails controller as well as the angular resources have been implemented in a [REST-full](https://github.com/kosz/se-challenge/wiki/REST-full-implementation) manner. 
+1. The code supporting the basic requirements has `full spec coverage` on the server side. [Travis CI and CodeClimate](https://github.com/kosz/se-challenge/wiki/Continuous-Integration) were used to uncover issues before they become problems.   
+1. The database has been designed `taking into consideration potential hidden requirements`, spotted on the initial datastructure.  [read more...](https://github.com/kosz/se-challenge/wiki/Database-Modeling)
 1. The application has been designed to be as `modular`, `extensible` and as `object oriented` as possible, given the time available for refactoring. This could of course, always be better.
 1. Overall I believe the strength of this application dosn't necessarily reside in a single place, but instead, `attention to detail was given in all areas`, across all stacks, to demonstrate ability to work and adapt in any tier or technology.
+1. The app has been managed on GIT with every commit providing the code to close an issue. Issues were tracked [here](https://github.com/kosz/se-challenge/issues?q=is%3Aissue+is%3Aclosed)
 
 ## Areas for Potential Improvement
 1. Full spec coverage. Some methods are not being directly covered, instead we rely on higher level tests to test them out. 
@@ -57,3 +58,4 @@ Run the following commands, line by line, in your terminal:
 1. The app doesn't scale ideally under 500 px width ( but i believe the scaling is still acceptable, just not ideal )
 1. CSS not very organized, little importance was given to it.
 1. Code comments. The code doesn't really have comments. Instead it is readable, for the most part, and documented here on the wiki. I am adaptable to both schools of thought, lots of comments in the code or no comments in the code. Either way I like documentation, and I like producing documentation, if the code isn't documented, I always provide various artifacts to facilitate transfer of knowledge. 
+1. The app doesn't implement any error handling or validators, based on the requirements which indicated that the data will always be available in that format.
