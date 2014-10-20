@@ -57,9 +57,38 @@ python src/server.py
 
 Navigate to http://localhost:5000 in Chrome or Fox and follow the on-page instructions.
 
-# What I'm Proud Of
+# Three Things I'm Proud Of
+
+##Cloud/Heroku
+
+This application also runs in the cloud on Heroku.
+
+First, get started with Heroku at: https://devcenter.heroku.com/articles/getting-started-with-python#introduction
+
+In the project directory provision a dyno and add postgres to it:
+
+```
+heroku create 
+
+heroku addons:add heroku-postgresql:hobby-dev 
+```
+
+Run locally with:
+```
+foreman start
+```
+
+Run in the cloud with:
+```
+git push heroku master
+
+heroku open
+```
+
+##Repurposed UI
+
+I repurposed code from another project to quickly iterate on the UI for this one. I am proud of the speedup that allowed.
 
 ##Unicode
-##UI
-##Cloud/Heroku
-##Prepurposed Code
+
+This project has skeletal unicode support. CSV files are often exported from Microsoft Excel, and nonexpert users can easily end up with files encoded, for example, as UTF-16BE. There is skeletal support for detecting and parsing these encodings included, but I abandoned it when I decided to use PG to ingest the CSVs directly (in the interests of speed).
