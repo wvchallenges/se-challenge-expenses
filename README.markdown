@@ -55,18 +55,9 @@ Start the server:
 python src/server.py
 ```
 
-Navigate to http://localhost:5000 and follow the instructions.
-
-
-1. heroku create
-1. heroku addons:add heroku-postgresql:hobby-dev
-1. git push heroku master
-
-heroku addons:add heroku-postgresql:hobby-dev
-
 ## What I'm Proud Of
 
-Unicode
-UI
-Cloud/Heroku
-Prepurposed Code
+#Unicode
+#UI
+#Cloud/Heroku
+#Prepurposed Code
