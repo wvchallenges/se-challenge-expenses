@@ -21,7 +21,7 @@ module MonthlyExpenseReport
   end
 
   def display_month
-    "#{Date::MONTHNAMES[@current_month_id[1]]}/#{@current_month_id[0]}"
+    "#{Date::MONTHNAMES[@current_month_id[1]][0..2]} / #{@current_month_id[0]}"
   end
 
   def monthly_expense_report

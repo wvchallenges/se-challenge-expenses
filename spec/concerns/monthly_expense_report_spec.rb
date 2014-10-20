@@ -11,7 +11,7 @@ shared_examples_for 'monthly_expense_report' do
     
       let(:expected_month_count) { 6 }
       let(:expected_first_month_total) { 430.0 }
-      let(:expected_first_month_title) { "September/2013" }
+      let(:expected_first_month_title) { 'Sep / 2013' }
 
       its(:monthly_expense_report) { should_not be nil }
       it('has a total of 430.0 for the first month') do

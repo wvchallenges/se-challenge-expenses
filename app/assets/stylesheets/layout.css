@@ -27,3 +27,22 @@
     margin-left: 15%; 
   } 
 }
+
+.graph_bar { 
+  width: 100%;
+  opacity: .5;
+  height: 100%;
+  background-color: red;
+  border-radius: 2px;
+}
+
+@media (max-width: 522px) { 
+  td, th { 
+    font-size: 12px;
+  }
+}
+@media (max-width: 480px) { 
+  td, th { 
+    font-size: 11px;
+  }
+}

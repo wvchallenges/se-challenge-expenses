@@ -14,7 +14,7 @@ angular.module('csv').controller('upload', [ '$scope', '$upload', function($scop
         $scope.percent = parseInt(100.0 * evt.loaded / evt.total);
       }).success(function(data, status, headers, config) {
         $scope.percent = 0;
-        console.log(data);
+        $scope.$root.$broadcast('update_report', {id: data.id });
       });
     }
   };
