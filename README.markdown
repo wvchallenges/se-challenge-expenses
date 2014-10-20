@@ -1,46 +1,61 @@
-# Wave Software Development Challenge
-Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
+# SE-Challenge Application
+The SE-Challenge Application has been implemented to be a Single Page Application. It communicates with the backend through a JSON-API, and it uses angular.js to render the Front End.
+Unlike some SPA codebases, the SE-Challenge App has been completely wrapped up in rails, as opposed to using grunt/bower to create a standalone front end app. 
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
+A [live demo](http://se-challenge.herokuapp.com/) of this application is available [here](http://se-challenge.herokuapp.com/). Please note that the first load may take a while if the heroku application is sleeping. 
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+## Dependencies
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one
-1. Complete the project as described below within your fork
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
+The SE-Challenge Application was built and tested on top of Ruby 2.1.1 and Rails 4.1.6. All other dependencies will be installed by bundler.
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository
-1. Complete your project as described below within your local repository
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+## Installation Instructions
+Run the following commands, line by line, in your terminal: 
+> `git clone git@github.com:kosz/se-challenge.git`
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+> `cd se-challenge`
 
-### What your web-based application must do:
+> `bundle install`
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions
- 1. Columns will always be in that order
- 2. There will always be data in each column
- 3. There will always be a header line
+> `rake db:create`
 
- An example input file named `data_example.csv` is included in this repo.
+> `rake db:migrate`
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+## Running Instructions
+1. First make sure specs are passing by running : `rspec spec`
+1. Then start up the server : `rails s`
+1. Assuming that port 3000 is available, then direct your browser to http://localhost:3000
+1. If port 3000 is in use then specify a different port, example : 4000, like so : `rails s -p 4000`, then direct your browser to http://localhost:4000
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+## Usage Instructions
+1. Load the application page
+1. You will have 3 options : Upload a file with a button, Upload a file through Drag and Drop or View the report on a previously uploaded file. 
+1. Once you upload a new file, or select a previously uploaded file, you will view a Monthly Expense Report based on your selection. 
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+## Technologies Used
+1. Angular.js, angular-ui-bootstrap, angular-file-upload, coffeescript, bootstrap ( ERB or HAML are not used as they are not needed )
+1. Ruby on Rails
+1. Rspec, FactoryGirl, Travis CI, CodeClimate   
+1. sqlite3, postgreSQL ( the heroku deployment is using postgreSQL, the development branch uses sqlite3 for ease of setup )
 
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
+## Strong Areas
+1. The application has been built using angular.js, to be a `Single Page Application`. It is extremely fast and dynamic. 
+1. The `UX design` has been taken into consideration. The call to action is clear, the interface is intuitive, and it doesn't look terrible. [read more...](https://github.com/kosz/se-challenge/wiki/UX-and-Responsive-Design)
+1. `Responsive Design` has also been taken into consideration, the app scales and reacts to all screen sizes. This has been achieved without the Bootstrap Grid.
+1. The rails controller as well as the angular resources have been implemented in a [REST-full](https://github.com/kosz/se-challenge/wiki/REST-full-implementation) manner. 
+1. The code supporting the basic requirements has `full spec coverage` on the server side. [Travis CI and CodeClimate](https://github.com/kosz/se-challenge/wiki/Continuous-Integration) were used to uncover issues before they become problems.   
+1. The database has been designed `taking into consideration potential hidden requirements`, spotted on the initial datastructure.  [read more...](https://github.com/kosz/se-challenge/wiki/Database-Modeling)
+1. The application has been designed to be as `modular`, `extensible` and as `object oriented` as possible, given the time available for refactoring. This could of course, always be better.
+1. Overall I believe the strength of this application dosn't necessarily reside in a single place, but instead, `attention to detail was given in all areas`, across all stacks, to demonstrate ability to work and adapt in any tier or technology.
+1. The app has been managed on GIT with every commit providing the code to close an issue. Issues were tracked [here](https://github.com/kosz/se-challenge/issues?q=is%3Aissue+is%3Aclosed)
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+## Areas for Potential Improvement
+1. Full spec coverage. Some methods are not being directly covered, instead we rely on higher level tests to test them out. 
+1. Front end testing automation ( protractor was not used in order to keep the dependency list small )
+1. Code refactoring. Spec Refactoring. Code could always be better, and given the limited time, I chose to spend time on extra features, rather than extra rubustness.
+1. The app is html5 reliant, and was not tested on older browsers.  
+1. The monthly expense report could have been written as a postgresql view.
+1. The database objects could be even more modular.
+1. The app doesn't scale ideally under 500 px width ( but i believe the scaling is still acceptable, just not ideal )
+1. CSS not very organized, little importance was given to it.
+1. Code comments. The code doesn't really have comments. Instead it is readable, for the most part, and documented here on the wiki. I am adaptable to both schools of thought, lots of comments in the code or no comments in the code. Either way I like documentation, and I like producing documentation, if the code isn't documented, I always provide various artifacts to facilitate transfer of knowledge. 
+1. The app doesn't implement any error handling or validators, based on the requirements which indicated that the data will always be available in that format.

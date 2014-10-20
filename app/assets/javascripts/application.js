@@ -1,0 +1,9 @@
+//= require jquery
+//= require angular-file-upload-html5-shim
+//= require angular
+//= require angular-file-upload
+//= require angular-ui-bootstrap-tpls
+//= require angular-resource
+//= require bootstrap-sprockets
+//= require jquery_ujs
+//= require_tree .

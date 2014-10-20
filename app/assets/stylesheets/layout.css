@@ -1,0 +1,58 @@
+.drag_drop {
+  line-height: 40px;
+  background-color: rgb(238,237,195);
+  border: 3px dashed rgb(41,57,67);
+  opacity: .6;
+  padding-left: 10px;
+}
+
+.drag_over { 
+  opacity: 1;
+}
+
+.panel-heading { 
+  cursor: pointer;
+}
+
+@media (min-width: 500px) { 
+  #content { 
+    width: 100%;
+    margin-left: 0;
+  } 
+}
+@media (min-width: 600px) { 
+  #content { 
+    margin-top: 20px;
+    width: 90%;
+    margin-left: 5%; 
+  } 
+}
+
+@media (min-width: 884px) { 
+  #content { 
+    margin-top: 20px;
+    width: 70%;
+    margin-left: 15%; 
+  } 
+}
+
+.graph_bar { 
+  height: 100%;
+  border-radius: 4px;
+  opacity: .8;
+}
+
+.graph_bar:hover { 
+  opacity: 1;
+}
+
+@media (max-width: 522px) { 
+  td, th { 
+    font-size: 12px;
+  }
+}
+@media (max-width: 480px) { 
+  td, th { 
+    font-size: 11px;
+  }
+}
