@@ -1,7 +1,10 @@
 ## Getting Started
 
-1. Install Homebrew
+1. Install Homebrew http://brew.sh/
 1. Install Python
+'''
+brew install python
+'''
 1. Install Postgres
 heroku addons:add heroku-postgresql:hobby-dev
 export DATABASE_URL=postgres://alex:@localhost:5432/csvstorage
