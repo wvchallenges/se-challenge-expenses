@@ -21,7 +21,7 @@ class DataWorker:
         cursor = conn.cursor()
         
         # For debugging: drop the table to clean up before creating it.
-        cursor.execute("DROP TABLE IF EXISTS csvstore")
+        # cursor.execute("DROP TABLE IF EXISTS csvstore")
 
         sql = ''' CREATE TABLE IF NOT EXISTS csvstore
             (entry_date date, category varchar,
