@@ -1,4 +1,4 @@
-## Getting Started
+# Getting Started
 
 First, clone this project and change to its directory.
 ```
@@ -55,9 +55,9 @@ Start the server:
 python src/server.py
 ```
 
-## What I'm Proud Of
+# What I'm Proud Of
 
-#Unicode
-#UI
-#Cloud/Heroku
-#Prepurposed Code
+##Unicode
+##UI
+##Cloud/Heroku
+##Prepurposed Code
