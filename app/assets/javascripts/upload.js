@@ -1,6 +1,22 @@
 // config as per : https://github.com/danialfarid/angular-file-upload
-angular.module('csv').controller('upload', [ '$scope', '$upload', function($scope, $upload) {
+angular.module('csv').controller('upload', [ '$scope', '$upload', 'Csvfile', 
+  function($scope, $upload, Csvfile) {
   $scope.percent = 0
+  $scope.filename = "";
+  $scope.is_open = true; // fixes Angular UI bug
+
+  $scope.refreshFiles = function() { 
+    Csvfile.query({}, function(data) { 
+      $scope.files = data;
+    });
+  }
+  $scope.refreshFiles();
+
+  $scope.onSelect = function($item) {  
+    $scope.filename = $item.name;
+    $scope.$root.$broadcast('update_report', {id: $item.id });
+  };
+
   $scope.onFileSelect = function($files) {
     for (var i = 0; i < $files.length; i++) {
       var file = $files[i];
@@ -15,6 +31,7 @@ angular.module('csv').controller('upload', [ '$scope', '$upload', function($scop
       }).success(function(data, status, headers, config) {
         $scope.percent = 0;
         $scope.$root.$broadcast('update_report', {id: data.id });
+        $scope.refreshFiles();
       });
     }
   };

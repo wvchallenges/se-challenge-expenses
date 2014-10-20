@@ -1,5 +1,13 @@
+.drag_drop {
+  line-height: 40px;
+  background-color: rgb(238,237,195);
+  border: 3px dashed rgb(41,57,67);
+  opacity: .6;
+  padding-left: 10px;
+}
+
 .drag_over { 
-  background-color: red;
+  opacity: 1;
 }
 
 .panel-heading { 
@@ -29,11 +37,13 @@
 }
 
 .graph_bar { 
-  width: 100%;
-  opacity: .5;
   height: 100%;
-  background-color: red;
-  border-radius: 2px;
+  border-radius: 4px;
+  opacity: .8;
+}
+
+.graph_bar:hover { 
+  opacity: 1;
 }
 
 @media (max-width: 522px) { 

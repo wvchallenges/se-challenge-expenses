@@ -3,7 +3,7 @@ require 'csv'
 class CsvsController < ApplicationController
 
   def index
-
+    render json: Csvfile.all
   end
   
   def create

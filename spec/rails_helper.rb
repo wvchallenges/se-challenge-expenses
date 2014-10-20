@@ -12,4 +12,7 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
+  config.expect_with :rspec do |c|
+    c.syntax = [:should]
+  end
 end

@@ -1,6 +1,6 @@
 module MonthlyExpenseReport
   extend ActiveSupport::Concern
-  
+
   def month_id(expense)
     [expense.date.year, expense.date.month]
   end
@@ -16,8 +16,17 @@ module MonthlyExpenseReport
     @month_total += expense.total_with_tax
   end
 
+  def month_total 
+    @month_total.round(2)
+  end
+
   def add_month_report
-    @report[:months] << { month: display_month, total_expenses: @month_total.round(2) } 
+    @report[:months] << { month: display_month, total_expenses: month_total } 
+    highest_month_total
+  end
+
+  def highest_month_total
+    @report[:highest_month_total] = @report[:highest_month_total] > month_total ? @report[:highest_month_total] : month_total
   end
 
   def display_month
@@ -27,7 +36,8 @@ module MonthlyExpenseReport
   def monthly_expense_report
     @report = {
       filename: self.name,
-      months: [] 
+      months: [], 
+      highest_month_total: 0
     } 
     expenses.each do |expense| 
       add_expense_to_month(expense)
