@@ -8,6 +8,8 @@ RSpec.describe Csvfile, :type => :model do
 
   let(:total_expenses_in_file) { 19 }
 
+  it_behaves_like 'monthly_expense_report'
+
   describe '.create' do
     its(:name) { should eq name }  
   end
@@ -15,7 +17,6 @@ RSpec.describe Csvfile, :type => :model do
   describe '.create_from_csv' do 
 
     context 'when it receives the example CSV file' do 
-      it { should_not be nil } 
       its('expenses.count') { should eql total_expenses_in_file }
     end 
 

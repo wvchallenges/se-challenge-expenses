@@ -12,7 +12,7 @@ class CsvsController < ApplicationController
   end
 
   def show
-
+    render json: Csvfile.find(params[:id]).monthly_expense_report
   end
 
 end

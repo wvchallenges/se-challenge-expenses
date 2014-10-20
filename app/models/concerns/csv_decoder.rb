@@ -17,12 +17,16 @@ module CsvDecoder
       date: Date.strptime(row[DATE], '%m/%d/%Y'), 
       category: row[CATEGORY], 
       expense_description: row[EXPENSE_DESCRIPTION],
-      pre_tax_amount: row[PRE_TAX_AMOUNT],   
+      pre_tax_amount: safe_float(row[PRE_TAX_AMOUNT]),
       tax_name: row[TAX_NAME],
-      tax_amount: row[TAX_AMOUNT],
+      tax_amount: safe_float(row[TAX_AMOUNT]),
       csvfile: self, 
       employee: employee
     })
+  end
+
+  def safe_float(str)
+    str.gsub(/[^0-9.]/, "")
   end
 
   module ClassMethods

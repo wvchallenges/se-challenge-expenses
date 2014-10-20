@@ -5,4 +5,10 @@ class Expense < ActiveRecord::Base
   belongs_to :employee
   belongs_to :csvfile
 
+  default_scope { order('date ASC') }
+
+  def total_with_tax
+    self.pre_tax_amount + self.tax_amount
+  end
+
 end

@@ -18,4 +18,15 @@ RSpec.describe Expense, :type => :model do
     its(:employee) { should be_kind_of Employee }
   end
 
+  describe '#total_with_tax' do
+    let(:pre_tax_amount) { 100.00 }
+    let(:tax_amount) { 15.00 }
+    subject { 
+      FactoryGirl.create(:expense, pre_tax_amount: pre_tax_amount, tax_amount: tax_amount ) 
+    }
+    let(:expected_total) { pre_tax_amount + tax_amount }
+
+    its(:total_with_tax) { should eq expected_total }
+  end
+
 end
