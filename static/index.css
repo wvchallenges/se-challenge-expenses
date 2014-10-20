@@ -31,6 +31,55 @@ img {
 	min-height: 512px; 
 }
 
+td {
+	text-align: right;
+	padding: 10px 0px 20px 20px;
+}
+
+.highlight {
+	outline: none;
+	background-color:rgba(255, 255, 255, 0.3);
+}
+
+#sample_overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	font-family: 'helvetica';
+	font-size: 3em;
+	line-height: 64px;
+
+	height: 100%;
+	width: 100%;
+	
+	opacity: 0;
+
+	background: orange;
+
+	text-align: center;
+	
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+	-ms-flex-align:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+
+	/* W3C */
+	display:box;
+	box-pack:center;
+	box-align:center;
+}
+
 #overlay {
 	position: absolute;
 	top: 0;

@@ -17,7 +17,7 @@ function animateOverlay(cfg) {
 		Y.one(nodeName).setStyle("zIndex", 1);
 
 		var animDef = {
-			to: { opacity: 1 },
+			to: { opacity: (cfg.hide ? 0 : 1) },
 			node: nodeName,
 			duration: 1,
 			easing: 'easeBothStrong'
@@ -48,6 +48,12 @@ YUI().use('node', 'event', 'uploader', 'uploader-html5', function(Y) {
 		uploader.uploadAll();
 		fadeThanks();
 	});
+
+	uploader.after("uploadcomplete", function showTable(e) {
+    	Y.one("#sample_overlay").setContent(e.data);
+    	animateOverlay({ sample: false, hide: true });
+    	animateOverlay({ sample: true, hide: false });
+    });
  
 	function init() {
 		uploader.render("#uploader");
@@ -55,10 +61,8 @@ YUI().use('node', 'event', 'uploader', 'uploader-html5', function(Y) {
 	}
 
 	function fadeThanks() {
-		animateOverlay({ sample: false });
+		//animateOverlay({ sample: false, hide: false });
 	}
 
-	// Fade in the message when the upload starts (TODO progress bar).
-    //Y.on("fileuploadstart", fadeThanks);
     Y.on("domready", init);
 });
