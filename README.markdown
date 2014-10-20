@@ -1,46 +1,98 @@
-# Wave Software Development Challenge
-Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
+# Getting Started
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
+First, clone this project and change to its directory.
+```
+git clone <repo_location>/se-challenge.git
+cd se-challenge
+```
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+Install Homebrew from http://brew.sh/
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one
-1. Complete the project as described below within your fork
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
+Install Python:
+```
+brew install python
+```
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository
-1. Complete your project as described below within your local repository
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+Install Postgres:
+```
+brew install postgres
+```
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+Configure Postgres:
+```
+initdb /usr/local/var/postgres
 
-### What your web-based application must do:
+createdb csvstorage
+```
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions
- 1. Columns will always be in that order
- 2. There will always be data in each column
- 3. There will always be a header line
+Start Postgres:
+```
+postgres -D /usr/local/var/postgres
+```
 
- An example input file named `data_example.csv` is included in this repo.
+Set the connection string environment variable. Mine looks like this:
+```
+export DATABASE_URL=postgres://alex:@localhost:5432/csvstorage
+```
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+Create a virtualenv:
+```
+virtualenv venv
+```
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+Activate virutualenv
+```
+source venv/bin/activate
+```
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+Install dependencies:
+```
+pip install -r requirements.txt
+```
 
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
+Start the server:
+```
+python src/server.py
+```
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Navigate to http://localhost:5000 in Chrome or Fox and follow the on-page instructions.
 
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+# Three Things I'm Proud Of
+
+## Running in the Cloud
+
+This application also runs in the cloud on Heroku.
+
+First, get started with Heroku at: https://devcenter.heroku.com/articles/getting-started-with-python#introduction
+
+In the project directory provision a dyno and add postgres to it:
+
+```
+heroku create 
+
+heroku addons:add heroku-postgresql:hobby-dev 
+```
+
+Run locally with:
+```
+foreman start
+```
+
+Run in the cloud with:
+```
+git push heroku master
+
+heroku open
+```
+
+##Repurposed UI
+
+I repurposed code from another project to quickly iterate on the UI for this one. I am proud of the speedup that allowed.
+
+##Unicode
+
+This project has skeletal unicode support. CSV files are often exported from Microsoft Excel, and nonexpert users can easily end up with files encoded, for example, as UTF-16BE. There is skeletal support for detecting and parsing these encodings included, but I abandoned it when I decided to use PG to ingest the CSVs directly (in the interests of speed).
+
+# TODO
+
+Add a fade to a spinner image to show the upload is working when there's a slight delay (eg, on Heroku).

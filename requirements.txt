@@ -1,0 +1,14 @@
+Flask==0.10.1
+Flask-API==0.6.2
+Flask-Cors==1.9.0
+Flask-Uploads==0.1.3
+Jinja2==2.7.3
+MarkupSafe==0.23
+Werkzeug==0.9.6
+chardet==2.3.0
+gunicorn==19.1.1
+itsdangerous==0.24
+psycopg2==2.5.4
+six==1.8.0
+unicodecsv==0.9.4
+wsgiref==0.1.2
