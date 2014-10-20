@@ -9,8 +9,8 @@ RSpec.describe CsvsController, :type => :controller do
 
   describe '#create' do
 
-    it "returns a JSON object with an id when successfully importing" do
-      JSON.parse(response.body)["id"].should eql expected_id
+    it 'returns a JSON object with an id when successfully importing' do
+      JSON.parse(response.body)['id'].should eql expected_id
     end
 
   end
@@ -19,7 +19,7 @@ RSpec.describe CsvsController, :type => :controller do
 
     before(:each) { get :show, id:  1 }
 
-    it "returns a JSON array" do
+    it 'returns a JSON array' do
       JSON.parse(response.body).should be_kind_of Hash
       response.body.should_not be nil
     end

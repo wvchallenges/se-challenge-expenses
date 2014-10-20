@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  resource :csvs
-  root :to => "csvs#new"
+  resources :csvs
+  root :to => 'csvs#new'
 end

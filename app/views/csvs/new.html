@@ -1,20 +1,29 @@
-<div id="content">
-  <div ng-controller="upload">
-    <accordion close-others="true">
-    <accordion-group heading="Select a file for upload here" is-open="true">
-    <input type="file" ng-file-select="onFileSelect($files)">
+<div id='content'>
+  <div ng-controller='upload'>
+    <accordion close-others='true'>
+    <accordion-group heading='Select a file for upload here' is-open='true'>
+    <input type='file' ng-file-select='onFileSelect($files)'>
     </accordion-group>
-    <accordion-group heading="Or drag and drop multiple files here"> 
-    <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="drag_over"
-      ng-show="dropSupported">drop files here</div>
-    <div ng-file-drop-available="dropSupported=true" 
-      ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+    <accordion-group heading='Or drag and drop multiple files here'> 
+    <div ng-file-drop='onFileSelect($files)' ng-file-drag-over-class='drag_over'
+      ng-show='dropSupported'>drop files here</div>
+    <div ng-file-drop-available='dropSupported=true' 
+      ng-show='!dropSupported'>HTML5 Drop File is not supported!</div>
     </accordion-group>
     </accordion>
 
-    <div ng-if="percent != 0">
-      <progressbar animate="false" value="percent" type="success"><b>{{percent}}%</b></progressbar>
+    <div ng-if='percent != 0'>
+      <progressbar animate='false' value='percent' type='success'><b>{{percent}}%</b></progressbar>
     </div>
 
   </div>
+
+
+  <div ng-controller='report'>
+    {{report.filename}}
+    <div ng-repeat='month in report.months'>
+      {{month.month}} - {{month.total_expenses}}
+    </div>  
+  </div>
+
 </div>
