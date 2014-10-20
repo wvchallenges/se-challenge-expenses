@@ -6,22 +6,22 @@ We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this
 Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
 
 ## Submission Instructions
-~~1. Fork this project on github. You will need to create an account if you don't already have one~~
+1. ~~Fork this project on github. You will need to create an account if you don't already have one~~
 1. Complete the project as described below within your fork
 1. Push all of your changes to your fork on github and submit a pull request. 
 1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-~~1. Clone the repository
+1. Clone the repository
 1. Complete your project as described below within your local repository
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)~~
+1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
 
 ## Project Description
 Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
 
 ### What your web-based application must do:
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
+1. ~~Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.~~
 1. You can make the following assumptions
  1. Columns will always be in that order
  2. There will always be data in each column
@@ -29,7 +29,7 @@ Imagine that Wave has just acquired a new company. Unfortunately, the company ha
 
  An example input file named `data_example.csv` is included in this repo.
 
-1. Your app must parse the given file, and store the information in a relational database.
+1. ~~Your app must parse the given file, and store the information in a relational database.~~
 1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
 
 Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
