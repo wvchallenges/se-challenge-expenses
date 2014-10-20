@@ -30,23 +30,23 @@ configure_uploads(app, csvFileSet)
 @app.route("/test")
 @cross_origin(origins="*", headers=["X-Requested-With"])
 def test():
-	urlparse.uses_netloc.append("postgres")
-	url = urlparse.urlparse(os.environ["DATABASE_URL"])
+	# urlparse.uses_netloc.append("postgres")
+	# url = urlparse.urlparse(os.environ["DATABASE_URL"])
 
-	conn = psycopg2.connect(
-	    database=url.path[1:],
-	    user=url.username,
-	    password=url.password,
-	    host=url.hostname,
-	    port=url.port
-	)
+	# conn = psycopg2.connect(
+	#     database=url.path[1:],
+	#     user=url.username,
+	#     password=url.password,
+	#     host=url.hostname,
+	#     port=url.port
+	# )
 
-	cursor = conn.cursor()
-	cursor.execute("SELECT * FROM csvstore")
+	# cursor = conn.cursor()
+	# cursor.execute("SELECT * FROM csvstore")
 
-	for row in cursor.fetchall():
-		print row
-		print "----------------"
+	# for row in cursor.fetchall():
+	# 	print row
+	# 	print "----------------"
 
 	return "Test successful!", status.HTTP_200_OK
 
@@ -109,5 +109,7 @@ def static_paths(filename="index.html"):
 
 if __name__ == "__main__":
 	app.run()
+	#debug=True
+	#print "Debugging"
 	#run_tests()
 
