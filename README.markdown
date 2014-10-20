@@ -92,3 +92,7 @@ I repurposed code from another project to quickly iterate on the UI for this one
 ##Unicode
 
 This project has skeletal unicode support. CSV files are often exported from Microsoft Excel, and nonexpert users can easily end up with files encoded, for example, as UTF-16BE. There is skeletal support for detecting and parsing these encodings included, but I abandoned it when I decided to use PG to ingest the CSVs directly (in the interests of speed).
+
+# TODO
+
+Add a fade to a spinner image to show the upload is working when there's a slight delay (eg, on Heroku).
