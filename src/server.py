@@ -100,15 +100,14 @@ def static_paths(filename="index.html"):
 	return send_from_directory(STATIC_PATH, filename)
 
 
-import unittest
+# import unittest
 
 
-def run_tests():
-	unittest.main()
+# def run_tests():
+# 	unittest.main()
 
 
 if __name__ == "__main__":
-	print "Running in debug mode."
-	app.run(debug=True)
-	run_tests()
+	app.run()
+	#run_tests()
 
