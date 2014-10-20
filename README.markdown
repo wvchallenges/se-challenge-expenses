@@ -59,7 +59,7 @@ Navigate to http://localhost:5000 in Chrome or Fox and follow the on-page instru
 
 # Three Things I'm Proud Of
 
-##Cloud/Heroku
+## Running in the Cloud
 
 This application also runs in the cloud on Heroku.
 
