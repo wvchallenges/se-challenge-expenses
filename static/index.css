@@ -1,0 +1,120 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+}
+
+img {
+	margin: 0 auto;
+}
+
+.upload {
+	display: inline-block;
+
+	float: left;
+	text-align: left;
+
+	margin: 0 auto;
+
+	font-family: 'helvetica';
+	font-size: 9em;
+	line-height: 128px;
+
+	color: white;
+	background: orange;
+	text-shadow: 1px 1px black;
+
+	width: 100%; 
+	min-width: 512px;
+
+	height: 100%;
+	min-height: 512px; 
+}
+
+#overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	height: 100%;
+	width: 100%;
+	
+	opacity: 0;
+
+	background: orange;
+
+	text-align: center;
+	
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+	-ms-flex-align:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+
+	/* W3C */
+	display:box;
+	box-pack:center;
+	box-align:center;
+}
+
+#content {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	height: 100%;
+	width: 100%;
+	
+	opacity: 1;
+}
+
+.uploader {
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+	-ms-flex-align:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+
+	/* W3C */
+	display:box;
+	box-pack:center;
+	box-align:center;
+}
+
+#upload_text {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#container {
+	display: block;
+	position: relative;
+
+	width: 100%;
+	min-width: 1024px;
+
+	height: 100%;
+	min-height: 256px;
+
+	margin: 0 auto;
+}

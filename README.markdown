@@ -44,3 +44,5 @@ Evaluation of your submission will be based on the following criteria.
 1. Did your application fulfill the basic requirements?
 1. Did you document the method for setting up and running your application?
 1. Did you follow the instructions for submission?
+heroku addons:add heroku-postgresql:hobby-dev
+export DATABASE_URL=postgres://alex:@localhost:5432/csvstorage
