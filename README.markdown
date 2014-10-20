@@ -55,6 +55,8 @@ Start the server:
 python src/server.py
 ```
 
+Navigate to http://localhost:5000 in Chrome or Fox and follow the on-page instructions.
+
 # What I'm Proud Of
 
 ##Unicode
