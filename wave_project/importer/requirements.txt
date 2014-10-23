@@ -1,0 +1,5 @@
+Django==1.7
+django-js-reverse==0.3.3
+ply==3.4
+slimit==0.8.1
+wsgiref==0.1.2

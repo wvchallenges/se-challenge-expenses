@@ -1,0 +1,36 @@
+/** Application Global CSS **/
+
+.page_content {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main-content {
+    padding-top: 10px;
+}
+
+.panel-default > .panel-heading {
+    background-color: #e2e2e2;
+}
+
+.panel-footer {
+    background-color: white;
+}
+
+input[type=file] {
+    display: inline;
+}
+
+.table thead tr td {
+    font-weight: bold;
+}
+
+.table tbody td.currency {
+    text-align: right;
+}
+
+.table > tbody > tr > td, .table > thead > tr > td {
+    padding-right: 70px;
+    text-align: right;
+}

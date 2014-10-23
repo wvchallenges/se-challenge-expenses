@@ -1,0 +1,39 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/html'>
+
+<head>
+    <link href='{% static 'bootstrap-3.2.0/css/bootstrap.min.css' %}' rel='stylesheet'>
+    <link href='{% static 'css/styles.css' %}' rel='stylesheet'>
+
+    <script src='{% static 'javascript/utils.js' %}'></script>
+    <script src='{% static 'javascript/jquery-2.1.1.min.js' %}'></script>
+    <script src='{% static 'bootstrap-3.2.0/js/bootstrap.min.js' %}'></script>
+    <script src='{% static 'javascript/can.custom.js' %}'></script>
+    <script src='{% url 'js_reverse' %}' type='text/javascript'></script>
+    <script src='{% static 'javascript/application.js' %}'></script>
+
+<head>
+
+<body>
+
+<div class='page_content'>
+
+    <div class='page-header'>
+        <h3>CSV Importer</h3>
+    </div>
+
+    <div id='main-content'>
+    </div>
+</div>
+
+<script type='application/javascript'>
+
+    jQuery(document).ready(function () {
+        new ApplicationDelegate(document.body.firstElementChild);
+    });
+</script>
+
+</body>
+</html>
