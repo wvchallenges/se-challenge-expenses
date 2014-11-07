@@ -1,0 +1,8 @@
+<h1>Select File to import</h1>
+
+<%= form_tag({:action => :import}, multipart: true) do %>
+  <%= file_field_tag :file, :accept => "text/csv" %>
+  <%= submit_tag( "Import" ) %>
+<% end %>
+
+
