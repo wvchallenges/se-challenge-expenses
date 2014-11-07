@@ -1,6 +1,6 @@
-class CreateDataImports < ActiveRecord::Migration
+class CreateEmployeeExpenses < ActiveRecord::Migration
   def change
-    create_table :data_imports do |t|
+    create_table :employee_expenses do |t|
       t.datetime :date
       t.string :category
       t.string :employee_name

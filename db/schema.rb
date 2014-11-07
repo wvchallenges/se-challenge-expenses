@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20141107025357) do
 
-  create_table "data_imports", :force => true do |t|
+  create_table "employee_expenses", :force => true do |t|
     t.datetime "date"
     t.string   "category"
     t.string   "employee_name"

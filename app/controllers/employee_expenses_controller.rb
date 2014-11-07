@@ -1,10 +1,10 @@
 require 'csv'
 
-class DataImportsController <ActionController::Base
+class EmployeeExpensesController <ActionController::Base
   # GET /data_imports
   # GET /data_imports.json
   def index
-    @data_imports = DataImport.all
+    @data_imports = EmployeeExpense.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,11 +14,20 @@ class DataImportsController <ActionController::Base
 
   
   def import
-    myfile = params[:file]
-    csv_text = File.read(myfile.path)
+
+    #verification of form field
+    if params[:file] && !params[:file].blank?
+      @filename = params[:file]
+    else
+      flash[:error] = 'Error: You must select a file'
+      redirect_to :action => 'index'
+      return
+    end
+
+    csv_text = File.read(@filename.path)
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
-      dataImport = DataImport.create(
+      dataImport = EmployeeExpense.create(
       :date => Date.strptime(row[0], "%m/%d/%Y"),
       :category => row[1],
       :employee_name => row[2], 
@@ -32,6 +41,7 @@ class DataImportsController <ActionController::Base
       )
       dataImport.save!
     end
-    @dataTotals = DataImport.all.group_by{|m| m.date.beginning_of_month}
+    #group by particular month
+    @dataTotals = EmployeeExpense.all.group_by{|m| m.date.beginning_of_month}
   end
 end

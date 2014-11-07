@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DataImportTest < ActiveSupport::TestCase
+class EmployeeExpenseTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
