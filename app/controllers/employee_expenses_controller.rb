@@ -23,13 +23,22 @@ class EmployeeExpensesController <ActionController::Base
       redirect_to :action => 'index'
       return
     end
-
+    
+    #verify if CSV file
+    if @filename.content_type != Mime::Type.lookup_by_extension('csv').to_s
+      flash[:error] = 'Error: Only CSV files can be uploaded'
+      redirect_to :action => 'index'
+      return
+    end
     #creating the import
     currentImport = FileImport.new(:filename => @filename.original_filename)#FileImport.create(:filename => @file)
     currentImport.save!
   
+    puts "Current Time After saving fileImport: " + Time.now.inspect
+    
     csv_text = File.read(@filename.path)
     csv = CSV.parse(csv_text, :headers => true)
+    puts "Current Time After reading csv file: " + Time.now.inspect
     csv.each do |row|
       dataImport = EmployeeExpense.create(
       :file_import_id => currentImport.id,
@@ -47,7 +56,9 @@ class EmployeeExpensesController <ActionController::Base
       dataImport.save!
     end
     #group by particular month
+    puts "Current Time after storing employee expenses: " + Time.now.inspect
     @currentTotals = currentImport.employee_expenses.all.group_by{|m| m.date.beginning_of_month}
     @dataTotals = EmployeeExpense.all.group_by{|m| m.date.beginning_of_month}
+    puts "Current Time after groupbys: " + Time.now.inspect
   end
 end

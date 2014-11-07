@@ -1,10 +1,10 @@
 <h1>Select File to import</h1>
 <% if flash[:error] %>
-  <h3>Error: You must select a file</h3>
+  <h3><%= flash[:error] %></h3>
 <% end %>
 
 <%= form_tag({:action => :import}, multipart: true) do %>
-  <%= file_field_tag :file, :accept => "text/csv" %>
+  <%= file_field_tag :file, :accept => "csv" %>
   <%= submit_tag( "Import" ) %>
 <% end %>
 
