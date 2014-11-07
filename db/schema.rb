@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141107025357) do
+ActiveRecord::Schema.define(:version => 20141107202853) do
 
   create_table "employee_expenses", :force => true do |t|
     t.datetime "date"
@@ -22,8 +22,15 @@ ActiveRecord::Schema.define(:version => 20141107025357) do
     t.decimal  "pre_tax_amount",      :precision => 16, :scale => 2
     t.string   "tax_name"
     t.decimal  "tax_amount",          :precision => 16, :scale => 2
+    t.integer  "file_import_id"
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
+  end
+
+  create_table "file_imports", :force => true do |t|
+    t.string   "filename"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

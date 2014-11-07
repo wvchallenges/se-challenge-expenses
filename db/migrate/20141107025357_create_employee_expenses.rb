@@ -9,7 +9,7 @@ class CreateEmployeeExpenses < ActiveRecord::Migration
       t.decimal :pre_tax_amount, :precision => 16, :scale => 2
       t.string :tax_name
       t.decimal :tax_amount, :precision => 16, :scale => 2
-
+      t.integer :file_import_id
       t.timestamps
     end
   end

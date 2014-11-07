@@ -24,10 +24,15 @@ class EmployeeExpensesController <ActionController::Base
       return
     end
 
+    #creating the import
+    currentImport = FileImport.new(:filename => @filename.original_filename)#FileImport.create(:filename => @file)
+    currentImport.save!
+  
     csv_text = File.read(@filename.path)
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
       dataImport = EmployeeExpense.create(
+      :file_import_id => currentImport.id,
       :date => Date.strptime(row[0], "%m/%d/%Y"),
       :category => row[1],
       :employee_name => row[2], 
@@ -42,6 +47,7 @@ class EmployeeExpensesController <ActionController::Base
       dataImport.save!
     end
     #group by particular month
+    @currentTotals = currentImport.employee_expenses.all.group_by{|m| m.date.beginning_of_month}
     @dataTotals = EmployeeExpense.all.group_by{|m| m.date.beginning_of_month}
   end
 end
