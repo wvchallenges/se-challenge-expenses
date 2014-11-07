@@ -1,0 +1,41 @@
+<% if @currentTotals %>
+
+<h2>Current import total expenses amount per month</h2>
+<table border="1">
+	<tr>
+		<th>Month</th>
+		<th>Total Expenses</th>
+	</tr>
+	<% @currentTotals.each do |month, expenses| %>
+	<tr>
+		<td><%= "#{format('%02d',month.mon)}/#{month.year}" %></td>
+		<% totalValue = 0 %>
+		<% expenses.each do |expense| %>
+		  <% totalValue = totalValue + expense.pre_tax_amount + expense.tax_amount %>
+		<% end %>
+		<td><%= number_to_currency(totalValue, precision:2) %></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+
+<% if @dataTotals %>
+<h2>Cumulative total expenses amount per month</h2>
+<table border="1">
+	<tr>
+		<th>Month</th>
+		<th>Total Expenses</th>
+	</tr>
+	<% @dataTotals.each do |month, expenses| %>
+	<tr>
+		<td><%= "#{format('%02d',month.mon)}/#{month.year}" %></td>
+		<% totalValue = 0 %>
+		<% expenses.each do |expense| %>
+		  <% totalValue = totalValue + expense.pre_tax_amount + expense.tax_amount %>
+		<% end %>
+		<td><%= number_to_currency(totalValue, precision:2) %></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+<%= link_to 'Import another file', "/" %>
