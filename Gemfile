@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'sqlite3'
 
 gem 'rails', '4.1.6'
 # Use SCSS for stylesheets
