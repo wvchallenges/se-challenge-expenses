@@ -1,2 +1,9 @@
 <h1>Expenses#index</h1>
 <p>Find me in app/views/expenses/index.html.erb</p>
+
+<h2>New Expense</h2>
+
+<%= form_tag import_expenses_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

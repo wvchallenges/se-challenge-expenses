@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-  get 'expenses/index'
-
-  get 'expenses/show'
-
-  get 'expenses/new'
-
-  get 'expenses/create'
+  resources :expenses do
+    collection { post :import }
+  end
+  root to: 'expenses#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
