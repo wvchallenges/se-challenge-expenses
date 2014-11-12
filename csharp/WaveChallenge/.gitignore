@@ -1,0 +1,28 @@
+# folder ignores
+
+[Oo]bj
+[Bb]in
+csx
+output
+publish
+_git
+App_Data
+temp
+
+# ignore files
+
+*.user
+*.suo
+*.orig
+*.Resharper
+*.ReSharper.*
+*.[C][c]ache
+*~
+*.pidb
+*.userprefs
+
+# ignore path patterns
+
+_ReSharper.*
+~$*
+packages
