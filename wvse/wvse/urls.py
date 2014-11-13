@@ -6,5 +6,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'wvse.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^uploader/', include('data_uploader.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
