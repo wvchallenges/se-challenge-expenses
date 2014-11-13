@@ -1,0 +1,13 @@
+{% extends "data_uploader/base.html" %}
+{% block content %}
+<form enctype="multipart/form-data" action="{% url 'upload' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+    {{ form }}
+    </div>
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary" value="Upload" />
+    </div>
+</form>
+{% endblock %}
