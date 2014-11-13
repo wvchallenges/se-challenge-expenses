@@ -7,11 +7,22 @@ class Expense < ActiveRecord::Base
                    "expense description" => "expense_description",
                    "tax name" => "tax_name",
                    "tax amount" => "tax_amount" }
-      header = row.to_hash
 
-      header.keys.each { |k| header[ mappings[k] ] = header.delete(k) if mappings[k] }
+      line = row.to_hash
 
-      Expense.create! header
+      # maps headers to db column names
+      line.keys.each { |k| line[ mappings[k] ] = line.delete(k) if mappings[k] }
+
+      # converts date from MM/DD/YYYY to YYYY/MM/DD
+      date = line["date"] .split('/')
+      reformatted_date = "#{date[2]}/#{date[0]}/#{date[1]}"
+      line["date"] = reformatted_date
+
+      #strips commas from amounts allowing effective import
+      line["pre_tax_amount"] = line["pre_tax_amount"].delete(',')
+      line["tax_amount"] = line["tax_amount"].delete(',')
+
+      Expense.create! line
     end
   end
 end

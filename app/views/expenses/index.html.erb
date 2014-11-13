@@ -1,5 +1,37 @@
-<h1>Expenses#index</h1>
-<p>Find me in app/views/expenses/index.html.erb</p>
+<h1>Expenses</h1>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Category</th>
+      <th>Employee Name</th>
+      <th>Employee Address</th>
+      <th>Expense Description</th>
+      <th>Tax Name</th>
+      <th>Pretax Amount</th>
+      <th>Tax Amount</th>
+    </tr>
+  </thead>
+      <% @expenses.each do |expense| %>
+  <tbody>
+    <tr>
+      <td><%= expense.date %></td>
+      <td><%= expense.category %></td>
+      <td><%= expense.employee_name %></td>
+      <td><%= expense.employee_address %></td>
+      <td><%= expense.expense_description %></td>
+      <td><%= expense.tax_name %></td>
+      <td><%= sprintf(
+      "%.2f", expense.pre_tax_amount) %></td>
+      <td><%= sprintf("%.2f", expense.tax_amount) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
 
 <h2>New Expense</h2>
 
