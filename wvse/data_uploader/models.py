@@ -7,7 +7,13 @@ class Employee(models.Model):
     address = models.CharField(max_length=120)
 
 
+class ExpenseUpload(models.Model):
+    filename = models.CharField(max_length=200)
+    uploaded = models.DateTimeField()
+
+
 class Expense(models.Model):
+    upload = models.ForeignKey('ExpenseUpload')
     date = models.DateField()
     category = models.CharField(max_length=60)
     employee = models.ForeignKey('Employee')
