@@ -1,41 +1,52 @@
-<h1>Expenses</h1>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <h1>Expenses</h1>
+  </div>
+</div>
 
 
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Employee Name</th>
-      <th>Employee Address</th>
-      <th>Expense Description</th>
-      <th>Tax Name</th>
-      <th>Pretax Amount</th>
-      <th>Tax Amount</th>
-    </tr>
-  </thead>
-      <% @expenses.each do |expense| %>
-  <tbody>
-    <tr>
-      <td><%= expense.date %></td>
-      <td><%= expense.category %></td>
-      <td><%= expense.employee_name %></td>
-      <td><%= expense.employee_address %></td>
-      <td><%= expense.expense_description %></td>
-      <td><%= expense.tax_name %></td>
-      <td><%= sprintf(
-      "%.2f", expense.pre_tax_amount) %></td>
-      <td><%= sprintf("%.2f", expense.tax_amount) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <div class="small-12 medium-10 small-centered columns">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Employee Name</th>
+          <th>Employee Address</th>
+          <th>Expense Description</th>
+          <th>Tax Name</th>
+          <th>Pretax Amount</th>
+          <th>Tax Amount</th>
+        </tr>
+      </thead>
+          <% @expenses.each do |expense| %>
+      <tbody>
+        <tr>
+          <td><%= expense.date %></td>
+          <td><%= expense.category %></td>
+          <td><%= expense.employee_name %></td>
+          <td><%= expense.employee_address %></td>
+          <td><%= expense.expense_description %></td>
+          <td><%= expense.tax_name %></td>
+          <td><%= sprintf(
+          "%.2f", expense.pre_tax_amount) %></td>
+          <td><%= sprintf("%.2f", expense.tax_amount) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<div class="row">
+  <div class="small-10 small-centered columns">
 
+    <h2>New Expense</h2>
+    <%= form_tag import_expenses_path, multipart: true do %>
+      <div id="button"><%= file_field_tag :file %></div>
+      <div id="button"><%= submit_tag "Import" %></div>
+    <% end %>
 
-<h2>New Expense</h2>
-
-<%= form_tag import_expenses_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-<% end %>
+  </div>
+</div>
