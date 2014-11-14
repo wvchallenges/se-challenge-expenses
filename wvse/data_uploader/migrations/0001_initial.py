@@ -37,4 +37,21 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.CreateModel(
+            name='ExpenseUpload',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('filename', models.CharField(max_length=200)),
+                ('uploaded', models.DateTimeField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='expense',
+            name='upload',
+            field=models.ForeignKey(to='data_uploader.ExpenseUpload'),
+            preserve_default=True,
+        ),
     ]
