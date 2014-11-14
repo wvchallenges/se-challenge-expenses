@@ -6,6 +6,9 @@ class Employee(models.Model):
     name = models.CharField(max_length=60)
     address = models.CharField(max_length=120)
 
+    class Meta:
+        unique_together = ('name', 'address')
+
 
 class ExpenseUpload(models.Model):
     filename = models.CharField(max_length=200)
