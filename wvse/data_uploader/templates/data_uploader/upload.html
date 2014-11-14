@@ -10,4 +10,21 @@
       <input type="submit" class="btn btn-primary" value="Upload" />
     </div>
 </form>
+
+{% if month_sums %}
+<div class="panel panel-default">
+  <div class="panel-heading">Per-month expense sums</div>
+  <table class="table">
+    <thead>
+      <th>Month</th>
+      <th>Total Expense Amount</th>
+    </thead>
+    <tbody>
+      {% for sum in month_sums %}
+      <tr><td>{{ sum.0|date:'M Y' }}</td><td>{{ sum.1 }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
 {% endblock %}
