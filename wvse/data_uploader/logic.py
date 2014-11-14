@@ -10,6 +10,10 @@ EXPECTED_FIELDS = [
 DATE_FORMAT = '%m/%d/%Y'
 
 
+def clean_decimal(decimal_string):
+    return decimal_string.strip().replace(',', '')
+
+
 def handle_uploaded_file(f):
     '''
     Read an uploaded CSV file and extract the information we need from it
@@ -49,8 +53,8 @@ def handle_uploaded_file(f):
         # We use the first day of the month as the key for our mapping
         month = date(expense_date.year, expense_date.month, 1)
 
-        pre_tax_amt = Decimal(row['pre-tax amount'].strip().replace(',', ''))
-        tax_amt = Decimal(row['tax amount'].strip().replace(',', ''))
+        pre_tax_amt = Decimal(clean_decimal(row['pre-tax amount']))
+        tax_amt = Decimal(clean_decimal(row['tax amount']))
         total_amt = pre_tax_amt + tax_amt
 
         # Add the total for this expense to the rest in this month
