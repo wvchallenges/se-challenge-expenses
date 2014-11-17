@@ -11,7 +11,9 @@
     "baseUrl": "widgets",
     "paths": {
       "almond": "../lib/almond",
-      "start": "../start"
+      "start": "../start",
+
+      "jquery": "../lib/jquery-1.11.1.min"
 
       // "lib": lib,
       // "jquery": lib + "/jquery",

@@ -58,8 +58,8 @@ module.exports = function (grunt) {
         },
         tasks: ['less']
       },
-      jade: {
-        files: ['app/views/**/*.jade'],
+      handlebars: {
+        files: ['app/views/**/*.handlebars'],
         options: { livereload: reloadPort }
       }
     }

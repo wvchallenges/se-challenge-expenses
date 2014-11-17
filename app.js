@@ -20,6 +20,8 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 var app = express();
 
 require('./config/express')(app, config);
-require('./config/routes')(app);
+require('./config/routes')(app, config, {
+  'csvHandler': require('./app/controllers/csvHandler')
+});
 
 app.listen(config.port);

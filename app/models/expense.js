@@ -6,6 +6,7 @@ var Expense = db.define('expense', {
   date: Date,
   category: String,
   employeeName: String,
+  employeeAddress: String,
   expenseDescription: String,
   preTaxAmount: Number,
   taxName: String,

@@ -1,4 +1,8 @@
 <div class="main">
-  <h1>Welcome to this example app</h1>
-  <p>I'm using Express with ORM2 (with MySQL), RequireJS (with Almond), Handlebars and Less.</p>
+  <h1>Welcome to the Wave CSV to MySQL converter</h1>
+  <p>This app will load your CSV file into our MySQL database.</p>
+  <form action="/CSVform" method="post" enctype="multipart/form-data">
+    <label>Browse for CSV: <input type="file" name="CSVfile"/></label>
+    <p><button type="submit">Submit</button></p>
+  </form>
 </div>

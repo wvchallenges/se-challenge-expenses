@@ -6,6 +6,7 @@
     "start": "app.js"
   },
   "dependencies": {
+    "csv": "^0.4.1",
     "express": "~3.3.4",
     "express-handlebars": "^1.1.0",
     "mysql": "~2.0.0-alpha9",
