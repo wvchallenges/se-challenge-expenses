@@ -848,3 +848,9 @@ textarea {
     }
 }
 
+.resultText {
+  color: green;
+}
+.resultText.warning {
+  color: red;
+}

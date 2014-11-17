@@ -13,6 +13,7 @@
       "almond": "../lib/almond",
       "start": "../start",
 
+      "hbs": "../lib/hbs",
       "jquery": "../lib/jquery-1.11.1.min"
 
       // "lib": lib,

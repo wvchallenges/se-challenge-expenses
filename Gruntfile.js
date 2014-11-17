@@ -29,6 +29,10 @@ module.exports = function (grunt) {
         options: {
           baseUrl: 'app/client/widgets',
           mainConfigFile: 'app/client/require.config.js',
+          hbs: {
+            "i18n": false,
+            "templateExtension": "handlebars"
+          },
           name: 'almond',
           include: ['start'],
           insertRequire: ['start'],
@@ -47,6 +51,7 @@ module.exports = function (grunt) {
         files: [
           'app.js',
           'app/**/*.js',
+          'app/client/**/*.handlebars',
           'config/*.js'
         ],
         tasks: ['requirejs', 'develop', 'delayed-livereload']

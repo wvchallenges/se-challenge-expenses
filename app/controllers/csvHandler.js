@@ -7,26 +7,33 @@ var fs = require('fs'),
 
 exports.postCSVFile = function (req, res) {
 
+  console.log('A CSV file is being processed.');
   var parser = csv.parse();
-
   var rowCount = 0;
-  parser.on('readable', function () {
-    while (data = parser.read()) {
-      if (++rowCount < 2) return; // skip header line
-      console.log('data read: ', data);
-      createExpense(data, function (err) {
-        if (err) { return res.status(500).send(err); }
-      });
-    }
-  });
+  var file = req.files.CSVfile;
 
-  parser.on('finish', function () {
-    console.log('All done! Processed ' + rowCount + ' rows.');
-    res.redirect('back');
-  });
+  getNewFileID(function (err, fileID) {
+    if (err) { return res.status(500).send(err); }
 
-  fs.createReadStream(req.files.CSVfile.path)
-    .pipe(parser);
+    parser.on('readable', function () {
+      while (data = parser.read()) {
+        if (++rowCount < 2) return; // skip header line
+        createExpense(data, file.name, fileID, function (err) {
+          if (err) { return res.status(500).send(err); }
+        });
+      }
+    });
+
+    parser.on('finish', function () {
+      rowCount--; // Don't count the header line
+      var successText = 'All done! Processed ' + rowCount + ' rows.';
+      console.log(successText);
+      res.status(200).json({text: successText});
+    });
+
+    fs.createReadStream(file.path)
+      .pipe(parser);
+  });
 
   // Saves the file on the server
   //
@@ -47,7 +54,7 @@ exports.postCSVFile = function (req, res) {
 };
 
 
-function createExpense (data, cb) {
+function createExpense (data, fileName, fileID, cb) {
   var errMsg = '';
 
   Expense.create([{
@@ -59,8 +66,8 @@ function createExpense (data, cb) {
     preTaxAmount: parseNum(data[5]),
     taxName: data[6],
     taxAmount: parseNum(data[7]),
-    sourceFileName: 'test',
-    sourceFileID: 1
+    sourceFileName: fileName,
+    sourceFileID: fileID
   }], function (err, items) {
     if (err) {
       errMsg = 'Could not write an expense to the db.\n';
@@ -72,8 +79,11 @@ function createExpense (data, cb) {
 }
 
 
-function parseNum (str) {
-  return parseFloat(str.replace(/[\s,]/g, ''), 10);
+function getNewFileID (cb) {
+  Expense.aggregate(['sourceFileID']).max('sourceFileID').get(function (err, max) {
+    if (err) { cb(err, null); }
+    else { cb(null, max && max + 1 || 1); }
+  });
 }
 
 
@@ -83,3 +93,9 @@ function parseDate (str) {
   });
   return new Date(dateComponents[2], dateComponents[0], dateComponents[1]);
 }
+
+
+function parseNum (str) {
+  return parseFloat(str.replace(/[\s,]/g, ''), 10);
+}
+
