@@ -15,23 +15,7 @@
 
       "hbs": "../lib/hbs",
       "jquery": "../lib/jquery-1.11.1.min"
-
-      // "lib": lib,
-      // "jquery": lib + "/jquery",
-      // "Ractive": lib + "/Ractive",
-
-      // "text": plugins + "/text",
-      // "rv": plugins + "/rv",
-
-      // "Model": core + "/Model"
     }
   });
-
-
-  /*
-    Launch the application
-  */
-
-  // requirejs(['start']);
 
 })();

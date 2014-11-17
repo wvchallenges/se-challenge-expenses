@@ -36,7 +36,7 @@ module.exports = function (grunt) {
           name: 'almond',
           include: ['start'],
           insertRequire: ['start'],
-          optimize: 'none',
+          // optimize: 'none',
           out: 'public/js/build.js',
           wrap: true
         }

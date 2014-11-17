@@ -1,5 +1,9 @@
 var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
+    user = 'root',
+    pw = process.env.ORM_PW ? (':' + process.env.ORM_PW) : '',
+    dbServer = 'localhost',
+    dbPath = 'mysql://' + user + pw + '@' + dbServer,
     env = process.env.NODE_ENV || 'development';
 
 var config = {
@@ -9,7 +13,7 @@ var config = {
       name: 'wave'
     },
     port: 3000,
-    db: 'mysql://root:9uykn6QC@localhost/wave_development'
+    db: dbPath + '/wave_development'
   },
 
   test: {
@@ -18,7 +22,7 @@ var config = {
       name: 'wave'
     },
     port: 3000,
-    db: 'mysql://root:9uykn6QC@localhost/wave_test'
+    db: dbPath + '/wave_test'
   },
 
   production: {
@@ -27,7 +31,7 @@ var config = {
       name: 'wave'
     },
     port: 3000,
-    db: 'mysql://root:9uykn6QC@localhost/wave_production'
+    db: dbPath + '/wave_production'
   }
 };
 
