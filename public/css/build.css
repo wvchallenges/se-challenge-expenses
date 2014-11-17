@@ -848,9 +848,12 @@ textarea {
     }
 }
 
-.resultText {
+.csvUploader .resultText {
   color: green;
 }
-.resultText.warning {
+.csvUploader .resultText.warning {
   color: red;
+}
+.csvUploader .resultTable {
+  margin: 0 auto;
 }

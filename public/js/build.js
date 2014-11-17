@@ -5312,6 +5312,22 @@ define('hbs',[
 ;
 
 /* START_TEMPLATE */
+define('hbs!csvUploader/main',['hbs','hbs/handlebars'], function( hbs, Handlebars ){ 
+var t = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers);
+  
+
+
+  return "<div class=\"csvUploader\">\n  <form class=\"CSVform\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">\n    <label>Browse for CSV: <input type=\"file\" name=\"CSVfile\"/></label>\n    <p><button type=\"submit\">Submit</button></p>\n  </form>\n  <div class=\"result\">\n    <p class=\"resultText\"></p>\n    <div class=\"resultTable\"></div>\n  </div>\n</div>\n";
+  });
+Handlebars.registerPartial('csvUploader/main', t);
+return t;
+});
+/* END_TEMPLATE */
+;
+
+/* START_TEMPLATE */
 define('hbs!csvUploader/resultTable',['hbs','hbs/handlebars'], function( hbs, Handlebars ){ 
 var t = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -5333,7 +5349,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<table class=\"resultTable\">\n  <tr>\n    <th>Month</th>\n    <th>Total Expenses</th>\n  </tr>\n  ";
+  buffer += "<table class=\"resultTable\">\n  <tr>\n    <th>Month</th>\n    <th>Total PreTax Expenses ($)</th>\n  </tr>\n  ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</table>\n";
@@ -5344,40 +5360,74 @@ return t;
 });
 /* END_TEMPLATE */
 ;
-define('start',['jquery', 'hbs!csvUploader/resultTable'], function ($, tmplTable) {
+define('csvUploader/main',['jquery', 'hbs!csvUploader/main', 'hbs!csvUploader/resultTable'],
+function ($, tmplMain, tmplTable) {
   
-  console.log('start.js: App started.');
 
-  var form = $('.CSVform')[0];
+  var $$ = function (selection) { return $(selection, '.csvUploader'); };
+  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'];
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    sendData();
-  });
 
-  function sendData ()  {
+  function _init (parentElem) {
+    parentElem.append(tmplMain());
+    var form = $$('.CSVform')[0];
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      sendData(form, displayResult, displayError);
+    });
+  }
+
+
+  function sendData (form, successHandler, errorHandler)  {
     var XHR = new XMLHttpRequest();
     var FD  = new FormData(form);
 
-    XHR.addEventListener("load", function(event) {
-      var response = JSON.parse(event.target.response);
-
-      var successMsg = (new Date()).toLocaleTimeString() + ': ' + response.text;
-      $('.resultText').toggleClass('error', false).text(successMsg);
-
-      var resultTable = tmplTable({items: [{month: "May", expense: "25.01"}, {month: "June", expense: "50.00"}]});
-      $('.resultTable').replaceWith(resultTable);
-    });
-
-    XHR.addEventListener("error", function(event) {
-      var errMsg = 'Something went wrong.\n' + event.target.responseText;
-      $('.resultText').toggleClass('error', true).text(errMsg);
-    });
-
+    XHR.addEventListener("load", successHandler);
+    XHR.addEventListener("error", errorHandler);
     XHR.open("POST", "/CSVform");
-
     XHR.send(FD);
   }
+
+
+  function displayResult (event) {
+    var response = JSON.parse(event.target.response);
+
+    var successMsg = (new Date()).toLocaleTimeString() + ': ' + response.text;
+    $$('.resultText').toggleClass('error', false).text(successMsg);
+
+    var resultTable = tmplTable({items: formatExpenses(response.mExpenses)});
+    $$('.resultTable').replaceWith(resultTable);
+  }
+
+  function displayError (event) {
+    var errMsg = 'Something went wrong.\n' + event.target.responseText;
+    $$('.resultText').toggleClass('error', true).text(errMsg);
+  }
+
+
+  function formatExpenses (mExpenses) {
+    return mExpenses.map(function (item) {
+      var itemDate = new Date(item.month);
+      return {
+        month: monthNames[itemDate.getMonth()] + ' ' + itemDate.getFullYear(),
+        expense: item.expense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+      };
+    });
+  }
+
+  return {
+    render: _init
+  };
+});
+
+define('start',['csvUploader/main'], function (csvUploader) {
+  
+  console.log('start.js: App started.');
+
+  var $main = $('.main')
+  csvUploader.render($main);
 });
 
 

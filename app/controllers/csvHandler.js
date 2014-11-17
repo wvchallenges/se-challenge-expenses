@@ -25,32 +25,17 @@ exports.postCSVFile = function (req, res) {
     });
 
     parser.on('finish', function () {
-      rowCount--; // Don't count the header line
-      var successText = 'All done! Processed ' + rowCount + ' rows.';
-      console.log(successText);
-      res.status(200).json({text: successText});
+      getMonthlyExpenses(fileID, function  (err, mExpenses) {
+        rowCount--; // Don't count the header line
+        var successText = 'All done! Processed ' + rowCount + ' rows.';
+        console.log(successText);
+        res.status(200).json({text: successText, mExpenses: mExpenses});
+      });
     });
 
     fs.createReadStream(file.path)
       .pipe(parser);
   });
-
-  // Saves the file on the server
-  //
-  // fs.readFile(req.files.CSVfile.path, function (err, data) {
-  //   if (err) { return res.status(500).send('CSV file could not be read.'); }
-
-  //   var newPath = csvDir + '/test.txt';
-
-  //   fs.writeFile(newPath, data, function (err) {
-  //     if (err) { return res.status(500).send('CSV file could not be uploaded to the server.'); }
-
-  //     console.log('err', err);
-  //     console.log('file was uploaded');
-  //     res.redirect('back');
-  //     // res.status(200).send('OK');
-  //   })
-  // });
 };
 
 
@@ -79,6 +64,34 @@ function createExpense (data, fileName, fileID, cb) {
 }
 
 
+function getMonthlyExpenses (fileID, cb) {
+  // build an array of total expenses per month
+
+  Expense.find({sourceFileID: fileID}, "date", function (err, expenses) {
+    if (err) { return cb(err, null); }
+    if (!expenses.length) { return cb(null, []); }
+
+    var mExpenses = [
+      { month: getYearMonth(expenses[0]), expense: expenses[0].preTaxAmount  }
+    ];
+
+    for (var i=1, l=expenses.length; i<l; i++) {
+      var newMonth = getYearMonth(expenses[i]);
+      if (mExpenses[0].month.getTime() !== newMonth.getTime()) {
+        mExpenses.unshift({
+          month: newMonth, expense: expenses[i].preTaxAmount
+        });
+      }
+      else {
+        mExpenses[0].expense += expenses[i].preTaxAmount;
+      }
+    }
+
+    cb(null, mExpenses);
+  });
+}
+
+
 function getNewFileID (cb) {
   Expense.aggregate(['sourceFileID']).max('sourceFileID').get(function (err, max) {
     if (err) { cb(err, null); }
@@ -87,11 +100,16 @@ function getNewFileID (cb) {
 }
 
 
+function getYearMonth(expense) {
+  return new Date(expense.date.getFullYear(), expense.date.getMonth());
+}
+
+
 function parseDate (str) {
   var dateComponents = str.split('/').map(function (n) {
     return parseInt(n);
   });
-  return new Date(dateComponents[2], dateComponents[0], dateComponents[1]);
+  return new Date(dateComponents[2], dateComponents[0] - 1, dateComponents[1]);
 }
 
 
