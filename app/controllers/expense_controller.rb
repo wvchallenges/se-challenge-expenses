@@ -8,8 +8,6 @@ class ExpenseController < ApplicationController
   end
 
   def monthly
-    @expenses =
-    Expense.select("strftime('%m/%Y', date) as month_year, round(sum(pre_tax_amount + tax_amount), 2) as total_expense").
-    group("month_year")
+    @expenses = Expense.per_month
   end
 end

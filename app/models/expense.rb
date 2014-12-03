@@ -14,4 +14,9 @@ class Expense < ActiveRecord::Base
     Expense.create! row.to_hash
     end
   end
+
+  def self.per_month
+    select("strftime('%m/%Y', date) as month_year, round(sum(pre_tax_amount + tax_amount), 2) as total_expense").
+    group("month_year")
+  end
 end
