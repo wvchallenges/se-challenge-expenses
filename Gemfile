@@ -20,6 +20,20 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :test, :development do
+  gem 'debugger'
+  gem 'rspec-rails'
+  gem 'mocha', :require => false
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner', :require => 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'factory_girl_rails'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
