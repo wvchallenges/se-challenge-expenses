@@ -1,4 +1,12 @@
 SeChallenge::Application.routes.draw do
+  root to: "expense#index"
+
+  get "expense/index"
+
+  post "expense/import"
+
+  get "expense/monthly"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
