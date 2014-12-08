@@ -1,7 +1,8 @@
 from django.db import models
 
-class Expenses(models.Model):
-    date = models.DateField()
+class Expense(models.Model):
+    date_db = models.DateField()
+    date = models.CharField(max_length=10) # mm/dd/yyyy
     category = models.CharField(max_length=100)
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)

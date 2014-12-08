@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <title>waveAccountingi</title>
+        <!--  <link href="/style.css" rel="stylesheet" type="text/css">-->
+</head >
+<body>
+    <p> Upload page </p>
+    <form id="upload" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <input id="fileselect" type="file" name="fileselect" /><button type="submit" value="Upload">Upload files</button>
+    </form>
+    <script src="/static/expense_reports/js/jquery-2.1.1.min.js"></script>
+    <script>
+        
+        var file;
+        
+        $('#fileselect').change(function(e){
+            
+            // get file object from file selector input
+            file = e.target.files[0];   
+
+        });
+        
+        $('#upload').submit(function(){
+            // TODO check if CSV, not just if text
+            console.log("File type" + file.type);
+            
+            // no file selected
+            if ( !(file) ){
+                alert("Please select a file to upload");
+                $('#fileselect').val('');  // reset select box 
+                return false;              // don't reload the page
+            }
+
+            // file is not a csv file
+            else if (file.type !== 'text/csv'){
+                alert("The file you tried to upload is not a CSV file. Only CSV files can be uploaded");
+                $('#fileselect').val('');  // reset select box 
+                return false;              // don't reload the page
+            }
+            //$('#fileselect').val(file);  // reset select box 
+            // file exceeds maximum file size 
+            //else if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000){
+            //    alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
+            //}
+
+            // upload file to server file
+        });
+
+    </script>
+</body>
+</html>
