@@ -2,51 +2,70 @@
 <html>
 <head>
     <title>waveAccountingi</title>
+    <style>
+        body { font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+        body { background: #F0F0F0; } 
+        .main_container { margin-top: 20px; margin-left: 40px; margin-right:40px; } 
+        .form_container { text-align: center; margin: 8% 30%; } 
+        #filebox { margin: 0 15%; margin-bottom:5%; border-style: dashed;border-radius:10px;  border-color:#909090;  background-color: #E0E0E0;  } 
+        #fileselect {  padding: 20%; padding-right: 0; opacity:0;  border-color:#909090;  background-color: #E0E0E0;  } 
+    </style>
         <!--  <link href="/style.css" rel="stylesheet" type="text/css">-->
-</head >
+</head>
 <body>
-    <p> Upload page </p>
-    <form id="upload" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <input id="fileselect" type="file" name="fileselect" /><button type="submit" value="Upload">Upload files</button>
-    </form>
+    <div class="main_container">
+        <h3> Upload Expense Reports </h3>
+        <div class="form_container">
+            <p>Drop files into the box or click to open file selector</p>
+            <form id="upload" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div id="filebox">
+                    <input id="fileselect" type="file" name="expense_report" />
+                </div>
+                <h4 id="filename"></h4>
+                <button id="submit" type="submit" value="Upload">Upload !</button>
+            </form>
+        </div>
+    </div>
     <script src="/static/expense_reports/js/jquery-2.1.1.min.js"></script>
     <script>
         
         var file;
         
         $('#fileselect').change(function(e){
-            
-            // get file object from file selector input
-            file = e.target.files[0];   
 
+            // get file object from file selector input
+            file = e.target.files[0];
+            
+            if(file){
+                $('#filename').text(file.name);
+            } else {
+                $('#filename').text("");
+            }
         });
-        
+
+
         $('#upload').submit(function(){
-            // TODO check if CSV, not just if text
-            console.log("File type" + file.type);
             
             // no file selected
             if ( !(file) ){
-                alert("Please select a file to upload");
+                alert("Please select a file to upload.");
                 $('#fileselect').val('');  // reset select box 
                 return false;              // don't reload the page
             }
-
             // file is not a csv file
             else if (file.type !== 'text/csv'){
-                alert("The file you tried to upload is not a CSV file. Only CSV files can be uploaded");
-                $('#fileselect').val('');  // reset select box 
-                return false;              // don't reload the page
+                alert("The file you selected is not a CSV file. Only CSV files can be uploaded.");
+                $('#fileselect').val('');
+                return false;           
             }
-            //$('#fileselect').val(file);  // reset select box 
+            // TODO some testing would be needed to determine safe maximum file size 
             // file exceeds maximum file size 
-            //else if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000){
-            //    alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-            //}
-
-            // upload file to server file
+            else if (file.size > MAX_FILE_SIZE * 1000){
+                alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' KB');
+                $('#fileselect').val('');
+                return false;           
+            }
         });
-
     </script>
 </body>
 </html>

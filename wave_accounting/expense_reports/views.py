@@ -20,7 +20,7 @@ def upload(request):
         # to do: add a color scheme per category + add totals per category (for each month and the year
 
         context = {'success': True }
-        f = request.FILES['fileselect']
+        f = request.FILES['expense_report']
 
         # parse file, add to database then return a sorted list of monthly expenses
         expenses = parse_file(f)
@@ -113,29 +113,30 @@ def parse_line(line):
 # TODO try string.replace (duh)
 # TODO count number of double quotes in line, and use two different regexes to parse
 
-    seg = line.split('\"') # TODO add support for when strings are identified with single quot0es
+    nb_double_quotes = line.count('"')
+    print nb_double_quotes
+    seg = line.replace('"','')  # TODO add support for when strings are identified with single quot0es
+    
+    print seg
+    seg = seg.split(',')
 
-    # first segment: date,category,name,_
-    date,category,name,_ = seg[0].split(',')
+    date = seg[0]
+    category = seg[1] 
+    name = seg[2]
    
-    # second segment: address
-    address = seg[1]
+    address = seg[3] + "," + seg[4] + "," + seg[5]
 
-    if len(seg) == 3:
+    description = seg[6]
 
-        # third segment: _ ,description, pretax_amount, tax_name, tax_amount
-        _,description,pretax_amount,tax_name,tax_amount = seg[2].split(',')
-        
+    if nb_double_quotes == 4: 
+        pretax_amount = seg[7] + seg[8]
+        tax_name = seg[9]
+        tax_amount = seg[10]
+
     else:
-        # third segment: _, description,_
-        _,description,_ = seg[2].split(',')
-        
-        # fourth segment: pretax_amount: e.g. 15,000
-        pre,post = seg[3].split(',')
-        pretax_amount = pre + post
-        
-        # fifth segment: _,tax_name,tax_amount 
-        _,tax_name,tax_amount = seg[4].split(',')
+        pretax_amount = seg[7]
+        tax_name = seg[8]
+        tax_amount = seg[9]
 
     return date,category,name,address,description,pretax_amount,tax_name,tax_amount
 
@@ -149,11 +150,8 @@ def split_date(US_date):
 
     # append a 0 when necessary
     # (pre-formatting for YYYY-MM-DD format)
-    if len(day) == 1 :
-        day = '0' + day
-    
-    if len(month) == 1 :
-        month = '0' + month
+    day = day.zfill(2)  # side note: there really is a Python function for everything
+    month = month.zfill(2)
 
     return year,month,day  
 
@@ -172,4 +170,3 @@ month_names = {
                 '11':'November',
                 '12':'December'
                 }
-
