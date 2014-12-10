@@ -10,3 +10,6 @@ class Expense(models.Model):
     pretax_amount = models.DecimalField(decimal_places=2,max_digits=6) # up to 10K. So doens't work for Tim Cook's private jet travel expenses.
     tax_name = models.CharField(max_length=50)
     tax_amount = models.DecimalField(decimal_places=2,max_digits=6)
+
+    class Meta:
+        unique_together = ["date", "category", "name","address","description","pretax_amount","tax_name","tax_amount"]

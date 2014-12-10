@@ -14,6 +14,7 @@
         tr:nth-child(odd) {background: #D8D8D8}
         tr.header {background: #606060; color: #F8F8F8; }
         tr.sub_header {background: #A8A8A8}
+        .error { color:red } 
 
     </style>
 
@@ -23,7 +24,9 @@
         
         <h3> Summary of Expenditures </h3>
         {% if success == True  %} 
-
+        {% if duplicates == True %}
+        <p class="error"> One or more entries were already found in the database and thus were not added to it <p> 
+        {% endif %}
         <div class="table_container">
             <table>
                 <tr class = "header"> 
@@ -50,7 +53,7 @@
             </table>
         </div>
         {% else %}
-        <p> File upload failed </p>
+        <p class="error"> File upload failed </p>
         {% endif %}
     </div>
 

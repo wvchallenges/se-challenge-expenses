@@ -2,29 +2,29 @@ from django.shortcuts import render
 
 from models import Expense
 
-# TODO : extra feature: add multiple files?
+# Extra features
+# TODO add multiple files?
+# TODO UI make each month expandable to view the details, or redirect to a new month
+# TODO UI add a color scheme per category + add totals per category (for each month and the year
 
 
 def upload(request):
     
     if request.method == 'GET':
-
-        # TODO import.html, drag/drop or select file button 
-        
+        print "GET request"
+         
         return render(request,'expense_reports/upload.html') # TODO use context to add an error message
     
     elif request.method == 'POST':
-       
-        # Extra feature
-        # make each month expandable to view the details, or redirect to a new month
-        # to do: add a color scheme per category + add totals per category (for each month and the year
+        print "POST request"
 
         context = {'success': True }
         f = request.FILES['expense_report']
 
-        # parse file, add to database then return a sorted list of monthly expenses
-        expenses = parse_file(f)
+        # parse file, add to database then return a sorted list of tuples describing monthly expenses
+        expenses,duplicates = parse_file(f)
         context['expenses'] = expenses
+        context['duplicates'] = duplicates
         return render(request,'expense_reports/summary.html',context)
        
 
@@ -34,6 +34,7 @@ def parse_file(expenses):
     # a year/month cross table that stores the totals
     # e.g. : {'2014': { 'January': 1300, 'February':500 }, '2013' : { }}
     breakdown = {}
+    duplicates = False
 
     for i,line in enumerate(expenses):
         if i != 0: ## skip header line
@@ -62,12 +63,17 @@ def parse_file(expenses):
                     tax_name = tax_name,
                     tax_amount = tax_amount
                     )
-            expense.save()
-            
+            try:
+                expense.save()
+            except:  # IntegrityError as detail:
+                print "Entry already exists in database and was not added" # , detail
+                duplicates = True      
+
+
     # TODO insert yearly totals (month code 00)
 
     #print format_breakdown(breakdown)
-    return format_breakdown(breakdown)
+    return format_breakdown(breakdown),duplicates
 
 
 def update_breakdown(breakdown,year,month,amount):
@@ -110,14 +116,12 @@ def format_breakdown(breakdown):
 
 def parse_line(line):
 
-# TODO try string.replace (duh)
-# TODO count number of double quotes in line, and use two different regexes to parse
+    # TODO use three different regexes depending on number of double quotes
 
     nb_double_quotes = line.count('"')
-    print nb_double_quotes
+    
     seg = line.replace('"','')  # TODO add support for when strings are identified with single quot0es
     
-    print seg
     seg = seg.split(',')
 
     date = seg[0]
@@ -128,10 +132,17 @@ def parse_line(line):
 
     description = seg[6]
 
-    if nb_double_quotes == 4: 
+    # we always have 2 double quotes for the address. 
+    # if we had 4, it's because the pretax_amount contains a comma 
+    if nb_double_quotes >= 4: 
         pretax_amount = seg[7] + seg[8]
         tax_name = seg[9]
-        tax_amount = seg[10]
+
+        if nb_double_quotes == 4:
+            tax_amount = seg[10]
+        else:
+            # for the unlikely case of a ~10k expense with a tax >= $ 1,000
+            tax_amount = seg[10] + seg[11]
 
     else:
         pretax_amount = seg[7]
