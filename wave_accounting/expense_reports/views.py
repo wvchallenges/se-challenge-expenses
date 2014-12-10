@@ -11,32 +11,45 @@ from models import Expense
 def upload(request):
     
     if request.method == 'GET':
-        print "GET request"
          
         return render(request,'expense_reports/upload.html') # TODO use context to add an error message
     
     elif request.method == 'POST':
-        print "POST request"
 
         context = {'success': True }
-        f = request.FILES['expense_report']
-
-        # parse file, add to database then return a sorted list of tuples describing monthly expenses
-        expenses,duplicates = parse_file(f)
-        context['expenses'] = expenses
-        context['duplicates'] = duplicates
+        
+        f = request.FILES.getlist('expense_report[]')
+        
+        try:
+            # parse each file. Add entries to database then return a sorted list of tuples describing monthly expenses
+            expenses,duplicates = parse_files(f)
+            context['expenses'] = expenses
+            context['duplicates'] = duplicates # indicates if the files contained duplicate entries
+        
+        except: 
+            context['success'] = False
+        
         return render(request,'expense_reports/summary.html',context)
        
+def parse_files(files):
 
+    breakdown = {}
+    duplicates = False
+    
+    for f in files:
+        dup = parse_file(f,breakdown)
+        if dup == True:
+            duplicates = True
+    
+    #print format_breakdown(breakdown)
+    return format_breakdown(breakdown),duplicates
 
-def parse_file(expenses):
+def parse_file(f,breakdown):
     
     # a year/month cross table that stores the totals
     # e.g. : {'2014': { 'January': 1300, 'February':500 }, '2013' : { }}
-    breakdown = {}
-    duplicates = False
 
-    for i,line in enumerate(expenses):
+    for i,line in enumerate(f):
         if i != 0: ## skip header line
 
             date,category,name,address,description,pretax_amount,tax_name,tax_amount = parse_line(line)
@@ -66,14 +79,11 @@ def parse_file(expenses):
             try:
                 expense.save()
             except:  # IntegrityError as detail:
-                print "Entry already exists in database and was not added" # , detail
                 duplicates = True      
 
+    return duplicates
 
-    # TODO insert yearly totals (month code 00)
 
-    #print format_breakdown(breakdown)
-    return format_breakdown(breakdown),duplicates
 
 
 def update_breakdown(breakdown,year,month,amount):
