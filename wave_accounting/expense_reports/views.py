@@ -2,35 +2,47 @@ from django.shortcuts import render
 
 from models import Expense
 
-# Extra features
-# TODO add multiple files?
+# Extra features (that would have been added with more time)
 # TODO UI make each month expandable to view the details, or redirect to a new month
 # TODO UI add a color scheme per category + add totals per category (for each month and the year
+# TODO Add view that displays summary for all expenses contained in database
 
-
+# the only view in this application. 
+# -- returns upload.html on GET reuqests, a form with a file browser and drag and drop to select files to upload
+# -- returns summary.html on POST requests, a page that displays a table containing the total expenses for each month
 def upload(request):
     
     if request.method == 'GET':
          
-        return render(request,'expense_reports/upload.html') # TODO use context to add an error message
+        return render(request,'expense_reports/upload.html')
     
     elif request.method == 'POST':
 
         context = {'success': True }
         
+        # get files uploaded by the user via form
         f = request.FILES.getlist('expense_report[]')
         
         try:
             # parse each file. Add entries to database then return a sorted list of tuples describing monthly expenses
             expenses,duplicates = parse_files(f)
-            context['expenses'] = expenses
+            
+            context['expenses'] = expenses     # an expense = (year,month,total_expense)
             context['duplicates'] = duplicates # indicates if the files contained duplicate entries
         
-        except: 
+        except:
+            # an error occured while parsing the file
             context['success'] = False
         
         return render(request,'expense_reports/summary.html',context)
-       
+
+
+
+# wrapper for the parse_file function
+# executes parse_file for each file uploaded
+# returns a list of tuples corresponding to monthly expense totals ordered by time
+# and returns boolean duplicates indicating if the files uplaoded contained duplicate entries
+
 def parse_files(files):
 
     breakdown = {}
@@ -44,6 +56,13 @@ def parse_files(files):
     #print format_breakdown(breakdown)
     return format_breakdown(breakdown),duplicates
 
+
+
+# parses each line of given file into the different variables (name, amount, description, date, etc)
+# adds the total to in-memory variable beakdown that represents a X table storing all the monthly totals 
+# saves entry to the databas
+# returns duplicate boolean (set to True if elements could not be added to the database)
+
 def parse_file(f,breakdown):
     
     # a year/month cross table that stores the totals
@@ -55,7 +74,7 @@ def parse_file(f,breakdown):
             date,category,name,address,description,pretax_amount,tax_name,tax_amount = parse_line(line)
             
             # reformat date into standard YYYY-MM-DD format 
-            # this format makes the database query-able for dates 
+            # this format enables querying the database for time periods and obtaining results sorted by time
             year,month,day = split_date(date)
             std_date = year + '-' + month + '-' + day
             
@@ -64,7 +83,6 @@ def parse_file(f,breakdown):
             update_breakdown(breakdown,year,month,full_amount)
             
             #2. save to database
-            # TODO prevent double entries
             expense=Expense(
                     date_db = std_date, 
                     date = date,
@@ -78,6 +96,7 @@ def parse_file(f,breakdown):
                     )
             try:
                 expense.save()
+                duplicates = False
             except:  # IntegrityError as detail:
                 duplicates = True      
 
@@ -85,52 +104,16 @@ def parse_file(f,breakdown):
 
 
 
-
-def update_breakdown(breakdown,year,month,amount):
-
-    if not year in breakdown: 
-        breakdown[year] = {month:amount}  # adds first entry for given year
-
-    elif not month in breakdown[year]:
-        breakdown[year][month] = amount   # adds first entry for given month 
-
-    else: 
-        breakdown[year][month] += amount  # add to already existing entry
-
-
-
-def format_breakdown(breakdown):    
-    breakdown_formated = []
-
-    for year in sorted(breakdown.keys()):
-        
-        d = breakdown[year]
-        tmp = []
-        total = 0
-        
-        for month in sorted(d.keys()):   
-            
-            # replace with month name
-            month_name = month_names[month]
-            
-            amount = d[month]
-            total += amount
-            tmp.append((year,month_name,amount))
-
-        tmp.insert(0,(year,'total',total))
-        breakdown_formated.append(tmp)
-
-    return breakdown_formated
-
-
+# parses each line into the different variables of interest 
+#  returns all 8 variables
 
 def parse_line(line):
 
-    # TODO use three different regexes depending on number of double quotes
+    # TODO alternative way:  use three different regexes to parse lines depending on number of double quotes
 
     nb_double_quotes = line.count('"')
     
-    seg = line.replace('"','')  # TODO add support for when strings are identified with single quot0es
+    seg = line.replace('"','')  # TODO add support for when strings are identified with single quotes
     
     seg = seg.split(',')
 
@@ -161,6 +144,56 @@ def parse_line(line):
 
     return date,category,name,address,description,pretax_amount,tax_name,tax_amount
 
+
+
+# function that updates breakdown variable (X-table of monthly totals)
+
+def update_breakdown(breakdown,year,month,amount):
+
+    if not year in breakdown: 
+        breakdown[year] = {month:amount}  # adds first entry for given year
+
+    elif not month in breakdown[year]:
+        breakdown[year][month] = amount   # adds first entry for given month 
+
+    else: 
+        breakdown[year][month] += amount  # add to already existing entry
+
+
+
+# returns a sorted list of (year,month,total_expenses) tuples
+# generated from the breakdown X-table
+# we retrive each monthly total in order, and as we do so, we also compute each year's total
+
+def format_breakdown(breakdown):    
+    breakdown_formated = []
+
+    for year in sorted(breakdown.keys()):
+        
+        monthly_expenses = breakdown[year] # get dict month <--> total
+        monthly_exp_sorted = []
+        yearly_total = 0
+        
+        for month in sorted(monthly_expenses.keys()):   
+            
+            # replace with month name
+            month_name = month_names[month]
+            
+            amount = monthly_expenses[month]
+            monthly_exp_sorted.append((year,month_name,amount))
+            
+            # add to yearly total
+            yearly_total += amount
+
+        monthly_exp_sorted.insert(0,(year,'total',yearly_total))
+        breakdown_formated.append(monthly_exp_sorted)
+
+    return breakdown_formated
+
+
+
+# takes a data in US format and return the year,month and day
+# prepends a 0 if month or day is single digit
 
 def split_date(US_date):
             
