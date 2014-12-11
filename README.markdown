@@ -44,3 +44,52 @@ Evaluation of your submission will be based on the following criteria.
 1. Did your application fulfill the basic requirements?
 1. Did you document the method for setting up and running your application?
 1. Did you follow the instructions for submission?
+
+## Running the solution
+
+I have uploaded a script to automatically install and run the application: install.sh, available in the root repository.
+
+1. Copy paste install.sh onto your computer, where you would like to install the application
+2. Open up a terminal and run: 
+   `bash -x script_name.sh`
+3. The following message should appear, meaning the installation was successful:
+
+```Starting development server at http://127.0.0.1:8000/```
+```Quit the server with CONTROL-C.```
+
+4. Open your browser to http://127.0.0.1:8000/
+
+ 
+## Implementation
+
+#### Upload 
+Users have the possibility to either use a file browser, or simply drag and drop files onto the upload page in order to select the files to upload. I enabled both methods for the user's convenience.
+
+As an additional feature, I also enabled the submittion of multiple files at once. I think that if this application was to be used in a real situation, it is quite likely that one would have to process several files, and submitting them one by one would be quite annoying.
+
+The application also checks on the client side that the files submitted are CSV files, and alerts the user if it's not so.
+
+#### Output
+I went for a minimalist, easy to read output. In addition to displaying the total amount of expenses for each month, I also chose to compute and display each year's total as I thought this could be useful information as well.
+
+An error message is displayed alongside the table if one or more entries contained in the files already exist in the database. Moreover, an error message is also displayed if file parsing failed (in which case no table is displayed).
+
+#### Backend
+The application has only one view which handles requests to the application's root URL.
+
+Upon a GET request, it returns upload.html which is a form for submitting files to the server.
+
+Once the form is submitted with a POST request, the view parses the files, adds the entries to the database, computes the total expenses for each month and returns this data in summary.html, the output file which consists of a table displaying this information.
+
+The total amount spent for each month is computed with the use of an in-memory table, that is updated every time we process a new database entry. Keeping it in memory is faster than using SQL select queries. This variable however is reset for every new upload (new POST request).
+
+#### Conclusion 
+I am proud of my application because of its user-oriented design. I think that features such as file selection using drag and drop, and multiple file upload make the app much more convenient.
+
+Another example of careful design is to check for duplicates, which seemed important to me because in a real-life sitation, users make mistakes and one could easily end up uploading the same file twice. However, it is important that such errors do not propagate to the database.
+
+In terms of the backend, I tried my best to structure the application in a way that makes it very readable and easier to troubleshoot. Each function has a clear and limited objective, which helps for both readability and troubleshooting.
+
+
+
+
