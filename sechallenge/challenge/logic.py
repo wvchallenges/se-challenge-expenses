@@ -40,23 +40,20 @@ def process_record(row):
     def employee_found(emp):
         try:
             emp = Employee.objects.filter(**emp)
-            return emp.objects[0].id
+            return emp.objects[0]
         except AttributeError:
             return False
 
     def expense_add(exp):
-        Expense(
-            employee=exp['employee'],
-            date=exp[da]
-
-        )
+        exp = Expense(**exp)
+        exp.save()
 
     employee = employee_info(row)
     expense = expense_info(row)
-    emp_id = employee_found(employee)
-    if not emp_id:
+    emp = employee_found(employee)
+    if not emp:
         emp = Employee(**employee)
         emp.save()
-        emp_id = emp.id
 
-    expense['employee'] = emp_id
+    expense['employee'] = emp
+    expense_add(expense)

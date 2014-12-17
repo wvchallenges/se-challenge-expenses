@@ -3,8 +3,8 @@ from django.test import TestCase
 from io import BytesIO
 
 from .logic import process_record
+from .models import Employee, Expense
 
-from .models import Employee
 DATA_EXAMPLE = '../data_example.csv'
 
 RECORD_EXAMPLE_1 = [
@@ -45,3 +45,6 @@ class LogicTestCase(TestCase):
         emp = Employee.objects.filter(name='Don Draper')
         self.assertEqual(emp[0].name, 'Don Draper')
 
+    def test_process_record_no_entries_new_entry(self):
+        process_record(RECORD_EXAMPLE_1)
+        self.assertEqual(len(Expense.objects.all()), 1)
