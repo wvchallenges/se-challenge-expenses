@@ -1,5 +1,6 @@
 import csv
 from io import StringIO
+from datetime import datetime
 
 from .models import Employee, Expense
 
@@ -29,7 +30,7 @@ def process_record(row):
             ])
 
         return {
-            'date': row[0],
+            'date': datetime.strptime(row[0], '%d/%m/%Y'),
             'category': row[1],
             'description': row[4],
             'pre_tax': float(clean_floats(row[5])),

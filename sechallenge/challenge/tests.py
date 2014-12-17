@@ -48,3 +48,6 @@ class LogicTestCase(TestCase):
     def test_process_record_no_entries_new_entry(self):
         process_record(RECORD_EXAMPLE_1)
         self.assertEqual(len(Expense.objects.all()), 1)
+        exp = Expense.objects.all()[0]
+        self.assertEqual(exp.description, 'Taxi ride')
+
