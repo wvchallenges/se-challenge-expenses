@@ -25,16 +25,18 @@ def load_sample():
     return csv_data
 
 
-class ChallengeTestCase(TestCase):
-    '''
+class IntegrationTestCase(TestCase):
     def test_submitting_csv_file_redirect(self):
         out = self.client.post('/', {'csv_file': load_sample()})
         self.assertEqual(out.url, 'http://testserver/total')
 
     def test_submitting_csv_processing(self):
-        out = self.client.post('/', {'csv_file': load_sample()})
-        import ipdb; ipdb.set_trace()
-    '''
+        self.client.post('/', {'csv_file': load_sample()})
+        emp = Employee.objects.filter(name='Don Draper')
+        self.assertEqual(emp[0].name, 'Don Draper')
+        exp = Expense.objects.filter(pre_tax=350.00)
+        self.assertTrue(exp)
+        self.assertEqual(exp[0].tax_amount, 31.06)
 
 
 class LogicTestCase(TestCase):

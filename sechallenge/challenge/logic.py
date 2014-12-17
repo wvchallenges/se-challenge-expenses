@@ -1,5 +1,6 @@
 import csv
 from io import StringIO
+from django.utils.dateparse import parse_date
 from datetime import datetime
 
 from .models import Employee, Expense
@@ -29,8 +30,26 @@ def process_record(row):
                 if x.isdigit() or x == '.'
             ])
 
+        def parse_datetime(item):
+            try:
+                out = parse_date(item)
+                if not out:
+                    raise ValueError()
+                return out
+            except ValueError:
+                pass
+
+            try:
+                return datetime.strptime(item, '%d/%m/%Y').date()
+            except ValueError:
+                pass
+
+            return datetime.strptime(item, '%m/%d/%Y').date()
+
+
+
         return {
-            'date': datetime.strptime(row[0], '%d/%m/%Y'),
+            'date': parse_datetime(row[0]),
             'category': row[1],
             'description': row[4],
             'pre_tax': float(clean_floats(row[5])),
