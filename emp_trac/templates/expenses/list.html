@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>Employee Expenses</h1>
+<ul>
+{% for expense in object_list %}
+    <li>{{ expense }}</li>
+{% empty %}
+    <li>No Expenses yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}

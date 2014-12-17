@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>Employee Expenses Upload CSV</h1>
+<form method='post' enctype="multipart/form-data" action=".">{% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="Submit"></p>
+</form>
+{% endblock %}

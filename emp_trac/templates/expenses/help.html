@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>Employee Expenses Help</h1>
+<ol>
+    <li>Upload a valid CSV File</li>
+    <li>View the uploaded expenses</li>
+    <li>View the admin panel for uploaded expenses, use user/pass admin/admin</li>
+</ol>
+
+<h1>Assumptions</h1>
+<ul>
+    <li>The list of expenses is flushed when a valid csv file is uploaded.</li>
+    <li>The file uploaded is in the correct format, form validation will not check that.</li>
+    <li>Users name is always first followed by last name, and first & last name combo signifies a unique user.</li>
+    <li>The header will contain the same field labels and order.</li>
+    <li>The csv file encompasses the whole database, so all data is reset each upload.</li>
+</ul>
+{% endblock %}
