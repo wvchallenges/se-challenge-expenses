@@ -5,15 +5,16 @@ from .forms import CSVUpload
 
 
 def csv_upload(request):
-    form = None
+    context = {}
+    context.update(csrf(request))
+
     if request.method == "POST":
-        form = CSVUpload(request.POST, request.FILES)
-        if form.is_valid():
+        context['form'] = CSVUpload(request.POST, request.FILES)
+        if context['form'].is_valid():
             return HttpResponseRedirect('/total_expenses')
     else:
-        form = CSVUpload()
-    context = {form: 'form'}
-    context.update(csrf(request))
+        context['form'] = CSVUpload()
+
     return render_to_response('challenge/upload.html', context)
 
 
