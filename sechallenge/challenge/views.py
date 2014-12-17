@@ -1,4 +1,4 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.http import HttpResponse
 
 
@@ -7,4 +7,4 @@ def csv_upload(request):
 
 
 def total_expenses(requrest):
-    return HttpResponse("expense report")
+    return render(requrest, 'challenge/expense_report.html', {})
