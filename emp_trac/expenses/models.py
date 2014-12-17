@@ -49,7 +49,9 @@ class Expense(models.Model):
     date = models.DateTimeField()
     description = models.CharField(max_length=255, blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)  # May need to be increased
+    # TODO: change to tax_state, and tax_percent
     tax = models.DecimalField(_('Tax Name'), max_digits=6, decimal_places=5, default=TAX_RATE_NONE, choices=TAX_RATES)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=255, blank=True, null=True, choices=CATEGORIES, default=CATEGORY_OTHER)
 
     def formatted_amount(self):

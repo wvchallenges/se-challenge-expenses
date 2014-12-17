@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView, ListView, FormView
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Sum, Count
 
 from .forms import ExpenseUploadForm
 from .models import Expense
@@ -21,17 +22,32 @@ upload = ExpenseUploadView.as_view()
 class HelpView(TemplateView):
     template_name = 'expenses/help.html'
 
-help = HelpView.as_view()
+hlp = HelpView.as_view()
 
 
 class ExpenseListView(ListView):
 
     template_name = 'expenses/list.html'
+    model = Expense
+
+
+lst = ExpenseListView.as_view()
+
+
+class ExpenseMonthlySummaryView(TemplateView):
+
+    template_name = 'expenses/monthly_summary.html'
 
     model = Expense
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ArticleListView, self).get_context_data(**kwargs)
-    #     return context
+    def get_context_data(self, **kwargs):
+        from django.db import connection
+        truncate_date = connection.ops.date_trunc_sql('month', 'date')
+        context = dict()
+        qs = Expense.objects.extra({'month': truncate_date})
+        context['report'] = qs.values('month').annotate(Sum('amount'), Count('pk')).order_by('month')
+        #context = super(ExpenseMonthlySummaryView, self).get_context_data(**kwargs)
 
-list = ExpenseListView.as_view()
+        return context
+
+monthly_summary = ExpenseMonthlySummaryView.as_view()

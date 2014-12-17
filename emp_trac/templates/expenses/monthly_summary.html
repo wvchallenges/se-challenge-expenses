@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>Employee Expenses</h1>
+<ul>
+{% for item in report %}
+    <li>{{ item }}</li>
+{% empty %}
+    <li>No Report yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}
