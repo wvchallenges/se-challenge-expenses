@@ -11,4 +11,4 @@ class ChallengeTestCase(TestCase):
         csv_data = BytesIO(open(DATA_EXAMPLE, 'rb').read())
         csv_data.name = 'testfile.csv'
         out = self.client.post('/', {'csv_file': csv_data})
-        self.assertEqual(out.url, 'http://testserver/total_expenses')
+        self.assertEqual(out.url, 'http://testserver/total')

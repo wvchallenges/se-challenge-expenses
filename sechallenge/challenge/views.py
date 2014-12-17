@@ -7,11 +7,10 @@ from .forms import CSVUpload
 def csv_upload(request):
     context = {}
     context.update(csrf(request))
-
     if request.method == "POST":
         context['form'] = CSVUpload(request.POST, request.FILES)
         if context['form'].is_valid():
-            return HttpResponseRedirect('/total_expenses')
+            return HttpResponseRedirect('/total')
     else:
         context['form'] = CSVUpload()
 
