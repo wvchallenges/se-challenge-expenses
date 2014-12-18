@@ -1,7 +1,9 @@
 import csv
 from io import StringIO
 from django.utils.dateparse import parse_date
-from datetime import datetime
+from datetime import datetime, date
+import calendar
+from dateutil import rrule
 
 from .models import Employee, Expense
 
@@ -77,3 +79,21 @@ def process_record(row):
 
     expense['employee'] = emp
     expense_add(expense)
+
+
+def produce_month_dates(mindate, maxdate):
+
+    def getmaxday(s_date):
+        return date(
+            s_date.year,
+            s_date.month,
+            calendar.monthrange(s_date.year, s_date.month)[1]
+        )
+
+    def mon_range(min_date, max_date):
+        min_date = date(min_date.year, min_date.month, 1)
+        for x in rrule.rrule(rrule.MONTHLY, dtstart=min_date, until=max_date):
+            yield date(x.year, x.month, x.day)
+
+    for start in mon_range(mindate, maxdate):
+        yield (start, getmaxday(start))

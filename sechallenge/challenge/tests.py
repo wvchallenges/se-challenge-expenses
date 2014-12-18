@@ -79,6 +79,11 @@ class IntegrationTestCase(TestCase):
         exp = Expense.objects.filter(recent_data=False)
         self.assertEqual(exp[0].employee.name, 'Linus Torvalds')
 
+    def test_total_expenses_agrecate(self):
+        self.client.post('/', {'csv_file': load_sample()})
+        out = self.client.get('/total/')
+        import ipdb; ipdb.set_trace()
+
 
 class LogicTestCase(TestCase):
 
