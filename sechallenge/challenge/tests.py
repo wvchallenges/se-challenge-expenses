@@ -82,7 +82,9 @@ class IntegrationTestCase(TestCase):
     def test_total_expenses_agrecate(self):
         self.client.post('/', {'csv_file': load_sample()})
         out = self.client.get('/total/')
-        import ipdb; ipdb.set_trace()
+        content = out.content.decode('UTF-8')
+        self.assertIn('2014-6', content)
+        self.assertIn('4931.65', content)
 
 
 class LogicTestCase(TestCase):
