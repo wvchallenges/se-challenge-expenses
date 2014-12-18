@@ -1,1 +1,25 @@
-<h1>Expense report page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<body>
+    <h1>Expense report page</h1>
+    <table>
+    <th>
+        <td>Month</td>
+        </td>Expense</td>
+    </th>
+    {% for date,expense in expenses.items %}
+        <tr>
+            <td>{{ date }}</td>
+            <td>{{ expense }}</td>
+        </tr>
+
+    {% endfor %}
+    </table>
+</body>
+</html>
+
+
+
