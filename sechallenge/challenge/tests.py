@@ -18,6 +18,17 @@ RECORD_EXAMPLE_1 = [
     '31.06'
 ]
 
+RECORD_EXAMPLE_2 = [
+    '11/10/2013',
+    'Computer - Hardware',
+    'Linus Torvalds',
+    '123 Unicycle Ln, Portland, OR 97201',
+    'MakerBot 3D printer',
+    '2000.00',
+    'OR Sales tax',
+    '0.0',
+]
+
 
 def load_sample():
     csv_data = BytesIO(open(DATA_EXAMPLE, 'rb').read())
@@ -26,17 +37,36 @@ def load_sample():
 
 
 class IntegrationTestCase(TestCase):
+
     def test_submitting_csv_file_redirect(self):
+        """
+        Upload & redirect works
+        """
         out = self.client.post('/', {'csv_file': load_sample()})
         self.assertEqual(out.url, 'http://testserver/total')
 
     def test_submitting_csv_processing(self):
+        """
+        Uploaded data is present for an employee and an expense
+        """
         self.client.post('/', {'csv_file': load_sample()})
         emp = Employee.objects.filter(name='Don Draper')
         self.assertEqual(emp[0].name, 'Don Draper')
         exp = Expense.objects.filter(pre_tax=350.00)
         self.assertTrue(exp)
         self.assertEqual(exp[0].tax_amount, 31.06)
+
+    def test_file_recent_data_flag(self):
+        """
+        recent_data flag is set to true on init
+        recent_data flag is set to False on next update_db invocation
+        """
+        process_record(RECORD_EXAMPLE_2)
+        exp = Expense.objects.filter(recent_data=True)
+        self.assertEqual(exp[0].employee.name, 'Linus Torvalds')
+        self.client.post('/', {'csv_file': load_sample()})
+        exp = Expense.objects.filter(recent_data=False)
+        self.assertEqual(exp[0].employee.name, 'Linus Torvalds')
 
 
 class LogicTestCase(TestCase):

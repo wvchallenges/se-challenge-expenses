@@ -14,3 +14,4 @@ class Expense(models.Model):
     pre_tax = models.FloatField()
     tax_type = models.CharField(max_length=512)
     tax_amount = models.FloatField()
+    recent_data = models.BooleanField(default=True)

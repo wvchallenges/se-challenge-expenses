@@ -15,6 +15,7 @@ def parse_fd(fd):
 
 
 def update_db(data):
+    Expense.objects.filter(recent_data=True).update(recent_data=False)
     for row in [[y.strip() for y in x] for x in data]:
         process_record(row)
 
@@ -45,8 +46,6 @@ def process_record(row):
                 pass
 
             return datetime.strptime(item, '%m/%d/%Y').date()
-
-
 
         return {
             'date': parse_datetime(row[0]),
