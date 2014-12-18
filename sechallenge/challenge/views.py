@@ -51,8 +51,8 @@ def total_expenses(requrest):
                 sum_everything(x) for x in
                 Expense.objects.filter(date__range=[interval[0], interval[1]])
             ]
-            all_expenses["%d-%d" % (interval[0].year, interval[0].month)] = \
-                reduce(add, sums) if sums else 0.0
+            all_expenses[interval[0].strftime("%Y-%m")] = \
+                "%.2f" % reduce(add, sums) if sums else 0.0
 
     return render(
         requrest,

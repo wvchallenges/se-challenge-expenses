@@ -83,8 +83,11 @@ class IntegrationTestCase(TestCase):
         self.client.post('/', {'csv_file': load_sample()})
         out = self.client.get('/total/')
         content = out.content.decode('UTF-8')
-        self.assertIn('2014-6', content)
-        self.assertIn('4931.65', content)
+        self.assertNotIn('2014-6', content)
+        self.assertIn('2013-10', content)
+        self.assertIn('2391.41', content)
+        self.assertIn('2014-02', content)
+        self.assertIn('1625.4', content)
 
 
 class LogicTestCase(TestCase):

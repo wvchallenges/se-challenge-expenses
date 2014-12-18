@@ -42,6 +42,7 @@ def process_record(row):
         def parse_datetime(item):
             """
             Some ambiguity on how to treat date formats ensues
+            Assuming US format M/D/Y
             """
             try:
                 out = parse_date(item)
@@ -52,11 +53,11 @@ def process_record(row):
                 pass
 
             try:
-                return datetime.strptime(item, '%d/%m/%Y').date()
+                return datetime.strptime(item, '%m/%d/%Y').date()
             except ValueError:
                 pass
 
-            return datetime.strptime(item, '%m/%d/%Y').date()
+            return datetime.strptime(item, '%d/%m/%Y').date()
 
         return {
             'date': parse_datetime(row[0]),
