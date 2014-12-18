@@ -58,10 +58,11 @@ def process_record(row):
 
     def employee_found(emp):
         try:
+            #import ipdb; ipdb.set_trace()
             emp = Employee.objects.filter(**emp)
-            return emp.objects[0]
-        except AttributeError:
-            return False
+            return emp[0]
+        except IndexError:
+            return None
 
     def expense_add(exp):
         exp = Expense(**exp)

@@ -26,7 +26,18 @@ RECORD_EXAMPLE_2 = [
     'MakerBot 3D printer',
     '2000.00',
     'OR Sales tax',
-    '0.0',
+    '00.00',
+]
+
+RECORD_EXAMPLE_3 = [
+    '12/10/2013',
+    'Computer - Hardware',
+    'Linus Torvalds',
+    '123 Unicycle Ln, Portland, OR 97201',
+    'PLA Fillament (1kg), Blue',
+    '30.00',
+    'OR Sales tax',
+    '00.00',
 ]
 
 
@@ -83,3 +94,8 @@ class LogicTestCase(TestCase):
         exp = Expense.objects.all()[0]
         self.assertEqual(exp.description, 'Taxi ride')
 
+    def test_process_multiple_records_single_employee(self):
+        process_record(RECORD_EXAMPLE_2)
+        process_record(RECORD_EXAMPLE_3)
+        self.assertEqual(len(Employee.objects.all()), 1)
+        self.assertEqual(len(Expense.objects.all()), 2)
