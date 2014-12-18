@@ -17,12 +17,18 @@ def parse_fd(fd):
 
 
 def update_db(data):
+    """
+    Update database with incoming data
+    """
     Expense.objects.filter(recent_data=True).update(recent_data=False)
     for row in [[y.strip() for y in x] for x in data]:
         process_record(row)
 
 
 def process_record(row):
+    """
+    Process each CSV record
+    """
     def employee_info(row):
         return {'name': row[2], 'address': row[3]}
 
@@ -34,6 +40,9 @@ def process_record(row):
             ])
 
         def parse_datetime(item):
+            """
+            Some ambiguity on how to treat date formats ensues
+            """
             try:
                 out = parse_date(item)
                 if not out:
@@ -60,7 +69,6 @@ def process_record(row):
 
     def employee_found(emp):
         try:
-            #import ipdb; ipdb.set_trace()
             emp = Employee.objects.filter(**emp)
             return emp[0]
         except IndexError:
@@ -82,6 +90,10 @@ def process_record(row):
 
 
 def produce_month_dates(mindate, maxdate):
+    """
+    Generating year-month intervals
+    There should be a better way of doing it with Django ORM
+    """
 
     def getmaxday(s_date):
         return date(
