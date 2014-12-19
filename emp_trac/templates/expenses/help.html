@@ -6,22 +6,23 @@
 <ol>
     <li>Upload a valid CSV File</li>
     <li>View the uploaded expenses</li>
-    <li>View the admin panel for uploaded expenses, use user/pass admin/admin</li>
+    <li>Start over and the database is cleared.</li>
 </ol>
 
 <h1>Assumptions</h1>
 <ul>
-    <li>The list of expenses is flushed when a valid csv file is uploaded.</li>
-    <li>The file uploaded is in the correct format, form validation will not check that.</li>
-    <li>Users name is always first followed by last name, and first & last name combo signifies a unique user.</li>
-    <li>The header will contain the same field labels and order.</li>
-    <li>The csv file encompasses the whole database, so all data is reset each upload.</li>
+    <li>The list of expenses is flushed when a valid csv file is uploaded.
+        The csv file encompasses the whole database, so all data is reset each upload.</li>
+    <li>The file uploaded is in the correct format, if the format is not understood, a custom error is raised.</li>
+    <li>User's name is always first followed by last name, and first & last name combo signifies a unique user.</li>
+    <li>The header will contain the same field labels.</li>
 </ul>
 
 <h1>Important Items not included</h1>
 <ul>
     <li>Write Unit Tests</li>
     <li>Front-end Design</li>
+    <li>Back-end Scalability Check with client</li>
     <li>Production Deployment Plan</li>
 </ul>
 {% endblock %}

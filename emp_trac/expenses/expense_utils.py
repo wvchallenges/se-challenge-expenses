@@ -2,6 +2,7 @@
 #!/usr/bin/env python
 
 import csv
+from csv import Error as csv_error
 import datetime
 import decimal
 
@@ -18,40 +19,44 @@ def process_csv_file(csv_file):
     expense description,pre-tax amount,tax name,tax amount
     :return: None
     """
-    #
 
-    csv_data = [row for row in csv.reader(csv_file.read().splitlines())]
-    csv_headers = csv_data[0]
-    del csv_data[0:1]
-    # Rest all data
-    Employee.objects.all().delete()
-    User.objects.filter(is_superuser=False).delete()
-    Expense.objects.all().delete()
-    for csv_record in csv_data:  # Process each record
-        json_record = csv_row_to_json(csv_record, csv_headers)
-        first_name, last_name = json_record.get('employee name').strip().split()
-        user, _ = User.objects.get_or_create(first_name=first_name, last_name=last_name,
-                                             username='{0}_{1}'.format(first_name.lower(), last_name.lower()))
-        user.save()
+    try:  # bit of a long try / catch but anything here can break due to file formatting
+        csv_data = [row for row in csv.reader(csv_file.read().splitlines())]
+        csv_headers = csv_data[0]
+        del csv_data[0:1]
+        # Rest all data
+        Employee.objects.all().delete()
+        User.objects.filter(is_superuser=False).delete()
+        Expense.objects.all().delete()
+        for csv_record in csv_data:  # Process each record
 
-        employee, _ = Employee.objects.get_or_create(user=user)
-        employee.address = json_record.get('employee address', None)
-        employee.save()
+            json_record = csv_row_to_json(csv_record, csv_headers)
+            first_name, last_name = json_record.get('employee name').strip().split()
+            user, _ = User.objects.get_or_create(first_name=first_name, last_name=last_name,
+                                                 username='{0}_{1}'.format(first_name.lower(), last_name.lower()))
+            user.save()
 
-        expense = Expense()
-        date = json_record.get('date', '')
-        if date:
-            date = datetime.datetime.strptime(date, '%m/%d/%Y')
-        expense.date = date
-        expense.employee = employee
-        expense.description = json_record.get('expense description', None)
-        expense.amount = decimal.Decimal(json_record.get('pre-tax amount').replace(",", ""))
-        expense.tax_name = json_record.get('tax name')
-        expense.tax_amount = decimal.Decimal(json_record.get('tax amount'))
-        expense.tax_rate = decimal.Decimal(expense.tax_amount/expense.amount)
-        expense.category = json_record.get('category')
-        expense.total_amount = expense.tax_amount + expense.amount
-        expense.save()
+            employee, _ = Employee.objects.get_or_create(user=user)
+            employee.address = json_record.get('employee address', None)
+            employee.save()
+
+            expense = Expense()
+            date = json_record.get('date', '')
+            if date:
+                date = datetime.datetime.strptime(date, '%m/%d/%Y')
+            expense.date = date
+            expense.employee = employee
+            expense.description = json_record.get('expense description', None)
+            expense.amount = decimal.Decimal(json_record.get('pre-tax amount').replace(",", ""))
+            expense.tax_name = json_record.get('tax name')
+            expense.tax_amount = decimal.Decimal(json_record.get('tax amount'))
+            expense.tax_rate = decimal.Decimal(expense.tax_amount/expense.amount)
+            expense.category = json_record.get('category')
+            expense.total_amount = expense.tax_amount + expense.amount
+            expense.save()
+    except (AttributeError, csv_error) as e:
+        #raise Exception("Oops! Looks like there was a problem processing your file: {0}".format(e))
+        raise Exception("Oops! Looks like there was a problem processing your file: {0}".format(e))
 
 
 def csv_row_to_json(csv_record, headers):
