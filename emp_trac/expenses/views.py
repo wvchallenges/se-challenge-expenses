@@ -13,7 +13,7 @@ class ExpenseUploadView(FormView):
 
     def form_valid(self, form):
         file = self.request.FILES['csv_expense_file']
-        form.csv_load_data(file)
+        form.handle_uploaded_file(file)
         return super(ExpenseUploadView, self).form_valid(form)
 
 upload = ExpenseUploadView.as_view()

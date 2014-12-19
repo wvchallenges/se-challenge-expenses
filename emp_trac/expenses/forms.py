@@ -6,6 +6,6 @@ class ExpenseUploadForm(forms.Form):
 
     csv_expense_file = forms.FileField(help_text=_('Upload Expenses using correct file format.'))
 
-    def csv_load_data(self, file):
+    def handle_uploaded_file(self, file):
         # send email using the self.cleaned_data dictionary
         process_csv_file(file)
