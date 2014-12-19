@@ -16,13 +16,13 @@ class ExpenseUploadView(FormView):
         form.handle_uploaded_file(file)
         return super(ExpenseUploadView, self).form_valid(form)
 
-upload = ExpenseUploadView.as_view()
+expense_upload = ExpenseUploadView.as_view()
 
 
 class HelpView(TemplateView):
     template_name = 'expenses/help.html'
 
-hlp = HelpView.as_view()
+expense_help = HelpView.as_view()
 
 
 class ExpenseListView(ListView):
@@ -31,7 +31,7 @@ class ExpenseListView(ListView):
     model = Expense
 
 
-lst = ExpenseListView.as_view()
+expense_list = ExpenseListView.as_view()
 
 
 class ExpenseMonthlySummaryView(TemplateView):
@@ -50,4 +50,4 @@ class ExpenseMonthlySummaryView(TemplateView):
 
         return context
 
-monthly_summary = ExpenseMonthlySummaryView.as_view()
+expense_monthly_summary = ExpenseMonthlySummaryView.as_view()
