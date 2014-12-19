@@ -9,11 +9,11 @@ from .models import Expense
 class ExpenseUploadView(FormView):
     template_name = 'expenses/upload.html'
     form_class = ExpenseUploadForm
-    success_url = reverse_lazy('expense_list')
+    success_url = reverse_lazy('expense_monthly_summary')
 
     def form_valid(self, form):
-        file = self.request.FILES['csv_expense_file']
-        form.handle_uploaded_file(file)
+        csv_file = self.request.FILES['csv_expense_file']
+        form.handle_uploaded_file(csv_file)
         return super(ExpenseUploadView, self).form_valid(form)
 
 expense_upload = ExpenseUploadView.as_view()
@@ -25,19 +25,9 @@ class HelpView(TemplateView):
 expense_help = HelpView.as_view()
 
 
-class ExpenseListView(ListView):
-
-    template_name = 'expenses/list.html'
-    model = Expense
-
-
-expense_list = ExpenseListView.as_view()
-
-
 class ExpenseMonthlySummaryView(TemplateView):
 
     template_name = 'expenses/monthly_summary.html'
-
     model = Expense
 
     def get_context_data(self, **kwargs):
@@ -45,9 +35,7 @@ class ExpenseMonthlySummaryView(TemplateView):
         truncate_date = connection.ops.date_trunc_sql('month', 'date')
         context = dict()
         qs = Expense.objects.extra({'month': truncate_date})
-        context['report'] = qs.values('month').annotate(Sum('amount'), Count('pk')).order_by('month')
-        #context = super(ExpenseMonthlySummaryView, self).get_context_data(**kwargs)
-
+        context['report'] = qs.values('month').annotate(Sum('total_amount')).order_by('month')
         return context
 
 expense_monthly_summary = ExpenseMonthlySummaryView.as_view()

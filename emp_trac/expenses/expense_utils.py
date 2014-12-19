@@ -47,10 +47,10 @@ def process_csv_file(csv_file):
         expense.description = json_record.get('expense description', None)
         expense.amount = decimal.Decimal(json_record.get('pre-tax amount').replace(",", ""))
         expense.tax_name = json_record.get('tax name')
-        expense.tax_amount = json_record.get('tax amount')
+        expense.tax_amount = decimal.Decimal(json_record.get('tax amount'))
         expense.tax_rate = decimal.Decimal(expense.tax_amount/expense.amount)
         expense.category = json_record.get('category')
-        expense.total_amount = expense.tax_amount + expense.total_amount
+        expense.total_amount = expense.tax_amount + expense.amount
         expense.save()
 
 
