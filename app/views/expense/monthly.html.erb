@@ -1,0 +1,19 @@
+<h1>Summary of Monthly Expenses</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Month (MM/YYYY)</th>
+        <th>Total Expenses</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.month_year %></td>
+          <td><%= expense.total_expense %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+

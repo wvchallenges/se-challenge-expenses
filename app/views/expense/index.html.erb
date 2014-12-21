@@ -1,0 +1,6 @@
+<h1>Wave Software Development Challenge</h1>
+<p>Upload a CSV file to get a monthly expenses summary:</p>
+<%= form_tag expense_import_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Submit" %>
+<% end %>
