@@ -1,0 +1,5 @@
+<h3>Import a CSV File</h3>
+<%= form_tag expenses_create_path, :method => :post, multipart: true do %>
+<%= file_field_tag :file %>
+<%= submit_tag "Import CSV" %>
+<% end %>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+	<%= stylesheet_link_tag    "application" %>
+	<%= javascript_include_tag "vendor/modernizr" %>
+	<%= csrf_meta_tags %>
+</head>
+
+<body>
+	<nav class="top-bar" data-topbar role="navigation">
+		<ul class="title-area">
+			<li class="name">
+				<h1><%= link_to "Expense Tracker", users_path%></h1>
+			</li>
+			<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+		</ul>
+
+		<section class="top-bar-section">
+			<!-- Right Nav Section -->
+			<ul class="right">
+				<li class="active"><a href="#"></a></li>
+				<li class="has-dropdown">
+					<a href="#">User</a>
+					<ul class="dropdown">
+						<% if current_user %>
+						<li><%= link_to "Logout", :logout, method: :post %></li>
+						<% else %>
+						<li><a href="#" data-reveal-id="myModal">Login</a></li>
+
+
+						<div id="myModal" class="reveal-modal" data-reveal>
+
+							<%= render partial: 'user_sessions/form' %>
+							<a class="close-reveal-modal">&#215;</a>
+						</div>
+						<!-- <li><%= link_to "Login", :login %></li> -->
+						<li><%= link_to "Register", new_user_path %></li>
+						<% end %>
+					</ul>
+				</li>
+			</ul>
+
+			<!-- Left Nav Section -->
+			<% if current_user %>
+			<ul class="left">
+				<li><a href="#"><%= link_to "View expenses", user_path(current_user) %></a></li>
+			</ul>
+			<% end %>
+		</section>
+	</nav>
+
+	<div>
+		<p id="notice"><%= flash[:notice] %></p>
+		<p id="alert"><%= flash[:alert] %></p>
+	</div>
+
+	<%= yield %>
+	<%= javascript_include_tag "application" %>
+</body>
+</html>
