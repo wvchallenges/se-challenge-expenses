@@ -1,0 +1,19 @@
+html {
+  font-family: "Georgia", serif;
+  font-size: 100%;
+
+  color: #333;
+}
+
+body {
+  max-width: 640px;
+
+  margin: 4em auto;
+
+  font-size: 0.85em;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 300;
+}

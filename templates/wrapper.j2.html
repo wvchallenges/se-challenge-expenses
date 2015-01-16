@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='typography.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='tables.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='form.css')}}">
+</head>
+<body>
+  <div class="wrapper">
+  {% block body %}{% endblock %}
+  </div>
+</body>
+</html>

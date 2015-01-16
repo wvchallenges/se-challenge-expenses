@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+th, td {
+  padding: 4px;
+}
+
+td.currency {
+  text-align: right;
+}
+
+td.date {
+  white-space: nowrap;
+}
+
+tr:nth-child(2n) {
+  background-color: #eee;
+}
+
+tr:hover {
+  color: #fff;
+  background-color: #333;
+
+  -webkit-transition: 0.15s all;
+  -o-transition: 0.15s all;
+  transition: 0.15s all;
+}
