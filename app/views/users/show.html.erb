@@ -1,56 +1,75 @@
-<a href="#" data-reveal-id="myModal" class = "button radius medium">Import CSV</a>
+	<head>
+		<style>
+			.expens{
+				padding: 10px
+			}
+		</style>
+	</head>
+	<div class = "expens">
+		<a href="#" data-reveal-id="myModal" class = "button radius medium">Import CSV</a>
+	</div>
 
-<div id="myModal" class="reveal-modal" data-reveal>
-	<%= form_tag expenses_create_path, multipart: true do %>
-	<%= file_field_tag :file %>
-	<%= submit_tag "Import CSV" %>
-	<% end %>
-	<a class="close-reveal-modal">&#215;</a>
-</div>
-
-
-
-<dl class="tabs" data-tab>
-	<% @expenses.each_with_index do |(key,value),index| %>
-	<% if index == 0 %>
-	<dd class="active"><a href="#panel<%= index %>"><%= key %></a></dd>
-	<% else  %>
-	<dd><a href="#panel<%= index %>"><%= key %></a></dd>
-	<% end %>
-	<% end %>
-</dl>
-
-<div class="tabs-content">
-	<% @expenses.each_with_index do |(key,value),index| %>
-	<% if index == 0 %>
-	<div class="content active" id="panel<%= index %>">
-		<% else  %>
-		<div class="content" id="panel<%= index %>">
-			<% end %>
-			<table>
-				<tr>
-					<th>Date</th>
-					<th>Category</th>
-					<th>Employee name</th>
-					<th>Employee address</th>
-					<th>Expense Description</th>
-					<th>Pretax amount</th>
-					<th>Tax name</th>
-					<th>Tax amount</th>
-				</tr>
-				<% value.each do |t| %>
-				<tr>
-					<td><%= t.date %></td>
-					<td><%= t.category %></td>
-					<td><%= t.employee_name %></td>
-					<td><%= t.employee_address %></td>
-					<td><%= t.expense_description %></td>
-					<td><%= t.pretax_amount %></td>
-					<td><%= t.tax_name %></td>
-					<td><%= t.tax_amount %></td>
-				</tr>
-				<% end %>
-			</table>
-		</div>
+	<div id="myModal" class="reveal-modal" data-reveal>
+		<%= form_tag expenses_create_path, multipart: true do %>
+		<%= file_field_tag :file %>
+		<%= submit_tag "Import CSV" %>
 		<% end %>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+
+
+
+	<dl class="tabs" data-tab>
+		<% @expenses.each_with_index do |(key,value),index| %>
+		<% if index == 0 %>
+		<dd class="active"><a href="#panel<%= index %>"><%= key %></a></dd>
+		<% else  %>
+		<dd><a href="#panel<%= index %>"><%= key %></a></dd>
+		<% end %>
+		<% end %>
+	</dl>
+
+	<div class="tabs-content expens">
+		<% @expenses.each_with_index do |(key,value),index| %>
+		<% if index == 0 %>
+		<div class="content active" id="panel<%= index %>">
+			<% else  %>
+			<div class="content" id="panel<%= index %>">
+				<% end %>
+				<table>
+					<tr>
+						<th>Date</th>
+						<th>Category</th>
+						<th>Employee name</th>
+						<th>Employee address</th>
+						<th>Expense Description</th>
+						<th>Pretax amount</th>
+						<th>Tax name</th>
+						<th>Tax amount</th>
+					</tr>
+					<% value.each do |t| %>
+					<tr>
+						<td><%= t.date %></td>
+						<td><%= t.category %></td>
+						<td><%= t.employee_name %></td>
+						<td><%= t.employee_address %></td>
+						<td><%= t.expense_description %></td>
+						<td><%= t.pretax_amount %></td>
+						<td><%= t.tax_name %></td>
+						<td><%= t.tax_amount %></td>
+					</tr>
+					<% end %>
+				</table>
+				<div class="row">
+					<div class="large-4 columns">
+						<div class = "panel">
+							<p>Pretax total: <%= number_to_currency(value.sum(&:pretax_amount)) %></p>
+							<p>Tax total: <%= number_to_currency(value.sum(&:tax_amount)) %></p>
+							<p>Total: <%= number_to_currency(value.sum(&:tax_amount) + value.sum(&:pretax_amount)) %></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<% end %>
+		</div>
 	</div>
