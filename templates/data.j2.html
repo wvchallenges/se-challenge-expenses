@@ -1,0 +1,21 @@
+{% extends "wrapper.j2.html" %}
+{% block body %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Total Expenses</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td class="date">{{ row['month'] }}</td>
+        <td class="currency">${{ row['sum'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "wrapper.j2.html" %}
+
+{% block body %}
+
+<h1>File Submission</h1>
+
+<form action="{{ url_for('accept_file') }}" method="post" enctype="multipart/form-data">
+  <input type="file" name="data.csv">
+  <input type="submit">
+</form>
+
+{% endblock %}
