@@ -5,8 +5,12 @@ class UploadsController < ApplicationController
 
   def upload
     begin
-      UploadFile.save(params[:file])
-      redirect_to uploads_path, text: "File has been uploaded successfully"
+      if (params[:file]).nil?
+        render text: "Please upload a file"
+      else
+        UploadFile.save(params[:file])
+        redirect_to uploads_path
+      end
 
     rescue
       render text: "Something wrong just happened"

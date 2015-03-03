@@ -1,28 +1,15 @@
-== README
+Before running the application:
+* First ensure that you have rails installed. This was built with rails 4.1.0, so running `gem install rails -v 4.1.0`.
+* Once that succeeds, cd into se-challenge/wave and run `bundle install` in order to install all gems.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run the application:
+* Run bundle install
+* Run rake db:migrate
+* Run rails s
+* Visit : localhost:3000/uploads
 
-Things you may want to cover:
+Note:
+In the csv file I replaced the spaces with _ to be able to map the columns properly with the DB.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+What I enjoyed the most:
+I enjoyed coding the data model and the logic in the controller that talks to it, I always like to find the cleanest way, less coding, efficient and easier for other developers to read.
