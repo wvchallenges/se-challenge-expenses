@@ -1,0 +1,12 @@
+      <% @employees.each do |employee| %>
+    <tr>
+      <td> <%= employee.date %></td>
+      <td> <%= employee.category %></td>
+      <td> <%= employee.employee_name %></td>
+      <td> <%= employee.employee_address %></td>
+      <td> <%= employee.expense_description %></td>
+      <td> <%= employee.pre_tax_amount %></td>
+      <td> <%= employee.tax_name %></td>
+      <td> <%= employee.tax_amount%></td>
+    </tr>
+    <% end %>

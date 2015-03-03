@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload</title>
+<h1> Please upload a file</h1>
+</head>
+<body>
+<%= form_tag upload_uploads_path , multipart: true  do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag( "Upload file" ) %>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>date</th>
+      <th>category</th>
+      <th>employee name</th>
+      <th>employee address</th>
+      <th>expense description </th>
+      <th>pre-tax amount</th>
+      <th>tax name</th>
+      <th>tax amount</th>
+    </tr>
+  </thead>
+    <tbody>
+    <% @employees.each do |employee| %>
+    <tr>
+      <td> <%= employee.date %></td>
+      <td> <%= employee.category %></td>
+      <td> <%= employee.employee_name %></td>
+      <td> <%= employee.employee_address %></td>
+      <td> <%= employee.expense_description %></td>
+      <td> <%= employee.pre_tax_amount %></td>
+      <td> <%= employee.tax_name %></td>
+      <td> <%= employee.tax_amount%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</body>
+</html>
