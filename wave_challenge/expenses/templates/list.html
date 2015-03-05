@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block title %}Monthly Expense Viewer{% endblock %}
+
+
+
+{% block content %}
+<div class="page-header">
+<h1>Monthly Expense Viewer</h1>
+</div>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+<table class="table">
+    <tr>
+        <th>Month</th>
+        <th>Total Expenses</th>
+    </tr>
+    {% for month, expense in monthly_expenses %}
+    <tr>
+        <td>{{ month|date:"F, Y" }}</td>
+        <td>$ {{ expense|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Import Expenses in CSV Format</h3>
+  </div>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" action="/expenses/add/" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="csv_file">Expense CSV File</label>
+            <input type="file" id="csv_file" name="file">
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Import CSV">
+        </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
