@@ -1,0 +1,97 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          wave_challenge_expenses
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the wave_challenge_expenses service
+# Description:       starts the wave_challenge_expenses service using gunicorn
+### END INIT INFO
+
+# settings
+PROJECT_NAME="wave_challenge"
+PROJECT_HOME="/home/ubuntu/se-challenge"
+PID_FILE="/tmp/wave_challenge.pid"
+
+
+
+RETVAL=0
+
+start() {
+        # make sure its stopped
+        is_running
+        [ $? -eq 1 ] && echo "$PROJECT_NAME: already running"  && return 1
+
+    echo "$PROJECT_NAME: starting"
+    cd $PROJECT_HOME/$PROJECT_NAME
+    $PROJECT_HOME/venv/bin/gunicorn_django -c gunconf.py
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && touch $PID_FILE
+    return $RETVAL
+}
+
+stop() {
+        # make sure its running
+        is_running
+        [ $? -eq 0 ] && echo "$PROJECT_NAME: not running" && return 1
+
+    echo "$PROJECT_NAME: stopping"
+    kill -9 `cat $PID_FILE`
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && rm -f $PID_FILE
+    return $RETVAL
+}
+
+reload() {
+        is_running
+        [ $? -eq 0 ] && echo "$PROJECT_NAME: not running" && return 1
+
+    echo "$PROJECT_NAME: reloading"
+    kill -HUP `cat $PID_FILE`
+    RETVAL=$?
+    return $RETVAL
+}
+
+
+status() {
+        msg="stopped"
+        
+        is_running
+        RETVAL=$?
+        [ $RETVAL -eq 1 ] && msg="running"
+        echo "$PROJECT_NAME: $msg"
+                
+        return $RETVAL
+}
+
+
+is_running() {
+        [ -s $PID_FILE ] && [ -e /proc/`cat $PID_FILE`/exe ] && return 1
+        return 0
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    reload)
+        reload
+        ;;
+    status)
+                status
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload|status}"
+        RETVAL=1
+        ;;
+esac
+exit $RETVAL
+
