@@ -1,46 +1,30 @@
-# Wave Software Development Challenge
-Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
+# Wave Software Development Challenge 
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+#Requirements
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one
-1. Complete the project as described below within your fork
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
+You'll need the following installed to run the application
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository
-1. Complete your project as described below within your local repository
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+1. Python 2.7.x
+2. pip to install requirements.txt (pip install -r requirements.txt)
+3. MySQL
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
 
-### What your web-based application must do:
+##Instructions
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions
- 1. Columns will always be in that order
- 2. There will always be data in each column
- 3. There will always be a header line
+1. Clone this repository using git bash or any git tool.
+2. open a terminal window and navigate to the application directory.
+3. Run "pip install -r requirements.txt"
+3. Create an empty database, and update the settings.py file with your database credentials and other information.
+4. Run 'python manage.py migrate' to initialize the database tables.
+6. Run the application using 'python manage.py runserver'.
 
- An example input file named `data_example.csv` is included in this repo.
+## What Parts I'm Proud of In my Implementation
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+1) Making use of Python csv.reader to force some of my inputs to be Date and Decimals fields. This made data manipulation easier (like sorting by date and summing the total amounts).
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+2) Keeping track of an uploaded file using a now() timestamp to make the file unique every time. This way we don't add new values in the results page if we have the same file name.
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+3) Using a helper method 'custom_redirect' to add additional parameters to my HttpRedirect. That GET parameter was used to filter the results. The input to the DB is sanitized of course using the cursor.execute() method.
 
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
-
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+4) Using bootstrap for quick styling and a JQuery plugin called "file input" to ensure the upload of valid .csv files only.

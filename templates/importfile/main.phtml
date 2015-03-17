@@ -1,0 +1,24 @@
+{% extends "base.phtml" %}
+
+{% block title %}Import Expense File{% endblock %}
+
+
+{% block content %}
+
+<h1>Please Input Your .csv file here</h1>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+<input id="inputfile" name="fileUpload" type="file"  >
+
+</form>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        $("#inputfile").fileinput({
+            showPreview : false,
+            allowedFileExtensions : ['csv'],
+        });
+    });
+</script>
+{% endblock %}

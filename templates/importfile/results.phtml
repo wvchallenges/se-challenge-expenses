@@ -1,0 +1,19 @@
+{% extends "base.phtml" %}
+
+{% block title %}Monthly Expenses{% endblock %}
+
+{% block content %}
+
+<table class="table">
+    <tr>
+        <th>Month</th>
+        <th>Total Expenses</th>
+    </tr>
+    {% for month, expense in monthly_expenses %}
+    <tr>
+        <td>{{ month|date:"F, Y" }}</td>
+        <td>$ {{ expense|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
