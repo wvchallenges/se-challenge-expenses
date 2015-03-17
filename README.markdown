@@ -25,6 +25,6 @@ You'll need the following installed to run the application
 
 2) Keeping track of an uploaded file using a now() timestamp to make the file unique every time. This way we don't add new values in the results page if we have the same file name.
 
-3) Using a helper method 'custom_redirect' to add additional parameters to my HttpRedirect. That GET parameter was used to filter the results. The input to the DB is sanitized using of course through the cursor.execute() method
+3) Using a helper method 'custom_redirect' to add additional parameters to my HttpRedirect. That GET parameter was used to filter the results. The input to the DB is sanitized of course using the cursor.execute() method.
 
-4) Using bootstrap for quick styling and a JQuery plugin called "file input" to ensure upload of valid .csv files only.
+4) Using bootstrap for quick styling and a JQuery plugin called "file input" to ensure the upload of valid .csv files only.
