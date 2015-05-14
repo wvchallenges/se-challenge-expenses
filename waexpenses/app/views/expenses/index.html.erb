@@ -1,23 +1,66 @@
-<h1>Listing expenses</h1>
+<h1>Wave SE Challenge</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div>
+<h3>Import a CSV File</h3>
+  <%= form_tag({action: :import}, multipart: true) do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import CSV" %>
+  <% end %>
+<%= flash[:notice] %>
+</div>
 
-  <tbody>
-    <% @expenses.each do |expense| %>
+<div>
+  <h2>Monthly Expenses</h2>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to 'Show', expense %></td>
-        <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-        <td><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Month</th>
+        <th>Total Expenses</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% (0..@dates.length-1).each do |i| %>
+        <tr>
+          <td><%= @dates[i] %></td>
+          <td><%= number_to_currency(@total_expense[i]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<br>
 
-<%= link_to 'New Expense', new_expense_path %>
+<% if false %>
+<!-- 
+<div>
+  <h2>All Data</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Employee Name</th>
+        <th>Employee Address</th>
+        <th>Expense Description</th>
+        <th>Pre-Tax Amount</th>
+        <th>Tax Name</th>
+        <th>Tax Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.date %></td>
+          <td><%= expense.category %></td>
+          <td><%= expense.employee_name %></td>
+          <td><%= expense.employee_address %></td>
+          <td><%= expense.expense_description %></td>
+          <td><%= number_to_currency(expense.pre_tax_amount) %></td>
+          <td><%= expense.tax_name %></td>
+          <td><%= number_to_currency(expense.tax_amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+-->
+<% end %>

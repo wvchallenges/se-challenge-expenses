@@ -5,6 +5,24 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     @expenses = Expense.all
+   
+    @dates = []
+    @total_expense = []
+    @expenses.each do |expense|
+      
+      month_and_year = Date.new(expense.date.year,expense.date.month, 1)
+
+      included = @dates.include? month_and_year
+      if !included
+        @dates << month_and_year
+        @total_expense << expense.calculate_total_amount()
+      else
+        matched_index = @dates.index(month_and_year)
+        if matched_index != nil
+          @total_expense[matched_index] += expense.calculate_total_amount()
+        end
+      end
+    end
   end
 
   # GET /expenses/1
@@ -61,6 +79,16 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def import
+    begin
+      CsvImport.import params[:file]
+      redirect_to root_url, notice: "File imported."
+    rescue
+      redirect_to root_url, notice: "Error importing CSV file."
+    end
+  end # end import
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_expense
@@ -72,3 +100,7 @@ class ExpensesController < ApplicationController
       params[:expense]
     end
 end
+
+
+#-- filter by date
+#@users = User.where(:created_at => start_date.to_time..end_date.to_time)
