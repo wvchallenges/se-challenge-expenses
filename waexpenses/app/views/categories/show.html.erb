@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @category.description %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @category.parent %>
+</p>
+
+<p>
+  <strong>Children:</strong>
+  <tbody>
+    <% @category.children.each do |child| %>
+      <tr>
+        <td><%= child.name %></td>
+        <td><%= link_to 'Show', child %></td>
+        <td><%= link_to 'Edit', edit_category_path(child) %></td>
+        <td><%= link_to 'Destroy', child, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
