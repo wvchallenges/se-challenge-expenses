@@ -32,4 +32,22 @@ class EmployeeTest < ActiveSupport::TestCase
     found_employee = Employee.find_or_create_from_name("Jim Graham, Jr")
     assert_equal "Montreal, PQ", found_employee.address, "Existing employee found"
   end
+
+  test "employee expenses summed" do
+    employee = Employee.new name: "Jim Graham, Jr", address: "Montreal, PQ"
+    employee.save!
+  
+    expense = employee.expenses.create amount_cents: 129900
+    expense.tax_amounts.create amount_cents: 129900 * 0.08
+    expense.tax_amounts.create amount_cents: 129900 * 0.10
+
+    assert_equal 1299.00 * 1.18, employee.calculate_total_expenses()
+
+    expense = employee.expenses.create amount_cents: 35000
+    expense.tax_amounts.create amount_cents: 35000 * 0.08
+
+    assert_equal (1299.00 * 1.18) + (350.00 * 1.08), employee.calculate_total_expenses()
+
+  end
+
 end

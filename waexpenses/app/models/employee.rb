@@ -10,6 +10,14 @@ class Employee < ActiveRecord::Base
     return Employee.find_or_create_by! name: first_and_last
   end
 
+  def calculate_total_expenses()
+    total = 0.0
+    self.expenses.each do |e|
+      total += e.calculate_total_amount()
+    end
+    return total
+  end
+
   def self.format_name_string(name)
     #-- name is of the form "First Last" or "Last, First"
     #-- put in "first last" order -- check for suffix.
