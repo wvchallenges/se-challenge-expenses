@@ -7,7 +7,7 @@
 
 <p>
   <strong>Address:</strong>
-  <%= @employee.address %>
+  <a href="http://maps.google.com/?q=<%= @employee.address %>" target="_blank"><%= @employee.address %></a>
 </p>
 
 
