@@ -5,5 +5,49 @@
   <%= @tax.name %>
 </p>
 
-<%= link_to 'Edit', edit_tax_path(@tax) %> |
-<%= link_to 'Back', taxes_path %>
+<p>
+  <strong>Total expenses:</strong>
+  <%= @tax.expenses.count %>
+</p>
+<p>
+  <strong>Total paid:</strong>
+  <%= @tax.calculate_total() %>
+</p>
+
+<div>
+  <h2>Total paid to <%= @tax.name %></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Employee Name</th>
+        <th>Employee Address</th>
+        <th>Expense Description</th>
+        <th>Tax Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tax.expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.date %></td>
+          <td><%= expense.category.full_name %></td>
+          <td>
+            <%= link_to(expense.employee) do %>
+              <%= expense.employee.name %>
+            <% end %>
+          </td>
+          <td><%= expense.employee.address %></td>
+          <td>
+            <%= link_to(expense) do %>
+              <%= expense.description %>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(expense.tax_amounts[0].amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'All Taxes', taxes_path %>
