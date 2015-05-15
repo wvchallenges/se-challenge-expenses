@@ -10,7 +10,6 @@
   <a href="http://maps.google.com/?q=<%= @employee.address %>" target="_blank"><%= @employee.address %></a>
 </p>
 
-
 <div>
   <h2><%= @employee.name %>'s Expenses</h2>
   <table>
@@ -35,7 +34,11 @@
             <% end %>
           </td>
           <td><%= number_to_currency(expense.amount) %></td>
-          <td><%= expense.taxes[0].name %></td>
+          <td>
+            <%= link_to(expense.taxes[0]) do %>
+              <%= expense.taxes[0].name %>
+            <% end %>
+          </td>
           <td><%= number_to_currency(expense.tax_amounts[0].amount) %></td>
         </tr>
       <% end %>

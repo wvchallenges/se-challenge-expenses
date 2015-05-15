@@ -5,25 +5,29 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Category</th>
-      <th colspan="3"></th>
+      <th>Parent Category</th>
     </tr>
   </thead>
 
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
+        <td>
+          <%= link_to(category) do %>
+            <%= category.full_name %>
+          <% end %>
+        </td>
         <td><%= category.description %></td>
-        <td><%= category.parent %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if category.parent %>
+            <%= link_to(category.parent) do %>
+              <%= category.parent.full_name %>
+            <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Category', new_category_path %>

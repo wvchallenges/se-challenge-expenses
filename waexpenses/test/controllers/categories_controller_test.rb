@@ -4,7 +4,7 @@ class CategoriesControllerTest < ActionController::TestCase
 
   setup do
     #-- Factory girl
-    @category = Category.new name: "Computer"
+    @category = Category.find_or_create_by_heirarchy("Computer - Hardware")
     @category.save!
   end
 

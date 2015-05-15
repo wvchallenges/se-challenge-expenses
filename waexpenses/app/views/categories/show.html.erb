@@ -10,24 +10,29 @@
   <%= @category.description %>
 </p>
 
-<p>
-  <strong>Parent:</strong>
-  <%= @category.parent %>
-</p>
+<% if @category.parent %>
+  <p>
+    <strong>Parent category:</strong>
+    <%= link_to(@category.parent) do %>
+      <%= @category.parent.name %>
+    <% end %>
+  </p>
+<% end %>
 
 <p>
   <strong>Children:</strong>
   <tbody>
     <% @category.children.each do |child| %>
       <tr>
-        <td><%= child.name %></td>
-        <td><%= link_to 'Show', child %></td>
-        <td><%= link_to 'Edit', edit_category_path(child) %></td>
-        <td><%= link_to 'Destroy', child, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to(child) do %>
+            <%= child.name %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </p>
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'All Categories', categories_path %>

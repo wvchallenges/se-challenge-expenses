@@ -2,7 +2,6 @@ class Category < ActiveRecord::Base
   validates :name, :presence => true,
                    :length =>{ :minimum => 2}
 
-  #-- TODO this should be parent_id
   belongs_to :parent, :class_name => 'Category', :foreign_key => :category_id
   has_many :children, :class_name => 'Category'
 

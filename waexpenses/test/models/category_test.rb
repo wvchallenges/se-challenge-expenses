@@ -46,9 +46,18 @@ class CategoryTest < ActiveSupport::TestCase
     assert category.save, "Category with name is saved"
 
     subcategory = Category.find_or_create_by_heirarchy("Computer - Hardware")
+    subcategory.save!
+    
     assert_equal 1, category.children.count
     assert_equal subcategory, category.children[0]
     assert_equal category, subcategory.parent
+
+    assert_equal "Hardware", subcategory.name
+    assert_equal "Computer - Hardware", subcategory.full_name
+
+    assert_equal "Computer", category.name
+    assert_equal "Computer", category.full_name
+
   end
 
   test "existing category added to tree from name" do

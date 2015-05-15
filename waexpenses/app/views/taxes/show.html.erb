@@ -11,7 +11,7 @@
 </p>
 <p>
   <strong>Total paid:</strong>
-  <%= @tax.calculate_total() %>
+  <%= number_to_currency(@tax.calculate_total()) %>
 </p>
 
 <div>
