@@ -50,12 +50,20 @@
         <tr>
           <td><%= expense.date %></td>
           <td><%= expense.category.full_name %></td>
-          <td><%= expense.employee.name %></td>
+          <td>
+            <%= link_to(expense.employee) do %>
+              <%= expense.employee.name %>
+            <% end %>
+          </td>
           <td><%= expense.employee.address %></td>
-          <td><%= expense.description %></td>
-          <td><%= expense.amount %></td>
+          <td>
+            <%= link_to(expense) do %>
+              <%= expense.description %>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(expense.amount) %></td>
           <td><%= expense.taxes[0].name %></td>
-          <td><%= expense.tax_amounts[0].amount %></td>
+          <td><%= number_to_currency(expense.tax_amounts[0].amount) %></td>
         </tr>
       <% end %>
     </tbody>

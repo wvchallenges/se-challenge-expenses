@@ -14,7 +14,7 @@
       <tr>
         <td><%= employee.name %></td>
         <td><%= employee.address %></td>
-        <td><%= employee.calculate_total_expenses() %></td>
+        <td><%= number_to_currency(employee.calculate_total_expenses()) %></td>
       </tr>
     <% end %>
   </tbody>
