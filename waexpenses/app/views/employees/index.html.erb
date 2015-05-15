@@ -1,4 +1,4 @@
-<h1>Listing employees</h1>
+<h1>Employees</h1>
 
 <table>
   <thead>
@@ -12,7 +12,11 @@
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
-        <td><%= employee.name %></td>
+        <td>
+          <%= link_to(employee) do %>
+            <%= employee.name %>
+          <% end %>
+        </td>
         <td><%= employee.address %></td>
         <td><%= number_to_currency(employee.calculate_total_expenses()) %></td>
       </tr>
