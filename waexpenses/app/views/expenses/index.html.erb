@@ -30,10 +30,8 @@
 </div>
 
 
-<% if false %>
-<!-- 
 <div>
-  <h2>All Data</h2>
+  <h2>All Expenses</h2>
   <table>
     <thead>
       <tr>
@@ -51,16 +49,14 @@
       <% @expenses.each do |expense| %>
         <tr>
           <td><%= expense.date %></td>
-          <td><%= expense.category %></td>
-          <td><%= expense.employee_name %></td>
-          <td><%= expense.employee_address %></td>
-          <td><%= expense.expense_description %></td>
-          <td><%= number_to_currency(expense.pre_tax_amount) %></td>
-          <td><%= expense.tax_name %></td>
-          <td><%= number_to_currency(expense.tax_amount) %></td>
+          <td><%= expense.category.full_name %></td>
+          <td><%= expense.employee.name %></td>
+          <td><%= expense.employee.address %></td>
+          <td><%= expense.description %></td>
+          <td><%= expense.amount %></td>
+          <td><%= expense.taxes[0].name %></td>
+          <td><%= expense.tax_amounts[0].amount %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
--->
-<% end %>
