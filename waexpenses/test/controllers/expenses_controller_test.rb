@@ -2,7 +2,19 @@ require 'test_helper'
 
 class ExpensesControllerTest < ActionController::TestCase
   setup do
-    @expense = expenses(:one)
+    #-- not from fixture. Look at Factory Girl
+    @employee = Employee.new name: "Jim Graham", address: "Toronto ON"
+    @employee.save!    
+    @category = Category.find_or_create_by_heirarchy("Computer - Hardware")
+    @category.save!
+    @expense = @employee.expenses.create description: "test", amount_cents: 129900, date: DateTime.now, category_id: @category.id
+    @tax = Tax.new name: "CA Tax"
+    @tax.save!
+    @amount = @tax.tax_amounts.create amount_cents: 12990
+    @expense.tax_amounts << @amount
+    @tax.expenses << @expense
+    @tax.save!
+    @expense.save!
   end
 
   test "should get index" do
@@ -14,14 +26,6 @@ class ExpensesControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
-  end
-
-  test "should create expense" do
-    assert_difference('Expense.count') do
-      post :create, expense: {  }
-    end
-
-    assert_redirected_to expense_path(assigns(:expense))
   end
 
   test "should show expense" do
