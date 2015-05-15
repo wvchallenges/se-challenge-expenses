@@ -2,7 +2,7 @@ class Employee < ActiveRecord::Base
   validates :name, :presence => true,
                    :length =>{ :minimum => 2}
 
-  has_many :expenses
+  has_many :expenses, -> { order(date: :desc) }
   accepts_nested_attributes_for :expenses
 
   def self.find_or_create_from_name(name)

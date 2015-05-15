@@ -4,12 +4,11 @@ class ExpensesController < ApplicationController
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.order(date: :desc)
    
     @dates = []
     @total_expense = []
     @expenses.each do |expense|
-      
       month_and_year = Date.new(expense.date.year,expense.date.month, 1)
 
       included = @dates.include? month_and_year
