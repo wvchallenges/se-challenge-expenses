@@ -17,4 +17,15 @@ class ExpenseTest < ActiveSupport::TestCase
     expense = Expense.new amount: "$1,299.00"
     assert_equal 1299.00, expense.amount, "Price is parsed correctly"
   end
+
+  test "amounts and taxes are summed" do
+    expense = Expense.new amount: "$1,299.00"
+    expense.save!
+
+    expense.tax_amounts.create amount_cents: 129900 * 0.08
+    expense.tax_amounts.create amount_cents: 129900 * 0.10
+
+    assert_equal 1299.00 * 0.18, expense.calculate_total_tax_amounts()
+    assert_equal 1299.00 * 1.18, expense.calculate_total_amount()
+  end
 end
