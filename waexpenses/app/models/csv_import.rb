@@ -33,7 +33,6 @@ class CsvImport
         #-- get the tax by name, possibly to lower.
         tax = Tax.find_or_create_by! :name => expense_row[tax_index].strip
 
-        expense.taxes << tax
         tax.expenses << expense
 
         tax_amount = tax.tax_amounts.create date: expense_date, amount_cents: tax_amount_value.cents, expense_id: expense.id

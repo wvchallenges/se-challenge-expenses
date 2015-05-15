@@ -9,9 +9,6 @@ class CsvImportTest < ActiveSupport::TestCase
 
     CsvImport.import csv_file
 
-    #Employee.all.each do |e|
-    #  p e
-    #end
     assert_equal 7, Employee.all.count, "7 employees imported"
 
     assert_equal 19, Expense.all.count, "19 expenses imported"
@@ -55,9 +52,6 @@ class CsvImportTest < ActiveSupport::TestCase
     CsvImport.import csv_file
     CsvImport.import csv_file
 
-    #Employee.all.each do |e|
-    #  p e
-    #end
     assert_equal 7, Employee.all.count, "only 7 employees imported"
     assert_equal 19, Expense.all.count, "only 19 expenses imported"
   end
