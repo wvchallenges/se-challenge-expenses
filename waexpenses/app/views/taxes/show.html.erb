@@ -21,8 +21,7 @@
       <tr>
         <th>Date</th>
         <th>Category</th>
-        <th>Employee Name</th>
-        <th>Employee Address</th>
+        <th>Employee</th>
         <th>Expense Description</th>
         <th>Tax Amount</th>
       </tr>
@@ -31,13 +30,16 @@
       <% @tax.expenses.each do |expense| %>
         <tr>
           <td><%= expense.date %></td>
-          <td><%= expense.category.full_name %></td>
+          <td>
+            <%= link_to(expense.category) do %>
+              <%= expense.category.full_name %>
+            <% end %>
+          </td>
           <td>
             <%= link_to(expense.employee) do %>
               <%= expense.employee.name %>
             <% end %>
           </td>
-          <td><%= expense.employee.address %></td>
           <td>
             <%= link_to(expense) do %>
               <%= expense.description %>
@@ -49,5 +51,7 @@
     </tbody>
   </table>
 </div>
+
+<%= link_to 'Edit', edit_tax_path(@tax) %> |
 
 <%= link_to 'All Taxes', taxes_path %>

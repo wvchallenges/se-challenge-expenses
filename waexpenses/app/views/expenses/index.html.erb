@@ -1,5 +1,3 @@
-<h1>Wave SE Challenge</h1>
-
 <div>
 <h3>Import a CSV File</h3>
   <%= form_tag({action: :import}, multipart: true) do %>
@@ -10,7 +8,7 @@
 </div>
 
 <div>
-  <h2>Monthly Expenses</h2>
+  <h2>Expenses by Month</h2>
   <table>
     <thead>
       <tr>
@@ -36,12 +34,12 @@
       <tr>
         <th>Date</th>
         <th>Category</th>
-        <th>Employee Name</th>
-        <th>Employee Address</th>
-        <th>Expense Description</th>
+        <th>Employee</th>
+        <th>Description</th>
         <th>Pre-Tax Amount</th>
         <th>Tax Name</th>
-        <th>Tax Amount</th>
+        <th>Tax levied</th>
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
@@ -58,7 +56,6 @@
               <%= expense.employee.name %>
             <% end %>
           </td>
-          <td><%= expense.employee.address %></td>
           <td>
             <%= link_to(expense) do %>
               <%= expense.description %>
@@ -66,11 +63,15 @@
           </td>
           <td><%= number_to_currency(expense.amount) %></td>
           <td>
-            <%= link_to(expense.taxes[0]) do %>
-              <%= expense.taxes[0].name %>
+            <!-- do as join, map -->
+            <% expense.taxes.each do |tax| %>
+              <%= link_to(tax) do %>
+                <%= tax.name %>, 
+              <% end %>
             <% end %>
           </td>
-          <td><%= number_to_currency(expense.tax_amounts[0].amount) %></td>
+          <td><%= number_to_currency(expense.calculate_total_tax_amount()) %></td>
+          <td><%= number_to_currency(expense.calculate_total_amount()) %></td>
         </tr>
       <% end %>
     </tbody>

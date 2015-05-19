@@ -5,8 +5,12 @@
  - [ ] Partial to show icon at top
  - [ ] CSS for table alignment
     - Use for number columns
- - [ ] App name `waexpenses` -> ???
+ - [x] App name `waexpenses` -> ???
  - [ ] Remove `destroy` routes.
+
+## Expense
+  
+  - [ ] Why did Ive, Jonathan fail to import?
 
 ## Employee
 
@@ -14,20 +18,25 @@
  - [ ] Edit
     - Name
     - Address
- - [ ] link to category
+    - Need better layout, not a table
+ - [x] link to category
     
 ## Category
- - [ ] Implement links in:
-    - [ ] Expenses
-    - [ ] Employees
- - [ ] Implement heirarchy
- - [ ] implement totals per level
+ - [x] Implement links in:
+    - [x] Expenses
+    - [x] Employees
+ - [x] Implement heirarchy
+ - [x] implement totals per level
  
 ## Tax
  - [ ] Edit name
  - [ ] Link to category
+ - [ ] Ordre expenses most-recent first.
 
 ## Expense
- - [ ] Show
- - [ ] edit description
- - 
+ - [x] Show
+
+## Category
+ - [ ] order expenses most-recent first
+ - [ ] Edit name (recalculate full name)
+ - [ ] Description

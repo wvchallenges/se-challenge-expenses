@@ -96,4 +96,28 @@ class CategoryTest < ActiveSupport::TestCase
     assert_equal 1, middle_category.children.count
     assert_equal "Mac", middle_category.children[0].name
   end
+
+  test "cateogory expenses are totaled" do
+    category = Category.find_or_create_by_heirarchy("Computer - Software")
+    parent = category.parent
+    category.save!
+    parent.save!
+
+    expense = parent.expenses.create amount: 10
+    expense.save!
+    expense = parent.expenses.create amount: 25
+    expense.save!
+
+    child_expense = category.expenses.create amount: 5
+    child_expense.save!
+    child_expense = category.expenses.create amount: 15
+    child_expense.save!
+
+    assert_equal 20, category.expense_total(), "correct child total"
+    assert_equal 35, parent.expense_total(), "correct parent total"
+    assert_equal 55, parent.expense_total_including_children(), "correct parent+child total"
+
+
+  end
+
 end

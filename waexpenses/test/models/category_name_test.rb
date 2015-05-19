@@ -41,13 +41,13 @@ class CategoryNameTest < ActiveSupport::TestCase
     subcategory = category.children.create name: "Hardware"
     subsubcategory = subcategory.children.create name: "Mac"
 
-    assert_equal category.full_name, "Computer"
-    assert_equal category.name, "Computer"
+    assert_equal "Computer", category.full_name
+    assert_equal "Computer", category.name
 
-    assert_equal subcategory.name, "Hardware"
-    assert_equal subcategory.full_name, "Computer - Hardware"
+    assert_equal "Hardware", subcategory.name
+    assert_equal "Computer - Hardware", subcategory.full_name
 
-    assert_equal subsubcategory.name, "Mac"
-    assert_equal subsubcategory.full_name, "Computer - Hardware - Mac"
+    assert_equal "Mac", subsubcategory.name
+    assert_equal "Computer - Hardware - Mac", subsubcategory.full_name
   end
 end

@@ -1,4 +1,4 @@
-<h1>Listing categories</h1>
+<h1>Expense Categories</h1>
 
 <table>
   <thead>
@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Parent Category</th>
+      <th>Total spent (including child categories)</th>
     </tr>
   </thead>
 
@@ -24,6 +25,9 @@
               <%= category.parent.full_name %>
             <% end %>
           <% end %>
+        </td>
+        <td>
+          <%= number_to_currency(category.expense_total_including_children()) %>
         </td>
       </tr>
     <% end %>

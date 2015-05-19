@@ -4,6 +4,7 @@ class CsvImport
   require 'monetize'
 
   def self.import(file)
+    expenses_imported = 0
     CSV.foreach(file.path, :headers => true ) do |expense_row|
 
       #-- date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
@@ -21,11 +22,11 @@ class CsvImport
       if (!expense.nil? && expense.employee == employee)
         next
       end
+      expenses_imported += 1
 
       category = Category.find_or_create_by_heirarchy(expense_row[1])
       expense = employee.expenses.create date: expense_date, description: expense_row[4].strip, amount_cents: expense_amount.cents, category_id: category.id
 
-      taxes = Array.new;
       tax_index = 6;
       until (tax_index >= expense_row.count )
         tax_amount_value = Monetize.parse expense_row[tax_index+1]
@@ -43,9 +44,10 @@ class CsvImport
       expense.save!
       employee.save!
     end
+    return expenses_imported
   end
 
-  def self.convert_to_currency(amount)
-    return amount.to_s.gsub(/[^\d\.]/, '').to_f
-  end
+  # def self.convert_to_currency(amount)
+  #   return amount.to_s.gsub(/[^\d\.]/, '').to_f
+  # end
 end

@@ -4,11 +4,12 @@ class Category < ActiveRecord::Base
 
   belongs_to :parent, :class_name => 'Category', :foreign_key => :category_id
   has_many :children, :class_name => 'Category'
+  has_many :expenses
 
   attr_accessor :full_name
 
   after_initialize do
-    calculate_full_name Array.new
+    calculate_full_name 
   end
 
   def self.find_category_names(name)
@@ -40,16 +41,33 @@ class Category < ActiveRecord::Base
     return last_category
   end
 
-  def calculate_full_name(previous_names)
-    if (previous_names.nil? )
-      previous_names = arr
+  def expense_total()
+    total_amount =0.0;
+    self.expenses.each do |e|
+      total_amount += e.calculate_total_amount()
     end
-    
-    previous_names.unshift self.name
-    if ( !self.parent.nil?)
-      self.parent.calculate_full_name previous_names
-    end
-    self.full_name = previous_names.join " - "
+    return total_amount
+  end
 
+  def expense_total_including_children()
+    total_amount = expense_total()
+    self.children.each do |c|
+      total_amount += c.expense_total_including_children()
+    end
+    return total_amount
+  end
+
+  def calculate_full_name()
+    self.full_name = get_full_name_array().join " - "
+  end
+
+  def get_full_name_array()
+    previous_names = Array.new
+    if ( !self.parent.nil? )
+      previous_names = self.parent.get_full_name_array()
+    end
+    previous_names << self.name
+
+    return previous_names
   end
 end

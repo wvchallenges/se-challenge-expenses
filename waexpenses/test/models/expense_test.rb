@@ -25,7 +25,31 @@ class ExpenseTest < ActiveSupport::TestCase
     expense.tax_amounts.create amount_cents: 129900 * 0.08
     expense.tax_amounts.create amount_cents: 129900 * 0.10
 
-    assert_equal 1299.00 * 0.18, expense.calculate_total_tax_amounts()
+    assert_equal 1299.00 * 0.18, expense.calculate_total_tax_amount()
     assert_equal 1299.00 * 1.18, expense.calculate_total_amount()
   end
+
+  test "tax amount is found for tax" do
+    expense = Expense.new amount: "$1,299.00"
+    expense.save!
+
+    tax_gst = Tax.new name: "GST"
+    tax_gst.expenses << expense 
+
+    tax_pst = Tax.new name: "PST"
+    tax_pst.expenses << expense
+
+    tax_pst.save!
+    tax_gst.save!
+
+    tax_pst.tax_amounts.create amount_cents: (129900 * 0.08), expense_id: expense.id
+    tax_gst.tax_amounts.create amount_cents: (129900 * 0.10), expense_id: expense.id
+    tax_pst.save!
+    tax_gst.save!
+    expense.reload
+
+    assert_equal (1299.00 * 0.08), expense.get_amount_for_tax(tax_pst).amount
+    assert_equal (1299.00 * 0.10), expense.get_amount_for_tax(tax_gst).amount
+  end
+
 end

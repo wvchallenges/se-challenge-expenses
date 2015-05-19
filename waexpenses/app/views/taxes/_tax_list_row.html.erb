@@ -1,0 +1,14 @@
+_tax_list_row.html.erb
+
+            <% @expense.taxes.each do |tax| %>
+              <tr>
+                <td>
+                  <%= link_to(tax) do %>
+                    <%= tax.name %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= number_to_currency(@expense.get_amount_for_tax(tax).amount) %>
+                </td> 
+              </tr>
+            <% end %>
