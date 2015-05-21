@@ -9,7 +9,7 @@
 
 <div>
   <h2>Expenses by Month</h2>
-  <table>
+  <table class="expense_data">
     <thead>
       <tr>
         <th>Month</th>
@@ -20,7 +20,7 @@
       <% (0..@dates.length-1).each do |i| %>
         <tr>
           <td><%= @dates[i] %></td>
-          <td><%= number_to_currency(@total_expense[i]) %></td>
+          <td class="numerical"><%= number_to_currency(@total_expense[i]) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -29,7 +29,7 @@
 
 <div>
   <h2>All Expenses</h2>
-  <table>
+  <table class="expense_data">
     <thead>
       <tr>
         <th>Date</th>
@@ -46,32 +46,15 @@
       <% @expenses.each do |expense| %>
         <tr>
           <td><%= expense.date %></td>
+          <td><%= link_to expense.category.full_name, expense.category %></td>
+          <td><%= link_to expense.employee.name, expense.employee %></td>
+          <td><%= link_to expense.description, expense %></td>
+          <td class="numerical"><%= number_to_currency(expense.amount) %></td>
           <td>
-            <%= link_to(expense.category) do %>
-              <%= expense.category.full_name %>
-            <% end %>
+            <%= render partial: "taxes/tax_list", locals: {taxes: expense.taxes} %>
           </td>
-          <td>
-            <%= link_to(expense.employee) do %>
-              <%= expense.employee.name %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to(expense) do %>
-              <%= expense.description %>
-            <% end %>
-          </td>
-          <td><%= number_to_currency(expense.amount) %></td>
-          <td>
-            <!-- do as join, map -->
-            <% expense.taxes.each do |tax| %>
-              <%= link_to(tax) do %>
-                <%= tax.name %>, 
-              <% end %>
-            <% end %>
-          </td>
-          <td><%= number_to_currency(expense.calculate_total_tax_amount()) %></td>
-          <td><%= number_to_currency(expense.calculate_total_amount()) %></td>
+          <td class="numerical"><%= number_to_currency(expense.calculate_total_tax_amount()) %></td>
+          <td class="numerical"><%= number_to_currency(expense.calculate_total_amount()) %></td>
         </tr>
       <% end %>
     </tbody>

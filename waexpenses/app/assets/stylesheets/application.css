@@ -13,3 +13,47 @@
  *= require_tree .
  *= require_self
  */
+
+  td.numerical {
+    text-align: right;
+  }
+
+  table.expense_data {
+    margin-left: 1em;
+    margin-right: auto;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .expense_data th, .expense_data td {
+    padding: 4px 8px;
+  }
+  .expense_data thead th {
+    background: #4f81bd;
+    text-transform: lowercase;
+    text-align: left;
+    font-size: 15px;
+    color: #fff;
+  }
+  .expense_data tr {
+    border-left: 1px solid #95b3d7;
+    border-right: 1px solid #95b3d7;
+  }
+  .expense_data tbody tr {
+    border-bottom: 1px solid #95b3d7;
+  }
+  .expense_data tbody tr:nth-child(odd) {
+    background: #dbe5f0;
+  }
+  .expense_data tbody th, .expense_data tbody tr:nth-child(even) td {
+    border-right: 1px solid #95b3d7;
+  }
+  .expense_data tfoot th {
+    background: #4f81bd;
+    text-align: left;
+    font-weight: normal;
+    font-size: 10px;
+    color: #fff;
+  }
+  .expense_data tr td.numerical {
+    text-align: right;
+  }

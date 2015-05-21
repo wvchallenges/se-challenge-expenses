@@ -1,6 +1,6 @@
-<h1>Expense Categories</h1>
+<h2>All Categories</h2>
 
-<table>
+<table class="expense_data">
   <thead>
     <tr>
       <th>Name</th>
@@ -13,21 +13,15 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td>
-          <%= link_to(category) do %>
-            <%= category.full_name %>
-          <% end %>
-        </td>
+        <td><%= link_to category.full_name, category %></td>
         <td><%= category.description %></td>
         <td>
           <% if category.parent %>
-            <%= link_to(category.parent) do %>
-              <%= category.parent.full_name %>
-            <% end %>
+            <%= link_to category.parent.full_name, category.parent %>
           <% end %>
         </td>
-        <td>
-          <%= number_to_currency(category.expense_total_including_children()) %>
+        <td  class="numerical">
+          <%= number_to_currency(category.calculate_total_expense_including_children()) %>
         </td>
       </tr>
     <% end %>

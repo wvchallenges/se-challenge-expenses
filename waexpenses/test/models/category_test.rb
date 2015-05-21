@@ -113,9 +113,9 @@ class CategoryTest < ActiveSupport::TestCase
     child_expense = category.expenses.create amount: 15
     child_expense.save!
 
-    assert_equal 20, category.expense_total(), "correct child total"
-    assert_equal 35, parent.expense_total(), "correct parent total"
-    assert_equal 55, parent.expense_total_including_children(), "correct parent+child total"
+    assert_equal 20, category.calculate_total_expense(), "correct child total"
+    assert_equal 35, parent.calculate_total_expense(), "correct parent total"
+    assert_equal 55, parent.calculate_total_expense_including_children(), "correct parent+child total"
 
 
   end

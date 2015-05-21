@@ -2,11 +2,11 @@
 
 ## General
 
- - [ ] Partial to show icon at top
- - [ ] CSS for table alignment
+ - [x] Partial to show icon at top
+ - [x] CSS for table alignment
     - Use for number columns
  - [x] App name `waexpenses` -> ???
- - [ ] Remove `destroy` routes.
+ - [x] Remove `destroy` routes.
 
 ## Expense
   
@@ -14,8 +14,8 @@
 
 ## Employee
 
- - [ ] Add total spent
- - [ ] Edit
+ - [x] Add total spent
+ - [x] Edit
     - Name
     - Address
     - Need better layout, not a table
@@ -29,14 +29,14 @@
  - [x] implement totals per level
  
 ## Tax
- - [ ] Edit name
- - [ ] Link to category
- - [ ] Ordre expenses most-recent first.
+ - [x] Edit name
+ - [x] Link to category
+ - [x] Ordre expenses most-recent first.
 
 ## Expense
  - [x] Show
 
 ## Category
- - [ ] order expenses most-recent first
- - [ ] Edit name (recalculate full name)
- - [ ] Description
+ - [x] order expenses most-recent first
+ - [x] Edit name (recalculate full name)
+ - [x] Description

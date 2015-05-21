@@ -1,57 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-  <!-- convert to div/CSS styles -->
-  <table>
-    <tbody>
-    	<tr>
-    		<td><strong>Date</strong></td>
-    		<td><%= @expense.date %></td>
-    	</tr>
-    	<tr>
-    		<td><strong>Description</strong></td>
-    		<td><%= @expense.description %></td>
-    	</tr>
-    	<tr>
-    		<td><strong>Category</strong></td>
-        <td>
-          <%= link_to(@expense.category) do %>
-	          <%= @expense.category.full_name %>
-          <% end %>
-        </td>
-    	</tr>
-    	<tr>
-    		<td><strong>Employee<strong></td>
-        <td>
-          <%= link_to(@expense.employee) do %>
-            <%= @expense.employee.name %>
-          <% end %>
-        </td>
-    	</tr>
-    	<tr>
-    		<td><strong>Amount<strong></td>
-    		<td><%= number_to_currency(@expense.amount) %></td>
-    	</tr>
-      <tr><td><strong>Taxes</strong></td></tr>
+<h2>Expense Detail</h2>
+<table>
+  <tbody> 
+    <tr>
+      <td><strong>Date</strong></td>
+      <td><%= @expense.date %></td>
+    </tr>
+    <tr>
+      <td><strong>Description</strong></td>
+      <td><%= @expense.description %></td>
+    </tr>
+    <tr>
+      <td><strong>Category</strong></td>
+      <td><%= link_to @expense.category.full_name, @expense.category %></td>
+    </tr>
+    <tr>
+      <td><strong>Employee<strong></td>
+      <td><%= link_to @expense.employee.name, @expense.employee %></td>
+    </tr>
+    <tr>
+      <td><strong>Amount<strong></td>
+      <td class="numerical"><%= number_to_currency(@expense.amount) %></td>
+    </tr>
+    <tr><td><strong>Taxes</strong></td></tr>
+    <% @expense.taxes.each do |tax| %>
       <tr>
-        <table>
-          <tbody>
-            <% @expense.taxes.each do |tax| %>
-              <tr>
-                <td>
-                  <%= link_to(tax) do %>
-                    <%= tax.name %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= number_to_currency(@expense.get_amount_for_tax(tax).amount) %>
-                </td> 
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <td><%= link_to tax.name, tax %></td>
+        <td class="numerical">
+          <%= number_to_currency(@expense.get_amount_for_tax(tax).amount) %>
+        </td> 
       </tr>
-    	<!-- need to be kept in order -->
-    </tbody>
-  </table>
+    <% end %>
+    <!-- need to be kept in order -->
+  </tbody>
+</table>
 
 <%= link_to 'All Expenses', expenses_path %>

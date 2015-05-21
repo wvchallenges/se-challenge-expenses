@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
 
   belongs_to :parent, :class_name => 'Category', :foreign_key => :category_id
   has_many :children, :class_name => 'Category'
-  has_many :expenses
+  has_many :expenses, -> { order(date: :desc) }
 
   attr_accessor :full_name
 
@@ -41,7 +41,7 @@ class Category < ActiveRecord::Base
     return last_category
   end
 
-  def expense_total()
+  def calculate_total_expense()
     total_amount =0.0;
     self.expenses.each do |e|
       total_amount += e.calculate_total_amount()
@@ -49,10 +49,10 @@ class Category < ActiveRecord::Base
     return total_amount
   end
 
-  def expense_total_including_children()
-    total_amount = expense_total()
+  def calculate_total_expense_including_children()
+    total_amount = calculate_total_expense()
     self.children.each do |c|
-      total_amount += c.expense_total_including_children()
+      total_amount += c.calculate_total_expense_including_children()
     end
     return total_amount
   end

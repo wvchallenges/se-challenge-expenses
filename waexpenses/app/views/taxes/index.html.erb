@@ -1,25 +1,19 @@
-<h1>Listing taxes</h1>
+<h2>All Taxes</h2>
 
-<table>
+<table class="expense_data">
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3"></th>
+      <th>Total paid</th>
     </tr>
   </thead>
 
   <tbody>
     <% @taxes.each do |tax| %>
       <tr>
-        <td><%= tax.name %></td>
-        <td><%= link_to 'Show', tax %></td>
-        <td><%= link_to 'Edit', edit_tax_path(tax) %></td>
-        <td><%= link_to 'Destroy', tax, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to tax.name, tax %></td>
+        <td class="numerical"><%= number_to_currency(tax.calculate_total) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Tax', new_tax_path %>
