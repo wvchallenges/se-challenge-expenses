@@ -116,12 +116,21 @@ production:
 
 ```
 
-create the database
+## Create the database
 
- rake db:create db:migrate
+```
+ > rake db:create db:migrate
+```
 
-Start the server
+## Start the server
 
-rails s
+```
+> rails s
+```
+
+## Navigate to the app
+
+After all these steps, go to [http://localhost:3000/](http://localhost:3000)
+
 
  
