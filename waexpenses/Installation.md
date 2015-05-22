@@ -34,6 +34,13 @@ I elected to install `ruby` via [RPM](https://rvm.io/rvm/install) Following thei
 ```
 > curl -sSL https://get.rvm.io | bash -s stable --ruby
 ```
+
+Do what the final instructions say and source the `rvm` script
+
+```
+> source ~/.rvm/scripts/rvm
+```
+
  - Install ruby 2.0.0
 
 ```
@@ -48,12 +55,6 @@ I use `bundler` to install all the dependencies for this sample, including `rail
 
 ``` 
 > gem install bundler
-```
-
-One of the gems that I will be installing needs a javascript VM. It's easiest to install node now
-
-```
-> sudo apt-get install nodejs
 ```
 
 ## Get the source
@@ -81,45 +82,13 @@ This will put the source code into a directory called `~/git/se-challenge/waexpe
 ## Install the open-source gem bundles (including `rails`)
 
 ```
-> bundler install
-```
-
-## Create the `secrets.yml` file 
-
-By default the `config/secrets.yml` file is not pushed to GitHub
-
-create the secrets file
-
-```
-# Be sure to restart your server when you modify this file.
-
-# Your secret key is used for verifying the integrity of signed cookies.
-# If you change this key, all old signed cookies will become invalid!
-
-# Make sure the secret is at least 30 characters and all random,
-# no regular words or you'll be exposed to dictionary attacks.
-# You can use `rake secret` to generate a secure secret key.
-
-# Make sure the secrets in this file are kept private
-# if you're sharing your code publicly.
-
-development:
-  secret_key_base: 
-
-test:
-  secret_key_base: 
-
-# Do not keep production secrets in the repository,
-# instead read values from the environment.
-production:
-  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
-
+> bundle install
 ```
 
 ## Create the database
 
 ```
- > rake db:create db:migrate
+ > rake db:migrate
 ```
 
 ## Start the server

@@ -1,18 +1,19 @@
 # README
 
-This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. All the requirements can be installed via `bundler`
+This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tested against Ruby `2.2.1`. All the requirements except ruby can be installed via `bundler`
 
 ## Simple installation
 
-If you have ruby installed, the simple installation instructions are
+If you have `ruby` and the `bundler` gem installed, the simple installation instructions are
 
   - launch a terminal
   - create an appropriate directory to store the code (*e.g.* `> mkdir git`)
   - change into that directory `> cd git`
   - checkout the code `> git clone https://github.com/jimgraham/se-challenge.git`
   - move into the source directory `> cd se-challenge/waexpenses`
-  - install the necessary gems via bundler `> bundler install`
-  - migrate the database via rake `> rake db:create db:migrate`
+  - install the necessary gems via bundler `> bundle install`
+  - migrate the database via rake `> rake db:migrate`
+  - Optional: run tests `> rake test`
   - start the server `rails s`
   - navigate to the application [http://localhost:3000](http://localhost:3000)
 
