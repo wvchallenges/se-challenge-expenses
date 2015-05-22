@@ -16,6 +16,9 @@
 </p>
 
 <div>
+  <%= render partial: "expenses/total_by_month", locals: {dates_and_totals: @dates_and_totals} %>
+</div>
+<div>
   <h2>Detailed Expenses:</h2>
   <table class="expense_data">
     <thead>

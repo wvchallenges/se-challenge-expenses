@@ -8,23 +8,7 @@
 </div>
 
 <div>
-  <h2>Expenses by Month</h2>
-  <table class="expense_data">
-    <thead>
-      <tr>
-        <th>Month</th>
-        <th>Total Expenses</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% (0..@dates.length-1).each do |i| %>
-        <tr>
-          <td><%= @dates[i] %></td>
-          <td class="numerical"><%= number_to_currency(@total_expense[i]) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render partial: "expenses/total_by_month", locals: {dates_and_totals: @dates_and_totals} %>
 </div>
 
 <div>

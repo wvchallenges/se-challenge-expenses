@@ -5,23 +5,8 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     @expenses = Expense.order(date: :desc)
-   
-    @dates = []
-    @total_expense = []
-    @expenses.each do |expense|
-      month_and_year = Date.new(expense.date.year,expense.date.month, 1)
 
-      included = @dates.include? month_and_year
-      if !included
-        @dates << month_and_year
-        @total_expense << expense.calculate_total_amount()
-      else
-        matched_index = @dates.index(month_and_year)
-        if matched_index != nil
-          @total_expense[matched_index] += expense.calculate_total_amount()
-        end
-      end
-    end
+    @dates_and_totals = Expense.total_by_month(@expenses)
   end
 
   # GET /expenses/1
@@ -40,7 +25,7 @@ class ExpensesController < ApplicationController
         notice = "One expense imported."
       else
         notice = expenses_imported.to_s + " expenses imported."
-      end          
+      end
 
       redirect_to root_url, notice: notice
     rescue

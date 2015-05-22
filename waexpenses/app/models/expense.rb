@@ -33,4 +33,15 @@ class Expense < ActiveRecord::Base
     tax_amount = tax.tax_amounts.select( expense_id: self.id)
     return !tax_amount.nil? ? tax_amount.first : nil
   end
+
+
+  def self.total_by_month(expenses)
+    dates = Hash.new(0.0)
+
+    expenses.each do |expense|
+      month_and_year = Date.new(expense.date.year, expense.date.month, 1)
+      dates[month_and_year] += expense.calculate_total_amount()
+    end
+    return dates
+  end
 end

@@ -23,6 +23,14 @@ class CsvImportTest < ActiveSupport::TestCase
 
     assert_equal "CA Sales tax", Tax.all[1].name, "CA tax"
     assert_equal 16, Tax.all[1].tax_amounts.count, "16 CA tax amounts"
+
+    dates_and_totals = Expense.total_by_month(Expense.all)
+
+    assert_equal 6, dates_and_totals.count
+    assert_equal 1625.40, dates_and_totals[Date.new(2014, 2, 1)]
+    assert_equal 3012.68, dates_and_totals[Date.new(2013, 12, 1)]
+    assert_equal 430, dates_and_totals[Date.new(2013, 9, 1)]
+
   end
 
   test "csv file is imported with correct categories" do

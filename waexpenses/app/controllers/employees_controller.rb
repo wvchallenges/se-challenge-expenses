@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
+    @dates_and_totals = Expense.total_by_month(@employee.expenses)
   end
 
   # GET /employees/new

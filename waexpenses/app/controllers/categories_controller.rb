@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @dates_and_totals = Expense.total_by_month(@category.expenses)
   end
 
   # GET /categories/new

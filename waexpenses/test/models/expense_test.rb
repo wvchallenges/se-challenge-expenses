@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class ExpenseTest < ActiveSupport::TestCase
+  setup do
+    if Expense.all.count  > 0
+
+      Expense.all.each do |e|
+        e.destroy
+      end
+    end
+  end  
   test "must have amount" do
     expense = Expense.new 
     assert_not expense.save, "Cannot save expense without amount"
@@ -52,4 +60,22 @@ class ExpenseTest < ActiveSupport::TestCase
     assert_equal (1299.00 * 0.10), expense.get_amount_for_tax(tax_gst).amount
   end
 
+  test "monthly totals are calculated" do
+    month = 1
+
+    for i in 1..10
+      expense = Expense.new amount: 100 * i, date: Date.new(2014, month, 1)
+      expense.save!
+
+      if (i % 2 == 0)
+        month +=1
+      end
+    end
+
+    dates_and_totals = Expense.total_by_month(Expense.all)
+
+    assert_equal 5, dates_and_totals.count
+    assert_equal 300, dates_and_totals[Date.new(2014, 1, 1)]
+    assert_equal 1900, dates_and_totals[Date.new(2014, 5, 1)]
+  end
 end
