@@ -11,7 +11,6 @@ class CsvImport
       employee = Employee.find_or_create_from_name(expense_row[2].strip)
       employee.address = expense_row[3].strip
 
-      #-- amounts will be handled by Money in expense
       expense_amount = Monetize.parse expense_row[5]
       expense_date = Date.strptime(expense_row[0].strip, "%m/%d/%Y")
 
