@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy]
+  before_action :set_employee, only: [:show, :edit, :update]
 
   # GET /employees
   # GET /employees.json
@@ -54,16 +54,6 @@ class EmployeesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /employees/1
-  # DELETE /employees/1.json
-  def destroy
-    @employee.destroy
-    respond_to do |format|
-      format.html { redirect_to employees_url, notice: 'Employee was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

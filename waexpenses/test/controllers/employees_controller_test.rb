@@ -42,16 +42,9 @@ class EmployeesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  #test "should update employee" do
-  #  patch :update, id: @employee, employee: { address: @employee.address, name: @employee.name }
-  #  assert_redirected_to employee_path(assigns(:employee))
-  #end
-
-  test "should destroy employee" do
-    assert_difference('Employee.count', -1) do
-      delete :destroy, id: @employee
-    end
-
-    assert_redirected_to employees_path
+  test "should update employee" do
+    patch :update, id: @employee, employee: { address: @employee.address, name: @employee.name }
+    assert_redirected_to employee_path(assigns(:employee))
   end
+
 end

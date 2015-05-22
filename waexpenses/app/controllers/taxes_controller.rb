@@ -1,5 +1,5 @@
 class TaxesController < ApplicationController
-  before_action :set_tax, only: [:show, :edit, :update, :destroy]
+  before_action :set_tax, only: [:show, :edit, :update]
 
   # GET /taxes
   # GET /taxes.json
@@ -48,16 +48,6 @@ class TaxesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @tax.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /taxes/1
-  # DELETE /taxes/1.json
-  def destroy
-    @tax.destroy
-    respond_to do |format|
-      format.html { redirect_to taxes_url, notice: 'Tax was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
