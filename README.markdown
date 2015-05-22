@@ -1,3 +1,7 @@
+# Solution
+
+My solution is in https://github.com/jimgraham/se-challenge/tree/master/waexpenses
+
 # Wave Software Development Challenge
 Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
 

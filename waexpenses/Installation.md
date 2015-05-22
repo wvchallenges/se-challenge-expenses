@@ -2,12 +2,10 @@
 
 This sample code requires
 
-  - `ruby v2.0.0`
-  - a javascript runtime for one of the bundled gems
+  - `ruby v2`
   - `bundler`
   - `rails` (resolved with `bundler`)
   - the source code from GitHub (you're looking at it)
-  - a `config/secrets.yml` file (not stored in GitHub by default)
   - a migrated database.
 
 I have run this sample on Mac OSX 10.10.3, Windows 7 sp1 and Ubuntu 14.04. Since the Ubuntu installation is lacking the most requirements, I will go through how I installed the sample application there.
@@ -24,7 +22,12 @@ At this point, we have a vanilla Ubuntu box with very little on it
 
 ## Installing `ruby`
 
-I elected to install `ruby` via [RPM](https://rvm.io/rvm/install) Following their instructions, from a terminal.
+I elected to install `ruby` via [RPM](https://rvm.io/rvm/install). On other OSs, you could consider
+
+ - [`rbenv`](https://github.com/sstephenson/rbenv) for Mac OSX
+ - [Rails Installer](http://railsinstaller.org) for Windows
+
+Following the RVM instructions, from a terminal.
 
  - Install the gpg key 
 ```
@@ -41,13 +44,7 @@ Do what the final instructions say and source the `rvm` script
 > source ~/.rvm/scripts/rvm
 ```
 
- - Install ruby 2.0.0
-
-```
-> rvm install 2.0.0
-> rvm use 2.0.0
-> rvm rubygems latest
-```
+At this point we have a working rails 2.2.1 installed locally.
 
 ## Installing `bundler`
 
@@ -81,17 +78,31 @@ This will put the source code into a directory called `~/git/se-challenge/waexpe
 
 ## Install the open-source gem bundles (including `rails`)
 
+We need to install rails and the open-source components that I've used in this sample. We can run these from the `Gemfile` through `bundler`
+
 ```
 > bundle install
 ```
 
 ## Create the database
 
+We need to create a default "development" database. The `rake` command will create and upgrade the database. The sample will run against this database.
+
 ```
  > rake db:migrate
 ```
 
+## Optionally run the unit tests
+
+If you're interested, you can run the unit tests for the application. There should be no errors!
+
+```
+ > rake test
+```
+
 ## Start the server
+
+Finally, start the rails server so we can navigate to the application.
 
 ```
 > rails s

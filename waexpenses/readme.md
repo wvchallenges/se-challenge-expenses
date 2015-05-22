@@ -1,6 +1,6 @@
 # README
 
-This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tested against Ruby `2.2.1`. All the requirements except ruby can be installed via `bundler`
+This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tested against Ruby `2.2.1`. All the requirements except ruby and `bundler` can be installed via `bundler`
 
 ## Simple installation
 
@@ -17,7 +17,7 @@ If you have `ruby` and the `bundler` gem installed, the simple installation inst
   - start the server `rails s`
   - navigate to the application [http://localhost:3000](http://localhost:3000)
 
-If you need more detailed instructions, there is an `Installation.md` file in this repository that details all the steps to install this app on a Vanilla Ubuntu machine.
+If you need more detailed instructions, there is an [`Installation.md`](https://github.com/jimgraham/se-challenge/blob/master/waexpenses/Installation.md) file in this repository that details all the steps to install this app on a Vanilla Ubuntu machine.
 
 # Comments
 
