@@ -8,13 +8,11 @@ gem 'sqlite3'
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
-#-- don't love this, but it seems required for `rake` on Ubuntu
-gem 'execjs'
-gem 'therubyracer',  platforms: :ruby
+#-- remove this as it requires `node.js` for crying out loud.
+# Use CoffeeScript for .js.coffee assets and views
+#gem 'coffee-rails', '~> 4.0.0'
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
