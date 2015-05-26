@@ -4,7 +4,7 @@ This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tes
 
 ## Simple installation
 
-If you have `ruby` and the `bundler` gem installed, the simple installation instructions are
+If you have `ruby`, the `bundler` gem, and a default Javascript runtime installed, the simple installation instructions are
 
   - launch a terminal
   - create an appropriate directory to store the code (*e.g.* `> mkdir git`)

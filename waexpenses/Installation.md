@@ -5,6 +5,7 @@ This sample code requires
   - `ruby v2`
   - `bundler`
   - `rails` (resolved with `bundler`)
+    - The default `rails` installations requires a javascript runtime. For most installations the system javascript runtime can be used, but you may need to install a runtime.
   - the source code from GitHub (you're looking at it)
   - a migrated database.
 
@@ -75,6 +76,19 @@ One needs to put this source code onto the machine. The easiest way to do this i
 ```
 
 This will put the source code into a directory called `~/git/se-challenge/waexpenses`
+
+## Aside: A Javascript runtime
+
+Certain gems installed in the default `rails` configuration use [`execjs`](https://github.com/sstephenson/execjs). `execjs` should be able to use a system-installed Javascript runtime. Other runtimes, such as `therubyracer` were difficult to install.
+
+Since the vanilla Ubuntu install did not have a system-wide Javascript runtime, I elected to install `nodejs`
+
+```
+> sudo apt-get install git
+```  
+
+This seems like overkill, but it was the fastest solution to getting a working installation on a Vanilla Ubuntu box.
+
 
 ## Install the open-source gem bundles (including `rails`)
 
