@@ -1,6 +1,6 @@
 # README
 
-This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tested against Ruby `2.2.1`. All the requirements except ruby and `bundler` can be installed via `bundler`
+This sample was developed against `Ruby 2.0.0`, Rails 4.1 and SQLite. It was tested against Ruby `2.2.1`. All the requirements except ruby, a Javascript runtime, and `bundler` can be installed via `bundler`.
 
 ## Simple installation
 
