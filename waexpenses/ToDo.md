@@ -1,4 +1,0 @@
- - [ ] remove destroy routes/etc
- - [ ] unit tests all pass
- - [x] add development secrets.yml
- - [ ] add running tests to installation/readmen
