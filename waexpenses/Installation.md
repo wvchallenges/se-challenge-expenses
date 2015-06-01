@@ -63,7 +63,7 @@ One needs to put this source code onto the machine. The easiest way to do this i
 
 ```
 > sudo apt-get update
-> sudo apt-get install git
+> sudo apt-get install nodejs
 ```
 
 #### Get the source
