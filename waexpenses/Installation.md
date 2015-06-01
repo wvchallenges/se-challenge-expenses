@@ -63,7 +63,7 @@ One needs to put this source code onto the machine. The easiest way to do this i
 
 ```
 > sudo apt-get update
-> sudo apt-get install nodejs
+> sudo apt-get install git
 ```
 
 #### Get the source
@@ -84,7 +84,7 @@ Certain gems installed in the default `rails` configuration use [`execjs`](https
 Since the vanilla Ubuntu install did not have a system-wide Javascript runtime, I elected to install `nodejs`
 
 ```
-> sudo apt-get install git
+> sudo apt-get install nodejs
 ```  
 
 This seems like overkill, but it was the fastest solution to getting a working installation on a Vanilla Ubuntu box.
