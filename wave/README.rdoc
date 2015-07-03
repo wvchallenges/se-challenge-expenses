@@ -14,11 +14,11 @@ This was made and bundled using Ubuntu 15.04. You'll find all the bundled progra
 
 * Navigate to appropriate folder (wave)
 
-* run > bundle install
+> bundle install
 
-* rake > (bundle exec) rake db:migrate
+> (bundle exec) rake db:migrate
 
-* serve > rails server
+> rails server
 
 
 === Thoughts
