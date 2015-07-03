@@ -2,7 +2,7 @@
 
 This is my submitted solution for the Wave Software Development Challenge. 
 
-# Quick Install
+## Quick Install
 
 This was made and bundled using Ubuntu 15.04. You'll find all the bundled programs and their corresponding version on the Gemfile.
 
@@ -14,7 +14,7 @@ This was made and bundled using Ubuntu 15.04. You'll find all the bundled progra
 -rake > (bundle exec) rake db:migrate
 -serve > rails server
 
-#Thoughts
+## Thoughts
 
 As a fullstack developer I tried to put in enough time for every aspect of the application.
 I decided to leave the monthly aggregations to javascript where it pulls the data from the server.
