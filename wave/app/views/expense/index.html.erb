@@ -1,0 +1,63 @@
+<div class="wrapper">
+  
+  <div class="title">Please attach your CSV file</div>
+  <%= form_tag({action: :upload}, multipart: true) do %>
+    <%= file_field_tag :csv %>
+    <%= submit_tag "Upload!", :id=> "csv_upload" %>
+  <% end %>
+  
+  <div class="button-holder">
+    <label for="csv">
+      <div id="select_button" class="button">Select a CSV file</div>
+    </label>
+  </div>
+  <div class="button-holder">
+    <label for="csv_upload">
+      <div id="upload_button" class="button">Upload!</div>
+    </label>
+  </div>
+  
+  <div id="open_table" class="button">View Monthly Totals</div>
+
+  <p id="notice"><%= notice %></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Employee</th>
+        <th>Address</th>
+        <th>Description</th>
+        <th>Pre-Tax Amount</th>
+        <th>Tax Name</th>
+        <th>Tax Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.date %></td>
+          <td><%= expense.category %></td>
+          <td><%= expense.employee.first_name %></td>
+          <td><%= expense.employee.address %></td>
+          <td><%= expense.description %></td>
+          <td> $<%= expense.amount %></td>
+          <td><%= expense.tax_name %></td>
+          <td> $<%= expense.tax_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div id="monthly_table" class="monthly-table">
+    <div class="monthly-wrapper">
+      <div class="monthly-header">
+        <div class="monthly-title">Monthly Report</div>
+        <div id="close_table" class="monthly-close">CLOSE</div>
+      </div>
+      <div id="monthly_append" class="monthly-expenses"></div>
+    </div>
+  </div>
+
+</div>
