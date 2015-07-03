@@ -86,7 +86,9 @@ $( document ).ready(function(){
     $('#monthly_table').css('display', 'none');
   });
   $('#open_table').on('click', function(){
-    $('#monthly_table').css('display', 'block');
+    if (importedExpenses !== undefined && importedExpenses.length > 0){
+      $('#monthly_table').css('display', 'block');
+    }
   });
 });
 
