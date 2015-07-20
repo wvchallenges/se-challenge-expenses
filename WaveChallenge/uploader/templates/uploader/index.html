@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1 class="text-center">Records</h1>
+{% if records %}
+	<table class="table table-bordered table-scrollable table-hover table-holder">
+		<tr>
+			<th>Date</th>
+			<th>Expense Category</th>
+			<th>Employee Name</th>
+			<th>Employee Address</th>
+			<th>Expense Description</th>
+			<th>Sub-total</th>
+			<th>Tax Name</th>
+			<th>Tax Amount</th>
+		</tr>
+		{% for record in records %}
+			<tr>
+				<td>{{ record.date }}</td>
+				<td>{{ record.expense_category }}</td>
+				<td>{{ record.employee_name }}</td>
+				<td>{{ record.employee_address }}</td>
+				<td>{{ record.expense_description }}</td>
+				<td>{{ record.sub_total }}</td>
+				<td>{{ record.tax_name }}</td>
+				<td>{{ record.tax_amount }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<p>Add additional records <a href="{% url 'uploader.views.upload' %}">here.</a></p>
+{% else %}
+	<p>No records found. You can upload a records CSV <a href="{% url 'uploader.views.upload' %}">here.</a></p>
+{% endif %}
+{% endblock %}

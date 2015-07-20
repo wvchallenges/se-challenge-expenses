@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">Upload CSV</h1>
+<div style="padding-top: 50px;">
+	<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+		<div class="form-group">
+			<label for="{{form.docfile.label}}"></label>
+	    	<input type="file" name="docfile" class="form-control" id="docfile" accept=".csv"> 
+		</div>
+	     <button type="submit" class="btn btn-default">Upload CSV!</button>
+		</div>
+	</form>
+</div>
+{% endblock %}
