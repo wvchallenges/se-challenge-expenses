@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="h1-div text-center">Monthly Expenses</h1>
+
+{% if total > 0 %}
+	<table class="table table-hover">
+		<tr>
+			<th>Month</th>
+			<th>Expenses</th>
+		</tr>
+		{% for key, value in records.items %}
+			<tr>
+				<td> {{key}} </td>
+				<td> ${{value}} </td>
+			</tr>
+		{% endfor %}
+		<tr>
+			<td>Total</td>
+			<td>${{total}} </td>
+		</tr>
+	</table>
+{% else %}
+	<p>No expenses found. You can upload a records CSV <a href="{% url 'uploader.views.upload' %}">here.</a></p>
+{% endif %}
+{% endblock %}
