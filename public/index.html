@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Fulfills the se-challenge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>se-challenge</title>
+
+  <!-- Material Design Lite by Google, http://www.getmdl.io/-->
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">se-challenge</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <!-- Your content goes here -->
+        <div class="demo-grid-1 mdl-grid">
+          <!-- First card: file upload -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div id="dropzone" style="width:100%;" class="mdl-card mdl-shadow--4dp demo-card-square">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Drop .csv here</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-card--expand">
+                Or use the traditional uploader below
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <input class="mdl-textfield__input" id="uploadInput" type="file" onchange="handleFile();" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Second card: display summary -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div style="width:100%;" class="mdl-card mdl-shadow--4dp demo-card-square">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Monthly Summary</h2>
+              </div>
+              <!-- Data table for summary -->
+              <div id="dataTable" class="mdl-card__actions">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="seTable" style="visibility: hidden;margin-left:auto;margin-right:auto">
+                  <thead>
+                    <tr>
+                      <th class="mdl-data-table__cell--non-numeric">Month</th>
+                      <th>Total Expenses</th>
+                    </tr>
+                  </thead>
+                  <tbody id="seTableBody">
+                  </tbody>
+                </table>
+              </div>
+              <div class="mdl-card__supporting-text" style="text-align: center;">
+                <!-- MDL Spinner Component -->
+                <div id="summarySpinner" class="mdl-spinner mdl-js-spinner is-active" style="visibility: hidden"></div>
+                <br/>
+                <button id="summaryPrompt" class="mdl-button mdl-js-button mdl-button--primary" disabled>
+                  ← Please choose one →
+                </button>
+                <p id="summaryLog"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Third card: archives -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div style="width:100%;" class="mdl-card mdl-shadow--4dp demo-card-square">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Archive</h2>
+              </div>
+              <div class="mdl-card__actions">
+                <!-- Archives table -->
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="seArchiveTable" style="margin-left:auto;margin-right:auto">
+                  <thead>
+                    <tr>
+                      <th class="mdl-data-table__cell--non-numeric">Date</th>
+                      <th>Rows</th>
+                      <th>Batch No.</th>
+                    </tr>
+                  </thead>
+                  <tbody id="seArchiveTableBody">
+                  </tbody>
+                </table>
+                <div class="mdl-tooltip" for="seArchiveTable">
+                  Click to load
+                </div>
+                <!-- Vertical spaces for tooltip -->
+                <br/>
+                <br/>
+                <br/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="mdl-mini-footer">
+      <div class="mdl-mini-footer--left-section">
+        <div class="mdl-logo"></div>
+        <ul class="mdl-mini-footer--link-list">
+          <li><a href="https://github.com/pigjr/se-challenge">pigjr@Github</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <!-- Material Design Lite by Google, http://www.getmdl.io/-->
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
+  <!-- Moment.js for date parsing and manipulation, MIT License, http://momentjs.com/-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+  <!-- CSV JS parser by Greg Kindel, MIT License, https://github.com/gkindel/CSV-JS -->
+  <script src="/js/csv.js"></script>
+  <!-- Main JS file -->
+  <script src="/js/main.js"></script>
+</body>
+
+</html>
