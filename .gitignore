@@ -1,0 +1,6 @@
+# ignore
+.DS_Store
+thumbs.db
+*.log
+node_modules/
+.openshift/

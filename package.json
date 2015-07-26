@@ -1,0 +1,27 @@
+{
+  "name": "se-challenge",
+  "version": "0.1.0",
+  "description": "se-challenge",
+  "keywords": [
+    "Node.JS"
+  ],
+  "author": {
+    "name": "Lingkai Zhu",
+    "email": "lingkai.zhu@gmail.com"
+  },
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "moment": "^2.10.5",
+    "mysql": "^2.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pigjr/se-challenge.git"
+  },
+  "main": "server.js"
+}
