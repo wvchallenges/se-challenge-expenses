@@ -4,7 +4,7 @@ This repository consists of three simple projects to demonstrate a possible solu
 
 **AngularJS Client - Deployed on Azure**
 
-A basic client in AngularJS that consumes back-end services whick can be switched through the user interface. 
+A basic client in AngularJS that consumes back-end services which can be switched through the user interface. 
 
 Components: angular, ui-router, bootstrap, jquery, font-awesome, ng-file-upload
 - Alternate Source code: https://github.com/omidmafi/wave.ng/
