@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wave</title>    
+    
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />                        
+    <link href="lib/components-font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />                        
+    <link href="css/default.css" rel="stylesheet" type="text/css" />                        
+    
+    <!--SCRIPT-->
+    <script src="lib/jquery/dist/jquery.js"></script>    
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>      
+    <script src="lib/angular/angular.js"></script>      
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>        
+    <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>      
+    <script src="lib/ng-file-upload/ng-file-upload-shim.js"></script>   
+    <script src="lib/ng-file-upload/ng-file-upload.js"></script>             
+    
+    <script src="app/app.js"></script>    
+    <script src="app/common/service/dataService.js"></script>    
+    <script src="app/common/service/globalInfo.js"></script>    
+    <script src="app/challenge/challengeController.js"></script>    
+    <script src="app/home/homeController.js"></script>        
+</head>
+    
+<body ng-app="app">          
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button class="btn btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <div id="logo">
+              <a ui-sref='challenge'>
+                <i class="fa fa-home fa-3x"></i>
+              </a>
+            </div>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="nav"><a ui-sref="home">Home</a></li>
+                <li class="nav"><a ui-sref="challenge">Challenge</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>             
+    
+    <div class="container-fluid">
+        <div ui-view></div>
+    </div>          
+</body>
+</html>

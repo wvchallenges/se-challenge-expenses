@@ -1,0 +1,23 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "ToBeDone",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {    
+    "cors": "^2.7.1",
+    "express": "^4.13.1",    
+    "moment": "^2.10.6",    
+    "multer": "^1.0.1",    
+    "uuid": "^2.0.1",    
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-nodemon": "^0.4.0"
+  }
+}

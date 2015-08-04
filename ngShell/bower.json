@@ -1,0 +1,27 @@
+{
+  "name": "ShellAngular",
+  "version": "0.0.0",
+  "authors": [
+    "Omid Mafi <omidmafi@gmail.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angular-bootstrap": "~0.13.1",
+    "bootstrap": "~3.3.5",
+    "angular-ui-router": "~0.2.15",
+    "ng-file-upload": "~6.0.2",
+    "components-font-awesome": "~4.4.0"
+  }
+}
