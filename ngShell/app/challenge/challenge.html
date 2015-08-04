@@ -1,0 +1,59 @@
+<h1>Challenge</h1>
+<hr />
+     
+<div class="panel panel-default">
+    <div class="panel-body">       
+        <form class="form-horizontal" name="uploader" method="post" enctype="multipart/form-data" ng-submit="vm.submit()">         
+            <div class="form-group ">
+                <label class="control-label col-sm-1" for="serviceMode">Service: </label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="serviceMode" ng-model="vm.serviceMode" convert-to-number>
+                        <option value="0">WebAPI + SQL Server (Azure)</option>
+                        <option value="1">Node + PostgreSQL (Heroku)</option>
+                    </select>
+                </div>
+
+                <div class="btn btn-primary" ngf-select ng-model="file">
+                    <i ng-show="vm.uploading" class="fa fa-cog fa-spin"></i>
+                    <i ng-hide="vm.uploading" class="fa fa-upload"></i>
+                    Upload
+                </div>
+
+                <button class="btn btn-default" ng-click="vm.fetch()">
+                    <i ng-show="vm.fetching" class="fa fa-cog fa-spin"></i>
+                    <i ng-hide="vm.fetching" class="fa fa-th-list"></i>
+                    Get Data
+                </button>
+            </div>
+        </form>
+    </div>
+   
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
+            <tr class="warning">
+                <th>#</th> 
+                <th>Date</th> 
+                <th>Category</th> 
+                <th>Name</th> 
+                <th>Address</th> 
+                <th>Description</th> 
+                <th>Pre Tax Amount</th> 
+                <th>Tax Name</th> 
+                <th>Tax Amount</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="success" ng-repeat="wi in vm.result">
+                <td>{{$index + 1}}</td>
+                <td>{{wi.date | date}}</td>
+                <td>{{wi.category}}</td>
+                <td>{{wi.employee_name}}</td>
+                <td>{{wi.employee_address}}</td>
+                <td>{{wi.expense_description}}</td>
+                <td>{{wi.pre_tax_amount}}</td>
+                <td>{{wi.tax_name}}</td>
+                <td>{{wi.tax_amount}}</td>                
+            </tr>
+        </tbody>
+    </table>    
+</div>    
