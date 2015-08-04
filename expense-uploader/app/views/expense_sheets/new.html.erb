@@ -1,2 +1,9 @@
-<h1>ExpenseSheets#new</h1>
-<p>Find me in app/views/expense_sheets/new.html.erb</p>
+<h1>Upload New Expense Sheet</h1>
+
+<p> Use the form below to upload a new expense sheet. </p>
+
+<%= form_for @sheet do |f| %>
+
+  <%= f.file_field :csv_path %>
+
+<% end %>
