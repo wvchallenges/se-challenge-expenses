@@ -1,3 +1,5 @@
+require 'csv'
+
 module Utility
   class CsvFile
 
@@ -7,7 +9,7 @@ module Utility
 
       contentsAsLines.each do |line|
 
-        columnValues = line.split(",")
+        columnValues = CSV.parse_line(line)
 
         localRow = CsvRow.new(columnValues)
 

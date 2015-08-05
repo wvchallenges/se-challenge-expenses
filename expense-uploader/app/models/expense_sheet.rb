@@ -1,3 +1,5 @@
+require 'date'
+
 class ExpenseSheet < ActiveRecord::Base
   has_many :expenses
 
@@ -22,17 +24,20 @@ class ExpenseSheet < ActiveRecord::Base
 
     def createExpenseFromCsvRow(csvRow)
 
+      parsedDate = Date.strptime(csvRow.values[0], '%m/%d/%Y')
 
+      parsedPreTax = csvRow.values[5].gsub(",", "")
+      parsedTax = csvRow.values[7].gsub(",", "")
 
       expense = Expense.new(
-        date: csvRow.values[0],
+        date: parsedDate,
         category: csvRow.values[1],
         employee_name: csvRow.values[2],
         employee_address: csvRow.values[3],
         description: csvRow.values[4],
-        tax_name: csvRow.values[5],
-        pre_tax_amount: csvRow.values[6],
-        tax_amount: csvRow.values[7]
+        pre_tax_amount: parsedPreTax,
+        tax_name: csvRow.values[6],
+        tax_amount: parsedTax
 
       )
 
