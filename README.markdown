@@ -10,6 +10,14 @@ There are a couple of things I wish I could have done better:
 2. Validate the data type in each column (assumptions only stated data would be present in each column, not that it would be valid)
 3. Display appropriate error pages in these cases, instead of RoR default error pages.
 
+# Instructions to run solution
+
+1. Pull the latest version of the 'master' branch
+2. Navigate to '\expense-uploader' folder
+3. Run 'bundle install;
+4. Run 'rake db:migrate'
+5. Run 'rails s -p 8000' (or whatever port you want)
+6. In your browser go to http://localhost:8000/
 
 ## Original Project Description
 Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
