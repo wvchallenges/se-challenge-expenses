@@ -4,4 +4,31 @@ class ExpenseSheetsController < ApplicationController
     @sheet = ExpenseSheet.new
   end
 
+  def create
+    uploadParams = createParams()
+
+    fileData = getFileFromCreateParams(uploadParams)
+
+    fileDataLines = FileUploadHelper.readUploadAsLines(fileData)
+
+    csvFileModel = Utility::CsvFile.new(fileDataLines)
+
+    puts csvFileModel.headerRow.class
+    @sheet = ExpenseSheet.new
+
+    @sheet.loadFromCsv(Time.now, csvFileModel)
+
+    @sheet.save
+
+    redirect_to @sheet
+  end
+
+  private
+    def createParams
+      params.require(:sheet).permit(:csv_path)
+    end
+
+    def getFileFromCreateParams(createParams)
+      createParams[:csv_path]
+    end
 end
