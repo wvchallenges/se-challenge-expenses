@@ -1,0 +1,23 @@
+<h3>Expense Report</h3>
+
+<table>
+<thead>
+	<tr>
+		<th>Year/Month</th>
+		<th>Expense</th>
+	</tr>
+</thead>
+<tbody>
+	<% @report.each do |r| %>
+		<tr>
+			<td><%= r['valYear'] %></td>
+			<td><%= r['expense'] %></td>
+		</tr>
+	<% end %>
+</tbody>
+</table>
+
+<br>
+<br>
+
+<%= link_to "<< Back to Home", root_path %>
