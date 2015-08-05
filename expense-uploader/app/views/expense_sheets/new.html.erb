@@ -1,0 +1,15 @@
+<div class="header">
+  <h1>Upload New Expense Sheet</h1>
+</div>
+
+<p> Use the form below to upload a new expense sheet. </p>
+
+<%= form_for @sheet, :as => :sheet do |f| %>
+
+  <%= f.file_field :csv_path, class: "form-file-pick" %>
+
+  <br>
+
+  <%= f.submit "Submit", class: "form-submit" %>
+
+<% end %>
