@@ -10,7 +10,7 @@ class ExpensesSummary
 
     groupedByMonth.each do |month,monthExpenses|
       sum = 0.0
-      monthExpenses.each {|x| sum += x.pre_tax_amount }
+      monthExpenses.each {|x| sum += x.pre_tax_amount + x.tax_amount }
       monthSummary = ExpenseMonth.new(month[0], month[1])
       monthSummary.amount = sum
       monthSummaries.push(monthSummary)

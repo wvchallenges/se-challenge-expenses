@@ -13,3 +13,49 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+   background-color: #CCDEE8;
+ }
+
+
+.header {
+  background-color: black
+}
+
+.footer {
+  margin-top: 1em;
+}
+
+.header h1 {
+  color: white;
+  font-family: sans-serif;
+  margin: 1em;
+}
+
+p {
+  font-family: sans-serif;
+}
+
+.form-submit {
+  margin-top: 1em;
+}
+
+.form-file-pick {
+  margin-top: 1em;
+}
+
+.expense-table-row td {
+  font-family: sans-serif;
+  background-color: white;
+}
+
+.expense-table-header td {
+  font-family: sans-serif;
+  background-color: white;
+  font-weight: bold;
+}
+
+.footer a {
+  font-family: sans-serif;
+}

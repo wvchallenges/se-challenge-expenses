@@ -1,17 +1,24 @@
-<h1>Summary of Expenses</h1>
+<div class="header">
+  <h1>Summary of Expenses</h1>
+</div>
 
-<table style="width:100%">
-  <tr>
+<table>
+  <tr class="expense-table-header">
     <td>Month</td>
     <td>Amount</td>
   </tr>
 
   <% @monthSummaries.each do |month| %>
 
-  <tr>
+  <tr class="expense-table-row">
     <td><%= "#{month.year}/#{ format('%02d', month.month) }" %></td>
     <td><%= "#{ number_to_currency(month.amount, :unit => "$") }" %></td>
   </tr>
 
   <% end %>
+
 </table>
+
+<div class="footer">
+  <%= link_to 'Upload another file', controller: "expense_sheets", action: "new" %>
+</div>
