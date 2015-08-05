@@ -23,6 +23,14 @@ class ExpenseSheetsController < ApplicationController
     redirect_to @sheet
   end
 
+  def show
+    @sheet = ExpenseSheet.find(params[:id])
+
+    summary = ExpensesSummary.new(@sheet)
+
+    @monthSummaries = summary.monthExpenses
+  end
+
   private
     def createParams
       params.require(:sheet).permit(:csv_path)

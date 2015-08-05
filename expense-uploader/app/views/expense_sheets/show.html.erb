@@ -1,2 +1,17 @@
-<h1>ExpenseSheets#show</h1>
-<p>Find me in app/views/expense_sheets/show.html.erb</p>
+<h1>Summary of Expenses</h1>
+
+<table style="width:100%">
+  <tr>
+    <td>Month</td>
+    <td>Amount</td>
+  </tr>
+
+  <% @monthSummaries.each do |month| %>
+
+  <tr>
+    <td><%= "#{month.year}/#{ format('%02d', month.month) }" %></td>
+    <td><%= "#{ number_to_currency(month.amount, :unit => "$") }" %></td>
+  </tr>
+
+  <% end %>
+</table>
