@@ -14,9 +14,10 @@ class ExpenseSheetsController < ApplicationController
     csvFileModel = Utility::CsvFile.new(fileDataLines)
 
     puts csvFileModel.headerRow.class
-    @sheet = ExpenseSheet.new
 
-    @sheet.loadFromCsv(Time.now, csvFileModel)
+    sheetFactory = Utility::CsvExpenseSheetFactory.new
+
+    @sheet = sheetFactory.createSheetFromCsv(Time.now, csvFileModel)
 
     @sheet.save
 

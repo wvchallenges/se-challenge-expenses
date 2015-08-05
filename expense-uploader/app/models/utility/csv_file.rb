@@ -3,6 +3,8 @@ require 'csv'
 module Utility
   class CsvFile
 
+    # Creates a new CsvFile from an array of CSV lines
+    # This assumes the first line is the headers
     def initialize(contentsAsLines)
 
       rows = Array.new
