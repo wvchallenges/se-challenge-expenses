@@ -14,7 +14,7 @@ function readCSV(event) {
   reader.onload = function (event) {
     var parsedCSV = parseCSV(event.target.result);
     var mappedData = mapCSVData(parsedCSV);
-    save(parsedCSV);
+    save(mappedData);
     var summary = calculateMonthlyExpenses(mappedData);
     display(summary);
   }
@@ -82,7 +82,7 @@ function display(monthlyExpenses) {
 
 function save(data) {
   var xhr = new XMLHttpRequest();
-  xhr.open('PUT', '/expenses');
+  xhr.open('POST', '/expenses');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify(data));
 }
