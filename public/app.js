@@ -2,6 +2,7 @@ console.log("init");
 
 var expenseFields = ["date", "category", "name", "address", "description", "pre_tax", "tax_name", "tax"];
 var tableBody = document.getElementById("data-summary-body");
+var fileNameField = document.getElementById("filename");
 
 document.getElementById("csv-upload").addEventListener("change", readCSV);
 
@@ -16,7 +17,7 @@ function readCSV(event) {
     var mappedData = mapCSVData(parsedCSV);
     save(mappedData);
     var summary = calculateMonthlyExpenses(mappedData);
-    display(summary);
+    display(summary, file.name);
   }
 }
 
@@ -64,8 +65,9 @@ function calculateMonthlyExpenses(rows) {
   return summary;
 }
 
-function display(monthlyExpenses) {
+function display(monthlyExpenses, fileName) {
   tableBody.innerHTML = "";
+  fileNameField.innerHTML = "Displaying: " + fileName;
   for (var i = 1; i <= 12; i++) {
     if (monthlyExpenses.hasOwnProperty(i)) {
       month_row = document.createElement("tr");
@@ -78,6 +80,7 @@ function display(monthlyExpenses) {
       tableBody.appendChild(month_row);
     }
   }
+  document.getElementById("data-summary").classList.remove("hide")
 }
 
 function save(data) {

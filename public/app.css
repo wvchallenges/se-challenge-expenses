@@ -1,6 +1,16 @@
-.show {
-  transition: opacity 400ms;
-}
 .hide {
-  opacity: 0;
+  display: none;
+}
+
+table#data-summary thead {
+  font-weight: bold;
+}
+
+td {
+  padding: 10px;
+}
+
+#filename {
+  font-size: 10px;
+  font-style: italic;
 }

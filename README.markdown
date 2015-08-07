@@ -1,4 +1,18 @@
+# Brendan's Wave Challenge Solution
+
+To run the app:
+
+- `cd` into directory
+- `bundle install`
+- `rackup`
+
+*What's specialial about this solution:* Pretty much all front end - snappy and would be very easy to take offline. No libraries used.
+
+*What's not special:* Perfunctory back-end implementation; no tests, validations, or error-handling; CSV parsing is fragile; doesn't look good.
+
+
 # Wave Software Development Challenge
+
 Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
 
 We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
