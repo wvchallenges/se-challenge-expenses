@@ -1,3 +1,5 @@
+require './expense'
+
 class WaveChallenge < Sinatra::Base
 
   get '/' do
@@ -6,7 +8,9 @@ class WaveChallenge < Sinatra::Base
 
   post '/expenses' do
     json = JSON.parse(request.body.read)
-    puts json
+    json.each do |record|
+      Expense.create(record)
+    end
     200
   end
 

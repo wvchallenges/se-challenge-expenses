@@ -3,7 +3,7 @@ require 'dm-migrations'
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/expenses.db")
 
-class Song
+class Expense
   include DataMapper::Resource
   property :id, Serial
   property :date, Date
