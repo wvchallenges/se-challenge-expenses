@@ -1,0 +1,23 @@
+<h1> New Company's Expense Page </h1>
+
+<h4> Upload new company's CSV file here: </h4>
+
+<%= form_tag({action: :upload}, multipart: true) do %>
+  <%= file_field_tag 'data' %>
+  <button type="submit" class="btn btn-default">Submit</button>
+<% end %>
+
+<br />
+
+<table class="table table-striped">
+  <tr>
+    <th> Month, Year </th>
+    <th> Total Expenses </th>
+  </tr>
+  <% @months.each do |month| %>
+    <tr>
+      <td class='name'><%= month[0] %></td>
+      <td class='players_count'><%= '%.2f' % month[1].sum(&:total_amount).round(2) %></td>
+    </tr>
+  <% end %>
+</table>
