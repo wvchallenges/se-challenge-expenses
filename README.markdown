@@ -14,11 +14,13 @@ A couple of notes:
 This is a classic Ruby on Rails project setup. 
 
 Prereqs:
+
 1. A github account setup with ssh keys on your computer.
 1. Latest versions of ruby and rails if you don't have it. (recommend using rvm)
 1. Setup mysql (recommend using homebrew)
 
 Setup:
+
 1. clone repo `git@github.com:nilu/se-challenge.git`
 1. cd to repo in the terminal of your choice
 1. run `bundle install` (type it in terminal)
