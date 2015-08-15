@@ -59,4 +59,4 @@ docs/_build/
 target/
 
 # Dev database
-challenge/db.sqlite3
+db.sqlite3

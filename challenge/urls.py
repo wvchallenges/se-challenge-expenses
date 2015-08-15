@@ -17,5 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url('^$', 'challenge.main.views.index', name='index'),
+
+    # Django admin not configured for this challenge
+    #url(r'^admin/', include(admin.site.urls)),
 ]
