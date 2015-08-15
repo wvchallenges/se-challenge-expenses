@@ -5,7 +5,7 @@
 <h1>All reports</h1>
 <ul>
   {% for report in reports %}
-  <li><a href="{% url 'expenses_report' report.id %}">{{ report.name }}</a>, imported on {{report.created_at }}</a></li>
+  <li><a href="{% url 'expenses_report' report.id %}">{{ report.name }}</a>, imported {{report.created_at|date:"Y-m-d H:i:s" }}</a></li>
   {% endfor %}
 </ul>
 

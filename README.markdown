@@ -13,7 +13,7 @@ It will also generate command line executables for all your dependencies' entry 
 
 #### Node
 
-I've setup buildout to download and compile node mostly for one package, less. While this might seem like overkill for the size of this project, most apps will end up using other modules from it, like yuglify or coffeescript.
+I've setup buildout to download and compile node for one package, less. This is mostly as a demonstration of what buildout can do.
 
 You may want to disable this if you prefer to use a system-wide install of less.
 
@@ -41,7 +41,7 @@ Errors when the uploaded file is invalid are not handled very well, in productio
 
 ### Pagination
 
-The current report page will load and display all existing data. This is just not going to scale at all. Pagination will reduce database load and increase page response times.
+The current pages will load and display all existing data. This is just not going to scale at all. Pagination will reduce database load and increase page response times.
 
 ### View Caching
 
