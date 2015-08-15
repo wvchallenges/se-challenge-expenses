@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h1>Upload a csv file</h1>
+
+<form action="{% url 'expenses_upload' %}" method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "upload" %} Upload
+        </button>
+    {% endbuttons %}
+</form>
+{% endblock %}

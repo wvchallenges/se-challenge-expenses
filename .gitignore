@@ -60,3 +60,6 @@ target/
 
 # Dev database
 db.sqlite3
+
+# Uploaded files
+media/
