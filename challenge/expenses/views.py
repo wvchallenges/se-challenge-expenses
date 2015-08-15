@@ -1,6 +1,6 @@
 from collections import defaultdict
 from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 from challenge.main.decorators import render_to
 from challenge.expenses.models import Expense, Report
@@ -24,20 +24,20 @@ def upload(request):
 
 
 @render_to('expenses/report.html')
-def report(request, report_id=None):
+def report(request, report_id):
     data = defaultdict(int)
 
-    # Optional restriction on single report
-    report = None
-    qs = Expense.objects.all()
-    if report_id:
-        qs = qs.filter(report_id=report_id)
-        report = Report.objects.get(id=report_id)
+    report = get_object_or_404(Report, id=report_id)
 
-    for expense in qs:
+    for expense in Expense.objects.filter(report_id=report_id):
         data[expense.date.strftime('%Y-%m')] += expense.total
 
     return {
         'data': sorted(data.items(), key=lambda x: x[0]),
         'report': report,
     }
+
+
+@render_to('expenses/list.html')
+def list(request):
+    return {'reports': Report.objects.all()}

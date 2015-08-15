@@ -6,6 +6,9 @@ class Report(models.Model):
     name = models.CharField(max_length=255, verbose_name='Name of this report')
     file = models.FileField()
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255, db_index=True)
