@@ -15,7 +15,7 @@ It will also generate command line executables for all your dependencies' entry 
 
 I've setup buildout to download and compile node mostly for one package, less. While this might seem like overkill for the size of this project, most apps will end up using other modules from it, like yuglify or coffeescript.
 
-You may want to disable this to install the app faster.
+You may want to disable this if you prefer to use a system-wide install of less.
 
   1. In `buildout.cfg`, remove `node` from the `parts` list on line 2.
   1. In `challenge/settings/base.py`, set `LESS_EXECUTABLE` to the path it can be found on your system. (Hint: `which lessc` in your terminal)
@@ -31,13 +31,6 @@ You may want to disable this to install the app faster.
 And you're done, go to [127.0.0.1:8000](http://127.0.0.1:8000)
 
 
-### Running tests
-
-    bin/mamba --enable-coverage
-
-A code coverage report will be generated in ``.
-
-
 ## Design decisions
 
 ### Django app structure
@@ -51,7 +44,11 @@ I typically will structure my django apps in 3 different files:
 
 ## What's next
 
-The following are ideas on how to improve or extend the project, ordered by biggest value for lowest engineering effort.
+The following are ideas on how to improve or extend the project, in no particular order.
+
+### Better error handling
+
+Errors when the uploaded file is invalid are not handled very well, in production they would result in a 500 error, which is less than ideal.
 
 ### Pagination
 
@@ -65,6 +62,6 @@ The index and upload pages could be cached forever, and the report page(s) could
 
 The dataset provided as example is small enough to process on the fly, but adding a queue system like Huey or Celery would be extremely helpful if the data or number or requests increases.
 
-### More tests
+### Add tests
 
-More test will reduce the chances of someone breaking something they didn't think would be impacted.
+I didn't have enough time to add tests to this app, but it should probably be done soon. Adding relevant tests will prevent breaking core functionalities of the app.
