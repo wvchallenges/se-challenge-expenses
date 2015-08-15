@@ -31,17 +31,6 @@ You may want to disable this if you prefer to use a system-wide install of less.
 And you're done, go to [127.0.0.1:8000](http://127.0.0.1:8000)
 
 
-## Design decisions
-
-### Django app structure
-
-I typically will structure my django apps in 3 different files:
-
-  - Models: Defines models, and each model contains logic related to data validation or preparation.
-  - Views: Defines all views relevant to the models, and contains only logic related to the http layer or template layer. Reading POST data or formatting data to be useable easily in the template, for example.
-  - API: Defines all business logic relevant to the models. Methods in `api` generally only accept python built-in types as parameters. This restriction allows for easier testing (both from unit tests and from a shell), as well as calling `api` methods from anywhere else, such as background tasks, management commands, etc.
-
-
 ## What's next
 
 The following are ideas on how to improve or extend the project, in no particular order.
