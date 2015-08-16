@@ -21,6 +21,11 @@ You may want to disable this if you prefer to use a system-wide install of less.
   1. In `challenge/settings/base.py`, set `LESS_EXECUTABLE` to the path it can be found on your system. (Hint: `which lessc` in your terminal)
 
 
+#### Database
+
+The project is set up to use SQLite. I did not think it would be useful to connect to an actual database server for this exercise, since it would have involved more work for the reviewer to create user/password/db.
+
+
 ### Installation
 
     python bootstrap.py   # Only run the first time, it sets up bin/buildout and setuptools

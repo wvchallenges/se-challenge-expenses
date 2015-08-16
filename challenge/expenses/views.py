@@ -17,8 +17,10 @@ def upload(request):
             form = ReportForm(request.POST, request.FILES)
             if form.is_valid():
                 report = form.save()
-                # This might fail. Errors are not handled yet,
-                # but the transaction prevents partial imports
+                # This might fail depending on the file uploaded.
+                # I'm using an atomic transaction to rollback everything
+                # if it does. That probably should be reworked to allow
+                # a nicer solution from the user's point of view
                 process_report(report.id)
                 messages.success(request, 'Report imported.')
                 return redirect('expenses_report', report.id)
