@@ -1,5 +1,6 @@
 from collections import defaultdict
 from django.db import transaction
+from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 
 from challenge.main.decorators import render_to
@@ -19,6 +20,7 @@ def upload(request):
                 # This might fail. Errors are not handled yet,
                 # but the transaction prevents partial imports
                 process_report(report.id)
+                messages.success(request, 'Report imported.')
                 return redirect('expenses_report', report.id)
     return {'form': form}
 
