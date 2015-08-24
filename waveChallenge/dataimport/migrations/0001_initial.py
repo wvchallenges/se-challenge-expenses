@@ -33,8 +33,6 @@ class Migration(migrations.Migration):
                 ('tax_amount', models.FloatField(default=0)),
                 ('date', models.DateTimeField()),
                 ('description', models.TextField()),
-                ('category', models.ForeignKey(to='dataimport.Category')),
-                ('owner', models.ForeignKey(to='dataimport.Employee')),
             ],
         ),
         migrations.CreateModel(
@@ -43,6 +41,29 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=100)),
             ],
+        ),
+        migrations.CreateModel(
+            name='UploadBatch',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('filename', models.CharField(max_length=200)),
+                ('upload_date', models.DateTimeField()),
+            ],
+        ),
+        migrations.AddField(
+            model_name='expense',
+            name='batch',
+            field=models.ForeignKey(to='dataimport.UploadBatch'),
+        ),
+        migrations.AddField(
+            model_name='expense',
+            name='category',
+            field=models.ForeignKey(to='dataimport.Category'),
+        ),
+        migrations.AddField(
+            model_name='expense',
+            name='owner',
+            field=models.ForeignKey(to='dataimport.Employee'),
         ),
         migrations.AddField(
             model_name='expense',

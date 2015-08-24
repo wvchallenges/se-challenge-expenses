@@ -15,6 +15,11 @@ class TaxType(models.Model):
     name = models.CharField(max_length=100)
 
 
+class UploadBatch(models.Model):
+    filename = models.CharField(max_length=200)
+    upload_date = models.DateTimeField()
+
+
 class Expense(models.Model):
     owner = models.ForeignKey(Employee)
     category = models.ForeignKey(Category)
@@ -23,6 +28,10 @@ class Expense(models.Model):
     tax_amount = models.FloatField(default=0)
     date = models.DateTimeField()
     description = models.TextField()
+    batch = models.ForeignKey(UploadBatch)
+
+
+
 
 
 
