@@ -17,3 +17,9 @@
     cursor: inherit;
     display: block;
 }
+.error-msg {
+	color: red;
+}
+#loading-msg img {
+	margin-right: 10px;
+}
