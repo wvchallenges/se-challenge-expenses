@@ -5,12 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloWorldController {
+public class UploadFileController {
 
-    @RequestMapping("/HelloWorld")
-    public String helloWorld(Model model) {
-        model.addAttribute("message", "Hello World!");
-        return "HelloWorld.jsp";
+    @RequestMapping("/UploadFile")
+    public String init() {
+        return "UploadFile.jsp";
     }
 
 }
