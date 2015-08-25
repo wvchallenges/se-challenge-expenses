@@ -13,6 +13,8 @@ public class ExpenseCategory {
 	private int id;
 	private String description;
 	
+	public ExpenseCategory(){} 
+	
 	public ExpenseCategory(int id, String description) {
 		super();
 		this.id = id;

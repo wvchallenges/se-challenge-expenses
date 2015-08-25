@@ -23,35 +23,35 @@ public class RepositoryUtils {
 	private ExpenseRepository expenseRepo;
 	
 	public void saveAll(List<Expense> expenses) {
-		
-		for(Expense ex : expenses) {
-			
-			//retieving or saving taxes
-			List<Tax> tList = taxRepo.findByName(ex.getTax().getName());
-			if(tList != null && tList.size() > 0) {
-				ex.setTax(tList.get(0));
-			} else {
-				taxRepo.save(ex.getTax());
+		if(expenses != null) {
+			for(Expense ex : expenses) {
+				//retieving or saving tax obj
+				List<Tax> tList = taxRepo.findByName(ex.getTax().getName());
+				if(tList != null && tList.size() > 0) {
+					ex.setTax(tList.get(0));
+				} else {
+					taxRepo.save(ex.getTax());
+				}
+				
+				//retrieving or saving expense category obj
+				List<ExpenseCategory> ecList = expenseCategoryRepo.findByDescription(ex.getCategory().getDescription());
+				if(ecList != null && ecList.size() > 0) {
+					ex.setCategory(ecList.get(0));
+				} else {
+					expenseCategoryRepo.save(ex.getCategory());
+				}
+				
+				//retrieving or saving employee obj
+				List<Employee> emList = employeeRepo.findByName(ex.getEmployee().getName());
+				if(emList != null && emList.size() > 0) {
+					ex.setEmployee(emList.get(0));
+				} else {
+					employeeRepo.save(ex.getEmployee());
+				}
+				
+				//saving expense
+				expenseRepo.save(ex);
 			}
-			
-			//retrieving or saving expense categories
-			List<ExpenseCategory> ecList = expenseCategoryRepo.findByDescription(ex.getCategory().getDescription());
-			if(ecList != null && ecList.size() > 0) {
-				ex.setCategory(ecList.get(0));
-			} else {
-				expenseCategoryRepo.save(ex.getCategory());
-			}
-			
-			//retrieving or saving employees
-			List<Employee> emList = employeeRepo.findByName(ex.getEmployee().getName());
-			if(emList != null && emList.size() > 0) {
-				ex.setEmployee(emList.get(0));
-			} else {
-				employeeRepo.save(ex.getEmployee());
-			}
-			
-			//saving expenses
-			expenseRepo.save(ex);
 		}
 		
 	}

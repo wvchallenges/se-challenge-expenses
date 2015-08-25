@@ -26,10 +26,12 @@ import junit.framework.TestCase;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class CSVExpenseDataReaderTest {
+public class CSVExpensesDataReaderTest {
 
 	@Autowired
-	private DataReaderFactory dataReaderFactory;
+	public DataReaderFactory dataReaderFactory;
+	
+	public List<Expense> expenses;
 	
 	@Test
 	@SuppressWarnings("unchecked")
@@ -37,7 +39,7 @@ public class CSVExpenseDataReaderTest {
 		
 		DataReader<Expense> expenseDataReader = (DataReader<Expense>) dataReaderFactory.getInstance(DataReaderTypes.CSV_EXPENSE);
 		
-		List<Expense> expenses = expenseDataReader.unmarshall(getTestData());
+		expenses = expenseDataReader.unmarshall(getTestData());
 		
 		TestCase.assertNotNull(expenses);
 		TestCase.assertTrue(expenses.size() > 0);
