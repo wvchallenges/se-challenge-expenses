@@ -1,0 +1,13 @@
+<html>
+<head>
+	<title>File Import</title>
+</head>
+<body>
+<b1>Expense file import</b1>
+<form enctype="multipart/form-data" action="/expense/import" method="post">
+	{% csrf_token %}
+	{{ form }}
+	<input type="submit" value="Submit" />
+</form>
+</body>
+</html>

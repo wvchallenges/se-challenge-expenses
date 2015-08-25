@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>Monthly Expense Report</title>
+</head>
+<body>
+{% if monthly_expense %}
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Expense</th>
+		</tr>
+		{% for expense in monthly_expense %}
+			<tr>
+				<td>{{ expense.month }}</td>
+				<td>{{ expense.total }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% else %}
+	<p>No expenses available.</p>
+{% endif %}
+</body>
+</html>
