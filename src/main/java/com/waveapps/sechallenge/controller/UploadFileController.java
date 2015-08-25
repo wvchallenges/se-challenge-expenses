@@ -1,9 +1,8 @@
 package com.waveapps.sechallenge.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,9 +10,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.waveapps.sechallenge.dataReader.DataReader;
+import com.waveapps.sechallenge.dataReader.DataReaderFactory;
+import com.waveapps.sechallenge.dataReader.DataReaderTypes;
+import com.waveapps.sechallenge.model.Expense;
+import com.waveapps.sechallenge.repository.ExpenseRepository;
+import com.waveapps.sechallenge.repository.RepositoryUtils;
+
 @Controller
 public class UploadFileController {
 
+	@Autowired
+	private RepositoryUtils repositoryUtils;
+	
+	@Autowired
+	private DataReaderFactory dataReaderFactory;
+	
+	@Autowired
+	private ExpenseRepository expenseRepo;
+	
 	private String message;
 	
 	private boolean error = false;
@@ -34,12 +49,19 @@ public class UploadFileController {
             	
             	if(file.getOriginalFilename() != null && file.getOriginalFilename().contains(".csv")) {
             	
-	                byte[] bytes = file.getBytes();
-	                BufferedOutputStream stream =
-	                        new BufferedOutputStream(new FileOutputStream(new File("c:\\CustomInstalls\\test.csv")));
-	                stream.write(bytes);
-	                stream.close();
-	                message = "You have successfully uploaded the file!";
+            		@SuppressWarnings("unchecked")
+					DataReader<Expense> reader = (DataReader<Expense>) dataReaderFactory.getInstance(DataReaderTypes.CSV_EXPENSE);
+	                List<Expense> expenses = reader.unmarshall(file);
+            		
+	                repositoryUtils.saveAll(expenses);
+	                
+	                Iterable<Expense> expensesFromDB = expenseRepo.findAll();
+	                
+	                for(Expense e : expensesFromDB) {
+	                	System.out.println(e.toString());
+	                }
+	                
+            		message = "The file has been successfully uploaded!";
 	                
             	} else {
             		message = "Please upload a valid .csv file.";
