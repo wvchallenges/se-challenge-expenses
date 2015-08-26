@@ -10,7 +10,7 @@
 		<script src="js/site.js"></script>
 	</head>
 	
-	<body>			
+	<body>
 		<br/><br/>
 		<div class="container" id="container">
 		
@@ -43,7 +43,35 @@
 			<h3 id="loading-msg" class="text-center" style="display: none;">
 				<img src="img/loading.gif"/>Please wait while the file is being uploaded...
 			</h3>
-					
+			
+			<c:if test="${totals.size() > 0}">
+				<h3 id="table-header">Totals by month</h3>
+				<div class="container-fluid">
+					<table class="table table-striped table-hover table-primary" >
+						<thead>
+							<tr>
+								<th>Year</th>
+								<th>Month</th>
+								<th><span class="pull-right">Pre-tax Total</span></th>
+								<th><span class="pull-right">Tax Total</span></th>
+								<th><span class="pull-right">Grand Total</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="t" items="${totals}">
+								<tr>
+							   		<td><c:out value="${t.year}"/></td>
+							   		<td><c:out value="${t.monthString}"/></td>
+							   		<td><span class="pull-right"><c:out value="${t.preTaxAmountTotalString}"/></span></td>
+							   		<td><span class="pull-right"><c:out value="${t.taxAmountTotalString}"/></span></td>
+							   		<td><span class="pull-right"><c:out value="${t.grandTotalString}"/></span></td>
+							   	</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</c:if>
+			
 		</div>
 	</body>
 </html>

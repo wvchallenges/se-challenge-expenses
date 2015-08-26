@@ -1,5 +1,6 @@
 package com.waveapps.sechallenge.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.waveapps.sechallenge.dataReader.DataReader;
 import com.waveapps.sechallenge.dataReader.DataReaderFactory;
 import com.waveapps.sechallenge.dataReader.DataReaderTypes;
 import com.waveapps.sechallenge.model.Expense;
+import com.waveapps.sechallenge.model.TotalByMonthQueryResult;
 import com.waveapps.sechallenge.repository.ExpenseRepository;
 import com.waveapps.sechallenge.repository.RepositoryUtils;
 
@@ -29,13 +31,17 @@ public class UploadFileController {
 	@Autowired
 	private ExpenseRepository expenseRepo;
 	
+	private List<TotalByMonthQueryResult> totals = new ArrayList<TotalByMonthQueryResult>();
+	
 	private String message;
 	
 	private boolean error = false;
 	
     @RequestMapping("/UploadFile")
-    public String init() {
-        return "UploadFile.jsp";
+    public ModelAndView init() {
+    	ModelAndView mav = new ModelAndView("UploadFile.jsp");
+    	mav.addObject("totals", totals);
+        return mav;
     }
     
     @RequestMapping(value="/upload", method=RequestMethod.POST)
@@ -43,6 +49,7 @@ public class UploadFileController {
     	
     	ModelAndView mav = new ModelAndView("UploadFile.jsp");
     	error = false;
+    	totals = new ArrayList<TotalByMonthQueryResult>();
     	
         if (!file.isEmpty()) {
             try {
@@ -54,13 +61,7 @@ public class UploadFileController {
 	                List<Expense> expenses = reader.unmarshall(file);
             		
 	                repositoryUtils.saveAll(expenses);
-	                
-	                Iterable<Expense> expensesFromDB = expenseRepo.findAll();
-	                
-	                for(Expense e : expensesFromDB) {
-	                	System.out.println(e.toString());
-	                }
-	                
+	                	                
             		message = "The file has been successfully uploaded!";
 	                
             	} else {
@@ -77,8 +78,11 @@ public class UploadFileController {
         	error = true;
         }
         
+        totals = expenseRepo.getTotalByMonthObjects(expenseRepo.getTotalByMonth());
+        
         mav.addObject("message", message);
         mav.addObject("isError", error);
+        mav.addObject("totals", totals);
         
         return mav;
     }
