@@ -6,6 +6,6 @@ The relational database structure that I created logically stores data parsed fr
 
 Instead of maintaining a record of each tax amount, I created a database for taxes, calculating the rate of each different tax. Then, when it comes time to calculating the totals, that's easily done by which sales tax was being used by the expense.
 
-
 One new discovery that I'm excited about using in this app is the inverse_of option in my association between employee and expenses. Since it made logical sense for expenses by month to be a view under the expenses controller, I was trying to find a way of showing the information of the employees who made the expenses; inverse_of solved that for me.
 
+Finally, I created a simple UI using Bootstrap to upload the file and showcase the data in a meaningful way. 
