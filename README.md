@@ -35,6 +35,8 @@ After installing Java and Tomcat, please download the latest version at https://
 1. [http://localhost:8080/se-challenge/UploadFileAngular](http://localhost:8080/se-challenge/UploadFileAngular) for the AngularJS version
 2. [http://localhost:8080/se-challenge/UploadFile](http://localhost:8080/se-challenge/UploadFile) for the Spring MVC + jQuery version
 	
+Note: the app was tested on the latest versions of Chrome and Firefox, and on IE11.
+
 The imported data is saved in a memory database (H2), so you can spare installing yet another DBMS on your computer. Additionally, Spring Boot has a beautiful integration with H2 that made things a lot easier to me. The downside is that the data is lost after the server is no longer running, but I believe this is not a problem.
 
 # Reading the source code
