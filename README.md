@@ -2,16 +2,19 @@
 This is my implementation of the `se-challenge` project for the [Wave Software Development Challenge](https://github.com/wvchallenges/se-challenge).
 
 To run this program, you will need:
+
 	1. [Java JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 
 	2. [Apache Tomcat 8] (https://tomcat.apache.org/download-80.cgi)
 	
 To open and browse the source code you will need (in addition to the two above):
+
 	1. [Eclipse Mars](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr)
 	
 Please note that this program only runs on Java 8 because I am using some of its latest features. I can work on a version that compiles older versions, if needed.
 
 # Technology Stack
 This implementation uses the following technology stack 
+
 	1. Java 8
 	2. Spring Boot MVC framework
 	3. JPA for the ORM mapping
@@ -27,6 +30,7 @@ I am taking this also as a learning opportunity to use new things, to have fun a
 
 # Running the application
 After installing Java and Tomcat, please download the latest version at https://github.com/lotif/se-challenge/tree/master/releases . Unzip the .war file and drop it in your <tomcat_home>/webapps folder. Start up Tomcat and access the following URLs on your favorite browser:
+
 	1. http://localhost:8080/se-challenge/UploadFileAngular for the AngularJS version
 	2. http://localhost:8080/se-challenge/UploadFile for the Spring MVC + jQuery version
 	
@@ -36,6 +40,7 @@ The data after the import is saved in a memory database (H2), so you can spare i
 Clone `se-challenge` project into your local machine, import it into Eclipse and have fun :)
 
 Below are little descriptions of the source folders:
+
 	1. `src/main/java`: the package for all the java classes
 		1.1. `com.waveapps.sechallenge`: contains the class needed for the configuration of Spring Boot
 		1.2. `com.waveapps.sechallenge.conroller`: contains the controller classes for the upload service
