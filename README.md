@@ -17,7 +17,7 @@ This implementation uses the following technology stack:
 
 1. Java 8
 2. Spring Boot MVC framework
-3. apache Maven build manager 
+3. Apache Maven build manager 
 4. JPA for the ORM mapping
 5. H2 In Memory Database
 6. Bootstrap for the HTML pages
