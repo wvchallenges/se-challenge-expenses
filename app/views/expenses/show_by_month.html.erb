@@ -1,0 +1,37 @@
+	<div class="panel panel-primary">
+		<div class="panel-heading header">Expenses by Month</div>
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<% @months.each_with_index do |m, index| %>
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="panel<%=index%>">
+			      <h4 class="panel-title">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<% index %>">
+				          	<%= m[0].strftime("%B %Y") %>: 
+				          	<span class="sum"><%= number_to_currency(m[1].inject(0) { |sum, expense| sum += expense.total}) %></span>
+									<span class="arrow">&#9660;</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapse<%= index %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel<%=index%>">
+			      <div class="panel-body">
+			      <table class="table table-striped">
+			      	<thead>
+			      		<th>Name</th>
+			      		<th>Description</th>
+			      		<th>Total</th>
+			      	</thead>
+			      	<% m[1].each do |expense| %>
+			      		<tr>
+				      		<td><%= expense.employee.name %></td>
+				      		<td><%= expense.description %></td>
+				      		<td><%= number_to_currency(expense.total) %></td>
+			      		</tr>
+			      	<% end %>
+			      	</table>
+			      </div>
+			    </div>
+			  </div>
+			<% end %>
+		 </div>
+	</div>
+</div>

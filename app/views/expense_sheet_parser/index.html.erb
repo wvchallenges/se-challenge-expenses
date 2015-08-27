@@ -1,0 +1,11 @@
+<%= form_tag({:action => :import}, multipart: true) do %>
+ 	<div class="panel panel-primary">
+ 		<div class="panel-heading header">Upload your file</div>
+	  <div class="row">
+	  <div class="col-sm-4 col-sm-offset-4 text-center padtopmore padbottomore">
+	 		<label class="control-label"><%= file_field_tag :file %></label>
+	 		<%= submit_tag "Import", class:"btn btn-primary" %>
+	  </div>
+	  </div>
+	</div>
+<% end %>
