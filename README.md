@@ -48,7 +48,7 @@ Below are brief descriptions of the source folders:
  3. `com.waveapps.sechallenge.dataReader`: contains the interfaces and implementations of the classes needed to read the  data
  4. `com.waveapps.sechallenge.model`: contains the JPA entities
  5. `com.waveapps.sechallenge.repository`: contains the Spring repositories for DB access
-2. `src/main/resources`: this folder is actually empty, I did not need it in the end but it is a folder created by default by Maven
+2. `src/main/resources`: this folder is actually empty (created by default by Maven)
 3. `src/test/java`: contains the unit tests
 4. `src/test/resources`: the resources needed for the unit tests
 
