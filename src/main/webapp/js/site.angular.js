@@ -48,12 +48,17 @@ app.controller('uploadController', function($scope, $http) {
 	$scope.resetAction = function() {
 		$scope.uploadForm = angular.copy($scope.uploadFormMaster);	
 		$scope.messages.clear();
+		$scope.clearFileInput();
+	};
+	
+	$scope.clearFileInput = function() {
 		//Clearing the input type="file" manually because it is not supported by angular
 		document.getElementById('fileUploadInput').value = "";
 		$scope.uploadForm.fileInput = "";
+		$scope.uploadForm.fileText = "";
 		$scope.myFile = null;
 		$scope.$apply();
-	};
+	}
 	
 	$scope.onFileInputChange = function(obj) {
 		var label = obj.value.replace(/\\/g, '/').replace(/.*\//, '');
@@ -98,6 +103,7 @@ app.controller('uploadController', function($scope, $http) {
 				$scope.messages.isError = true;
 				$scope.uploadForm = angular.copy($scope.uploadFormMaster);
 		    	$scope.messages.showLoading = false;
+		    	$scope.clearFileInput();
 			}
 		);
 	}
