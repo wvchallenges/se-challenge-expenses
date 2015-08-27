@@ -1,0 +1,27 @@
+== README
+
+* Ruby version
+2.1.1
+
+* Rails version
+4.2.0
+
+* Configuration
+pull the project from git
+
+* Run bundler
+bundle install
+
+* Database creation
+rake db:create
+
+* Database initialization
+rake db:migrate
+
+* Start server
+rails s
+
+* Open a web browser and type in the following url
+http://localhost:3000/
+
+You can now start testing :)
