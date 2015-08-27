@@ -17,10 +17,11 @@ This implementation uses the following technology stack:
 
 1. Java 8
 2. Spring Boot MVC framework
-3. JPA for the ORM mapping
-4. H2 In Memory Database
-5. Bootstrap for the HTML pages
-6. And two implementations for the view:
+3. apache Maven build manager 
+4. JPA for the ORM mapping
+5. H2 In Memory Database
+6. Bootstrap for the HTML pages
+7. And two implementations for the view:
  1. Pure Spring MVC with a little help from jQuery
  2. RESTful services provided by Spring and consumed by AngularJS
 
@@ -34,7 +35,7 @@ After installing Java and Tomcat, please download the latest version at https://
 1. [http://localhost:8080/se-challenge/UploadFileAngular](http://localhost:8080/se-challenge/UploadFileAngular) for the AngularJS version
 2. [http://localhost:8080/se-challenge/UploadFile](http://localhost:8080/se-challenge/UploadFile) for the Spring MVC + jQuery version
 	
-The data after the import is saved in a memory database (H2), so you can spare installing yet another DBMS on your computer. Also, Spring Boot has a beautiful integration with H2 that made things a lot easier to me. The downside is that the data is lost after the server is no longer running, but I believe this is not a problem.
+The imported data is saved in a memory database (H2), so you can spare installing yet another DBMS on your computer. Additionally, Spring Boot has a beautiful integration with H2 that made things a lot easier to me. The downside is that the data is lost after the server is no longer running, but I believe this is not a problem.
 
 # Reading the source code
 Clone `se-challenge` project into your local machine, import it into Eclipse and have fun :)
@@ -44,10 +45,10 @@ Below are brief descriptions of the source folders:
 1. `src/main/java`: the package for all the java classes
  1. `com.waveapps.sechallenge`: contains the class needed for the configuration of Spring Boot
  2. `com.waveapps.sechallenge.conroller`: contains the controller classes for the upload service
- 3. `com.waveapps.sechallenge.dataReader`: contains the interfaces and implementations of the classes needed to read the import data
+ 3. `com.waveapps.sechallenge.dataReader`: contains the interfaces and implementations of the classes needed to read the  data
  4. `com.waveapps.sechallenge.model`: contains the JPA entities
  5. `com.waveapps.sechallenge.repository`: contains the Spring repositories for DB access
-2. `src/main/resources`: this folder is actually empty because I did not need it
+2. `src/main/resources`: this folder is actually empty, I did not need it in the end but it is a folder created by default by Maven
 3. `src/test/java`: contains the unit tests
 4. `src/test/resources`: the resources needed for the unit tests
 
