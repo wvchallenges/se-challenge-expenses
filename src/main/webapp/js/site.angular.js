@@ -1,13 +1,17 @@
 var app = angular.module('uploadApp', []);
 
 app.controller('uploadController', function($scope, $http) {
+	
+	window.scope = $scope;
+	
 	$scope.pageTitle = "Upload File";
 	
 	$scope.messages = {
 		current: "",
-		empty: "The file seems to be empty. Please select a file and try again.",
-		wrongFormat: "Please upload a valid .csv file.",
+		uploadError: "Error contacting the server. Please try again in a few minutes.",
+		getTotalsError: "There was a problem retrieving the totals from the server. Please try again in a few minutes.",
 		isError: false,
+		showLoading: false,
 		clear: function() {
 			$scope.messages.current = "";
 			$scope.messages.isError = false;
@@ -18,9 +22,24 @@ app.controller('uploadController', function($scope, $http) {
 	
 	$scope.uploadForm = angular.copy($scope.uploadFormMaster);
 	
+	$scope.getTotals = function() {
+		$http.get("getTotals")
+			.then(function(response) {
+							
+				console.log(response.data)
+				
+				$scope.totals = response.data;
+								
+			}, function(response) {
+				$scope.messages.current = $scope.messages.totalsError;
+				$scope.messages.isError = true;
+			}
+		);
+	}	
+	
+	$scope.totals = $scope.getTotals();
+	
 	$scope.disableReset = function() {
-		console.log("2: " + $scope.uploadForm.fileInput);
-		console.log("3: " + $scope.uploadForm.fileText);
 		return ($scope.uploadForm.fileInput == null || $scope.uploadForm.fileInput == undefined || $scope.uploadForm.fileInput == "") && 
 			   ($scope.uploadForm.fileText == null || $scope.uploadForm.fileText == undefined || $scope.uploadForm.fileText == "");
 	};
@@ -28,42 +47,67 @@ app.controller('uploadController', function($scope, $http) {
 	$scope.resetAction = function() {
 		$scope.uploadForm = angular.copy($scope.uploadFormMaster);	
 		$scope.messages.clear();
+		//Clearing the input type="file" manually because it is not supported by angular
+		document.getElementById('fileUploadInput').value = "";
 	};
 	
 	$scope.onFileInputChange = function(obj) {
-		
 		var label = obj.value.replace(/\\/g, '/').replace(/.*\//, '');
 		
-		console.log("1: " + label);
-		
-		//$scope.uploadForm.fileInput = label;
+		$scope.uploadForm.fileInput = obj.value; 
 		$scope.uploadForm.fileText = label;
 		$scope.$apply();
-		
-		fileselectOn('fileselect', 1, label);
 	}
 	
 	$scope.submitAction = function(e) {
-		$('#msg').html('');
-    	$('#loading-msg').show();
-    	$scope.uploadForm = angular.copy($scope.uploadFormMaster);
+		$scope.messages.clear();
+		$scope.messages.showLoading = true;
+		
+		var formData=new FormData();
+	    formData.append("file", $scope.myFile);
+		
+		$http.post("uploadRest", formData, {
+		        transformRequest: function(data, headersGetterFunction) {
+		            return data;
+		        },
+		        headers: { 'Content-Type': undefined }
+	        })
+			.then(function(response) {
+							
+				$scope.messages.current = response.data.message;
+				$scope.messages.isError = response.data.error;
+				
+				$scope.totals = response.data.totals;
+				
+				$scope.uploadForm = angular.copy($scope.uploadFormMaster);
+		    	$scope.messages.showLoading = false;
+				
+			}, function(response) {
+				$scope.messages.current = $scope.messages.uploadError;
+				$scope.messages.isError = true;
+				$scope.uploadForm = angular.copy($scope.uploadFormMaster);
+		    	$scope.messages.showLoading = false;
+			}
+		);
 	}
 	
-});
-
-$(document).ready( function() {
-    $('#btn-file :file').on('fileselect', fileselectOn);   
-});
-
-var fileselectOn = function(event, numFiles, label) {
-        
-    var input = $(this).parents('#input-group').find(':text');
-    var log = numFiles > 1 ? numFiles + ' files selected' : label;
-    
-    if( input.length ) {
-        input.val(log);
-    } else {
-        if( log ) console.log("error: input size = 0. log=" + log);
-    }
-    
-}
+})
+//a little hack here because input type="file" is not supported by angular yet
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+            	
+            	scope.onFileInputChange(this);
+            	
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);

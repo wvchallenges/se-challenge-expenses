@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,7 +63,7 @@ public class UploadFileController {
     	error = false;
     	totals = new ArrayList<TotalByMonthQueryResult>();
     	
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             try {
             	
             	if(file.getOriginalFilename() != null && file.getOriginalFilename().contains(".csv")) {
@@ -98,7 +99,7 @@ public class UploadFileController {
     }
     
     @RequestMapping("/uploadAngular")
-    public ModelAndView handleFileUploadANGULAR(@RequestParam("file") MultipartFile file) {
+    public ModelAndView handleFileUploadAngular(@RequestParam("file") MultipartFile file) {
     	ModelAndView mav = new ModelAndView("UploadFileAngular.jsp");
     	
     	processUploadAction(file);
@@ -108,6 +109,22 @@ public class UploadFileController {
         mav.addObject("totals", totals);
         
         return mav;
+    }
+    
+    @RequestMapping(value = "/uploadRest", method = RequestMethod.POST)
+    @ResponseBody
+    public UploadRESTResponse handleFileUploadRest(@RequestParam("file") MultipartFile file) {
+    	processUploadAction(file);        
+        return new UploadRESTResponse(message, error, totals);
+    }
+    
+    @RequestMapping("/getTotals")
+    @ResponseBody
+    public List<TotalByMonthQueryResult> getTotals() {
+    	if(totals == null || totals.size() == 0) {
+    		totals = expenseRepo.getTotalByMonthObjects(expenseRepo.getTotalByMonth());
+    	}
+        return totals;
     }
 
 }
