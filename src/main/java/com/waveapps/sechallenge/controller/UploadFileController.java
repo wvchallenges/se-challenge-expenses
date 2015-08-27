@@ -48,6 +48,17 @@ public class UploadFileController {
     public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file){
     	
     	ModelAndView mav = new ModelAndView("UploadFile.jsp");
+    	
+    	processUploadAction(file);
+        
+        mav.addObject("message", message);
+        mav.addObject("isError", error);
+        mav.addObject("totals", totals);
+        
+        return mav;
+    }
+ 
+    private void processUploadAction(MultipartFile file) {	
     	error = false;
     	totals = new ArrayList<TotalByMonthQueryResult>();
     	
@@ -78,7 +89,19 @@ public class UploadFileController {
         	error = true;
         }
         
-        totals = expenseRepo.getTotalByMonthObjects(expenseRepo.getTotalByMonth());
+        totals = expenseRepo.getTotalByMonthObjects(expenseRepo.getTotalByMonth());    	
+    }
+    
+    @RequestMapping("/UploadFileAngular")
+    public String initAngular() {
+        return "UploadFileAngular.jsp";
+    }
+    
+    @RequestMapping("/uploadAngular")
+    public ModelAndView handleFileUploadANGULAR(@RequestParam("file") MultipartFile file) {
+    	ModelAndView mav = new ModelAndView("UploadFileAngular.jsp");
+    	
+    	processUploadAction(file);
         
         mav.addObject("message", message);
         mav.addObject("isError", error);

@@ -15,7 +15,7 @@
 		<br/><br/>
 		<div class="container" id="container" ng-app="uploadApp" ng-controller="uploadController">
 		
-			<form class="panel panel-primary" role="form" method="POST" action="./upload" enctype="multipart/form-data">	
+			<form class="panel panel-primary" role="form" method="POST" action="./uploadAngular" enctype="multipart/form-data">	
 				<div class="panel-heading">
 					<h4 ng-bind="pageTitle"></h4>
 				</div>
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col-sm-12">
 						<br/>
-						<input type="submit" value="Upload" id="btn-upload" class="btn btn-primary" />
+						<input type="submit" value="Upload" id="btn-upload" class="btn btn-primary" ng-click="submitAction()"/>
 						<input type="submit" value="Reset" id="btn-reset" class="btn btn-primary" ng-disabled="disableReset()" ng-click="resetAction()"/>
 					</div>
 				</div>

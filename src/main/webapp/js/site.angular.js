@@ -19,7 +19,9 @@ app.controller('uploadController', function($scope, $http) {
 	$scope.uploadForm = angular.copy($scope.uploadFormMaster);
 	
 	$scope.disableReset = function() {
-		return ($scope.uploadForm.fileInput == null || $scope.uploadForm.fileInput == undefined || $scope.uploadForm.fileInput == "")&& 
+		console.log("2: " + $scope.uploadForm.fileInput);
+		console.log("3: " + $scope.uploadForm.fileText);
+		return ($scope.uploadForm.fileInput == null || $scope.uploadForm.fileInput == undefined || $scope.uploadForm.fileInput == "") && 
 			   ($scope.uploadForm.fileText == null || $scope.uploadForm.fileText == undefined || $scope.uploadForm.fileText == "");
 	};
 	
@@ -29,36 +31,39 @@ app.controller('uploadController', function($scope, $http) {
 	};
 	
 	$scope.onFileInputChange = function(obj) {
-		console.log('auei!');
-		console.log(obj);
+		
+		var label = obj.value.replace(/\\/g, '/').replace(/.*\//, '');
+		
+		console.log("1: " + label);
+		
+		//$scope.uploadForm.fileInput = label;
+		$scope.uploadForm.fileText = label;
+		$scope.$apply();
+		
+		fileselectOn('fileselect', 1, label);
+	}
+	
+	$scope.submitAction = function(e) {
+		$('#msg').html('');
+    	$('#loading-msg').show();
+    	$scope.uploadForm = angular.copy($scope.uploadFormMaster);
 	}
 	
 });
 
-$(document).on('change', '#btn-file :file', function() {
-	var input = $(this);
-	var numFiles = input.get(0).files ? input.get(0).files.length : 1;
-	var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-	input.trigger('fileselect', [numFiles, label]);
+$(document).ready( function() {
+    $('#btn-file :file').on('fileselect', fileselectOn);   
 });
 
-$(document).ready( function() {
-    $('#btn-file :file').on('fileselect', function(event, numFiles, label) {
+var fileselectOn = function(event, numFiles, label) {
         
-        var input = $(this).parents('#input-group').find(':text');
-        var log = numFiles > 1 ? numFiles + ' files selected' : label;
-        
-        if( input.length ) {
-            input.val(log);
-        } else {
-            if( log ) alert(log);
-        }
-        
-    });
+    var input = $(this).parents('#input-group').find(':text');
+    var log = numFiles > 1 ? numFiles + ' files selected' : label;
     
-    $('#btn-upload').click(function(e) {
-    	$('#msg').html('');
-    	$('#loading-msg').show();    	
-    });
+    if( input.length ) {
+        input.val(log);
+    } else {
+        if( log ) console.log("error: input size = 0. log=" + log);
+    }
     
-});
+}
