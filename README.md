@@ -10,7 +10,7 @@ To open and browse the source code you will need (in addition to the two above):
 
 1. [Eclipse Mars](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr)
 	
-Please note that this program only runs on Java 8 because I am using some of its latest features. I can work on a version that compiles older versions, if needed.
+Please note that this program runs only on Java 8 since I am using some of its latest features. I can work on a version that compiles older versions, if needed.
 
 # Technology Stack
 This implementation uses the following technology stack:
