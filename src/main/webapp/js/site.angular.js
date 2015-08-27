@@ -8,6 +8,7 @@ app.controller('uploadController', function($scope, $http) {
 	
 	$scope.messages = {
 		current: "",
+		fileNotPresentError: "The file seems to be empty. Please select a file and try again.",
 		uploadError: "Error contacting the server. Please try again in a few minutes.",
 		getTotalsError: "There was a problem retrieving the totals from the server. Please try again in a few minutes.",
 		isError: false,
@@ -49,6 +50,9 @@ app.controller('uploadController', function($scope, $http) {
 		$scope.messages.clear();
 		//Clearing the input type="file" manually because it is not supported by angular
 		document.getElementById('fileUploadInput').value = "";
+		$scope.uploadForm.fileInput = "";
+		$scope.myFile = null;
+		$scope.$apply();
 	};
 	
 	$scope.onFileInputChange = function(obj) {
@@ -60,6 +64,13 @@ app.controller('uploadController', function($scope, $http) {
 	}
 	
 	$scope.submitAction = function(e) {
+		
+		if(!$scope.myFile) {
+			$scope.messages.current = $scope.messages.fileNotPresentError;
+			$scope.messages.isError = true;
+			return;
+		}
+		
 		$scope.messages.clear();
 		$scope.messages.showLoading = true;
 		
