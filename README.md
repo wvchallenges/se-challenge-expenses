@@ -10,10 +10,10 @@ To open and browse the source code you will need (in addition to the two above):
 
 1. [Eclipse Mars](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr)
 	
-Please note that this program runs only on Java 8 since I am using some of its latest features. I can work on a version that compiles older versions, if needed.
+Please note that this program runs only on Java 8 since I am using some of its latest features. I can work on a version that compiles on older Java versions, if needed.
 
 # Technology Stack
-This implementation uses the following technology stack:
+This implementation utilizes the following technology stack:
 
 1. Java 8
 2. Spring Boot MVC framework
@@ -25,12 +25,12 @@ This implementation uses the following technology stack:
  1. Pure Spring MVC with a little help from jQuery
  2. RESTful services provided by Spring and consumed by AngularJS
 
-I decided to implement two views because I though about taking a stab at AngularJS. Since I am no expert on it, this second implementation can have some mistakes and bad design decisions. 
+I decided to implement two views because I thought about taking a stab at AngularJS. I am no expert on it, though, so this second implementation may have some mistakes and bad design decisions. 
 
-I am taking this also as a learning opportunity to use new things, to have fun and try something more than the tutorials I have been working on AngularJS. I hope you enjoy reviewing this code as much as I enjoyed working on it.
+I am taking this also as a learning opportunity to use new tools, have fun and try something more than the tutorials I have been working on AngularJS. I hope you enjoy reviewing this code as much as I enjoyed working on it.
 
 # Running the application
-After installing Java and Tomcat, please download the latest version at https://github.com/lotif/se-challenge/tree/master/releases . Unzip the .war file and drop it in your <tomcat_home>/webapps folder. Start up Tomcat and access the following URLs on your favorite browser (assuming you have it listening at port 8080):
+After installing Java and Tomcat, please download the latest version at https://github.com/lotif/se-challenge/tree/master/releases . Unzip the .war file and drop it in your `<tomcat_home>/webapps` folder. Start up Tomcat and access the following URLs on your favorite browser (assuming you have it listening at port 8080):
 
 1. [http://localhost:8080/se-challenge/UploadFileAngular](http://localhost:8080/se-challenge/UploadFileAngular) for the AngularJS version
 2. [http://localhost:8080/se-challenge/UploadFile](http://localhost:8080/se-challenge/UploadFile) for the Spring MVC + jQuery version
@@ -49,7 +49,7 @@ Below are brief descriptions of the source folders:
  2. `com.waveapps.sechallenge.conroller`: contains the controller classes for the upload service
  3. `com.waveapps.sechallenge.dataReader`: contains the interfaces and implementations of the classes needed to read the  data
  4. `com.waveapps.sechallenge.model`: contains the JPA entities
- 5. `com.waveapps.sechallenge.repository`: contains the Spring repositories for DB access
+ 5. `com.waveapps.sechallenge.repository`: contains the Spring repository classes for DB access
 2. `src/main/resources`: this folder is actually empty (created by default by Maven)
 3. `src/test/java`: contains the unit tests
 4. `src/test/resources`: the resources needed for the unit tests
