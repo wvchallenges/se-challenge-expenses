@@ -20,7 +20,7 @@ import com.waveapps.sechallenge.model.Expense;
 import com.waveapps.sechallenge.model.ExpenseCategory;
 import com.waveapps.sechallenge.model.Tax;
 
-public class CSVExpensesDataReader<T> extends DataReader<Expense> {
+public class CSVExpensesDataReader extends DataReader<Expense> {
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	private DecimalFormat numberFormat = new DecimalFormat("#,##0.##");
