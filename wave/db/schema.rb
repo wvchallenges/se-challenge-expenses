@@ -28,16 +28,4 @@ ActiveRecord::Schema.define(version: 20150904071649) do
     t.string   "employee_adress"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.string   "type"
-    t.string   "image"
-  end
-
 end
