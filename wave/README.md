@@ -3,11 +3,11 @@
 This is submission by Jay
 
 # Build
-1. git clone https://github.com/jmart98/se-challenge.git
-1. cd se-challenge
-1. bundle install
-1. rake db:migrate
-1. rails s
+  1. git clone https://github.com/jmart98/se-challenge.git
+  1. cd se-challenge/wave
+  1. bundle install
+  1. rake db:migrate
+  1. rails s
 
 You're now ready to go
 
