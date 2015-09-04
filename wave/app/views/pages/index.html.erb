@@ -1,0 +1,30 @@
+<%= form_for @amount, :html => {:multipart => true} do |f| %>
+
+  <%= f.label :csv %><br />
+  <%= f.file_field :csv %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h1>Listing Expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Total tax</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expenses.each do |e| %>
+      <tr>
+        <td><%= e.d %></td>
+        <td><%= e.total_tax %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

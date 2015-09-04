@@ -1,0 +1,39 @@
+<h1>Listing amounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>D</th>
+      <th>Category</th>
+      <th>Employee name</th>
+      <th>Expense description</th>
+      <th>Pre tax amount</th>
+      <th>Tax name</th>
+      <th>Tax amount</th>
+      <th>Total tax</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @amounts.each do |amount| %>
+      <tr>
+        <td><%= amount.d %></td>
+        <td><%= amount.category %></td>
+        <td><%= amount.employee_name %></td>
+        <td><%= amount.expense_description %></td>
+        <td><%= amount.pre_tax_amount %></td>
+        <td><%= amount.tax_name %></td>
+        <td><%= amount.tax_amount %></td>
+        <td><%= amount.total_tax %></td>
+        <td><%= link_to 'Show', amount %></td>
+        <td><%= link_to 'Edit', edit_amount_path(amount) %></td>
+        <td><%= link_to 'Destroy', amount, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Amount', new_amount_path %>

@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>D:</strong>
+  <%= @amount.d %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @amount.category %>
+</p>
+
+<p>
+  <strong>Employee name:</strong>
+  <%= @amount.employee_name %>
+</p>
+
+<p>
+  <strong>Expense description:</strong>
+  <%= @amount.expense_description %>
+</p>
+
+<p>
+  <strong>Pre tax amount:</strong>
+  <%= @amount.pre_tax_amount %>
+</p>
+
+<p>
+  <strong>Tax name:</strong>
+  <%= @amount.tax_name %>
+</p>
+
+<p>
+  <strong>Tax amount:</strong>
+  <%= @amount.tax_amount %>
+</p>
+
+<p>
+  <strong>Total tax:</strong>
+  <%= @amount.total_tax %>
+</p>
+
+<%= @amount.csv.url %>
+<%= @results %>
+
+<%= link_to 'Edit', edit_amount_path(@amount) %> |
+<%= link_to 'Back', amounts_path %>
