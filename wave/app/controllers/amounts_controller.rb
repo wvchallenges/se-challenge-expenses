@@ -14,16 +14,18 @@ class AmountsController < ApplicationController
     @results = []
     @path = @amount.csv.path
 
-    CSV.foreach(@path, headers: true) do |row|
-      Amount.create(:d => Date.strptime(row[0], "%m/%d/%Y"),
-                    :category => row[1],
-                    :employee_name => row[2],
-                    :expense_description => row[4],
-                    :pre_tax_amount => row[5],
-                    :tax_name => row[6],
-                    :tax_amount => row[7],
-                    :total_tax => row[5].to_f + row[7].to_f,
-                    :employee_adress => row[3])
+    unless @path.nil?
+      CSV.foreach(@path, headers: true) do |row|
+        Amount.create(:d => Date.strptime(row[0], "%m/%d/%Y"),
+                      :category => row[1],
+                      :employee_name => row[2],
+                      :expense_description => row[4],
+                      :pre_tax_amount => row[5],
+                      :tax_name => row[6],
+                      :tax_amount => row[7],
+                      :total_tax => row[5].to_f + row[7].to_f,
+                      :employee_adress => row[3])
+      end
     end
   end
 
