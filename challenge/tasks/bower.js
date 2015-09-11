@@ -2,47 +2,44 @@
   'use strict';
 
   var gulp = require('gulp'),
-      mainBowerFiles = require('gulp-main-bower-files'),
-      _ = require('underscore'),
-      filter = require('gulp-filter'),
-      merge = require('gulp-merge'),
-      uglifycss = require('gulp-uglifycss'),
-      gutil = require('gulp-util'),
-      gif = require('gulp-if'),
-      uglify = require('gulp-uglify'),
-      concat = require('gulp-concat');
+    $ = require('gulp-load-plugins')();
 
-    var help = require('require-dir')('helpers'),
-        join = help.common.joinChunks;
+  var help = require('require-dir')('helpers'),
+      join = help.common.joinChunks;
 
-    var src = 'bower.json';
-    var dest = 'public/';
-    var prefix = 'bower';
+  var src = 'bower.json';
+  var dest = 'public',
+    destJS = join([dest, 'js']),
+    destCSS = join([dest, 'css']);
+  var prefix = 'bower';
 
-    gulp.task('bower', function() {
-        var filterJS = filter('**/*.js'),
-            filterCSS = filter('**/*.css');
+  gulp.task('bower', ['bower:js','bower:css']);
 
-        var js = gulp
-            .src(src)
-            // .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
-            .pipe(mainBowerFiles())
-            .pipe(filterJS)
-            .pipe(concat(prefix+'.js'))
-            .pipe(gif(gutil.env.production, uglify()))
-            // .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
-            .pipe(gulp.dest(dest+'js'));
+  gulp.task('bower:js', function() {
+    var filterJS = $.filter('**/*.js');
 
-        var css = gulp
-            .src(src)
-            // .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
-            .pipe(mainBowerFiles())
-            .pipe(filterCSS)
-            .pipe(concat(prefix+'.css'))
-            .pipe(gif(gutil.env.production, uglifycss(), gutil.noop()))
-            // .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
-            .pipe(gulp.dest(dest+'css'));
+    return gulp
+      .src(src)
+      .pipe($.if($.util.env.prloduction, $.sourcemaps.init()))
+      .pipe($.mainBowerFiles())
+      .pipe(filterJS)
+      .pipe($.concat(prefix+'.js'))
+      .pipe($.if($.util.env.production, $.uglify()))
+      .pipe($.if($.util.env.production, $.sourcemaps.write('.')))
+      .pipe(gulp.dest(destJS));
+  });
 
-        return merge(js, css);
-    });
+  gulp.task('bower:css', function() {
+    var filterCSS = $.filter('**/*.css');
+
+    return gulp
+      .src(src)
+      .pipe($.if($.util.env.production, $.sourcemaps.init()))
+      .pipe($.mainBowerFiles())
+      .pipe(filterCSS)
+      .pipe($.concat(prefix+'.css'))
+      .pipe($.if($.util.env.production, $.uglifycss(), $.util.noop()))
+      .pipe($.if($.util.env.production, $.sourcemaps.write('.')))
+      .pipe(gulp.dest(destCSS));
+  });
 }());

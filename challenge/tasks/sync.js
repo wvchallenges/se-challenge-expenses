@@ -1,5 +1,5 @@
 (function(){
-	"use strict";
+	'use strict';
 
 	var gulp = require('gulp'),
 		browserSync = require('browser-sync').create(),
@@ -7,7 +7,7 @@
 		JS_ASSETS = ASSETS+'js/',
 		CSS_ASSETS = ASSETS+'css/';
 
-	gulp.task('sync', ['default'], function() {
+	gulp.task('sync', function() {
 	    browserSync.init({
 	        server: {
 	            baseDir: "public"

@@ -2,7 +2,7 @@
     'use strict';
 
     var gulp = require('gulp'),
-        inject = require('gulp-inject'),
+        $ = require('gulp-load-plugins')(),
         path = require('path');
 
     var help = require('require-dir')('helpers'),
@@ -12,9 +12,9 @@
     var injectables = [join(['public','js', 'all.js']),
             join(['public','css', 'all.css'])];
 
-    gulp.task('inject', ['styles', 'scripts'], function() {
+    gulp.task('inject', function() {
         return gulp.src(src)
-            .pipe(inject(gulp.src(injectables, {read: false})))
+            .pipe($.inject(gulp.src(injectables, {read: false})))
             .pipe(gulp.dest(path.dirname(src)));
     });
 }());

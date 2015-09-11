@@ -2,20 +2,20 @@
 	'use strict';
 
 	var gulp = require('gulp'),
-		ts = require('gulp-typescript');
+		$ = require('gulp-load-plugins')();
 
-	src = './resources/assets/typescript/';
-	dest = src;
+	var src = './resources/assets/typescript/';
+	var dest = src;
 
     src += '**/*.ts';
-    options = {
+    var options = {
         sortOutput: true
     };
 
     gulp.task('typescript', function () {
         return gulp
         	.src(src)
-            .pipe(ts(options))
+            .pipe($.typescript(options))
             .pipe(gulp.dest(dest));
     });
 }());
