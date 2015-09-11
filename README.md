@@ -32,7 +32,7 @@ I am taking this also as a learning opportunity to use new tools, have fun and t
 # Running the application
 After installing Java and Tomcat, please download the latest version at https://github.com/lotif/se-challenge/tree/master/releases . Unzip the .war file and drop it in your `<tomcat_home>/webapps` folder. Start up Tomcat and access the following URLs on your favorite browser (assuming you have it listening at port 8080):
 
-1. [http://localhost:8080/se-challenge/UploadFileAngular](http://localhost:8080/se-challenge/UploadFileAngular) for the AngularJS version
+1. [http://localhost:8080/se-challenge/UploadFileAngular.html](http://localhost:8080/se-challenge/UploadFileAngular.html) for the AngularJS version
 2. [http://localhost:8080/se-challenge/UploadFile](http://localhost:8080/se-challenge/UploadFile) for the Spring MVC + jQuery version
 	
 Note: the app was tested on the latest versions of Chrome and Firefox, and on IE11.
