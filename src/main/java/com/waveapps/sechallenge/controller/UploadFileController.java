@@ -93,11 +93,6 @@ public class UploadFileController {
         totals = expenseRepo.getTotalByMonthObjects(expenseRepo.getTotalByMonth());    	
     }
     
-    @RequestMapping("/UploadFileAngular")
-    public String initAngular() {
-        return "UploadFileAngular.jsp";
-    }
-    
     @RequestMapping("/uploadAngular")
     public ModelAndView handleFileUploadAngular(@RequestParam("file") MultipartFile file) {
     	ModelAndView mav = new ModelAndView("UploadFileAngular.jsp");

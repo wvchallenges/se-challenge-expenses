@@ -59,7 +59,7 @@ public class TotalByMonthQueryResult {
 		return taxAmountTotal;
 	}
 	public String getTaxAmountTotalString() {
-		return MONEY_FORMAT.format(preTaxAmountTotal);
+		return MONEY_FORMAT.format(taxAmountTotal);
 	}
 	public void setTaxAmountTotal(double taxAmountTotal) {
 		this.taxAmountTotal = taxAmountTotal;
