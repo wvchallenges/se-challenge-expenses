@@ -12,3 +12,5 @@
 */
 
 Route::resource('/', 'ExpenseController');
+Route::get('/get', 'ExpenseController@getExpenses');
+

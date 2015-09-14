@@ -12,6 +12,28 @@ use App\UploadedFile;
 
 class ExpenseController extends Controller
 {
+    public function getExpenses() {
+        $pageSize = 10;
+        if($size = Input::get('pageSize')) $pageSize = $size;
+
+        $expenses = Expense::paginate($pageSize);
+
+        // $amounts = Expense::select(DB::raw('((tax_amount)+(`pre-tax_amount`)) AS TOTAL'))
+        //                     ->skip($skipOffset)
+        //                     ->take($pageSize)
+        //                     ->get();
+
+        return ['data' =>
+            [
+                'expenseArray' => $expenses->toArray(), //Note: this is for iterating with angular
+                'expenses' => $expenses,
+                // 'amounts' => $amounts
+            ]
+        ];
+
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,27 +41,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $pageSize = 10;
-        if($size = Input::get('pageSize')) $pageSize = $size;
-
-        $expenses = Expense::paginate($pageSize);
-
-        $totalCost = Expense::select(DB::raw('(SUM(tax_amount)+SUM(`pre-tax_amount`)) AS TOTAL'))
-                            ->take($pageSize)
-                            ->first();
-
-        $amounts = Expense::select(DB::raw('((tax_amount)+(`pre-tax_amount`)) AS TOTAL'))
-                            ->take($pageSize)
-                            ->get();
-
-        $data = ['data' =>
-            [
-                'expenses' => $expenses,
-                'totalCost' => $totalCost,
-                'amounts' => $amounts
-            ]
-        ];
-
+        $data = $this->getExpenses();
         return view('layout', $data);
     }
 
@@ -133,50 +135,5 @@ class ExpenseController extends Controller
             }
         }
         return $result;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request $request
-     * @param  int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

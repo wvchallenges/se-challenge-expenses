@@ -2,14 +2,17 @@
 <html lang="en" ng-app="ChallengeApp">
     <head>
         <!-- inject:css -->
-        <link rel="stylesheet" href="/public/css/all.css">
+        <link rel="stylesheet" href="/css/all.css">
         <!-- endinject -->
     </head>
+    <base href="/">
 
     <body>
-        <?php echo View::make('partials.expense-list', ['data' => $data]) ?>
+        <div ng-controller="AppCtrl">
+            <?php echo View::make('partials.expense-list', ['data' => $data]) ?>
+        </div>
         <!-- inject:js -->
-        <script src="/public/js/all.js"></script>
+        <script src="/js/all.js"></script>
         <!-- endinject -->
     </body>
 </html>

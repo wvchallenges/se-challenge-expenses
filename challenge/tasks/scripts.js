@@ -1,19 +1,29 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	var gulp = require('gulp'),
+    var gulp = require('gulp'),
         $ = require('gulp-load-plugins')();
 
     var help = require('require-dir')('helpers'),
-        join = help.common.joinChunks;
+        join = help.common.joinChunks,
+        exists = help.common.exists;
 
-	gulp.task('scripts', function() {
-        var pJS = join(['public', 'js']);
-        var src = [join([pJS, 'bower.js']), join([pJS, 'angular.js'])];
-        var dest = pJS;
-        
-        var name = 'all.js';
+    var pJS = join(['public', 'js']),
+        bowerJS = join([pJS, 'bower.js']),
+        angularJS = join([pJS, 'angular.js']),
+        src = [bowerJS, angularJS],
+        dest = pJS,
+        name = 'all.js';
 
+    var angularExists = exists(angularJS),
+        bowerExists = exists(bowerJS),
+        dependencies = angularExists 
+            ? (bowerExists 
+                    ? null
+                    : ['bower'])
+            : ['angular']; 
+
+	gulp.task('scripts', dependencies, function() {
         return gulp
             .src(src)
             .pipe($.if($.util.env.production, $.sourcemaps.init()))
