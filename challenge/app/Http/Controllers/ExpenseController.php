@@ -15,16 +15,17 @@ class ExpenseController extends Controller
     public function getExpenses() {
         $pageSize = 10;
         if($size = Input::get('pageSize')) $pageSize = $size;
-
+ 
         $expenses = Expense::paginate($pageSize);
         return ['data' =>
             [
                 'expenseArray' => $expenses->toArray(), //Note: this is for iterating with angular
                 'expenses' => $expenses,
+                'monthSums' => Expense::select(DB::raw('MONTH(date) as m,(SUM(tax_amount) + SUM(`pre-tax_amount`)) as t'))
+                  ->groupBy(DB::raw('MONTH(date)'))
+                  ->paginate($pageSize)
             ]
         ];
-
-
     }
 
     /**

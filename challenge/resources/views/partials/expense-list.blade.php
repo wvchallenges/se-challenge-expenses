@@ -23,7 +23,6 @@
                       <th numeric name="Total"></th>
                       <th name="Employee Name"></th>
                     </thead>
-
                     <tbody>
                       @for($i = 0; $i < count($data['expenses']); $i++)
                         <tr>
@@ -33,7 +32,23 @@
                             <td>{{ $data['expenses'][$i]['tax_amount'] }}</td>
                             <td>{{ number_format($data['expenses'][$i]['tax_amount'] + $data['expenses'][$i]['pre-tax_amount'], 2) }}</td>
                             <td>{{ $data['expenses'][$i]['employee_name']}}</td>
-                            <!-- <md-divider></md-divider> -->
+                        </tr>
+                      @endfor
+                    </tbody>
+                  </table>
+                </md-data-table-container>
+                <md-divider></md-divider><br><br>
+                <md-data-table-container>
+                  <table md-data-table>
+                    <thead md-order="order">
+                      <th name="Month"></th>
+                      <th numeric name="Total"></th>
+                    </thead>
+                    <tbody>
+                      @for($i = 0; $i < count($data['monthSums']); $i++)
+                        <tr>
+                          <td> {{ DateTime::createFromFormat('!m', $data['monthSums'][$i]['m'])->format('F') }} </td>
+                          <td> {{ $data['monthSums'][$i]['t'] }}</td>
                         </tr>
                       @endfor
                     </tbody>
