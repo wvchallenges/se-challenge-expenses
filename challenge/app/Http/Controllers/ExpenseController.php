@@ -17,17 +17,10 @@ class ExpenseController extends Controller
         if($size = Input::get('pageSize')) $pageSize = $size;
 
         $expenses = Expense::paginate($pageSize);
-
-        // $amounts = Expense::select(DB::raw('((tax_amount)+(`pre-tax_amount`)) AS TOTAL'))
-        //                     ->skip($skipOffset)
-        //                     ->take($pageSize)
-        //                     ->get();
-
         return ['data' =>
             [
                 'expenseArray' => $expenses->toArray(), //Note: this is for iterating with angular
                 'expenses' => $expenses,
-                // 'amounts' => $amounts
             ]
         ];
 
@@ -94,8 +87,8 @@ class ExpenseController extends Controller
             for($i = 0; $i < $cHeadings; $i++) {
                 if($headings[$i] !== null) {
                     $fixedChunk = trim($line[$i]); //Trim whitespace on both ends
-                    if(is_numeric($fixedChunk)) { //Check column represents a number
-                        $fixedChunk = strpos($fixedChunk, ',') ? str_replace(',', '', $fixedChunk) : $fixedChunk;
+                    if(is_numeric(str_replace(',', '', $fixedChunk))) { //Check column represents a number
+                        $fixedChunk = floatval(str_replace(',', '', $fixedChunk));
                     } elseif (strtotime($fixedChunk)) { //Check column represents a date
                         $fixedChunk = new Carbon($fixedChunk);
                     }
@@ -104,7 +97,7 @@ class ExpenseController extends Controller
             }
 
             if(!$expenseModel->validateExpense($modelContent))
-                return Response($expenseModel->getErrors(), 400);
+                return Response([$expenseModel->getErrors(), $modelContent], 400);
             array_push($models, $modelContent);
         }
         return $this->saveExpenseModels($models);

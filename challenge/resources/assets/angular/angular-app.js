@@ -58,9 +58,9 @@
 		    	},
 		    	link: function(scope, elem, attrs) {
 		    		scope.identifier = attrs.identifier;
-		    		var queryParams = $window.location.search.slice(1).split('&');
+		    		var queryParams = $window.location.search.slice(1).split('&'); var l = queryParams.length;
 		    		var page = 1;
-		    		for(var i = 0; queryParams.length; i++) {
+		    		for(var i = 0; i < l; i++) {
 		    			var param = queryParams[i].split('=');
 		    			if(param[0].indexOf('page') > -1) {
 		    				page = param[1];

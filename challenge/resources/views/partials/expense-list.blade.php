@@ -31,7 +31,7 @@
                             <td>{{ $data['expenses'][$i]['expense_description'] }}</td>
                             <td>{{ $data['expenses'][$i]['pre-tax_amount'] }}</td>
                             <td>{{ $data['expenses'][$i]['tax_amount'] }}</td>
-                            <td>{{ $data['expenses'][$i]['tax_amount'] + $data['expenses'][$i]['pre-tax_amount']}}</td>
+                            <td>{{ number_format($data['expenses'][$i]['tax_amount'] + $data['expenses'][$i]['pre-tax_amount'], 2) }}</td>
                             <td>{{ $data['expenses'][$i]['employee_name']}}</td>
                             <!-- <md-divider></md-divider> -->
                         </tr>

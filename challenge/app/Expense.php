@@ -6,8 +6,8 @@ class Expense extends GenericModel
     protected $validationRules = [
         'expense_description' => 'sometimes|string',
         'tax_name' => 'required|string|between:1,64',
-        'tax_amount' => 'required|regex:/[\d]+\.[\d]{2}/',
-        'pre-tax_amount' => 'required|regex:/[\d]+\.[\d]{2}/',
+        'tax_amount' => 'required|regex:/[\d]+(,)?(\.[\d]{2})?/',
+        'pre-tax_amount' => 'required|regex:/[\d]+(,)?(\.[\d]{2})?/',
         'employee_address' => 'sometimes|string|between:1,256',
         'employee_name' => 'required|string|between:1,128',
         'category' => 'required|string',
