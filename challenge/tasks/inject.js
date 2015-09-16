@@ -3,8 +3,7 @@
 
     var gulp = require('gulp'),
         $ = require('gulp-load-plugins')(),
-        path = require('path'),
-        wiredep = require('wiredep').stream;
+        path = require('path');
 
     var help = require('require-dir')('helpers'),
         join = help.common.joinChunks,

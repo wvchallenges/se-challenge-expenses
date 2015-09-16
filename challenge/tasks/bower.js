@@ -3,7 +3,6 @@
 
   var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
-    wiredep = require('wiredep').stream,
     path = require('path'),
     bowerFiles = require('bower-files')();
 
