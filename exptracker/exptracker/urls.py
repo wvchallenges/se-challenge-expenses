@@ -18,8 +18,8 @@ from django.contrib import admin
 import expense.views
 
 urlpatterns = [
-    url(r'^$', expense.views.index),   
-    url(r'^api/', expense.views.api),    
+    url(r'^$', expense.views.index),
+    url(r'^api/', expense.views.api),
     url(r'^purge/', expense.views.purge),
     url(r'^upload/', include('upload.urls')),
     url(r'^admin/', include(admin.site.urls)),
