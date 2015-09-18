@@ -29,11 +29,6 @@ def index(request):
 
 
 def process_csv(f):
-    """
-    Columns will always be in that order
-    There will always be data in each column
-    There will always be a header line
-    """
     skipped = False
     num_success = 0
     num_failed = 0
@@ -53,9 +48,20 @@ def is_valid_entry(entry):
     # short circuited empty column check per line
     has_empty_lines = any(not i for i in entry)
     # column count check
+    if is_number(entry[5]) is False or is_number(entry[7]) is False:
+        return False
+
     if len(entry) == 8 and has_empty_lines is False:
         return True
     return False
+
+
+def is_number(s):
+    try:
+        float(s.replace(',', ''))
+        return True
+    except ValueError:
+        return False
 
 
 def insert_entry(entry):
