@@ -1,1 +1,27 @@
-.
+How to set up:
+    cd ~/se-challenge
+    virtualenv env
+    source env/bin/activate
+    cd exptracker
+    pip install -r requirements.txt
+
+How to run:
+    ./manage.py makemigraitons
+    ./manage.py migrate
+    ./manage.py runserver
+
+Particularly proud of:
+    I'm not particularly proud of anything to be honest, because
+    everything done here was done many times before by many people,
+    and it is trivial implenenation at best. However, what I would be proud of 
+    is the process of developing this project.
+
+    I took this code challenge as a personal challenge to keep the google
+    search (or stackoverflow search) to a minimum. Having PHP as my current
+    dayjob, I ended up searching 7 times total. I think that is pretty neat.
+
+    I guess it would be worht mentioning that I built a simple api,
+    and I seperated model to Employee, Expense and Category envisioning that
+    that was a wise move to make.
+    
+-Terry
