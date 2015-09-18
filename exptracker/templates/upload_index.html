@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if success == '0' %}
+    <p class="bg-danger">
+        Failed. Try again.
+    </p>
+    {% elif success == '1' %}
+    <p class="bg-success">
+        Successfully imported {{num_success}} entries. {{num_failed}} failed entries. Review entires <a href='/'>here</a>
+    </p>
+    {% endif %}
+
+    <b>To import data, please upload csv consisting of below columns</b>
+    <pre>date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount</pre>
+
+    <form action="." method="post" enctype=multipart/form-data>
+        {% csrf_token %}
+        {{form}}    
+        <input type="submit" value="upload">
+    </form>
+{% endblock %}
