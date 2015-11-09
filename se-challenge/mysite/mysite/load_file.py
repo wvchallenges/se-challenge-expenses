@@ -1,7 +1,10 @@
-csv_filepathname = "C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite/mysite/data_example.csv"
-djangoProject_home="C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite"
+#csv_filepathname = "C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite/mysite/data_example.csv"
+#djangoProject_home="C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite"
 
 import sys, os
+csv_filepathname = os.path.dirname(os.path.abspath(__file__))+"\\data_example.csv"
+djangoProject_home = os.getcwd()
+
 sys.path.append(djangoProject_home)
 os.environ['DJANGO_SETTINGS_MODULE']='settings'
 
