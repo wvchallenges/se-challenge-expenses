@@ -1,0 +1,26 @@
+{% if MonthlyExpense %}
+	<div id="table">
+		<table border=0>
+			<tr>
+				{% for field in fields %}
+					{% if field.name != "id" %}	
+						<th>{{ field.name }}</th>
+					{% endif %}
+				{% endfor %}
+			</tr>
+			<tr>
+				{% for expense in MonthlyExpense %}
+				<tr>
+					<th>{{ expense.date }}</th>
+					<th>{{ expense.employee_name }}</th>
+					<th>{{ expense.pre_tax }}</th>
+					<th>{{ expense.tax_amount }}</th>
+					<th>{{ expense.post_tax }}</th>
+				</tr>
+				{% endfor %}
+			</tr>
+		</table>
+	</div>
+{% else %}
+    <p>No Expense data to display, run load_file.py and calculate.py first</p>
+{% endif %}
