@@ -17,9 +17,9 @@ class RawExpenseSheet(models.Model):
 	
 class MonthlyExpense(models.Model):
 	date = models.DateField('Date');
-	employee_name = models.CharField(max_length=200)
+	#employee_name = models.CharField(max_length=200)
 	pre_tax = models.DecimalField(max_digits=6, decimal_places=2)
 	tax_amount = models.DecimalField(max_digits=6, decimal_places=2)
 	post_tax = models.DecimalField(max_digits=6, decimal_places=2)
 	def __str__(self):
-		return self.employee_name
+		return self.date

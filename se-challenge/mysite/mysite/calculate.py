@@ -1,6 +1,7 @@
-djangoProject_home="C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite"
+#djangoProject_home="C:/Users/Chris/Documents/GitHub/se-challenge/se-challenge/mysite"
 
 import sys, os
+djangoProject_home = os.getcwd()
 sys.path.append(djangoProject_home)
 os.environ['DJANGO_SETTINGS_MODULE']='settings'
 
@@ -10,22 +11,19 @@ from datetime import date
 
 for expense in RawExpenseSheet.objects.all():
 	lookupdate = date(expense.date.year, expense.date.month, 1)
-	lookupname = expense.employee_name
-	monthlyExpenseFiltered = MonthlyExpense.objects.filter(date=lookupdate, employee_name = lookupname)
-	print(monthlyExpenseFiltered)
-	
-	#add new monthlyExpense for employee if record not found
+	monthlyExpenseFiltered = MonthlyExpense.objects.filter(date=lookupdate)
+		
+	#add new monthlyExpense for record for that month is not found
 	if not monthlyExpenseFiltered:
-		print("montlyExpense not found")
+		print("monthlyExpense not found")
 		newMonthlyExpense = MonthlyExpense()
 		newMonthlyExpense.date = lookupdate
-		newMonthlyExpense.employee_name = lookupname
 		newMonthlyExpense.pre_tax = expense.pre_tax
 		newMonthlyExpense.tax_amount = expense.tax_amount
 		newMonthlyExpense.post_tax = expense.post_tax
 		newMonthlyExpense.save()
-	else: #update employee's monthly expense if found
-		monthlyExpenseRecord = MonthlyExpense.objects.get(date=lookupdate, employee_name = lookupname)
+	else: #update monthly expense if found
+		monthlyExpenseRecord = MonthlyExpense.objects.get(date=lookupdate)
 		print(expense.pre_tax,expense.tax_amount,expense.post_tax)
 		monthlyExpenseRecord.pre_tax+=expense.pre_tax
 		monthlyExpenseRecord.tax_amount += expense.tax_amount
