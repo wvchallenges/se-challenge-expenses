@@ -9,6 +9,15 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
 
+    @staticmethod
+    def get_employee(name, address):
+        if Employee.objects.filter(name=name).exists():
+            return Employee.objects.get(name=name)
+        else:
+            employee_object = Employee(name=name, address=address)
+            employee_object.save()
+            return employee_object
+
 
 class File(models.Model):
     name = models.CharField(max_length=200)
