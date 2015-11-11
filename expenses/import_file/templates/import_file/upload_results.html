@@ -1,0 +1,14 @@
+<title>Expense Report </title>
+<h1>Expense report for file {{filename}} </h1>
+<table>
+<tr>
+    <td>Month/Year</td>
+    <td>Expenses</td>
+</tr>
+{% for month, expense in monthly.items  %}
+<tr>
+    <td>{{ month.month}}/ {{month.year}}</td>
+    <td>{{ expense }}</td>
+</tr>
+{% endfor %}
+</table>

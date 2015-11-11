@@ -1,0 +1,9 @@
+<title>Expense Import Page</title>
+<h1>Please upload your file.</h1>
+<form action="/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form }}
+</br>
+</br>
+    <input type="submit" value="Submit" />
+</form>
