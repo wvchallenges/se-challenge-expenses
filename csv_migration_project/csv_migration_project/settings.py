@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Project specific apps
     'landing',
+    'data_migrator',
 )
 
 MIDDLEWARE_CLASSES = (
