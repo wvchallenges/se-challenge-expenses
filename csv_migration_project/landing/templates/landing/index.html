@@ -1,13 +1,48 @@
+{% load staticfiles %}
 <html>
     <head>
+        <meta charset="utf-8">
+        <title>CSV Migration Project</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}" media="screen">
 
         <!-- Latest compiled and minified JavaScript -->
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+
     </head>
 
     <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">CSV Migration Project</a>
+                </div> <!-- navbar-header -->
+            
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="">Home</a></li>
+                        <li><a href="">Data Migrator</a></li>
+                        <li><a href="">View Data</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
 
+        <div class="container">
+            <div class="starter-template">
+                <h1><b>CSV Migration Project</b></h1>
+                <p class="lead">Please use the <a href="">Data Migrator</a> to upload your CSV data file. We will take care of migrating your data into the company's database.</p>
+                <p class="lead">If you would like to view the uploaded data, you can do so on the <a href="">View Data</a> page.</p>
+            </div>
+        </div><!-- /.container -->
     </body>
 <html>
