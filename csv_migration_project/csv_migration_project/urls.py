@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', include('landing.urls')),
+    url(r'^data_migrator$', include('data_migrator.urls')),
 ]
