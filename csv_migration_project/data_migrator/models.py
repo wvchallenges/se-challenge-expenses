@@ -17,8 +17,8 @@ class EmployeeExpenseModel(models.Model):
     expense_date        = models.DateTimeField()
 
     # Float fields
-    pre_tax_amount      = models.DecimalField(decimal_places=2)
-    tax_amount          = models.DecimalField(decimal_places=2)
+    pre_tax_amount      = models.DecimalField(max_digits=10, decimal_places=2)
+    tax_amount          = models.DecimalField(max_digits=10, decimal_places=2)
     
     # Char fields
     expense_discription = models.CharField(max_length=1024)
