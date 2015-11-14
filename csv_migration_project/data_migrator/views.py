@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 import csv
 import json
-from collections import namedtuple
+from collections import namedtuple, defaultdict, OrderedDict
 from datetime import datetime 
 from decimal import Decimal 
 
@@ -15,7 +15,17 @@ def data_migrator_page(request):
 
 def view_data_page(request):
     if request.method == 'GET':
-        return render(request, 'data_migrator/view_data_page.html')
+        expenses_by_month = defaultdict(Decimal)
+        expenses = EmployeeExpenseModel.objects.all().order_by('expense_date')
+        
+        for expense in expenses:
+            # Example: December 2015
+            expense_month_year = expense.expense_date.strftime('%B %Y')
+            expenses_by_month[expense_month_year] += expense.pre_tax_amount
+
+        sorted_expenses = OrderedDict(sorted(expenses_by_month.items(), reverse=True))
+        
+        return render(request, 'data_migrator/view_data_page.html', {'sorted_expenses': sorted_expenses})
 
 def upload_file(request):
     if request.method == 'POST':
