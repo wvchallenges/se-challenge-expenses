@@ -1,0 +1,22 @@
+# Tsering's CVS Migration Project
+This is my submission for the Wave Coding Challenge
+
+### Installation
+
+Create a virtualenv
+
+    $ virtualenv /opt/cvs_migration_project_env
+
+Download the latest code from Github and install the requirements.
+
+    $ source /opt/cvs_migration_project_env ; cd /opt/cvs_migration_project_env
+    $ git clone -b develop https://github.com/tpaljor/se-challenge
+    $ pip install -r se-challenge/requirements.txt
+
+Initialize the database and start the development server
+
+    $ cd se-challenge/csv_migration_project/
+    $ python manage.py migrate
+    $ python manage.py runserver
+
+You should now be able to see the site at http://localhost:8000
