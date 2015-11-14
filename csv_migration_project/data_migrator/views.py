@@ -5,6 +5,7 @@ import csv
 import json
 from collections import namedtuple
 from datetime import datetime 
+from decimal import Decimal 
 
 from .models import EmployeeExpenseModel, ExpenseCategory, Employee, TaxName
 
@@ -65,8 +66,8 @@ def load_csv_data_into_database(csv_string):
                         employee=employee,
                         expense_category=expense_category,
                         expense_date=expense_date,
-                        pre_tax_amount=item.pre_tax_amount.strip(),
-                        tax_amount=item.tax_amount.strip(),
+                        pre_tax_amount=Decimal(item.pre_tax_amount.strip().replace(',', '')),
+                        tax_amount=Decimal(item.tax_amount.strip().replace(',', '')),
                         expense_description=item.expense_description.strip(),
                         tax_name=tax_name,
                     )
