@@ -77,7 +77,7 @@
                     contentType: false,
                     success: function(json) {
                         alert("Successfully Uploaded your file!");
-                        location.reload();
+                        window.location.replace("/data_migrator/view_data");
                     },
                     error : function(xhr,errmsg,err) {
                         alert("Encountered Error: " + xhr.status + ": " + xhr.responseText);
