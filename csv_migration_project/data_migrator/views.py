@@ -17,7 +17,7 @@ def view_data_page(request):
     if request.method == 'GET':
         expenses_by_month = defaultdict(Decimal)
         expenses = EmployeeExpenseModel.objects.all().order_by('expense_date')
-        
+
         for expense in expenses:
             # Example: December 2015
             expense_month_year = expense.expense_date.strftime('%B %Y')
@@ -36,13 +36,16 @@ def upload_file(request):
         csv_string            = csv_file.read()
         load_csv_data_into_database(csv_string)
 
-        
-
         return HttpResponse(json.dumps(response_dict), content_type='application/javascript')
 
 def load_csv_data_into_database(csv_string):
     '''Create DB entries based on CSV data.'''
     csv_data_set    = _process_csv_file(csv_string)
+
+    # Delete existing objects so that we don't keep
+    # incrementing the totals
+    EmployeeExpenseModel.objects.all().delete()
+
     for item in csv_data_set:
         # Create Employee if it doesn't already exist
         employee_name = item.emp_name.strip()
