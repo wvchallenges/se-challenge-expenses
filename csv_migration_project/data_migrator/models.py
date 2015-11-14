@@ -24,5 +24,5 @@ class EmployeeExpenseModel(models.Model):
     tax_amount          = models.DecimalField(max_digits=10, decimal_places=2)
     
     # Char fields
-    expense_discription = models.CharField(max_length=1024)
+    expense_description = models.CharField(max_length=1024)
     tax_name            = models.CharField(max_length=255)

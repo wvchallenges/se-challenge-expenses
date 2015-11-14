@@ -45,6 +45,7 @@ def load_csv_data_into_database(csv_string):
         category_name = item.category.strip()
         if not ExpenseCategory.objects.filter(category_name=category_name).exists():
             expense_category = ExpenseCategory(category_name=category_name)
+            expense_category.save()
         else:
             expense_category = ExpenseCategory.objects.filter(category_name=category_name).first()
 
@@ -52,6 +53,7 @@ def load_csv_data_into_database(csv_string):
         tax_name_raw = item.tax_name.strip()
         if not TaxName.objects.filter(tax_name=tax_name_raw).exists():
             tax_name = TaxName(tax_name=tax_name_raw)
+            tax_name.save()
         else:
             tax_name = TaxName.objects.filter(tax_name=tax_name_raw).first()
 
@@ -68,6 +70,7 @@ def load_csv_data_into_database(csv_string):
                         expense_description=item.expense_description.strip(),
                         tax_name=tax_name,
                     )
+        expense.save()
 
 def _process_csv_file(csv_string):
     '''Process csv data string and return list of tuples.'''
