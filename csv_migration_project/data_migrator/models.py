@@ -7,6 +7,9 @@ class Employee(models.Model):
 class ExpenseCategory(models.Model):
     category_name       = models.CharField(max_length=255)
 
+class TaxName(models.Model):
+    tax_name            = models.CharField(max_length=255)
+
 class EmployeeExpenseModel(models.Model):
     # ForeignKey fields
     employee            = models.ForeignKey('data_migrator.Employee')

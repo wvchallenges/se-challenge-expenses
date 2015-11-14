@@ -4,6 +4,9 @@ from django.http import HttpResponse
 import csv
 import json
 from collections import namedtuple
+from datetime import datetime 
+
+from .models import EmployeeExpenseModel, ExpenseCategory, Employee, TaxName
 
 def data_migrator_page(request):
     if request.method == 'GET':
@@ -14,13 +17,60 @@ def upload_file(request):
         response_dict   = {}
         found_errors    = False
         csv_file        = request.FILES.get('csv-data-file', False)
-        data            = csv_file.read()
-        csv_data_set    = process_csv_file(data)
+
+        csv_string            = csv_file.read()
+        load_csv_data_into_database(csv_string)
+
+        
 
         return HttpResponse(json.dumps(response_dict), content_type='application/javascript')
 
-def process_csv_file(csv_string):
-    '''Process csv data string and return list of tuples'''
+def load_csv_data_into_database(csv_string):
+    '''Create DB entries based on CSV data.'''
+    csv_data_set    = _process_csv_file(csv_string)
+    for item in csv_data_set:
+        # Create Employee if it doesn't already exist
+        employee_name = item.emp_name.strip()
+        employee_address = item.emp_address.strip()
+        if not Employee.objects.filter(employee_name=employee_name).exists():
+            employee = Employee(
+                                employee_name=employee_name,
+                                employee_address=employee_address
+                            )
+            employee.save()
+        else:
+            employee = Employee.objects.filter(employee_name=employee_name).first()
+
+        # Create expense category if it doesn't already exist
+        category_name = item.category.strip()
+        if not ExpenseCategory.objects.filter(category_name=category_name).exists():
+            expense_category = ExpenseCategory(category_name=category_name)
+        else:
+            expense_category = ExpenseCategory.objects.filter(category_name=category_name).first()
+
+        # Create tax name object if it doesn't already exist
+        tax_name_raw = item.tax_name.strip()
+        if not TaxName.objects.filter(tax_name=tax_name_raw).exists():
+            tax_name = TaxName(tax_name=tax_name_raw)
+        else:
+            tax_name = TaxName.objects.filter(tax_name=tax_name_raw).first()
+
+        # Convert string to datetime object for expense date
+        expense_date = datetime.strptime(item.date.strip(), '%m/%d/%Y')
+
+        # Create new expense object
+        expense = EmployeeExpenseModel(
+                        employee=employee,
+                        expense_category=expense_category,
+                        expense_date=expense_date,
+                        pre_tax_amount=item.pre_tax_amount.strip(),
+                        tax_amount=item.tax_amount.strip(),
+                        expense_description=item.expense_description.strip(),
+                        tax_name=tax_name,
+                    )
+
+def _process_csv_file(csv_string):
+    '''Process csv data string and return list of tuples.'''
     csv_lines   = csv_string.splitlines()
     csv_reader  = csv.reader(csv_lines, delimiter=',')
     # Ingore the header
