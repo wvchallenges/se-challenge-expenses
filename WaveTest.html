@@ -1,0 +1,218 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+	
+		<style type="text/css">
+		
+			body {
+				margin:0;
+				padding:0;
+				font-family: Sans-Serif;
+				line-height: 1.5em;
+			}
+			
+			#header {
+				background: #ccc;
+				height: 100px;
+			}
+			
+			#header h1 {
+				margin: 0;
+				padding-top: 15px;
+			}
+			
+			main {
+				padding-bottom: 10010px;
+				margin-bottom: -10000px;
+				float: left;
+				width: 100%;
+			}
+			
+			#nav {
+				padding-bottom: 10010px;
+				margin-bottom: -10000px;
+				float: left;
+				width: 230px;
+				margin-left: -100%;
+				background: #eee;
+			}
+			
+			#footer {
+				clear: left;
+				width: 100%;
+				background: #ccc;
+				text-align: center;
+				padding: 4px 0;
+			}
+	
+			#wrapper {
+				overflow: hidden;
+			}
+						
+			#content {
+				margin-left: 230px; /* Same as 'nav' width */
+			}
+			
+			.innertube {
+				margin: 15px; /* Padding for content */
+				margin-top: 0;
+			}
+		
+			p {
+				color: #555;
+			}
+	
+			nav ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			
+			nav ul a {
+				color: darkgreen;
+				text-decoration: none;
+			}
+			.success, .error{
+				border: 1px solid;
+				margin: 10px 0px;
+				padding:15px 10px 15px 50px;
+				background-repeat: no-repeat;
+				background-position: 10px center;
+				width:30%;
+			}
+			.error {
+				color: #D8000C;
+				background-color: #FFBABA;
+			}
+			.success {
+				color: #4F8A10;
+				background-color: #DFF2BF;
+				
+			}
+			table.results {
+				font-family: verdana,arial,sans-serif;
+				font-size:11px;
+				color:#333333;
+				border-width: 1px;
+				border-color: #666666;
+				border-collapse: collapse;
+			}
+			table.results th {
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #dedede;
+			}
+			table.results td {
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #ffffff;
+			}
+
+		</style>
+</head>
+<body>
+    <script type="text/javascript">
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        $(document).ready(function() {
+            $('.error').hide();
+            $('.success').hide();
+            $('.results').hide();
+            $("#fileUpload").ajaxForm({
+                complete: function(data) {
+                    if (data.responseText != 'undefined') {
+                        var parseData = $.parseJSON(data.responseText);
+                        if (parseData.status == 'error') {
+                            $('.success').hide();
+                            $('.results').hide();
+                            $('.error').show();
+                            $('#message').text(parseData.message);
+                        } else {
+                            $('.error').hide();
+                            $('.success').show();
+                            $('.results').show();
+                            //looping through months to append to results tables.
+                            var index = 0;
+                            parseData.data.months.forEach(function(entry) {
+                                $('.results').append("<tr><td>" + months[entry - 1] + "</td><td>" + parseData.data.expense[index] + "</td></tr>");
+                                index++;
+                            });
+                        }
+                    }
+                }
+            }).submit();
+        });
+    </script>
+
+    <header id="header">
+        <div class="innertube">
+            <h1>Wave Programming Challenge</h1>
+        </div>
+    </header>
+
+    <div id="wrapper">
+        <main>
+            <div id="content">
+                <div class="innertube">
+                    <h3>Form for Uploading CSV to database</h3>
+                    <form id="fileUpload" action="upload.php" method="post" enctype="multipart/form-data">
+                        Select the CSV to upload:
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <BR>
+                        <BR>
+                        <input type="submit" value="Upload the CSV" name="submit">
+                    </form>
+                    <BR>
+                    <div class='error'>The following error happened while uploading the csv:
+                        <br>
+                        <br><span id='message'> </span></div>
+                    <br>
+                    <div class='success'>Your file has been uploaded and saved. Please see the total expenses by month below:
+                        <BR>
+                    </div>
+                    <br>
+
+
+                    <table class='results'>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total Expenses</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <nav id="nav">
+            <div class="innertube">
+                <h3>Left heading</h3>
+                <ul>
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                    <li><a href="#">Link 5</a></li>
+                </ul>
+                <h3>Left heading</h3>
+                <ul>
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                    <li><a href="#">Link 5</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="footer-wrapper">
+        <footer id="footer">
+            <p>Footer...</p>
+        </footer>
+    </div>
+</body>
+</html>
