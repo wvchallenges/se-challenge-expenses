@@ -132,6 +132,8 @@
                             $('.error').show();
                             $('#message').text(parseData.message);
                         } else {
+						    //resetting results table.
+							$('.results').html("<table class='results'><tr><th>Month</th><th>Total Expenses</th></tr></table>");
                             $('.error').hide();
                             $('.success').show();
                             $('.results').show();
