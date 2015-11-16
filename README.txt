@@ -7,7 +7,7 @@ Wave Programming Challenge ReadMe by Travis Rawn
 What you are particularly proud of in your implementation, and why.
 ----------------------------------------------------------------------------------------
 I don't know if there is anything particular that I’m proud about. There was nothing too challenging and  
-I didn't expand on the challenge. I read the challenge and tried to take the simplest approach to it. I  
+I didn't expand too much on the challenge. I read the challenge and tried to take the simplest approach to it. I  
 do feel like I succeded in that aspect. With that said, I was disappointed that I couldn't find a way to  
 read the csv without having to save it to the server first. I also feel like my code is clear and  
 concise. 
@@ -15,7 +15,7 @@ concise.
 ----------------------------------------------------------------------------------------
 How to get this setup working.
 ----------------------------------------------------------------------------------------
-Getting this setup is very simple. 
+Getting this setup to work is very simple. 
 
 1)Upload the .html and the .php files to your server.
 2)Update the mysql info in lines 4-7 in the php file.
@@ -24,7 +24,7 @@ Getting this setup is very simple.
 ----------------------------------------------------------------------------------------
 What I would of done differently in a real workplace.
 ----------------------------------------------------------------------------------------
-Creating a web application for saving csv to database doesn't really make sense. The new company that was 
+Creating a web application for saving csv to database doesn't really make sense in this context. The new company that was 
 just acquired could have thousands of csv if they were saving data that way. It would make alot more  
 sense to batch insert all those files into the database. Furthermore, these files have to be linked to an 
 account or a person somehow.
