@@ -80,10 +80,10 @@ $lineCount=1;
 		$month=explode("/",$cols[0])[0];
 		if(!(in_array($month,$months))){
 			array_push($months,$month);
-			array_push($monthExp,$cols[7]);
+			array_push($monthExp,$cols[7]+$cols[5]);
 		}else{
 			$index=array_search($month,$months);
-			$monthExp[$index]+=$cols[7];		
+			$monthExp[$index]+=$cols[7]+$cols[5];		
 		}
 		//insert into db
 		$sql="INSERT INTO ". $tableName ." (date, category, employeeName,employeeAddress,expenseDesc,pretaxAmt,taxName,taxAmount)
