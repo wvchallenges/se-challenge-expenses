@@ -1,0 +1,11 @@
+h2 Taxes
+
+table
+  thead
+    tr
+      th Name
+
+  tbody
+    - @taxes.each do |tax|
+      tr
+        td = tax.name

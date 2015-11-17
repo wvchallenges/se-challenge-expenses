@@ -1,0 +1,13 @@
+h2 Employees
+
+table
+  thead
+    tr
+      th Name
+      th Address
+
+  tbody
+    - @employees.each do |employee|
+      tr
+        td = employee.name
+        td = employee.address

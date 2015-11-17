@@ -1,0 +1,16 @@
+h1 Import
+
+p = flash[:notice]
+
+= form_tag({ controller: :importers, action: :create }, { method: :post, multipart: true }) do
+  = label_tag :file, 'Select CSV file'
+  br
+
+  = file_field_tag 'file'
+  br
+
+  = submit_tag 'Upload'
+
+- %w(categories taxes employees expenses).each do |model|
+  == render partial: "#{model}/index"
+br
