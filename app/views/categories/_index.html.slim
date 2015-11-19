@@ -1,0 +1,11 @@
+h2 Categories
+
+table
+  thead
+    tr
+      th Name
+
+  tbody
+    - @categories.each do |category|
+      tr
+        td = category.name

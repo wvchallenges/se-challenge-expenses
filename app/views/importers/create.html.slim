@@ -1,0 +1,10 @@
+h1 Import
+
+p = flash[:notice]
+
+h2 Monthly Expenses
+- @monthly_expenses.each do |(month, expenses)|
+  h3 = month
+
+  - @expenses = expenses
+  == render partial: 'expenses/index'
