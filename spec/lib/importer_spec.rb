@@ -86,10 +86,10 @@ RSpec.describe Importer, type: :model do
     }
   end
 
-  # Run before each test
-  let!(:imported_expenses) { described_class.import!(rows) }
-
   context 'one row' do
+    # Run before each test
+    let!(:imported_expenses) { described_class.import!(rows) }
+
     let(:rows) { [ first_row ] }
 
     let(:expected_employee) do
@@ -153,6 +153,9 @@ RSpec.describe Importer, type: :model do
   end
 
   context 'two rows' do
+    # Run before each test
+    let!(:imported_expenses) { described_class.import!(rows) }
+
     let(:rows) { [ first_row, second_row ] }
 
     it 'does not create employee record' do
@@ -173,6 +176,9 @@ RSpec.describe Importer, type: :model do
   end
 
   context 'three rows' do
+    # Run before each test
+    let!(:imported_expenses) { described_class.import!(rows) }
+
     let(:rows) { [ first_row, second_row, third_row ] }
 
     it 'does not create employee record' do
@@ -196,6 +202,17 @@ RSpec.describe Importer, type: :model do
     let(:rows) { [ first_row, second_row, third_row, incomplete_row ] }
 
     it 'does not create any database records' do
+      expect do
+        described_class.import!(rows)
+      end.to raise_exception ActiveRecord::RecordInvalid
+    end
+
+    it 'does not create any database records' do
+      begin
+        described_class.import!(rows)
+      rescue
+      end
+
       expect(Employee.all).to be_empty
       expect(Tax.all).to be_empty
       expect(Category.all).to be_empty

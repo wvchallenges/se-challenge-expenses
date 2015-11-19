@@ -19,8 +19,6 @@ class Importer
           expenses << expense
         end
       end
-    rescue => e
-      return []
     end
 
     expenses
