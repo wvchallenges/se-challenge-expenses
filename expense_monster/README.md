@@ -7,7 +7,7 @@ Requirements:
 
 * Django
 * MySQL
-# django-encrypted-fields
+* django-encrypted-fields
 
 
 ## Data Storage & Encrypted Fields
