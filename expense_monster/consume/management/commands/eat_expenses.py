@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         filename = args[0]
-        self.stdout.write("Eating expenses from csv file")
+        self.stdout.write("Rwar! Eating expenses from csv file!")
         num_imported = import_csv_file(filename)
         self.stdout.write(
-            'Successfully consumed {} records'.format(num_imported))
+            'Burrrrp! I just consumed {} expense records'.format(num_imported))
