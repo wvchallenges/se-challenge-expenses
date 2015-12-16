@@ -24,14 +24,18 @@ To get started with Expense Monster follow the steps below:
 2. install the dependencies
 3. install mysql:
 
-        ```apt-get install mysql-server mysql-client libmysqlclient-dev```
+    ```
+    apt-get install mysql-server mysql-client libmysqlclient-dev
+    ```
 
 4. install python 2.7
 5. install pip
 6. install virtualenv and virtualenvwrapper [How to setup virtualenv & django](https://www.jeffknupp.com/blog/2012/02/09/starting-a-django-project-the-right-way/)
 7. install pip requirements (this includes django v. 1.9)
 
-        ```pip install -r requirements.txt```
+    ```
+    pip install -r requirements.txt
+    ```
 
 7. Setup the database users correctly
 
