@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from consume.models import Expense, Tax, Employee, Category
+from consume.models import Expense, Tax, Employee, Category, CSVFile
 
 
 @admin.register(Expense)
@@ -35,8 +35,16 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Category)
-class categoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'name',
+    )
+
+
+@admin.register(CSVFile)
+class FileAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'filename',
     )

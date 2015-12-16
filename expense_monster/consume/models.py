@@ -12,6 +12,25 @@ class EncryptedDecimalField(EncryptedFieldMixin, models.DecimalField):
     pass
 
 
+class CSVFile(models.Model):
+    '''
+    CSV file is stored in the DB for management
+    '''
+
+    upload_date = models.DateField()
+
+    filename = models.CharField(
+        max_length=100
+    )
+
+    csv_file = models.FileField(
+        blank=False, upload_to='csv_backups'
+    )
+
+    def __unicode__(self):
+        return self.filename
+
+
 class Employee(models.Model):
     '''
     Employee model with 2 fields
@@ -40,6 +59,9 @@ class Category(models.Model):
     Example:
         - name: Travel
     '''
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
     name = models.CharField(
         max_length=150
@@ -56,6 +78,9 @@ class Tax(models.Model):
     Example:
         - name: CA Sales tax
     '''
+    class Meta:
+        verbose_name = "Tax"
+        verbose_name_plural = "Taxes"
 
     name = models.CharField(
         max_length=150
@@ -70,13 +95,9 @@ class Expense(models.Model):
     This model is the main expense model that is used by the consume app
     '''
 
-    csv_file = models.FileField(
-        blank=True, upload_to='csv_backup'
-    )
+    source_file = models.ForeignKey(CSVFile, blank=True)
 
-    upload_date = models.DateField()
-
-    date = models.DateTimeField()
+    date = models.DateField()
 
     category = models.ForeignKey(Category)
 
@@ -99,6 +120,10 @@ class Expense(models.Model):
         blank=False,
         max_digits=11,
         decimal_places=2
+    )
+
+    deleted = models.BooleanField(
+        default=False
     )
 
     def __unicode__(self):
