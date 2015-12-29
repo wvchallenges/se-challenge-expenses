@@ -2,8 +2,8 @@
 
 ## Setup
 
-If python/pip are not installed - run ```$ sudo runserver.sh```.
-Otherwise, run ```$ runserver.sh -s```.
+If python/pip are not installed - run ```$ sudo bash runserver.sh```.
+Otherwise, run ```$ bash runserver.sh -s```.
 
 Open http://localhost:8000/ (or the port specified with -p) in your browser.
 
