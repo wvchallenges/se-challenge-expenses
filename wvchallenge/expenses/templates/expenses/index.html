@@ -1,0 +1,14 @@
+{% extends "expenses/layout.html" %}
+
+{% block content %}
+<form action="{% url 'expenses:upload' %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div>{{ upload }}</div>
+    {% if error %}
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+    {% endif %}
+    <div>
+        <input type="submit" value="Upload" />
+    </div>
+</form>
+{% endblock %}

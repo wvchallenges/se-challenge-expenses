@@ -1,0 +1,17 @@
+{% extends "expenses/layout.html" %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <th><strong>Month</strong></th>
+        <th><strong>Expense Total</strong></th>
+    </tr>
+    {% for month, amt in expense_report.iteritems %}
+        <tr>
+            <td>{{ month }}</td>
+            <td>{{ amt }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<a id="back_link" href="expenses/">Back</a>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link href="{% static 'expenses/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'expenses/bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'expenses/css/styles.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
