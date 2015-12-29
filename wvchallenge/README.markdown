@@ -5,7 +5,7 @@
 If python/pip are not installed - run ```$ sudo runserver.sh```.
 Otherwise, run ```$ runserver.sh -s```.
 
-Open http://localhost:8080/ in your browser.
+Open http://localhost:8000/ (or the port specified with -p) in your browser.
 
 If running manually, use --insecure so static files are served.
 
