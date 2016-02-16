@@ -1,7 +1,6 @@
 import csv
 import io
 import sqlite3
-from contextlib import closing
 from flask import Flask, Response, request, render_template
 
 # import gevent
@@ -41,15 +40,13 @@ def parse_csv():
     with connect_db() as db:
         db.executemany("""insert into expenses ('date', category, employee_name, employee_address, expense_description, tax_name, pretax_amount, tax_amount)
             values (?, ?, ?, ?, ?, ?, ?, ?)""", expense_parser(reader))
-        db.commit()
 
     return ""
 
-with app.app_context(), connect_db() as db:
-    print("Initializing")
-    with app.open_resource('schema.sql', mode='r') as f:
+with app.app_context():
+    with connect_db() as db, app.open_resource('schema.sql', mode='r') as f:
+        print("Initializing db")
         db.cursor().executescript(f.read())
-    db.commit()
 
 if __name__ == "__main__":
     app.run(threaded=True)
