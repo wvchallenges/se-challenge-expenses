@@ -1,3 +1,7 @@
 html, body {
     background-color: #ecf0f1;
 }
+
+th {
+    text-transform: capitalize;
+}

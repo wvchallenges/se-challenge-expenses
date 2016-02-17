@@ -3,6 +3,33 @@ $(function() {
 
     var CardCollection = Backbone.Collection.extend({
         model: CardModel,
+        url: "/expense_report",
+        sync: function(method, model, options) {
+            var _this = this;
+
+            $.ajax({
+                url: _this.url,
+                type: 'GET',
+                success: function(res) {
+                    _.each(res, function(e) {
+                        _this.add(new CardModel(e));
+                    });
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                },
+            });
+        },
+        add: function(card, options) {
+            var _card = this.findWhere({ "title" : card.get("title") });
+
+            if (_card) {
+                _card.set("data", card.get("data"));
+                return _card;
+            } else {
+                return Backbone.Collection.prototype.add.call(this, card, options);
+            }
+        }
     });
 
     var CardView = Backbone.View.extend({
@@ -10,6 +37,7 @@ $(function() {
         className: 'col-sm-6 col-md-4',
         template: _.template($("#cardTPL").html()),
         initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
             this.render()
         },
         render: function() {
@@ -42,7 +70,7 @@ $(function() {
                 contentType: false,
                 success: function(res) {
                     _.each(res, function(e) {
-                        Cards.add(e)
+                        Cards.add(new CardModel(e));
                     });
                 },
                 error: function(xhr) {
@@ -57,13 +85,16 @@ $(function() {
         initialize: function() {
             this.listenTo(Cards, 'add', this.addCard);
             this.render();
+
+            if (loadData) {
+                Cards.fetch();
+            }
         },
         render: function() {
             this.$el.find("#uploadContainer").html(new UploadFormView().el);
         },
         addCard: function(model) {
             var view = new CardView({model: model});
-            console.log(this);
             this.$el.find("#cards").append(view.el);
         }
     })

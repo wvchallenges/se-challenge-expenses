@@ -21,7 +21,10 @@ def convert_datetime(date):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    load_data = False
+    with connect_db() as db:
+        load_data = db.cursor().execute("select count(*) from expenses").fetchone()[0] > 0
+    return render_template("index.html", load_data=load_data)
 
 @app.route("/expense_report", methods=["GET"])
 def report():
