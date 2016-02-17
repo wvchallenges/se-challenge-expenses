@@ -1,7 +1,8 @@
 import csv
 import io
 import sqlite3
-from flask import Flask, Response, request, render_template
+from datetime import datetime, date, time
+from flask import Flask, Response, request, render_template, jsonify, redirect
 
 # import gevent
 # from gevent.wsgi import WSGIServer
@@ -11,11 +12,49 @@ app = Flask(__name__, static_folder="web", static_url_path="", template_folder="
 app.config.from_object('config')
 
 def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+    conn = sqlite3.connect(app.config['DATABASE'], detect_types=sqlite3.PARSE_DECLTYPES)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/expense_report", methods=["GET"])
+def report():
+    expenses_by_month = """
+        select strftime('%Y-%m', expense_date) as month, sum(pretax_amount) + sum(tax_amount) as total
+        from expenses
+        group by month
+        order by month asc
+    """
+    expenses_by_employee = """
+        select employee_name, sum(pretax_amount) + sum(tax_amount) as total
+        from expenses
+        group by employee_name
+        order by total desc
+        limit 20
+    """
+
+    result = {
+        "expenses_by_month": None,
+        "expenses_by_employee": None,
+    }
+    with connect_db() as db:
+        cur = db.cursor()
+
+        result["expenses_by_month"] = [{
+            "month": row["month"],
+            "total": row["total"]
+        } for row in cur.execute(expenses_by_month).fetchall()]
+
+        result["expenses_by_employee"] = [{
+            "employee": row["employee_name"],
+            "total": row["total"]
+        } for row in cur.execute(expenses_by_employee).fetchall()]
+
+    return jsonify(result)
+
 
 @app.route("/parse", methods=["POST"])
 def parse_csv():
@@ -24,7 +63,7 @@ def parse_csv():
 
         for row in reader:
             yield (
-                row['date'],
+                convert_datetime(row["date"]),
                 row['category'],
                 row['employee name'],
                 row['employee address'],
@@ -35,13 +74,13 @@ def parse_csv():
             )
 
     reader = csv.DictReader(io.StringIO(request.files["file"].read().decode("UTF8"), newline=None))
-    print(reader.fieldnames)
 
     with connect_db() as db:
-        db.executemany("""insert into expenses ('date', category, employee_name, employee_address, expense_description, tax_name, pretax_amount, tax_amount)
+        db.cursor().executemany("""insert into expenses
+            (expense_date, category, employee_name, employee_address, expense_description, tax_name, pretax_amount, tax_amount)
             values (?, ?, ?, ?, ?, ?, ?, ?)""", expense_parser(reader))
 
-    return ""
+    return redirect("/expense_report")
 
 with app.app_context():
     with connect_db() as db, app.open_resource('schema.sql', mode='r') as f:
