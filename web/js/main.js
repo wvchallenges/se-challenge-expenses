@@ -1,5 +1,28 @@
 $(function() {
-    var CardModel = Backbone.Model.extend({});
+    var CardModel = Backbone.Model.extend({
+        chartOptions: {
+            distributeSeries: true
+        },
+        constructor: function() {
+            // Little hacky but this ensures that parse gets called everytime there's a new model
+            // http://stackoverflow.com/a/13611033
+            [].push.call(arguments, {
+                parse: true
+            });
+            Backbone.Model.apply(this, arguments);
+        },
+        parse: function(response, options) {
+            response["chartData"] = {
+                labels: [],
+                series: []
+            };
+            _.each(response["data"], function(row) {
+                response["chartData"]["labels"].push(row[response["xAxis"]]);
+                response["chartData"]["series"].push(row["total"]);
+            })
+            return response;
+        }
+    });
 
     var CardCollection = Backbone.Collection.extend({
         model: CardModel,
@@ -21,7 +44,9 @@ $(function() {
             });
         },
         add: function(card, options) {
-            var _card = this.findWhere({ "title" : card.get("title") });
+            var _card = this.findWhere({
+                "title": card.get("title")
+            });
 
             if (_card) {
                 _card.set("data", card.get("data"));
@@ -34,14 +59,22 @@ $(function() {
 
     var CardView = Backbone.View.extend({
         tagName: 'div',
-        className: 'col-sm-6 col-md-4',
+        className: 'col-sm-6',
         template: _.template($("#cardTPL").html()),
+        events: {
+            "click .card-toggle": "switchViews"
+        },
         initialize: function() {
             this.listenTo(this.model, 'change', this.render);
             this.render()
         },
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
+            this.chart = new Chartist.Bar(this.$el.find(".chart")[0], this.model.get("chartData"), this.model.chartOptions);
+        },
+        switchViews: function() {
+            this.$el.find(".data-table, .chart").toggleClass("hidden");
+            this.chart.update();
         }
     });
 
@@ -94,7 +127,9 @@ $(function() {
             this.$el.find("#uploadContainer").html(new UploadFormView().el);
         },
         addCard: function(model) {
-            var view = new CardView({model: model});
+            var view = new CardView({
+                model: model
+            });
             this.$el.find("#cards").append(view.el);
         }
     })

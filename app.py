@@ -45,9 +45,11 @@ def report():
     result = {
         "expenses_by_month": {
             "title": "By Month",
+            "xAxis": "month",
         },
         "expenses_by_employee": {
             "title": "By Employee",
+            "xAxis": "employee",
         },
     }
     with connect_db() as db:
