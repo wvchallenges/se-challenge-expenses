@@ -16,6 +16,9 @@ def connect_db():
     conn.row_factory = sqlite3.Row
     return conn
 
+def convert_datetime(date):
+    return datetime.strptime(date, "%m/%d/%Y").date().strftime('%Y-%m-%d')
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -37,21 +40,27 @@ def report():
     """
 
     result = {
-        "expenses_by_month": None,
-        "expenses_by_employee": None,
+        "expenses_by_month": {
+            "title": "By Month",
+        },
+        "expenses_by_employee": {
+            "title": "By Employee",
+        },
     }
     with connect_db() as db:
         cur = db.cursor()
 
-        result["expenses_by_month"] = [{
+        by_month = cur.execute(expenses_by_month).fetchall()
+        result["expenses_by_month"]["data"] = [{
             "month": row["month"],
             "total": row["total"]
-        } for row in cur.execute(expenses_by_month).fetchall()]
+        } for row in by_month]
 
-        result["expenses_by_employee"] = [{
+        by_employee = cur.execute(expenses_by_employee).fetchall()
+        result["expenses_by_employee"]["data"] = [{
             "employee": row["employee_name"],
             "total": row["total"]
-        } for row in cur.execute(expenses_by_employee).fetchall()]
+        } for row in by_employee]
 
     return jsonify(result)
 
