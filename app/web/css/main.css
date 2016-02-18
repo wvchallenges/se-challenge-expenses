@@ -36,8 +36,8 @@ th {
 
 .panel-body {
     background-color: #FAFAFA;
-    min-height: 325px;
-    max-height: 325px;
+    min-height: 330px;
+    max-height: 330px;
     overflow-y: auto;
 }
 

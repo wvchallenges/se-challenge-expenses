@@ -150,7 +150,7 @@ $(function() {
                     _this.$el.find(".upload-form-btn").prop("disabled", true).removeClass("btn-primary");
                 },
                 error: function(xhr) {
-                    console.log(xhr);
+                    alert(xhr.responseJSON.message);
                 },
             });
         }

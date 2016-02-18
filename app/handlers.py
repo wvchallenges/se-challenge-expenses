@@ -2,10 +2,16 @@ import csv
 import io
 import sqlite3
 from datetime import datetime, date, time
-from flask import Blueprint, Response, request, render_template, jsonify, redirect
-from . import db_utils
+from flask import Blueprint, Response, request, render_template, jsonify, redirect, abort
+from . import db_utils, invalid_usage
 
 mod = Blueprint("csv_parser", __name__, static_folder="web", static_url_path="", template_folder="web/html")
+
+@mod.errorhandler(invalid_usage.InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 @mod.route("/")
 def index():
@@ -52,19 +58,33 @@ def parse_csv():
     # Generator expression for each row in the CSV
     def expense_parser(reader):
         for row in reader:
-            yield (
-                db_utils.convert_datetime(row["date"]),
-                row['category'],
-                row['employee name'],
-                row['employee address'],
-                row['expense description'],
-                row['tax name'],
-                db_utils.money_convert(row["pre-tax amount"]),
-                db_utils.money_convert(row["tax amount"]),
-            )
+            try:
+                yield (
+                    db_utils.convert_datetime(row["date"]),
+                    row['category'],
+                    row['employee name'],
+                    row['employee address'],
+                    row['expense description'],
+                    row['tax name'],
+                    db_utils.money_convert(row["pre-tax amount"]),
+                    db_utils.money_convert(row["tax amount"]),
+                )
+            except:
+                raise invalid_usage.InvalidUsage("Not a valid expense report", 400)
+
+    if not request.files["file"]:
+        abort(400)
+
+    csv_file = io.StringIO(request.files["file"].read().decode("UTF8"), newline=None)
+
+    try:
+        csv.Sniffer().sniff(csv_file.read(1024))
+        csv_file.seek(0)
+    except:
+        raise invalid_usage.InvalidUsage("Not a valid CSV file", 400)
 
     # Have to wrangle the file into a File object for DictReader
-    reader = csv.DictReader(io.StringIO(request.files["file"].read().decode("UTF8"), newline=None))
+    reader = csv.DictReader(csv_file)
 
     # Insert all the rows into the db
     with db_utils.connect_db() as db:
