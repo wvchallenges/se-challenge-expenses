@@ -1,7 +1,111 @@
 html, body {
-    background-color: #ecf0f1;
+    background-color: #F5F5F5;
+}
+
+html, body, #content, .container-fluid {
+    height: 100%;
+}
+
+h1, h4, p, button, div {
+    font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+    font-weight: bold;
 }
 
 th {
     text-transform: capitalize;
+}
+
+.empty {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-fluid {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.panel-heading {
+    background-color: #607D8B;
+}
+
+.panel-body {
+    background-color: #FAFAFA;
+    min-height: 325px;
+    max-height: 325px;
+    overflow-y: auto;
+}
+
+.data-table > table {
+    margin: 0;
+}
+
+.panel-heading h4.title {
+    font-weight: bold;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.btn {
+    font-weight: bold;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: #54C7C3;
+    border-color: #54C7C3;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: #37A7A3;
+    border-color: #37A7A3;
+}
+
+.card-toggle {
+    background-color: #607D8B;
+    color: #FFF;
+    border: #ecf0f1 2px solid;
+}
+
+.card-toggle:hover,
+.card-toggle:active,
+.card-toggle:focus {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: #607D8B;
+    border-color: rgba(255, 255, 255, 0.7);
+    outline: none;
+}
+
+.upload-file-btn {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    vertical-align: middle;
+    font-size: 18px;
+    position: fixed;
+    bottom: 1.75em;
+    right: 1.5em;
+}
+
+.popover-title {
+    background-color: #607D8B;
+    color: #FFF;
+}
+
+.file-picker-group {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
 }

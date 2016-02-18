@@ -4,10 +4,6 @@ import sqlite3
 from datetime import datetime, date, time
 from flask import Flask, Response, request, render_template, jsonify, redirect
 
-# import gevent
-# from gevent.wsgi import WSGIServer
-# from gevent.queue import Queue
-
 app = Flask(__name__, static_folder="web", static_url_path="", template_folder="web/html")
 app.config.from_object('config')
 
@@ -102,6 +98,4 @@ with app.app_context():
         db.cursor().executescript(f.read())
 
 if __name__ == "__main__":
-    app.run(threaded=True)
-    # server = WSGIServer(("", 5000), app)
-    # server.serve_forever()
+    app.run()

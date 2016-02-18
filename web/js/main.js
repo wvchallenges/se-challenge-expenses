@@ -1,7 +1,24 @@
 $(function() {
+    // JQuery extension from animate.css https://github.com/daneden/animate.css
+    $.fn.extend({
+        animateCss: function(animationName) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            $(this).addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+            });
+        }
+    });
+
     var CardModel = Backbone.Model.extend({
         chartOptions: {
-            distributeSeries: true
+            chartPadding: {
+                top: 0,
+                bottom: 0,
+            },
+            distributeSeries: true,
+            height: "290px",
+            width: "100%",
+            onlyInteger: true,
         },
         constructor: function() {
             // Little hacky but this ensures that parse gets called everytime there's a new model
@@ -17,9 +34,11 @@ $(function() {
                 series: []
             };
             _.each(response["data"], function(row) {
+                row["total"] = (row["total"] / 100).toFixed(2)
                 response["chartData"]["labels"].push(row[response["xAxis"]]);
                 response["chartData"]["series"].push(row["total"]);
             })
+            console.log(response.chartData);
             return response;
         }
     });
@@ -61,6 +80,7 @@ $(function() {
         tagName: 'div',
         className: 'col-sm-6',
         template: _.template($("#cardTPL").html()),
+        tableVisible: true,
         events: {
             "click .card-toggle": "switchViews"
         },
@@ -69,11 +89,17 @@ $(function() {
             this.render()
         },
         render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template({
+                model: this.model.toJSON(),
+                tableVisible: this.tableVisible,
+            }));
+
             this.chart = new Chartist.Bar(this.$el.find(".chart")[0], this.model.get("chartData"), this.model.chartOptions);
         },
         switchViews: function() {
-            this.$el.find(".data-table, .chart").toggleClass("hidden");
+            this.tableVisible = !this.tableVisible;
+            this.$el.find(".card-toggle span").toggleClass("glyphicon-list glyphicon-stats").animateCss("fadeIn");
+            this.$el.find(".data-table, .chart").toggleClass("hidden").animateCss("fadeIn");
             this.chart.update();
         }
     });
@@ -81,6 +107,8 @@ $(function() {
     var UploadFormView = Backbone.View.extend({
         template: _.template($('#uploadFormTPL').html()),
         events: {
+            "click .file-picker": "pickFile",
+            "change .upload-input": "enableSubmit",
             "submit form": "uploadFile",
         },
         initialize: function() {
@@ -89,11 +117,18 @@ $(function() {
         render: function() {
             this.$el.html(this.template());
         },
+        pickFile: function() {
+            this.$el.find(".upload-input").click();
+        },
+        enableSubmit: function(e) {
+            this.$el.find(".upload-form-btn").prop("disabled", false).addClass("btn-primary");
+        },
         uploadFile: function(e) {
             e.preventDefault();
 
-            var fd = new FormData();
-            fd.append('file', $(e.currentTarget).find('input[name="file"]')[0].files[0]);
+            var _this = this,
+                fd = new FormData();
+            fd.append('file', $(e.currentTarget).find(".upload-input").get(0).files[0]);
 
             $.ajax({
                 url: "/parse",
@@ -105,6 +140,9 @@ $(function() {
                     _.each(res, function(e) {
                         Cards.add(new CardModel(e));
                     });
+
+                    $(e.currentTarget).get(0).reset();
+                    _this.$el.find(".upload-form-btn").prop("disabled", true).removeClass("btn-primary");
                 },
                 error: function(xhr) {
                     console.log(xhr);
@@ -115,8 +153,14 @@ $(function() {
 
     var AppView = Backbone.View.extend({
         el: $("#content"),
+        events: {
+            "click .upload-file-btn": "togglePopover",
+            "click .container-fluid": "closePopover",
+        },
         initialize: function() {
+            this.uploadForm = new UploadFormView();
             this.listenTo(Cards, 'add', this.addCard);
+            this.listenTo(Cards, 'change', this.closePopover);
             this.render();
 
             if (loadData) {
@@ -124,13 +168,33 @@ $(function() {
             }
         },
         render: function() {
-            this.$el.find("#uploadContainer").html(new UploadFormView().el);
+            this.$el.find(".upload-file-btn").popover({
+                content: this.uploadForm.el,
+                html: true,
+                placement: "left",
+                title: "Upload an expense report",
+                trigger: "manual"
+            });
         },
         addCard: function(model) {
-            var view = new CardView({
-                model: model
-            });
-            this.$el.find("#cards").append(view.el);
+            var cardContainer = this.$el.find("#cards"),
+                view = new CardView({
+                    model: model
+                });
+
+            if (!loadData) {
+                cardContainer.removeClass("hidden");
+                this.$el.find(".empty").addClass("hidden")
+            }
+
+            cardContainer.append(view.el);
+            this.closePopover();
+        },
+        togglePopover: function() {
+            this.$el.find(".upload-file-btn").popover("toggle");
+        },
+        closePopover: function() {
+            this.$el.find(".upload-file-btn").popover("hide");
         }
     })
 
