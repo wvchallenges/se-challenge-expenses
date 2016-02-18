@@ -1,7 +1,13 @@
 # Wave Software Development Challenge
 
 ## Installing
-```pip install -r requirements.txt```
+Installing is dead-simple just use the included requirements.txt
+```
+pip install -r requirements.txt
+```
 
 ## Running
-```python3 run.py```
+Ensure that you're using your Python 3 binary. *Note: this was developed with Python 3.5 not sure about compatibility with other 3.x versions* 
+```
+python3 run.py
+```
