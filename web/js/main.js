@@ -29,6 +29,7 @@ $(function() {
             Backbone.Model.apply(this, arguments);
         },
         parse: function(response, options) {
+            // Build up the data structure for chart
             response["chartData"] = {
                 labels: [],
                 series: []
@@ -38,7 +39,6 @@ $(function() {
                 response["chartData"]["labels"].push(row[response["xAxis"]]);
                 response["chartData"]["series"].push(row["total"]);
             })
-            console.log(response.chartData);
             return response;
         }
     });
@@ -62,6 +62,7 @@ $(function() {
                 },
             });
         },
+        // Add or update an existing model
         add: function(card, options) {
             var _card = this.findWhere({
                 "title": card.get("title")
@@ -97,6 +98,7 @@ $(function() {
             this.chart = new Chartist.Bar(this.$el.find(".chart")[0], this.model.get("chartData"), this.model.chartOptions);
         },
         switchViews: function() {
+            // Track which side of the card to keep visible and toggle the card button/content
             this.tableVisible = !this.tableVisible;
             this.$el.find(".card-toggle span").toggleClass("glyphicon-list glyphicon-stats").animateCss("fadeIn");
             this.$el.find(".data-table, .chart").toggleClass("hidden").animateCss("fadeIn");
@@ -141,6 +143,7 @@ $(function() {
                         Cards.add(new CardModel(e));
                     });
 
+                    // Cleanup the form
                     $(e.currentTarget).get(0).reset();
                     _this.$el.find(".upload-form-btn").prop("disabled", true).removeClass("btn-primary");
                 },
@@ -163,6 +166,7 @@ $(function() {
             this.listenTo(Cards, 'change', this.closePopover);
             this.render();
 
+            // If there's data in the DB fetch it
             if (loadData) {
                 Cards.fetch();
             }
@@ -182,9 +186,10 @@ $(function() {
                     model: model
                 });
 
+            // If there was no data before hide the no data splash
             if (!loadData) {
-                cardContainer.removeClass("hidden");
-                this.$el.find(".empty").addClass("hidden")
+                this.$el.find(".empty").addClass("hidden").animateCss("fadeOut");
+                cardContainer.removeClass("hidden").animateCss("fadeInDown");
             }
 
             cardContainer.append(view.el);

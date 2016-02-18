@@ -25,8 +25,8 @@
     <div id="content">
         <div class="container-fluid">
             {% if not load_data %}
-                <div class="empty">
-                    <h1>Sorry No Data Right Now</h1>
+                <div class="empty text-center">
+                    <h1>Sorry No Data Right Now<br><small>Buuut you should try that button in the corner ;)</small></h1>
                 </div>
             {% endif %}
             <div class="{{ '' if load_data else 'hidden' }} row" id="cards">
