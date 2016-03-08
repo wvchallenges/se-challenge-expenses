@@ -1,5 +1,9 @@
 # Wave Software Development Challenge
-Applicants for the [Software Developer](https://www.waveapps.com/about-us/jobs/software-developer/) career at Wave must complete the following challenge, and submit a solution prior to the interviewing process. This will help the interviewers assess your strengths, and frame the conversation through the interview process. Take as much time as you need, however we ask that you not spend more than a few hours. 
+Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+
+The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+
+There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
 
 We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
 
