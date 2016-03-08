@@ -10,14 +10,14 @@ We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this
 Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
 
 ## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one
-1. Complete the project as described below within your fork
+1. Fork this project on github. You will need to create an account if you don't already have one.
+1. Complete the project as described below within your fork.
 1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests).
+1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository
-1. Complete your project as described below within your local repository
+1. Clone the repository.
+1. Complete your project as described below within your local repository.
 1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
 
 ## Project Description
@@ -26,10 +26,10 @@ Imagine that Wave has just acquired a new company. Unfortunately, the company ha
 ### What your web-based application must do:
 
 1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions
- 1. Columns will always be in that order
- 2. There will always be data in each column
- 3. There will always be a header line
+1. You can make the following assumptions:
+ 1. Columns will always be in that order.
+ 2. There will always be data in each column.
+ 3. There will always be a header line.
 
  An example input file named `data_example.csv` is included in this repo.
 
