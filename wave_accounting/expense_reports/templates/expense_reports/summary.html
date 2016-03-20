@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <title>waveAccountingi</title>
+        <!--  <link href="/style.css" rel="stylesheet" type="text/css">-->
+    <style>
+        body { font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+        body { background: #F0F0F0 } 
+        .main_container { margin-top: 20px; margin-left: 40px; margin-right:40px; } 
+        .table_container { margin: 0px 30%; } 
+        table { width: 100%; text-align:center; font-size:120%; }
+        td { width: 50%; padding: 5px;}  
+        tr:nth-child(even) {background: #E8E8E8}
+        tr:nth-child(odd) {background: #D8D8D8}
+        tr.header {background: #606060; color: #F8F8F8; }
+        tr.sub_header {background: #A8A8A8}
+        .error { color:red } 
+
+    </style>
+
+</head>
+<body>
+    <div class="main_container">
+        
+        <h3> Summary of Expenditures </h3>
+        {% if success == True  %} 
+        {% if duplicates == True %}
+        <p class="error"> One or more entries were already found in the database and thus were not added to it <p> 
+        {% endif %}
+        <div class="table_container">
+            <table>
+                <tr class = "header"> 
+                    <td><b> Period </b> </td>
+                    <td><b> Total Expenditure </b> </td> 
+                </tr>
+            </table>
+                {% for yr in expenses %} 
+                {% for year,month,sum in yr %}
+                {% if forloop.first %}
+            <table>
+                <tr class = "sub_header">    
+                    <td><b> {{ year }} </b></td>
+                    <td><b> {{ sum }} </b></td> 
+                </tr>
+                {% else %}
+                <tr class = "content">    
+                    <td> {{ month }} </td>
+                    <td> {{ sum }} </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p class="error"> File upload failed (one of your files may be corrupted) </p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

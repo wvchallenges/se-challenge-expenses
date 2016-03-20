@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <title>waveAccountingi</title>
+    <style>
+        body { font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+        body { background: #F0F0F0; } 
+        .main_container { margin-top: 20px; margin-left: 40px; margin-right:40px; } 
+        .form_container { text-align: center; margin: 8% 30%; } 
+        #filebox { margin: 0 15%; margin-bottom:5%; border-style: dashed;border-radius:10px;  border-color:#909090;  background-color: #E0E0E0;  } 
+        #fileselect {  padding: 20%; padding-right: 0; opacity:0;  border-color:#909090;  background-color: #E0E0E0;  } 
+        #filenames { list-style-type: none; margin: 0; padding: 0; }
+        h5 { margin: 0; margin-bottom: 10px; padding: 0px;   }     
+    </style>
+        <!--  <link href="/style.css" rel="stylesheet" type="text/css">-->
+</head>
+<body>
+    <div class="main_container">
+        <h3> Upload Expense Reports </h3>
+        <div class="form_container">
+            <p>Drop files into the box or click to open file selector</p>
+            <form id="upload" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div id="filebox">
+                    <input id="fileselect" type="file" name="expense_report[]" multiple />
+                </div>
+                <ul id="filenames"></ul>
+                <button id="submit" type="submit" value="Upload">Upload !</button>
+            </form>
+        </div>
+    </div>
+    <script src="/static/expense_reports/js/jquery-2.1.1.min.js"></script>
+    <script>
+        
+        var MAX_FILE_SIZE = 1000; // in KB  
+        var files = [];
+        
+        $('#fileselect').change(function(e){
+
+            // get file object from file selector input
+            files = e.target.files;
+            
+            $('#filenames').empty();
+            
+            for (var i = 0; i < files.length; i++){
+            
+                $('#filenames').append('<li><h5>' + files[i].name + '</h5></li>');
+            }
+        });
+
+
+        $('#upload').submit(function(){
+            
+            // no file selected
+            if ( !(files[0]) ){
+                alert("Please select a file to upload.");
+                $('#fileselect').val('');  // reset select box 
+                return false;              // don't reload the page
+            }
+            
+            for(var i = 0; i < files.length ; i++){
+            
+                // file is not a csv file
+                if (files[i].type !== 'text/csv'){
+                    alert(files[i].name + " is not a CSV file. Only CSV files can be uploaded.");
+                    $('#fileselect').val('');
+                    return false;           
+                }
+                // TODO some testing would be needed to determine safe maximum file size 
+                // file exceeds maximum file size 
+                if (files[i].size > MAX_FILE_SIZE * 1000){
+                    alert('Sorry, we can only accept files up to ' + MAX_FILE_SIZE + ' KB');
+                    $('#fileselect').val('');
+                    return false;          
+                }
+            }
+        });
+    </script>
+</body>
+</html>
