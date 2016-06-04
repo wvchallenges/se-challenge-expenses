@@ -1,0 +1,25 @@
+[package]
+name = "se-challenge"
+version = "0.1.0"
+authors = ["Belhorma Bendebiche"]
+
+[dependencies]
+itertools = "0.4"
+csv = "0.14"
+rustc-serialize = "0.3.19"
+iron = "0.3"
+router = "0.1.1"
+staticfile = "0.2"
+
+[dependencies.chrono]
+version = "0.2"
+features = ["rustc-serialize"]
+
+[dependencies.postgres]
+version = "0.11"
+features = ["chrono"]
+
+[dependencies.multipart]
+version = "0.7.0"
+default-features = false
+features = ["server", "iron"]

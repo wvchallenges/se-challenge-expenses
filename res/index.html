@@ -1,0 +1,129 @@
+<html>
+    <head>
+        <title>CSV Upload</title>
+        <style>
+            .file {
+                    width: 0.1px;
+                    height: 0.1px;
+                    opacity: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    z-index: -1;
+            }
+
+            .button {
+                    font-size: 100%;
+                    padding: 0.5em 1em;
+                    color: rgba(0, 0, 0, 0.80);
+                    border: none rgba(0, 0, 0, 0);
+                    background-color: #E6E6E6;
+                    border-radius: 2px;
+            }
+
+            .well {
+                box-shadow: 1px 1px 3px #888;
+                padding: 20px;
+            }
+
+            .results table {
+                border-collapse: collapse;
+                border-spacing: 0px;
+                border: 1px solid #cbcbcb;
+            }
+
+            .results td,
+            .results th {
+                padding: 0.5em 1em;
+                border-left: 1px solid #cbcbcb;
+            }
+
+            .results thead {
+                background-color: #e0e0e0;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function() {
+                let file_selector = document.getElementById('file');
+                let file_label = document.getElementById('file_label');
+
+                file_selector.onchange = function(e) {
+                    file_label.innerHTML = this.files[0].name;
+                }
+
+                let tabulate = function(result) {
+                    let months = Object.keys(result);
+                    months.sort();
+
+                    if (months.length == 0) {
+                        return;
+                    }
+
+                    let results_div = document.getElementById('results_div');
+                    results_div.style.visibility = 'visible';
+                    let tbody = document.getElementById('results');
+                    tbody.innerHTML = '';
+
+                    for (let month of months) {
+                        let tr = document.createElement('tr');
+                        let month_td = document.createElement('td');
+                        let total_td = document.createElement('td');
+
+                        month_td.innerHTML = month;
+                        total_td.innerHTML = "$" + result[month];
+
+                        tr.appendChild(month_td);
+                        tr.appendChild(total_td);
+
+                        tbody.appendChild(tr);
+                    }
+                };
+
+                let button = document.getElementById('submit');
+                button.onclick = function(event) {
+                    event.preventDefault();
+
+                    let form = document.forms.namedItem('upload');
+
+                    let formData = new FormData(form);
+
+                    let fetchOptions = {
+                        method: 'POST',
+                        mode: 'same-origin',
+                        body: formData,
+                    }
+
+                    let uri = '/upload';
+
+                    fetch(uri, fetchOptions).then(r => r.json().then(tabulate));
+                };
+            }
+	</script>
+    </head>
+    <body>
+        <div class="well" style="display: table">
+        <div class="well" style="display: table-row">
+            <div class="well form" style="display: table-cell">
+                <h3>Upload a CSV file of expenses</h3>
+                <form enctype="multipart/form-data" name="upload">
+                    <input class="file" id="file" type="file" name="file">
+          					<label id="file_label" for="file" class="button">Browse</label>
+                    <input class="button" id="submit" type="submit" value="Upload">
+                </form>
+            </div>
+            <p></p>
+            <div id="results_div" style="visibility: hidden" class="well results" style="display: table-cell">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>
