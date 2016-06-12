@@ -1,50 +1,46 @@
 # Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+This project is a simple application developed for Wave's SE Challenge [here](https://github.com/wvchallenges/se-challenge).
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+## Application notes
+### What it does
+It is a web application that supports uploading an Employee Expense CSV file into an in-memory database, displaying the aggregated expenses per month upon successful upload. 
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
+### Languages/technologies used
+As I am not well-versed in Ruby/Ruby on Rails or Python/Django, it was developed using Java, Spring, and Thymeleaf with bootstrap for styling. It also uses an in-memory H2 database for easy set-up, which can be easily swapped out for on-disk database if necessary.
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+### Development notes
+1. My primary focus in developing this web-app was on the back-end domain model. This is the area I'm most familiar with, as most of my professional career has been spent working on back-end RESTful web-services.
+2. Less expertise was spent on the front-end views, as front-end is not my strong point.
+3. I focused on making the domain model as clean, extensible, and abstract as possible to support scalability and maintainability.
+4. Basic error handling was added, despite the project specs stating certain assumptions could be made, because I couldn't help adding it. The controller handling file uploads handles errors with file type, empty files, and files with unexpected format.
+5. Some of the CSV parsing functionality was abstracted to support uploading of other domain types by CSV in the future, since it seemed like a probable future requirement.
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
+## Setup
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+The application can be easily built and deployed using maven and spring-boot. Simply run `mvn spring-boot:run` from the root of the cloned application repository. Detailed steps below:
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+1. To run the application you'll need [Maven 3.0+](http://maven.apache.org/download.cgi) and [JDK 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+2. Clone the project to your local machine (`git clone https://github.com/tannner/se-challenge.git`) or download the project zip (https://github.com/tannner/se-challenge/archive/master.zip)
+3. Navigate (cd) into the root directory of the cloned/downloaded project (se-challenge) and run `mvn spring-boot:run`
 
-### What your web-based application must do:
+Once the above steps are complete, the application should be up and running. You can navigate to http://localhost:8080 in your favorite browser to play with the application. If you experience errors, please email rutgers.tanner@gmail.com and ridicule him.
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
+## Viewing the database
 
- An example input file named `data_example.csv` is included in this repo.
+Since the database is currently in-memory, all tables are dropped and re-created per application startup. If you want to view the database for the currently running instance, follow the steps below:
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+1. Navigate to http://localhost:8080/h2-console in your browser
+2. Login to the H2 console using the settings below:
+  * __Driver Class:__ org.h2.Driver
+  * __JDBC URL:__ jdbc:h2:mem:mydb
+  * __User Name:__ sa
+  * __Password:__ [blank]
+  
+  ![H2 settings](http://i.imgur.com/smT0nEa.png?1)
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+3. The EMPLOYEE_EXPENSE table can be queried with standard SQL
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
 
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+__If you have any questions or issues, please email rutgers.tanner@gmail.com__
