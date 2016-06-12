@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "Default",
+    "properties": {
+      "property": [
+        {
+          "name": "log-path",
+          "value": "logs"
+        }
+      ]
+    },
+    "appenders": {
+      "Console": {
+        "name": "Console-Appender",
+        "target": "SYSTEM_OUT",
+        "PatternLayout": {
+          "pattern": "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        }
+      },
+      "File": {
+        "name": "File-Appender",
+        "fileName": "${log-path}/se-challenge.log",
+        "PatternLayout": {
+          "pattern": "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        }
+      }
+    },
+    "loggers": {
+      "logger": [{
+        "name": "com.tannerrutgers.sechallenge.application",
+        "level": "debug",
+        "appender-ref": [{"ref": "File-Appender"}]
+      },
+      {
+        "name": "org.thymeleaf",
+        "level": "error"
+      }],
+      "root": {
+        "level": "info",
+        "appender-ref": [{"ref": "Console-Appender"},
+          {"ref": "File-Appender", "level": "error"}]
+      }
+    }
+  }
+}
