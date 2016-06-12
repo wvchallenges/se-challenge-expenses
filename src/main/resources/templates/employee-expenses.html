@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorators/primary-layout">
+
+<div layout:fragment="content">
+    <h1>Upload Employee Expenses!</h1>
+
+    <div th:if="${#lists.isEmpty(monthlyExpenses)}">
+        <form role="form-inline" class="form-horizontal" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="btn btn-default" for="ee-file-selector">
+                    <input id="ee-file-selector" type="file" name="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());"/>
+                    Choose File
+                </label>
+                <span class='label label-default' id="upload-file-info"></span>
+                <div th:if="${message}">
+                    <p class="help-block" th:text="${message}"/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">Upload</button>
+        </form>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(monthlyExpenses)}">
+        <h2>Monthly Expenses</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th style="text-align:left">Date</th>
+                <th style="text-align:right">Total Expenses</th>
+            </tr>
+            <tr th:each="expense : ${monthlyExpenses}">
+                <td style="text-align:left" th:text="${#calendars.format(expense.date,'MMM yyyy')}"></td>
+                <td style="text-align:right" th:text="${'$' + #numbers.formatDecimal(expense.expense, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            </tr>
+        </table>
+        <form th:action="@{/employee-expenses}" method="get">
+            <button class="btn btn-default" type="submit">Upload New</button>
+        </form>
+    </div>
+</div>
+</html>

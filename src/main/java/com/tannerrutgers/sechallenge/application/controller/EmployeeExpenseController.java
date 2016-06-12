@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import javax.ws.rs.QueryParam;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -43,9 +45,9 @@ public class EmployeeExpenseController {
     EmployeeExpenseCSVParser employeeExpenseCSVParser;
 
 
-    @RequestMapping(method = RequestMethod.GET, value="/employeeexpenses")
-    public String loadPage() {
-        return "employeeExpenses";
+    @RequestMapping(method = RequestMethod.GET, value="/employee-expenses")
+    public String loadPage(@QueryParam("reset") boolean reset, Model model) {
+        return "employee-expenses";
     }
 
     /**
@@ -54,7 +56,7 @@ public class EmployeeExpenseController {
      * @param redirectAttributes Model attributes to be used after redirection
      * @return View to refresh or redirect
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/employeeexpenses", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/employee-expenses", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadEmployeeExpensesFile(@RequestParam("file") MultipartFile file,
                                              RedirectAttributes redirectAttributes) {
         LOGGER.info("uploadEmployeeExpensesFile()");
@@ -84,7 +86,7 @@ public class EmployeeExpenseController {
             LOGGER.info("uploadEmployeeExpenseFile received empty file");
         }
         redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/employeeexpenses";
+        return "redirect:/employee-expenses";
     }
 
     /**
