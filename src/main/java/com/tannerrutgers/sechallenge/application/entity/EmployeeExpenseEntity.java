@@ -1,5 +1,7 @@
 package com.tannerrutgers.sechallenge.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,13 +10,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * JPA Entity mapping for employee expenses table
+ * JPA Entity mapping for employee expense table
  */
-@Entity(name = "EXPENSES")
-public class ExpensesEntity {
+@Entity(name = "EMPLOYEE_EXPENSE")
+public class EmployeeExpenseEntity {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
     @Column(nullable=false)

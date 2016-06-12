@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/employeeexpenses">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+
+<div th:if="${not #lists.isEmpty(monthlyExpenses)}">
+    <h2>Monthly Expenses</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Total Expenses</th>
+        </tr>
+        <tr th:each="expense : ${monthlyExpenses}">
+            <td th:text="${#calendars.format(expense.date,'MMM yyyy')}"></td>
+            <td style="text-align:right" th:text="${'$' + #numbers.formatDecimal(expense.expense, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

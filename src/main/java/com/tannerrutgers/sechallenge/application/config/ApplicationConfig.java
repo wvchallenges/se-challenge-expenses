@@ -1,5 +1,7 @@
 package com.tannerrutgers.sechallenge.application.config;
 
+import com.tannerrutgers.sechallenge.application.util.csvparser.EmployeeExpenseCSVParser;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -8,4 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
+    @Bean
+    public EmployeeExpenseCSVParser employeeExpenseCSVParser() {
+        return new EmployeeExpenseCSVParser();
+    }
 }
