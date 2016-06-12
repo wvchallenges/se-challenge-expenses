@@ -10,10 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * $DateTime$
- *
- * @Version $Header$
- * @Author $Author$
+ * Concrete CSVEntityParser for parsing EmployeeExpenseEntities from CSV
  */
 public class EmployeeExpenseCSVParser extends CSVEntityParser<EmployeeExpenseEntity> {
 
