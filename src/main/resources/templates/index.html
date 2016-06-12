@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorators/primary-layout">
+
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1>Welcome to the SE Challenge App!</h1>
+        <p class="lead">This application allows you to upload employee expenses from a CSV file into our database and view the corresponding monthly totals!</p>
+        <p><a class="btn btn-lg btn-success" th:href="@{/employee-expenses}" href="employee-expenses.html" role="button">Try it out</a></p>
+    </div>
+</div>
+</html>

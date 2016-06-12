@@ -3,29 +3,44 @@
       layout:decorator="decorators/primary-layout">
 
 <div layout:fragment="content">
-    <h1>Upload Employee Expenses!</h1>
-
-    <div th:if="${#lists.isEmpty(monthlyExpenses)}">
-        <form role="form-inline" class="form-horizontal" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label class="btn btn-default" for="ee-file-selector">
-                    <input id="ee-file-selector" type="file" name="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());"/>
-                    Choose File
-                </label>
-                <span class='label label-default' id="upload-file-info"></span>
-                <div th:if="${message}">
-                    <p class="help-block" th:text="${message}"/>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-default">Upload</button>
-        </form>
+    <div class="page-header">
+        <h1>Upload employee expenses</h1>
     </div>
 
+    <!-- Upload new file form -->
+    <div th:if="${#lists.isEmpty(monthlyExpenses)}">
+        <form role="form" class="form-inline" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="btn btn-default" for="ee-file-selector">
+                    <input id="ee-file-selector" type="file" name="file" style="display:none;" onchange="$('#upload-file-info').attr('placeholder',$(this).val().split('\\').pop());"/>
+                    Choose File
+                </label>
+                <input id="upload-file-info" style="width:300px;" type="text" class="form-control" readonly="readonly"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        <div th:if="${errorMessage}">
+            <br/>
+            <div class="alert alert-danger">
+                <span th:utext="${errorMessage}"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggleable message -->
+    <div th:if="${message}">
+        <br/>
+        <div class="alert alert-success">
+            <span th:utext="${message}"/>
+        </div>
+    </div>
+
+    <!-- Monthly expenses from upload -->
     <div th:if="${not #lists.isEmpty(monthlyExpenses)}">
         <h2>Monthly Expenses</h2>
-        <table class="table table-bordered">
+        <table class="table table-striped table-bordered">
             <tr>
-                <th style="text-align:left">Date</th>
+                <th style="text-align:left">Month</th>
                 <th style="text-align:right">Total Expenses</th>
             </tr>
             <tr th:each="expense : ${monthlyExpenses}">
@@ -34,7 +49,7 @@
             </tr>
         </table>
         <form th:action="@{/employee-expenses}" method="get">
-            <button class="btn btn-default" type="submit">Upload New</button>
+            <button class="btn btn-primary" type="submit">Upload New</button>
         </form>
     </div>
 </div>

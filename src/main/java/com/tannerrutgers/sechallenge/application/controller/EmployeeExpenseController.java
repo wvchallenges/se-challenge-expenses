@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -46,7 +44,7 @@ public class EmployeeExpenseController {
 
 
     @RequestMapping(method = RequestMethod.GET, value="/employee-expenses")
-    public String loadPage(@QueryParam("reset") boolean reset, Model model) {
+    public String loadPage() {
         return "employee-expenses";
     }
 
@@ -61,31 +59,33 @@ public class EmployeeExpenseController {
                                              RedirectAttributes redirectAttributes) {
         LOGGER.info("uploadEmployeeExpensesFile()");
         String message = null;
+        String errorMessage = null;
         String filename = file.getOriginalFilename();
         if (!file.isEmpty()) {
             if (CONTENT_TYPE_CSV.equals(file.getContentType())) {
                 try {
                     List<EmployeeExpenseEntity> expenses = employeeExpenseCSVParser.parseCSVToEntities(file.getInputStream());
                     employeeExpenseService.createExpenses(expenses);
-                    message = "Upload successful!";
                     redirectAttributes.addFlashAttribute("monthlyExpenses", getMonthlyExpenses(expenses));
+                    message = "<strong>Success!</strong> " + filename + " was successfully uploaded and saved!";
                     LOGGER.info("uploadEmployeeExpensesFile successful");
                 } catch (IOException|ParseException|IllegalArgumentException ex) {
-                    message = "The uploaded file (" + filename + ") has unexpected content or cannot be parsed.";
+                    errorMessage = "The uploaded file <strong>" + filename + "</strong> has unexpected content or cannot be parsed. Please try a different file.";
                     LOGGER.info("uploadEmployeeExpensesFile failed", ex);
                 } catch (DataAccessException ex) {
-                    message = "There was an error saving employee expenses. Please try again.";
+                    errorMessage = "There was an error saving employee expenses. Please try again.";
                     LOGGER.error("uploadEmployeeExpensesFile failed", ex);
                 }
             } else {
-                message = "The uploaded file (" + filename + ") is not a supported file type.";
+                errorMessage = "The uploaded file <strong>" + filename + "</strong> is not a supported file type. Please only upload .csv files.";
                 LOGGER.info("uploadEmployeeExpensesFile received unsupported file type: " + filename);
             }
         } else {
-            message = "The uploaded file (" + filename + ") appears to be empty.";
+            errorMessage = "The uploaded file <strong>" + filename + "</strong> appears to be empty. Please try a different file.";
             LOGGER.info("uploadEmployeeExpenseFile received empty file");
         }
         redirectAttributes.addFlashAttribute("message", message);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/employee-expenses";
     }
 
