@@ -4,6 +4,9 @@ import com.tannerrutgers.sechallenge.application.entity.EmployeeExpenseEntity;
 import com.tannerrutgers.sechallenge.application.model.Expense;
 import com.tannerrutgers.sechallenge.application.service.EmployeeExpenseService;
 import com.tannerrutgers.sechallenge.application.util.csvparser.EmployeeExpenseCSVParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,30 +28,36 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * $DateTime$
- *
- * @Version $Header$
- * @Author $Author$
+ * MVC Controller for handling employee expenses
  */
 @Controller
 public class EmployeeExpenseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeExpenseController.class);
+
     private static final String CONTENT_TYPE_CSV = "text/csv";
-    private static final SimpleDateFormat MONTH_DATE_FORMAT = new SimpleDateFormat("M/yyyy");
 
     @Inject
     EmployeeExpenseService employeeExpenseService;
     @Inject
     EmployeeExpenseCSVParser employeeExpenseCSVParser;
 
+
     @RequestMapping(method = RequestMethod.GET, value="/employeeexpenses")
     public String loadPage() {
         return "employeeExpenses";
     }
 
+    /**
+     * Supports the upload and persistence of employee expenses by CSV
+     * @param file MultipartFile representing uploaded CSV file
+     * @param redirectAttributes Model attributes to be used after redirection
+     * @return View to refresh or redirect
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/employeeexpenses", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadExpensesFile(@RequestParam("file") MultipartFile file,
-                                         RedirectAttributes redirectAttributes) {
+    public String uploadEmployeeExpensesFile(@RequestParam("file") MultipartFile file,
+                                             RedirectAttributes redirectAttributes) {
+        LOGGER.info("uploadEmployeeExpensesFile()");
         String message = null;
         String filename = file.getOriginalFilename();
         if (!file.isEmpty()) {
@@ -58,35 +67,55 @@ public class EmployeeExpenseController {
                     employeeExpenseService.createExpenses(expenses);
                     message = "Upload successful!";
                     redirectAttributes.addFlashAttribute("monthlyExpenses", getMonthlyExpenses(expenses));
+                    LOGGER.info("uploadEmployeeExpensesFile successful");
                 } catch (IOException|ParseException|IllegalArgumentException ex) {
                     message = "The uploaded file (" + filename + ") has unexpected content or cannot be parsed.";
+                    LOGGER.info("uploadEmployeeExpensesFile failed", ex);
+                } catch (DataAccessException ex) {
+                    message = "There was an error saving employee expenses. Please try again.";
+                    LOGGER.error("uploadEmployeeExpensesFile failed", ex);
                 }
             } else {
                 message = "The uploaded file (" + filename + ") is not a supported file type.";
+                LOGGER.info("uploadEmployeeExpensesFile received unsupported file type: " + filename);
             }
         } else {
             message = "The uploaded file (" + filename + ") appears to be empty.";
+            LOGGER.info("uploadEmployeeExpenseFile received empty file");
         }
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/employeeexpenses";
     }
 
-    private List<Expense> getMonthlyExpenses(List<EmployeeExpenseEntity> employeeExpenses) throws ParseException {
+    /**
+     * Generates a list of Expense model objects from a list of Employee Expense entities
+     * @param employeeExpenses List of employee expense entities from which to generate Expenses
+     * @return List of Expenses
+     */
+    private List<Expense> getMonthlyExpenses(List<EmployeeExpenseEntity> employeeExpenses) {
         List<Expense> monthlyExpenses = new ArrayList<>();
 
+        SimpleDateFormat monthDateFormat = new SimpleDateFormat("M/yyyy");
+
+        // Create map of monthly expenses
         Map<String, BigDecimal> expenseMap = new HashMap<>();
         for (EmployeeExpenseEntity employeeExpense : employeeExpenses) {
-            String month = MONTH_DATE_FORMAT.format(employeeExpense.getDate());
+            String month = monthDateFormat.format(employeeExpense.getDate());
             BigDecimal expense = employeeExpense.getPreTaxAmount().add(employeeExpense.getTaxAmount());
             expenseMap.putIfAbsent(month, BigDecimal.ZERO);
             expenseMap.put(month, expenseMap.get(month).add(expense));
         }
 
+        // Parse monthly expense map back into list of Expense objects and sort
         for (Map.Entry<String, BigDecimal> monthlyExpense : expenseMap.entrySet()) {
-            Date month = MONTH_DATE_FORMAT.parse(monthlyExpense.getKey());
-            monthlyExpenses.add(new Expense(month, monthlyExpense.getValue()));
+            try {
+                Date month = monthDateFormat.parse(monthlyExpense.getKey());
+                monthlyExpenses.add(new Expense(month, monthlyExpense.getValue()));
+            } catch (ParseException ex) {
+                LOGGER.error("getMonthlyExpenses Error parsing date from monthly expense map");
+                return null;
+            }
         }
-
         Collections.sort(monthlyExpenses);
 
         return monthlyExpenses;
