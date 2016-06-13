@@ -1,8 +1,6 @@
 package com.tannerrutgers.sechallenge.application.model.report;
 
 import com.tannerrutgers.sechallenge.application.model.Expense;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -11,7 +9,6 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -22,8 +19,6 @@ import java.util.TreeMap;
  * Concrete Report class for Expenses represented monthly
  */
 public class MonthlyExpenseReport extends Report<Expense> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MonthlyExpenseReport.class);
 
     private static final String TITLE = "Monthly Expense Report";
     private static final List<String> HEADERS = Arrays.asList("Month", "Total Expenses");
@@ -40,7 +35,6 @@ public class MonthlyExpenseReport extends Report<Expense> {
     public void populateReport(List<Expense> expenses) {
         this.rows = new ArrayList<>();
 
-        Calendar calendar = Calendar.getInstance();
         DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM, yyyy");
 
         // Create sorted map of monthly expenses
