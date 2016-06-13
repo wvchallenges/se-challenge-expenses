@@ -15,7 +15,7 @@ As I am not well-versed in Ruby/Ruby on Rails or Python/Django, it was developed
 2. Equal attention, but less expertise was spent on the front-end views, as front-end is not my strong point but was fun to play with.
 3. I focused on making the domain model as clean, extensible, and abstract as possible to support scalability and maintainability.
 4. Basic error handling was added, despite the project specs stating certain assumptions could be made, because I couldn't help adding it. The controller handling file uploads handles errors with file type, empty files, and files with unexpected format.
-5. Some of the CSV parsing functionality was abstracted to support uploading of other domain types by CSV in the future, since it seemed like a probable future requirement.
+5. Some of the CSV parsing functionality was abstracted to support uploading of other domain types by CSV in the future, since it seemed like a probable future requirement. I also abstracted a Report model and view for easy extension/creation of other types of reports.
 
 ## Setup
 
