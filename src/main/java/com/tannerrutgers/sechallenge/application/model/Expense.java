@@ -1,17 +1,17 @@
 package com.tannerrutgers.sechallenge.application.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Basic model representing a tracked expense
  */
 public class Expense implements Comparable<Expense> {
 
-    private Date date;
+    private LocalDate date;
     private BigDecimal expense;
 
-    public Expense(Date date, BigDecimal expense) {
+    public Expense(LocalDate date, BigDecimal expense) {
         this.date = date;
         this.expense = expense;
     }
@@ -33,11 +33,11 @@ public class Expense implements Comparable<Expense> {
         }
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

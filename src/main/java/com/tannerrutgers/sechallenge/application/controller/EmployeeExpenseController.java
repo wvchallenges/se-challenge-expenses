@@ -2,6 +2,8 @@ package com.tannerrutgers.sechallenge.application.controller;
 
 import com.tannerrutgers.sechallenge.application.entity.EmployeeExpenseEntity;
 import com.tannerrutgers.sechallenge.application.model.Expense;
+import com.tannerrutgers.sechallenge.application.model.report.MonthlyExpenseReport;
+import com.tannerrutgers.sechallenge.application.model.report.Report;
 import com.tannerrutgers.sechallenge.application.service.EmployeeExpenseService;
 import com.tannerrutgers.sechallenge.application.util.csvparser.EmployeeExpenseCSVParser;
 import org.slf4j.Logger;
@@ -19,13 +21,9 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * MVC Controller for handling employee expenses
@@ -66,7 +64,7 @@ public class EmployeeExpenseController {
                 try {
                     List<EmployeeExpenseEntity> expenses = employeeExpenseCSVParser.parseCSVToEntities(file.getInputStream());
                     employeeExpenseService.createExpenses(expenses);
-                    redirectAttributes.addFlashAttribute("monthlyExpenses", getMonthlyExpenses(expenses));
+                    redirectAttributes.addFlashAttribute("report", getMonthlyExpenseReport(expenses));
                     message = "<strong>Success!</strong> " + filename + " was successfully uploaded and saved!";
                     LOGGER.info("uploadEmployeeExpensesFile successful");
                 } catch (IOException|ParseException|IllegalArgumentException ex) {
@@ -94,33 +92,14 @@ public class EmployeeExpenseController {
      * @param employeeExpenses List of employee expense entities from which to generate Expenses
      * @return List of Expenses
      */
-    private List<Expense> getMonthlyExpenses(List<EmployeeExpenseEntity> employeeExpenses) {
-        List<Expense> monthlyExpenses = new ArrayList<>();
-
-        SimpleDateFormat monthDateFormat = new SimpleDateFormat("M/yyyy");
-
-        // Create map of monthly expenses
-        Map<String, BigDecimal> expenseMap = new HashMap<>();
+    private Report<Expense> getMonthlyExpenseReport(List<EmployeeExpenseEntity> employeeExpenses) {
+        List<Expense> expenses = new ArrayList<>();
         for (EmployeeExpenseEntity employeeExpense : employeeExpenses) {
-            String month = monthDateFormat.format(employeeExpense.getDate());
-            BigDecimal expense = employeeExpense.getPreTaxAmount().add(employeeExpense.getTaxAmount());
-            expenseMap.putIfAbsent(month, BigDecimal.ZERO);
-            expenseMap.put(month, expenseMap.get(month).add(expense));
+            LocalDate date = employeeExpense.getDate();
+            BigDecimal totalExpense = employeeExpense.getPreTaxAmount().add(employeeExpense.getTaxAmount());
+            expenses.add(new Expense(date, totalExpense));
         }
-
-        // Parse monthly expense map back into list of Expense objects and sort
-        for (Map.Entry<String, BigDecimal> monthlyExpense : expenseMap.entrySet()) {
-            try {
-                Date month = monthDateFormat.parse(monthlyExpense.getKey());
-                monthlyExpenses.add(new Expense(month, monthlyExpense.getValue()));
-            } catch (ParseException ex) {
-                LOGGER.error("getMonthlyExpenses Error parsing date from monthly expense map");
-                return null;
-            }
-        }
-        Collections.sort(monthlyExpenses);
-
-        return monthlyExpenses;
+        return new MonthlyExpenseReport(expenses);
     }
 
 

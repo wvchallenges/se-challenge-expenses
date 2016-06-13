@@ -8,7 +8,7 @@
     </div>
 
     <!-- Upload new file form -->
-    <div th:if="${#lists.isEmpty(monthlyExpenses)}">
+    <div th:unless="${report}">
         <form role="form" class="form-inline" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="btn btn-default" for="ee-file-selector">
@@ -36,18 +36,8 @@
     </div>
 
     <!-- Monthly expenses from upload -->
-    <div th:if="${not #lists.isEmpty(monthlyExpenses)}">
-        <h2>Monthly Expenses</h2>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th style="text-align:left">Month</th>
-                <th style="text-align:right">Total Expenses</th>
-            </tr>
-            <tr th:each="expense : ${monthlyExpenses}">
-                <td style="text-align:left" th:text="${#calendars.format(expense.date,'MMM yyyy')}"></td>
-                <td style="text-align:right" th:text="${'$' + #numbers.formatDecimal(expense.expense, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
-            </tr>
-        </table>
+    <div th:if="${report}">
+        <div th:include="report"/>
         <form th:action="@{/employee-expenses}" method="get">
             <button class="btn btn-primary" type="submit">Upload New</button>
         </form>

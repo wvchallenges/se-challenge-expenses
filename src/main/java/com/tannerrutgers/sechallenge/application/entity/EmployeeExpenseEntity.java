@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * JPA Entity mapping for employee expense table
@@ -21,7 +21,7 @@ public class EmployeeExpenseEntity {
     private Long id;
 
     @Column(nullable=false)
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable=false)
     private String category;
@@ -52,11 +52,11 @@ public class EmployeeExpenseEntity {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

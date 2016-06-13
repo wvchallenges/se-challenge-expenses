@@ -5,7 +5,8 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class EmployeeExpenseCSVParser extends CSVEntityParser<EmployeeExpenseEntity> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("M/d/yyyy");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("M/d/yyyy");
 
     private static final String DATE_FIELD = "date";
     private static final String CATEGORY_FIELD = "category";
@@ -44,7 +45,7 @@ public class EmployeeExpenseCSVParser extends CSVEntityParser<EmployeeExpenseEnt
     @Override
     protected EmployeeExpenseEntity recordToEntity(CSVRecord record) throws ParseException {
         EmployeeExpenseEntity entity = new EmployeeExpenseEntity();
-        entity.setDate(DATE_FORMAT.parse(record.get(fieldMap.get("date"))));
+        entity.setDate(LocalDate.parse(record.get(fieldMap.get("date")), DATE_FORMAT));
         entity.setCategory(record.get(fieldMap.get("category")));
         entity.setEmployeeName(record.get(fieldMap.get("employeeName")));
         entity.setEmployeeAddress(record.get(fieldMap.get("employeeAddress")));
