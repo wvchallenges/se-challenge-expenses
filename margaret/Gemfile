@@ -19,10 +19,8 @@ gem 'awesome_print'
 # VIEWS
 gem 'jquery-rails'
 gem 'haml'
-gem 'foundation-rails'
-gem 'foundation_rails_helper'
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'coffee-rails', '~> 4.1.0'
-gem 'foundation-icons-sass-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
