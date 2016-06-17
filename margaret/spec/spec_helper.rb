@@ -1,7 +1,3 @@
-require 'simplecov'
-SimpleCov.start
-
-require 'auth_request_methods'
 require 'chewy/rspec'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -29,5 +25,4 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.include FactoryGirl::Syntax::Methods
 end
