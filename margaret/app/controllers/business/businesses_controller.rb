@@ -16,7 +16,7 @@ class Business::BusinessesController < ApplicationController
   end
 
   def show
-    @business = Business::Business.find_by(id: params[:id])
+    @business = Business::Business.includes(:reports, :report_entries).find_by(id: params[:id])
     if @business.blank?
       # flash error and return to index
       flash[:danger] = "Can not find business"

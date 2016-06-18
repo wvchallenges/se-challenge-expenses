@@ -1,2 +1,8 @@
-.row
-  - #TODO make a row function that just builds these column pieces automatically so I don't have to type it each time
+= row do
+  .business-title
+    %h4= "#{@business.name}"
+    .business-address
+      = @business.address
+
+= row do
+  %strong= "#{@business.reports.count} Reports with #{@business.report_entries.count} Entries"
