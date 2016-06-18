@@ -6,3 +6,8 @@
 
 = row do
   %strong= "#{@business.reports.count} Reports with #{@business.report_entries.count} Entries"
+
+= row do
+  = form_for(@upload_service, as: :upload_service, method: :post, url: upload_business_business_path(@business), html: { class: 'form-inline' } ) do |f|
+    .btn.btn-default.btn-file
+      = f.file_field :csv, accept: '.csv'

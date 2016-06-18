@@ -22,6 +22,12 @@ class Business::BusinessesController < ApplicationController
       flash[:danger] = "Can not find business"
       redirect_to business_businesses_path and return
     end
+
+    @upload_service = Services::CsvUploadService.new(business: @business)
+  end
+
+  def upload
+    @upload_service = Services::CsvUploadService.new(business: Business::Business.find_by(id: params[:id]))
   end
 
   protected
