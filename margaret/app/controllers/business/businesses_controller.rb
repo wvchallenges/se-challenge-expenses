@@ -27,7 +27,13 @@ class Business::BusinessesController < ApplicationController
   end
 
   def upload
-    @upload_service = Services::CsvUploadService.new(business: Business::Business.find_by(id: params[:id]))
+    @upload_service = Services::CsvUploadService.new({business: Business::Business.find_by(id: params[:id])}.merge(upload_csv_params))
+
+    if @upload_service.process
+      # some continuation
+    else
+      # render errors - display on page
+    end
   end
 
   protected
@@ -42,5 +48,10 @@ class Business::BusinessesController < ApplicationController
 
     def business_params
       params.require(:business).permit(:name, :address)
+    end
+
+    def upload_csv_params
+      binding.pry
+      params.require(:upload_service).permit(:csv)
     end
 end
