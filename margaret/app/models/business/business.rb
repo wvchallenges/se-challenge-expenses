@@ -6,4 +6,5 @@ class Business::Business < ActiveRecord::Base
   has_many :report_entries, class_name: "Business::ReportEntry", foreign_key: :business_id
 
   validates :name, :address, presence: true
+  validates :name, uniqueness: true
 end

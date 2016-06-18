@@ -1,0 +1,24 @@
+- if @business.errors.any?
+  .row
+    .alert.alert-danger
+      %ul
+        - @business.errors.each do |field, msg|
+          = "#{field.capitalize} #{msg}"
+
+= row do
+  %h4 All Businesses
+
+= row(row_class: 'row control-buttons') do
+  = form_for @business, as: :business, method: :post, url: business_businesses_path, html: {class: 'form-inline'} do |f|
+    = f.text_field :name, placeholder: 'Name', label: false, class: 'form-control'
+    = f.text_field :address, placeholder: 'Address', label: false, class: 'form-control'
+    %button.btn.btn-primary.form-control{type: 'submit'} Add new 
+
+= row do
+  %ul.list-group
+    - @businesses.each do |business|
+      %li.list-group-item
+        - # TODO link to busineses#show page
+        = link_to business.name, business_business_path(business)
+        %span.label.label-default.label-pill.pull-right
+          = "#{business.reports.count} reports with #{business.report_entries.count} entries"
