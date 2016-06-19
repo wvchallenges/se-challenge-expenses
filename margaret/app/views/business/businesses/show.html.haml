@@ -1,4 +1,9 @@
 = row do
+  %ol.breadcrumb
+    %li
+      %a{href: business_businesses_path} All Businesses
+
+= row do
   .business-title
     %h4= "#{@business.name}"
     .business-address
@@ -11,3 +16,29 @@
   = form_for(@upload_service, as: :upload_service, method: :post, url: upload_business_business_path(@business), html: { class: 'form-inline' } ) do |f|
     = f.file_field :csv, accept: '.csv', class: 'form-control'
     %button.btn.btn-primary.form-control{type: 'submit'} Upload
+
+.reports-box
+  - if @business.reports.any?
+    - @business.reports.order('created_at desc').each do |report|
+      = row(col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+        .panel.panel-default
+          .panel-heading
+            %a{href: "#report_#{report.id}", :"data-toggle" => "collapse"}
+              = "Uploaded on #{ftime(report.created_at)}"
+          %div.collapse.panel-collapse{id: "report_#{report.id}"}
+            .panel-body
+              %table.table.table-striped
+                %thead
+                  %th Date 
+                  %th Category
+                  %th Employee Name
+                  %th Address
+                  %th Description
+                  %th Pre-tax Amount
+                  %th Tax Name
+                  %th Tax Amount
+                %tbody
+                  = render partial:'report_entry', collection: report.entries
+  - else
+    .reports-cta
+      %p No reports for this business. Upload above!

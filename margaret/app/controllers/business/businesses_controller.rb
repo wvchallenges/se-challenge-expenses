@@ -1,5 +1,7 @@
 class Business::BusinessesController < ApplicationController
 
+  before_action :lookup_business, except: [:index, :create]
+
   def index
     @businesses = Business::Business.all.order("#{sort_field} #{sort_order}")
     @business = Business::Business.new
@@ -16,7 +18,6 @@ class Business::BusinessesController < ApplicationController
   end
 
   def show
-    @business = Business::Business.includes(:reports, :report_entries).find_by(id: params[:id])
     if @business.blank?
       # flash error and return to index
       flash[:danger] = "Can not find business"
@@ -27,16 +28,20 @@ class Business::BusinessesController < ApplicationController
   end
 
   def upload
-    @upload_service = Services::CsvUploadService.new({business: Business::Business.find_by(id: params[:id])}.merge(upload_csv_params))
+    @upload_service = Services::CsvUploadService.new({business: @business}.merge(upload_csv_params))
 
     if @upload_service.process
-      # some continuation
+      redirect_to business_business_path(@business)
     else
-      # render errors - display on page
+      render action: :show
     end
   end
 
   protected
+
+    def lookup_business
+      @business = Business::Business.includes(:reports, :report_entries).find_by(id: params[:id])
+    end
 
     def sort_field
       %w(name created_at updated_at).include?(params[:sort_field]) ? params[:sort_field] : 'updated_at'
@@ -51,7 +56,6 @@ class Business::BusinessesController < ApplicationController
     end
 
     def upload_csv_params
-      binding.pry
       params.require(:upload_service).permit(:csv)
     end
 end

@@ -6,4 +6,17 @@ module ApplicationHelper
       end
     end
   end
+
+  def ftime(time)
+    time.try(:strftime, '%B %d, %Y at %H:%M:%S')
+  end
+
+  def number_to_amount(number)
+    # converts cents to an amount in dollars
+    "$%.2f" % (number.to_i/100.0)
+  end
+
+  def fdate(date)
+    date.try(:strftime, '%m/%d/%Y')
+  end
 end
