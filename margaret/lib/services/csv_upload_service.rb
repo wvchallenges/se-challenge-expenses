@@ -1,15 +1,13 @@
 require 'csv'
 
 class Services::CsvUploadService < Services::BaseService
-  attr_accessor :business, :csv, :report
+  attr_accessor :business, :csv, :report, :file_contents
 
   def process
     result = true
-    file_contents = CSV.read(csv.path)
-    file_contents.shift # throw away the headers
 
     ActiveRecord::Base.transaction do
-      result = create_report && create_entries(file_contents)
+      result = read_csv_file && create_report && create_entries
 
       unless result
         raise ActiveRecord::Rollback
@@ -21,15 +19,28 @@ class Services::CsvUploadService < Services::BaseService
 
   protected
 
-    def create_report
-      self.report = Business::Report.construct(business: business)
-      self.copy_errors_from(report) unless report.save
+    def read_csv_file
+      if csv.blank?
+        self.errors.add(:csv, "please upload .csv file")
+      else
+        contents = CSV.read(csv.path)
+        contents.shift
+        self.file_contents = contents
+      end
+
       self.errors.blank?
     end
 
-    def create_entries(contents)
+    def create_report
+      self.report = Business::Report.construct(business: business)
+      self.copy_errors_from(report) unless report.save
+
+      self.errors.blank?
+    end
+
+    def create_entries
       result = true
-      csv_to_report_entries(contents).each do |report_entry|
+      csv_to_report_entries.each do |report_entry|
         entry = Business::ReportEntry.construct(report_entry.merge(report: report))
         result &= entry.save
       end
@@ -38,9 +49,9 @@ class Services::CsvUploadService < Services::BaseService
       result
     end
 
-    def csv_to_report_entries(contents)
+    def csv_to_report_entries
       [].tap do |array|
-        contents.each do |contents_line|
+        self.file_contents.each do |contents_line|
           array << Hash[Business::Report.entry_schema.map(&:to_sym).zip(contents_line)]
         end
       end
