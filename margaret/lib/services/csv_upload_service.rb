@@ -30,7 +30,7 @@ class Services::CsvUploadService < Services::BaseService
     def create_entries(contents)
       result = true
       csv_to_report_entries(contents).each do |report_entry|
-        entry = Business::ReportEntry.construct(report_entry.merge(business: business, report: report))
+        entry = Business::ReportEntry.construct(report_entry.merge(report: report))
         result &= entry.save
       end
 
