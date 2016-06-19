@@ -29,6 +29,8 @@ public class EmployeeExpenseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeExpenseController.class);
 
     private static final String CONTENT_TYPE_CSV = "text/csv";
+    private static final String CONTENT_TYPE_OCTET_STREAM = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+    private static final String CSV_SUFFIX = ".csv";
 
     @Inject
     EmployeeExpenseService employeeExpenseService;
@@ -55,7 +57,8 @@ public class EmployeeExpenseController {
         String errorMessage = null;
         String filename = file.getOriginalFilename();
         if (!file.isEmpty()) {
-            if (CONTENT_TYPE_CSV.equals(file.getContentType())) {
+            String contentType = file.getContentType();
+            if (CONTENT_TYPE_CSV.equals(contentType) || (CONTENT_TYPE_OCTET_STREAM.equals(contentType) && filename.endsWith(CSV_SUFFIX))) {
                 try {
                     List<EmployeeExpenseEntity> expenses = employeeExpenseCSVParser.parseCSVToEntities(file.getInputStream());
                     employeeExpenseService.createExpenses(expenses);
