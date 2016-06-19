@@ -1,4 +1,4 @@
-package com.tannerrutgers.sechallenge.application.model;
+package com.tannerrutgers.sechallenge.application.expenses;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 /**
  * Basic model representing a tracked expense
  */
-public class Expense implements Comparable<Expense> {
+class Expense implements Comparable<Expense> {
 
     private LocalDate date;
     private BigDecimal expense;

@@ -1,4 +1,4 @@
-package com.tannerrutgers.sechallenge.application.model.report;
+package com.tannerrutgers.sechallenge.application.common;
 
 import java.util.ArrayList;
 import java.util.List;

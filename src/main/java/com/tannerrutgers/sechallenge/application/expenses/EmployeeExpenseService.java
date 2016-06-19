@@ -1,7 +1,5 @@
-package com.tannerrutgers.sechallenge.application.service;
+package com.tannerrutgers.sechallenge.application.expenses;
 
-import com.tannerrutgers.sechallenge.application.entity.EmployeeExpenseEntity;
-import com.tannerrutgers.sechallenge.application.repository.EmployeeExpenseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +10,7 @@ import java.util.List;
  * Service class for handling EmployeeExpense entities
  */
 @Service
-public class EmployeeExpenseService {
+class EmployeeExpenseService {
 
     @Inject
     private EmployeeExpenseRepository employeeExpenseRepository;

@@ -1,4 +1,4 @@
-package com.tannerrutgers.sechallenge.application.entity;
+package com.tannerrutgers.sechallenge.application.expenses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
  * JPA Entity mapping for employee expense table
  */
 @Entity(name = "EMPLOYEE_EXPENSE")
-public class EmployeeExpenseEntity {
+class EmployeeExpenseEntity {
 
     @Id
     @GeneratedValue

@@ -1,27 +1,21 @@
-package com.tannerrutgers.sechallenge.application.model.report;
+package com.tannerrutgers.sechallenge.application.expenses;
 
-import com.tannerrutgers.sechallenge.application.model.Expense;
+import com.tannerrutgers.sechallenge.application.common.Report;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
- * Concrete Report class for Expenses represented monthly
+ * Concrete Report class for expenses represented monthly
  */
-public class MonthlyExpenseReport extends Report<Expense> {
+class MonthlyExpenseReport extends Report<Expense> {
 
     private static final String TITLE = "Monthly Expense Report";
-    private static final List<String> HEADERS = Arrays.asList("Month", "Total Expenses");
+    private static final List<String> HEADERS = Arrays.asList("Month", "Total expenses");
 
     public MonthlyExpenseReport() {
         super(TITLE, HEADERS);

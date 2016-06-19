@@ -1,4 +1,4 @@
-package com.tannerrutgers.sechallenge.application.entity.converter;
+package com.tannerrutgers.sechallenge.application.config;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

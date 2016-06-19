@@ -1,11 +1,6 @@
-package com.tannerrutgers.sechallenge.application.controller;
+package com.tannerrutgers.sechallenge.application.expenses;
 
-import com.tannerrutgers.sechallenge.application.entity.EmployeeExpenseEntity;
-import com.tannerrutgers.sechallenge.application.model.Expense;
-import com.tannerrutgers.sechallenge.application.model.report.MonthlyExpenseReport;
-import com.tannerrutgers.sechallenge.application.model.report.Report;
-import com.tannerrutgers.sechallenge.application.service.EmployeeExpenseService;
-import com.tannerrutgers.sechallenge.application.util.csvparser.EmployeeExpenseCSVParser;
+import com.tannerrutgers.sechallenge.application.common.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -89,8 +84,8 @@ public class EmployeeExpenseController {
 
     /**
      * Generates a list of Expense model objects from a list of Employee Expense entities
-     * @param employeeExpenses List of employee expense entities from which to generate Expenses
-     * @return List of Expenses
+     * @param employeeExpenses List of employee expense entities from which to generate expenses
+     * @return List of expenses
      */
     private Report<Expense> getMonthlyExpenseReport(List<EmployeeExpenseEntity> employeeExpenses) {
         List<Expense> expenses = new ArrayList<>();
