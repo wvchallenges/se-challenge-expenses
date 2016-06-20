@@ -1,0 +1,23 @@
+= row(col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+  .panel.panel-default
+    .panel-heading
+      - if show_detailed_view
+        = link_to('Detailed View', business_business_report_path(@report, business_id: @business.id), class: 'btn btn-info')
+      %a{href: "#report_#{@report.id}", :"data-toggle" => "collapse"}
+        %button.btn.btn-secondary Quickview
+      %span.label.pull-right
+        = "Uploaded on #{ftime(@report.created_at)}"
+    %div.collapse.panel-collapse{id: "report_#{@report.id}"}
+      .panel-body
+        %table.table.table-striped
+          %thead
+            %th Date 
+            %th Category
+            %th Employee Name
+            %th Address
+            %th Description
+            %th Pre-tax Amount
+            %th Tax Name
+            %th Tax Amount
+          %tbody
+            = render partial: 'shared/report_entry', collection: @report.entries

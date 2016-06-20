@@ -18,7 +18,6 @@
   %ul.list-group
     - @businesses.each do |business|
       %li.list-group-item
-        - # TODO link to busineses#show page
         = link_to business.name, business_business_path(business)
         %span.label.label-default.label-pill.pull-right
           = "#{business.reports.count} reports with #{business.report_entries.count} entries"
