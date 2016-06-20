@@ -8,8 +8,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 # ELASTICSEARCH
-gem 'chewy', '~> 0.8.3'
-gem 'elasticsearch', '>= 1.0.0'
+gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 
 # DATA GENERATIONS
 gem 'faker', '~> 1.6.3'
@@ -23,6 +23,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'react-rails'
 
 group :test do
   gem 'shoulda-matchers'

@@ -11,12 +11,12 @@ class Business::Report < ActiveRecord::Base
       entries.select(&filter).each do |entry|
         csv << [
           entry.date.try(:strftime, "%m/%d/%Y"),
-          "#{entry.category}",
+          entry.category,
           entry.employee_name,
-          "#{entry.employee_address}",
-          "#{entry.expense_description}",
+          entry.employee_address,
+          entry.expense_description,
           ("%.2f" % (entry.amount_before_tax / 100.00)).to_s,
-          "#{entry.tax_name}",
+          entry.tax_name,
           ("%.2f" % (entry.tax_amount / 100.00)).to_s,
         ]
       end

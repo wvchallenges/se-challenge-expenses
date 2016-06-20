@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/elasticsearch/elasticsearch-rails.git
+  revision: ceef80eafce6f3cf5513496c2ac7bca6cb5b45f4
+  specs:
+    elasticsearch-model (0.1.9)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,6 +50,10 @@ GEM
     autoprefixer-rails (6.3.6.2)
       execjs
     awesome_print (1.7.0)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -51,9 +65,6 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.5)
-    chewy (0.8.4)
-      activesupport (>= 3.2)
-      elasticsearch (>= 1.0.0)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -63,6 +74,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
+    connection_pool (2.2.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
@@ -106,6 +118,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.7)
       tilt
+    hashie (3.4.4)
     i18n (0.7.0)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -181,6 +194,13 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    react-rails (1.7.2)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      rails (>= 3.2)
+      tilt
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -250,10 +270,10 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.3.6)
-  chewy (~> 0.8.3)
   coffee-rails (~> 4.1.0)
   database_cleaner
-  elasticsearch (>= 1.0.0)
+  elasticsearch-model!
+  elasticsearch-rails!
   factory_girl_rails
   faker (~> 1.6.3)
   guard-rspec
@@ -264,6 +284,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   rails (= 4.2.6)
+  react-rails
   rspec
   rspec-rails
   sass-rails (~> 5.0)
