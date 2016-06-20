@@ -1,13 +1,12 @@
 class Business::ReportEntry < ActiveRecord::Base
   belongs_to :report, class_name: "Business::Report", foreign_key: :business_report_id
-  belongs_to :business, class_name: "Business::Business", foreign_key: :business_id # cached in model
+  belongs_to :business, class_name: "Business::Business", foreign_key: :business_id # cached in model for faster lookup
 
-  # validations if required
-  validates :date, :category, :employee_name, :employee_address, :expense_description, :amount_before_tax, :tax_name, :tax_amount, presence: true
+  validates :business_id, :business_report_id, :date, :category, :employee_name, :employee_address, :expense_description, :amount_before_tax, :tax_name, :tax_amount, presence: true
 
   class << self
     def convert_amount_to_cents(amount)
-      amount.gsub(/[,\.]/, '').to_i
+      amount.try(:gsub, /[,\.]/, '').to_i
     end
 
     def parse_date(date)

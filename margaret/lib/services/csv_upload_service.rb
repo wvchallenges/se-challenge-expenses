@@ -42,10 +42,12 @@ class Services::CsvUploadService < Services::BaseService
       result = true
       csv_to_report_entries.each do |report_entry|
         entry = Business::ReportEntry.construct(report_entry.merge(report: report))
-        result &= entry.save
+
+        unless result &= entry.save
+          self.errors.add(:csv, "There was an issue in parsing your upload. It may be in line: #{report_entry.values}")
+        end
       end
 
-      # TODO - reporting on what went wrong with the parsing
       result
     end
 
