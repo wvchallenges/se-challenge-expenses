@@ -77,7 +77,7 @@ describe Services::CsvUploadService do
 
       it "adds the error" do
         expect(subject.process).to be_falsey
-        expect(subject.errors[:csv]).to eq(["There was an issue in parsing your upload. It may be in line: [\"7/27/2009\", \"Music & Shoes\", \"Janis Padberg I\", \"3010 Bennett Skyway, North Glennie, South Carolina 58979-0914\", nil, nil, nil, nil]"])
+        expect(subject.errors[:csv]).to eq(["There was an issue in parsing your upload. It may be in line: 7/27/2009,Music & Shoes,Janis Padberg I,3010 Bennett Skyway, North Glennie, South Carolina 58979-0914"])
       end
 
       it { expect{subject.process}.to_not change{sam_james.reload.reports.count} }
@@ -139,7 +139,7 @@ describe Services::CsvUploadService do
 
         it "adds the errors" do
           expect(subject.send("create_entries")).to be_falsey
-          expect(subject.errors[:csv]).to eq(["There was an issue in parsing your upload. It may be in line: [\"7/27/2009\", \"Music & Shoes\", \"Janis Padberg I\", \"3010 Bennett Skyway, North Glennie, South Carolina 58979-0914\", \"approach agriculturist\", \"73.00\", nil, nil]"])
+          expect(subject.errors[:csv]).to eq(["There was an issue in parsing your upload. It may be in line: 7/27/2009,Music & Shoes,Janis Padberg I,3010 Bennett Skyway, North Glennie, South Carolina 58979-0914,approach agriculturist,73.00"])
         end
 
       end

@@ -1,5 +1,5 @@
 - if @business.errors.any?
-  .row
+  = row do
     .alert.alert-danger
       %ul
         - @business.errors.each do |field, msg|
