@@ -1,1 +1,1 @@
-Chewy.logger = Logger.new(STDOUT)
+Chewy.logger = Rails.logger

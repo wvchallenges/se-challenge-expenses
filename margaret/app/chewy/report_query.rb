@@ -1,11 +1,12 @@
 class ReportQuery
   class << self
-    def search(business_id:, query: [])
+    def search(business_id: nil, query:)
       index_query = [filter_by_business(business_id), search_query(query)].compact.reduce(:merge)
       [].tap { |array|
         index_query.to_a.each do |result|
           search_result = result._data
           array << OpenStruct.new(
+            # return all info for purposes of displaying
             id: search_result["_source"]["id"],
             report_id: search_result["_source"]["business_report_id"],
             business_id: search_result["_source"]["business_id"],
@@ -20,12 +21,13 @@ class ReportQuery
             score: search_result["_score"]
           )
         end
-      }
+      }.sort_by(&:score)
     end
 
     protected
 
       def filter_by_business(specified_business_id)
+        return nil if specified_business_id.blank?
         index.filter { business_id == specified_business_id }
       end
 

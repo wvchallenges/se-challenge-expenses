@@ -19,6 +19,7 @@ class ReportEntryIndex < Chewy::Index
   }
 
   define_type Business::ReportEntry do
+    # Mostly for purposes of displaying without hitting the db - can just return all info as a struct, yet still accessible through non-indexed searching
     field :id, type: 'long', value: -> { id }
     field :business_id, type: 'long', value: -> { business_id }
     field :business_report_id, type: 'long', value: -> { business_report_id }

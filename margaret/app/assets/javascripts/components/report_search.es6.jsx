@@ -11,6 +11,7 @@ class ReportSearch extends SearchComponent {
     if(searchQuery.length < 4) {
       this.setState({results: []});
     } else {
+      // scoping report search by business
       this.apiConnector.end(
         superagent.get(`/api/businesses/${this.props.business_id}/search_reports`).query(`query=${searchQuery}`),
         this.setResults.bind(this)
@@ -18,6 +19,7 @@ class ReportSearch extends SearchComponent {
     }
   }
 
+  // Return any reports for this business matching some specified info
   results() {
     let searchResults = this.state.results.map(
       entry => <li className={"list-group-item"}><a key={entry.id} href={entry.link_to_report}>{entry.date}, {entry.employee_name}, ${entry.amount_before_tax}, {entry.category}, ...</a></li>

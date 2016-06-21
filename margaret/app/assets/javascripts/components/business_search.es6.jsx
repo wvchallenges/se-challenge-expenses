@@ -14,6 +14,7 @@ class BusinessSearch extends SearchComponent {
     }
   }
 
+  // return a list of matching businesses - link to their #show page
   results() {
     let searchResults = this.state.results.map(
       business => <li className={"list-group-item"}><a key={business.id} href={business.link_to_business}>{business.name}</a></li>
