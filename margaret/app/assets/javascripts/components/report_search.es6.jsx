@@ -1,14 +1,18 @@
-class BusinessSearch extends SearchComponent {
+class ReportSearch extends SearchComponent {
+  constructor(props) {
+    super(props);
+  }
+
   handleQueryChange(e) {
     let searchQuery = e.target.value;
     this.setState({queryInput: searchQuery});
 
-    // only perform after more than 3 characters entered
-    if(searchQuery.length <= 3) {
+    // only perform after 4 characters entered
+    if(searchQuery.length < 4) {
       this.setState({results: []});
     } else {
       this.apiConnector.end(
-        superagent.get('/api/businesses/search').query(`query=${searchQuery}`),
+        superagent.get(`/api/businesses/${this.props.business_id}/search_reports`).query(`query=${searchQuery}`),
         this.setResults.bind(this)
       );
     }
@@ -16,17 +20,17 @@ class BusinessSearch extends SearchComponent {
 
   results() {
     let searchResults = this.state.results.map(
-      business => <li className={"list-group-item"}><a key={business.id} href={business.link_to_business}>{business.name}</a></li>
+      entry => <li className={"list-group-item"}><a key={entry.id} href={entry.link_to_report}>{entry.date}, {entry.employee_name}, ${entry.amount_before_tax}, {entry.category}, ...</a></li>
     );
-
+    
     return((searchResults.length > 0) ? <ul className={"list-group"}>{searchResults}</ul> : <ul className={"list-group"}>No results</ul>);
   }
 
   render () {
-    return (
+    return(
       <div>
         <div className={"input-group input-group-btn"}>
-          <input type="text" className={"form-control"} placeholder="Search by business name or address..." value={this.state.queryInput} onChange={this.handleQueryChange.bind(this)} />
+          <input type="text" className={"form-control"} placeholder="Search for data..." value={this.state.queryInput} onChange={this.handleQueryChange.bind(this)} />
         </div>
         <div className={"row control-buttons"}>
           {this.results()}

@@ -6,6 +6,7 @@ class ReportQuery
         index_query.to_a.each do |result|
           search_result = result._data
           array << OpenStruct.new(
+            id: search_result["_source"]["id"],
             report_id: search_result["_source"]["business_report_id"],
             business_id: search_result["_source"]["business_id"],
             category: search_result["_source"]["category"],

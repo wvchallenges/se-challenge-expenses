@@ -19,10 +19,13 @@
         - @upload_service.errors.each do |field, msg|
           = "Error with #{field}: #{msg}"
 
-= row do
-  = form_for(@upload_service, as: :upload_service, method: :post, url: upload_business_business_path(@business), html: { class: 'form-inline' } ) do |f|
-    = f.file_field :csv, accept: '.csv', class: 'form-control'
-    %button.btn.btn-primary.form-control{type: 'submit'} Upload
+= row(col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+  .col-lg-6.col-md-12.col-xs-12
+    = form_for(@upload_service, as: :upload_service, method: :post, url: upload_business_business_path(@business), html: { class: 'form-inline' } ) do |f|
+      = f.file_field :csv, accept: '.csv', class: 'form-control'
+      %button.btn.btn-primary.form-control{type: 'submit'} Upload
+  .col-lg-6.col-md-12.col-xs-12
+    = react_component('ReportSearch', business_id: @business.id)
 
 .reports-box
   - if @business.reports.any?

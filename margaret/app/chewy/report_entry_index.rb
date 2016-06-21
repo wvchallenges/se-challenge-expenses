@@ -19,6 +19,7 @@ class ReportEntryIndex < Chewy::Index
   }
 
   define_type Business::ReportEntry do
+    field :id, type: 'long', value: -> { id }
     field :business_id, type: 'long', value: -> { business_id }
     field :business_report_id, type: 'long', value: -> { business_report_id }
     field :category, index: 'analyzed', analyzer: 'ngram'
