@@ -12,4 +12,6 @@ This project also runs on ElasticSearch and was developed using ElasticSearch 2.
 
 I have created some seed data which can get started, as well as initailize the ElasticSearch indices. Run `$ rake db:seed` to get this started.
 
+To generate any .csv files to test this out with, you can run `$ rake margaret:csv:generate_fake` to generate a new expense report.
+
 Finally run `$ rails s` to begin the server, and navigate to `localhost:3000` (or whatever your local may be set to in your hosts file) to begin.
