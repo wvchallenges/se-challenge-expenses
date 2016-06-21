@@ -1,0 +1,6 @@
+development:
+  host: 'localhost:9200'
+  prefix: 'dev'
+test:
+  host: 'localhost:9250'
+  prefix: 'test'

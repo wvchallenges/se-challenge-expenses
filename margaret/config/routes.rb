@@ -14,4 +14,12 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    resources :businesses, only: [] do
+      collection do
+        get :search
+      end
+    end
+  end
 end

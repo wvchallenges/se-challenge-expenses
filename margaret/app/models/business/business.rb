@@ -1,8 +1,4 @@
-require 'elasticsearch/model'
-
 class Business::Business < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
 
   self.table_name = 'businesses'
 
@@ -13,5 +9,5 @@ class Business::Business < ActiveRecord::Base
   validates :name, :address, presence: true
   validates :name, uniqueness: true
 
-
+  update_index('business#business') { self }
 end

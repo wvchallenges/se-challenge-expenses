@@ -8,8 +8,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 # ELASTICSEARCH
-gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
-gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'chewy', '~> 0.8'
+gem 'responders', '~> 2.0'
 
 # DATA GENERATIONS
 gem 'faker', '~> 1.6.3'

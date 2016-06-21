@@ -1,0 +1,1 @@
+Chewy.logger = Logger.new(STDOUT)

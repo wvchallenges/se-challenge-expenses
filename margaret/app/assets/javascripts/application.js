@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require superagent-1.2.0.min
 //= require react
 //= require react_ujs
 //= require components
