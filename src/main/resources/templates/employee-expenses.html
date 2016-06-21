@@ -18,6 +18,7 @@
                 <input id="upload-file-info" style="width:300px;" type="text" class="form-control" readonly="readonly"/>
             </div>
             <button type="submit" class="btn btn-primary">Upload</button>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
         <div th:if="${errorMessage}">
             <br/>

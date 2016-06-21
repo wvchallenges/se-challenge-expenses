@@ -38,6 +38,21 @@
                 <li role="presentation" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a th:href="@{/}" href="index.html">Home</a></li>
                 <li role="presentation" th:classappend="${#httpServletRequest.getRequestURI() == '/employee-expenses' ? 'active':''}"><a th:href="@{/employee-expenses}" href="employee-expenses.html">Upload</a></li>
             </ul>
+            <ul th:if="${currentUser}" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a th:text="${currentUser.username}" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Sign Out"/>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul th:unless="${currentUser}" class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/login}" href="/login">Login</a></li>
+            </ul>
         </div>
     </div>
 </nav>

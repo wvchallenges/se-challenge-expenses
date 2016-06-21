@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +41,7 @@ public class EmployeeExpenseController {
 
 
     @RequestMapping(method = RequestMethod.GET, value="/employee-expenses")
+    @PreAuthorize("isAuthenticated()")
     public String loadPage() {
         return "employee-expenses";
     }
@@ -50,6 +53,7 @@ public class EmployeeExpenseController {
      * @return View to refresh or redirect
      */
     @RequestMapping(method = RequestMethod.POST, value = "/employee-expenses", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public String uploadEmployeeExpensesFile(@RequestParam("file") MultipartFile file,
                                              RedirectAttributes redirectAttributes) {
         LOGGER.info("uploadEmployeeExpensesFile()");
