@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorators/primary-layout">
+
+<div layout:fragment="content">
+    <div class="page-header">
+        <h1>Upload employee expenses</h1>
+    </div>
+
+    <!-- Upload new file form -->
+    <div th:unless="${report}">
+        <form role="form" class="form-inline" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="btn btn-default" for="ee-file-selector">
+                    <input id="ee-file-selector" type="file" name="file" style="display:none;" onchange="$('#upload-file-info').attr('placeholder',$(this).val().split('\\').pop());"/>
+                    Choose File
+                </label>
+                <input id="upload-file-info" style="width:300px;" type="text" class="form-control" readonly="readonly"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+        <div th:if="${errorMessage}">
+            <br/>
+            <div class="alert alert-danger">
+                <span th:utext="${errorMessage}"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggleable message -->
+    <div th:if="${message}">
+        <br/>
+        <div class="alert alert-success">
+            <span th:utext="${message}"/>
+        </div>
+    </div>
+
+    <!-- Monthly expenses from upload -->
+    <div th:if="${report}">
+        <div th:include="report"/>
+        <form th:action="@{/employee-expenses}" method="get">
+            <button class="btn btn-primary" type="submit">Upload New</button>
+        </form>
+    </div>
+</div>
+</html>
