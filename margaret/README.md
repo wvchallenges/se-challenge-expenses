@@ -7,3 +7,9 @@ Application was built using ruby 2.3.0p0, so check ruby version using `ruby -v`,
 Ensure you have rails by running `$ rails -v`. This is built on _rails 4.2.6_ so if uninstalled, run `gem install rails -v 4.2.6`.
 
 Run `$ rake db:create` in order to build the database, after ensuring that you have installed PostgreSQL and it is running properly. See database.yml to configure db settings properly.
+
+This project also runs on ElasticSearch and was developed using ElasticSearch 2.3.3. See elasticsearch website for information on installation. In order to run locally, ElasticSearch must be running at `localhost:9200`.
+
+I have created some seed data which can get started, as well as initailize the ElasticSearch indices. Run `$ rake db:seed` to get this started.
+
+Finally run `$ rails s` to begin the server, and navigate to `localhost:3000` (or whatever your local may be set to in your hosts file) to begin.
