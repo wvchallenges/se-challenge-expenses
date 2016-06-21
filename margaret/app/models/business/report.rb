@@ -5,6 +5,8 @@ class Business::Report < ActiveRecord::Base
 
   validates :business_id, presence: true
 
+  update_index('report_entry#report_entry') { entries }
+
   def to_csv(options: {}, filter: lambda {|x| x})
     CSV.generate(options) do |csv|
       csv << self.class.input_schema

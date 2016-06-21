@@ -4,6 +4,8 @@ class Business::ReportEntry < ActiveRecord::Base
 
   validates :business_id, :business_report_id, :date, :category, :employee_name, :employee_address, :expense_description, :amount_before_tax, :tax_name, :tax_amount, presence: true
 
+  update_index('report_entry#report_entry') { self }
+
   class << self
     def convert_amount_to_cents(amount)
       amount.try(:gsub, /[,\.]/, '').to_i
