@@ -3,7 +3,7 @@ class Business::BusinessesController < ApplicationController
   before_action :lookup_business, except: [:index, :create]
 
   def index
-    @businesses = Business::Business.all.order("#{sort_field} #{sort_order}")
+    @businesses = Business::Business.all
     @business = Business::Business.new
   end
 
@@ -12,7 +12,7 @@ class Business::BusinessesController < ApplicationController
     if @business.save
       redirect_to business_business_path(@business)
     else
-      @businesses = Business::Business.all.order("#{sort_field} #{sort_order}")
+      @businesses = Business::Business.all
       render action: :index
     end
   end
@@ -41,14 +41,6 @@ class Business::BusinessesController < ApplicationController
 
     def lookup_business
       @business = Business::Business.includes(:reports, :report_entries).find_by(id: params[:id])
-    end
-
-    def sort_field
-      %w(name created_at updated_at).include?(params[:sort_field]) ? params[:sort_field] : 'updated_at'
-    end
-
-    def sort_order
-      %w(asc desc).include?(params[:sort_order]) ? params[:sort_order] : 'asc'
     end
 
     def business_params
