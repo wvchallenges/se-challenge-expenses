@@ -18,7 +18,7 @@ describe ReportQuery do
     BusinessIndex.purge!
     BusinessIndex.import!
     ReportEntryIndex.purge!
-    ReportEntryIndex.import
+    ReportEntryIndex.import!
   end
 
   describe 'searching by employee name' do
