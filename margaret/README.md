@@ -1,4 +1,4 @@
-# Wave Se-Challenge
+# Wave Se-Challenge: Margaret
 
 ## Installation
 
