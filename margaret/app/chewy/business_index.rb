@@ -22,5 +22,9 @@ class BusinessIndex < Chewy::Index
     field :name,    index: 'analyzed', analyzer: 'ngram'
     field :address, index: 'analyzed', analyzer: 'ngram'
     field :business_id, type: 'long', value: -> { id }
+    # for logstash
+    field :reports_count, type: 'long', value: -> { reports.count }
+    field :report_entries_count, type: 'long', value: -> { report_entries.count }
+    field :created_at, type: 'date', include_in_all: false, value: -> { created_at }
   end
 end

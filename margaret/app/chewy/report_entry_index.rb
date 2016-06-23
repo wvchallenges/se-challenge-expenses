@@ -31,5 +31,7 @@ class ReportEntryIndex < Chewy::Index
     field :amount_before_tax, type: 'long', value: -> { amount_before_tax }
     field :tax_name, index: 'not_analyzed'
     field :tax_amount, type: 'long', value: -> { tax_amount }
+    # Date fields for logstash
+    field :created_at, type: 'date', include_in_all: false, value: -> { created_at }
   end
 end

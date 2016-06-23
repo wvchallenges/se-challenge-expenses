@@ -38,4 +38,15 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.logstasher.enabled = true
+
+  config.logstasher.log_controller_parameters = true
+  config.logstasher.controller_enabled = true
+  config.logstasher.record_enabled = true
+  config.logstasher.view_enabled = true
+
+  # Still write log output
+  config.logstasher.suppress_app_log = false
+  config.logstasher.backtrace = true
 end

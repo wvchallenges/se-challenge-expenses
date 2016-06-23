@@ -49,6 +49,10 @@ test:
   prefix: 'test'
 ```
 
+### Logstash (Optional)
+
+If you would like to hook in logstash, start it with `$ logstash -f config/logstash.conf agent` to pipe the rails logs to ElasticSearch.
+
 ### Seeding
 
 I have created some seed data which can get started, as well as initailize the ElasticSearch indices. Run `$ rake db:seed` to get this started.
