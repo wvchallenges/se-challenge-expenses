@@ -51,7 +51,7 @@ test:
 
 ### Logstash (Optional)
 
-If you would like to hook in logstash, start it with `$ logstash -f config/logstash.conf agent` to pipe the rails logs to ElasticSearch.
+If you would like to hook in logstash, start it with `$ logstash -f config/logstash.conf agent` to pipe the rails logs to ElasticSearch. **NOTE** change the line pointing to the output directory to be wherever you have placed the project.
 
 ### Seeding
 
