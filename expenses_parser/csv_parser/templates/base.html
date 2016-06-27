@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+{% load staticfiles %}
+
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" href="{% static 'csv_parser/style.css' %}" />
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+
+  <body>
+
+    <div class="page header">
+      <h1>Employee Expenses Submission Form</h1>
+    </div>
+    
+    {% if errors %}
+      <hr />
+      <p>Error{{errors|pluralize}}: </p>
+      <ol>
+        {% for error in errors %}
+          <li>{{ error }} </li>
+        {% endfor %}
+      </ol>
+      <hr />
+    {% endif %}
+
+    {% block content %} {% endblock %}
+    {% block footer %} {% endblock %}
+
+  </body>
+</html>

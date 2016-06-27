@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %} Upload Your Expense Report! {% endblock %}
+
+{% block content %}
+  <p> 
+    Submit your expenses in csv format with a header line, data in each column, and the following fields:
+  </p>
+
+  <p> 
+    date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+  </p>
+
+  <form enctype="multipart/form-data" method="POST" action="">
+    {% csrf_token %}
+    <div class="csv form">{{ csv_form.as_p }}</div>
+    <div class="centered button">
+       <input type="submit" value="Submit">
+    </div>
+  </form>
+{% endblock %}
+~              
