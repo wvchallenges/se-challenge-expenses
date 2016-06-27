@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} CSV Upload Complete! {% endblock %}
+
+{% block content %}
+  {% if monthly_expenses %}
+    <h3 class="centered content"> Uploaded Monthly Expenses </h3>
+    <table class="center">
+      <thead>
+        <tr>
+          <td> Month </td>
+          <td> Total Expenses </td>
+        </tr>
+      </thead>
+      <tbody>
+      {% for month, total in monthly_expenses.items %}
+        <tr>
+          <td> {{ month }} </td>
+          <td> {{ total }} </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  <a href="/" class="centered content"> Return to Home </a>
+{% endblock %}
+~              
