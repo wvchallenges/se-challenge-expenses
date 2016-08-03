@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 
-from .views import UploadView
+from .views import UploadView, ExpenseLiseView, NukeView
+
+admin.autodiscover()
 
 urlpatterns = [
+    url(r'^expenses/$', ExpenseLiseView.as_view(), name='expense-list'),
     url(r'^upload/$', UploadView.as_view(), name='upload'),
+    url(r'^clear/$', NukeView.as_view(), name='clear'),
     url(r'^admin/', admin.site.urls),
+    url(r'^.*$', RedirectView.as_view(pattern_name='upload', permanent=False)),
 ]
