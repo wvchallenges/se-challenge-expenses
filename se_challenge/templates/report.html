@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load aggr %}
 
+{% block extra_tabs %}
+<li><a href="{% url 'upload' %}">Upload</a></li>
+{% endblock %}
+
 {% block content %}
 
     <div class="row">
