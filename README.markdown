@@ -1,5 +1,7 @@
 # Wave Software Development Challenge by Sonu Kapoor
+
 This application uses the following technologies to complete the challenge:
+
 1. Angular JS version 1.5.8
 2. BootStrap version 3.3.7
 3. Node.js version 6.2.2
