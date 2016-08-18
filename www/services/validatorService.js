@@ -10,6 +10,32 @@
         {
             var validatorService = {};
 
+            validatorService.areColumnsValid = function (item)
+            {
+                // the following columns must exist in the file. 
+                var columns = ["date", "category", "employee name", "employee address", "expense description", "pre-tax amount", "tax name", "tax amount"];
+                var nonExistingColumns = [];
+                for (var c in columns)
+                {
+                    if (!item.hasOwnProperty(columns[c]))
+                    {
+                        nonExistingColumns.push(columns[c]);
+                    }
+                }    
+                
+                var errors = [];
+                for (var nec in nonExistingColumns)
+                {
+                    errors.push("The column " + nonExistingColumns[nec] + " is missing from your file.");
+                }    
+                var validation = {
+                    rowIndex: -1,
+                    isFileValid: errors.length == 0,
+                    errors: errors
+                };
+                return validation;
+            }    
+
             // function to validate the data in the row. 
             // We will validate the date, pre-tax amount and tax amount        
             validatorService.isValidRow = function (item, rowIndex)
