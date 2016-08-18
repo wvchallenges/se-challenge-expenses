@@ -11,5 +11,5 @@ This application uses the following technologies to complete the challenge:
 1. Clone or download the repository into your system. 
 2. Install node.js using npm for mac or using the binary packages for linux from the nodejs.org website. 
 3. Open Terminal and navigate to the folder where you have cloned or downloaded the repository
-4. Start node.js using node server.js
+4. Start node.js by typing 'node server.js' (without quotes) into the terminal. 
 5. Open finder, navigate again to the project folder and double click the index.html file inside the www folder to open it in your browser. 
