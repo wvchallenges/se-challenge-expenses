@@ -1,0 +1,22 @@
+<div class="main">
+  <input class="input" type="file" file-select="parseFile(file)" />
+  <p class="message" ng-show="render.result">{{expenseItems.length}} records saved</p>
+  <p class="message" ng-show="render.failed">Something went wrong :(</p>
+
+  <div class="result" ng-show="render.result">
+    <table>
+      <tr>
+        <th></th>
+        <th>Pre Tax</th>
+        <th>Tax</th>
+        <th>After Tax</th>
+      </tr>
+      <tr ng-repeat="item in expensesByMonth">
+        <td>{{item.month}} {{item.year}}</td>
+        <td>{{item.preTax.toFixed(2)}}</td>
+        <td>{{item.tax.toFixed(2)}}</td>
+        <td>{{item.afterTax.toFixed(2)}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

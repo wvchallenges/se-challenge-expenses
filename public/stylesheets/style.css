@@ -1,0 +1,23 @@
+.main {
+  width: 80%;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.input {
+  width: 300px;
+  margin: auto;
+  font-weight: 100;
+  font-size: 20px;
+}
+
+.message {
+  width: 300px;
+  margin: auto;
+  font-weight: 100;
+}
+
+table {
+  width: 500px;
+  margin: 30px auto;
+}
