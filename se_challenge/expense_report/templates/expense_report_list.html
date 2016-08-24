@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% block title %}
+    Expense Report List
+{% endblock %}
+{% block content %}
+    <form class="form-horizontal" action='{% url "empty-expense-list" %}' method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Empty Expense List</button>
+    </form>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">Expense Table</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Expense Description</th>
+                    <th>Pre Tax Amount</th>
+                    <th>Tax Name</th>
+                    <th>Tax Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in object_list %}
+                    <tr>
+                        <th>{{ expense.id }}</th>
+                        <th>{{ expense.employee.name }}</th>
+                        <th>{{ expense.employee.address }}</th>
+                        <th>{{ expense.date }}</th>
+                        <th>{{ expense.category.name }}</th>
+                        <th>{{ expense.expense_description }}</th>
+                        <th>{{ expense.pre_tax_amount|floatformat:2 }}</th>
+                        <th>{{ expense.tax_name }}</th>
+                        <th>{{ expense.tax_amount|floatformat:2 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

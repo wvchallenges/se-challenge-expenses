@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% block title %}
+    Expense Report
+{% endblock %}
+{% block content %}
+    <form class="form-horizontal" action='{% url "expense-report" %}' method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.expense_file.id_for_label }}" class="col-sm-2 control-label">{{ form.expense_file.label }}</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="{{ form.expense_file.id_for_label }}" name='{{ form.expense_file.html_name }}'>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+
+                            <span id="help-block" class="help-block">
+                                <p class="bg-danger">{{ error|escape }}</p>
+                            </span>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+         <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+    </form>
+{% endblock %}
+
+
+
+
+
