@@ -1,3 +1,3 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Should definitely write some unit and acceptance tests.

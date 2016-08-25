@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block title %}
+    Expense Report List By Month
+{% endblock %}
+{% block content %}
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">Monthly Expense Table</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for monthly_total in monthly_totals %}
+                    <tr>
+                        <th>{{ monthly_total.trunc_month | date:"F" }}</th>
+                        <th>{{ monthly_total.trunc_month | date:"Y" }}</th>
+                        <th>$ {{ monthly_total.monthly_total|floatformat:2 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

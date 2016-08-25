@@ -33,9 +33,9 @@
                         <th>{{ expense.date }}</th>
                         <th>{{ expense.category.name }}</th>
                         <th>{{ expense.expense_description }}</th>
-                        <th>{{ expense.pre_tax_amount|floatformat:2 }}</th>
+                        <th>$ {{ expense.pre_tax_amount|floatformat:2 }}</th>
                         <th>{{ expense.tax_name }}</th>
-                        <th>{{ expense.tax_amount|floatformat:2 }}</th>
+                        <th>$ {{ expense.tax_amount|floatformat:2 }}</th>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from expense_report.models import (
-    Category,
-    ExpenseReport,
-    Employee,
-)
+from expense_report.models import Category, ExpenseReport, Employee
 
 
 @admin.register(ExpenseReport)

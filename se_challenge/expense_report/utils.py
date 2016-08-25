@@ -7,6 +7,9 @@ from expense_report.forms import CategoryForm, EmployeeForm, ExpenseReportForm
 
 
 class CSVHandler(object):
+    '''
+    Parses the CSV file and stores the data in the database
+    '''
 
     def __init__(self, expense_report):
         self.expense_report = expense_report
@@ -27,7 +30,7 @@ class CSVHandler(object):
         row_data['pre_tax_amount'] = (
             row_data['pre_tax_amount'].replace(',', ''))
 
-        row_data['tax_amount'] = row_data['pre_tax_amount'].replace(',', '')
+        row_data['tax_amount'] = row_data['tax_amount'].replace(',', '')
 
         return row_data
 
