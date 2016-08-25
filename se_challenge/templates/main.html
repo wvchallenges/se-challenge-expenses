@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}SE Challange{% endblock %}</title>
+        <!-- Bootstrap core CSS -->
+        <link href='{% static "css/bootstrap.css" %}' rel="stylesheet">
+        <link href='{% static "css/expense_report.css" %}' rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+            {% block navbar %}
+                <a class="navbar-brand" href="#">Project name</a>
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'expense-report' %}">Upload Report</a></li>
+                    <li><a href="{% url 'expense-report-by-month' %}">See Reports By Month</a></li>
+                    <li><a href="{% url 'expense-list' %}">See All Expenses</a></li>
+                </ul>
+            {% endblock %}
+        </nav>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
