@@ -12,13 +12,23 @@ const app = express();
 const upload = multer();
 
 app.post('/upload', upload.array('csvfiles'), (req, res) => { 
-  bl.uploadEmployeeExpenseFiles(req.files).then(res.send('ok'))
+  bl.uploadEmployeeExpenseFiles(req.files)
+    .then(res.send('ok'))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Failed to upload files, see server logs for more info');
+    })
 });
 
 app.get('/expensesPerMonth', (req, res) => {
-  bl.getTotalExpensesPerMonth().then((results) => {
-    res.send(results);
-  });
+  bl.getTotalExpensesPerMonth()
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status('500').send('Failed to retrieve results, see server logs for more info');
+    });
 });
 
 dm.initialize()
