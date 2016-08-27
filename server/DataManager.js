@@ -45,7 +45,6 @@ module.exports = class DataManager {
      * @returns
      */
     insertRows(tableName, rowArray) {
-
         return new Promise((resolve, reject) => {
 
             if (rowArray && rowArray.length) {
@@ -77,11 +76,19 @@ module.exports = class DataManager {
                 });
 
                 stmt.finalize((err) => {
-                    if (err) reject(error);
+                    if (err) reject(err);
                     else resolve();
                 })
             }
-            
+        });
+    }
+
+    select(queryString, params) {
+        return new Promise((resolve, reject) => {
+            this.db.all(queryString, params, (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            })
         });
     }
 }

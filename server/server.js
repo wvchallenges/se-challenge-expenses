@@ -15,7 +15,13 @@ app.post('/upload', upload.array('csvfiles'), (req, res) => {
 
   dm.insertRows('EmployeeExpense', data)
     .then(() => {
-      console.log('success');
+      dm.select('select * from EmployeeExpense', [])
+        .then((rows) => {
+          console.log(rows);
+        })
+        .catch((err) => {
+          console.log('failure: ' + err);
+        })
     })
     .catch((err) => {
       console.log('failure: ' + err);
