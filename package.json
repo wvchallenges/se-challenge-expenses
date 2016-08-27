@@ -4,7 +4,7 @@
   "description": "Wave Software Development Challenge",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js"
+    "start": "babel-node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,17 @@
     "url": "https://github.com/dan523/se-challenge/issues"
   },
   "homepage": "https://github.com/dan523/se-challenge#readme",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "dependencies": {
     "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0"
   }
 }
