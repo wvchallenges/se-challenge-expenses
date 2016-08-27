@@ -53,4 +53,27 @@ module.exports = class BusinessLayer {
 
         return this._dal.insertEmployeeExpenseRecords(dataArray);
     }
+
+    /**
+     * Get the total expenses grouped by month
+     * 
+     * @returns {Promise}
+     */
+    getTotalExpensesPerMonth() {
+        // Map the results of the record to an objects containing
+        // the total expenses grouped by month
+        return this._dal.getEmployeeExpenseRecords().then((results) => {
+            return results.reduce((prev, curr) => {
+                var date = new Date(curr.date.getFullYear(), curr.date.getMonth()).getTime();
+                if (!prev[date]) {
+                    prev[date] = {
+                        totalExpense: 0
+                    }; 
+                }
+
+                prev[date].totalExpense += curr.preTaxAmount + curr.taxAmount;
+                return prev;
+            }, {});
+        });
+    }
 }

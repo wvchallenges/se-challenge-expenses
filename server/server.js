@@ -1,7 +1,6 @@
 const express = require('express');
 const multer = require('multer'); // express middleware for retrieving form data
 
-const parseCSVFile = require('./parseCSVFile');
 const DataManager = require('./DataManager');
 const BusinessLayer = require('./BusinessLayer');
 const DataAccessLayer = require('./DataAccessLayer');
@@ -14,7 +13,7 @@ const upload = multer();
 
 app.post('/upload', upload.array('csvfiles'), (req, res) => { 
   bl.uploadEmployeeExpenseFiles(req.files).then(() => {
-    dal.getEmployeeExpenseRecords().then((data) => {
+    bl.getTotalExpensesPerMonth().then((data) => {
       console.log(data);
       res.send('ok');
     })
