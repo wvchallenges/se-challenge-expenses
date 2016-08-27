@@ -38,51 +38,38 @@ module.exports = class DataManager {
     }
 
     /**
-     * Insert rows from the rowArray into the specified table
+     * Bulk insertion of data using the specified query string
      * 
-     * @param {any} tableName
-     * @param {any} rowArray
-     * @returns
+     * @param {any} queryString
+     * @param {any} dataArray
+     * @returns {Promise}
      */
-    insertRows(tableName, rowArray) {
+    bulkInsert(queryString, dataArray) {
         return new Promise((resolve, reject) => {
 
-            if (rowArray && rowArray.length) {
-                
-                // assumes that each row has the same properties
-                let valuesArray = [];
-                for (let prop in rowArray[0]) {
-                    if (rowArray[0].hasOwnProperty(prop)) {
-                        valuesArray.push('?');
-                    }
-                }
+            if (dataArray && dataArray.length) {
 
-                const valuesString = valuesArray.join(',');
-                var sql = `
-                    INSERT INTO 
-                        ${tableName} 
-                    VALUES
-                        (${valuesString})
-                `;
-
-                // prepare the above insert statement and run for each row of data
-                const stmt = this.db.prepare(sql);
-                rowArray.forEach(row => {
-                    const values = [];
-                    for (let prop in row) {
-                        values.push(row[prop]);
-                    }
-                    stmt.run(values);
-                });
-
+                const stmt = this.db.prepare(queryString);
+                dataArray.forEach(row => stmt.run(row));
                 stmt.finalize((err) => {
                     if (err) reject(err);
                     else resolve();
-                })
+                });
+
+            } else {
+                reject('dataArray is null or empty');
             }
         });
     }
 
+    /**
+     * Run the queryString with the given parameters to select data
+     * from the database
+     * 
+     * @param {any} queryString
+     * @param {any} params
+     * @returns {Promise}
+     */
     select(queryString, params) {
         return new Promise((resolve, reject) => {
             this.db.all(queryString, params, (err, rows) => {

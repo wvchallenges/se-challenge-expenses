@@ -3,31 +3,28 @@ const multer = require('multer'); // express middleware for retrieving form data
 
 const parseCSVFile = require('./parseCSVFile');
 const DataManager = require('./DataManager');
+const BusinessLayer = require('./BusinessLayer');
+const DataAccessLayer = require('./DataAccessLayer');
 
 const dm = new DataManager();
+const dal = new DataAccessLayer(dm);
+const bl = new BusinessLayer(dal);
 const app = express();
 const upload = multer();
 
 app.post('/upload', upload.array('csvfiles'), (req, res) => { 
-  var data = req.files.reduce((prev, curr) => {
-    return prev.concat(parseCSVFile(curr.buffer));
-  }, []);
-
-  dm.insertRows('EmployeeExpense', data)
-    .then(() => {
-      dm.select('select * from EmployeeExpense', [])
-        .then((rows) => {
-          console.log(rows);
-        })
-        .catch((err) => {
-          console.log('failure: ' + err);
-        })
+  bl.uploadEmployeeExpenseFiles(req.files).then(() => {
+    dal.getEmployeeExpenseRecords().then((data) => {
+      console.log(data);
+      res.send('ok');
     })
     .catch((err) => {
       console.log('failure: ' + err);
-    });
-
-  res.send('ok'); 
+    })
+  })
+  .catch((err) => {
+    console.log('failure: ' + err);
+  });
 }); 
 
 dm.initialize()
