@@ -1,0 +1,19 @@
+{
+  "name": "se-challenge",
+  "version": "1.0.0",
+  "description": "Wave Software Development Challenge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan523/se-challenge.git"
+  },
+  "author": "Daniel Wright",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan523/se-challenge/issues"
+  },
+  "homepage": "https://github.com/dan523/se-challenge#readme"
+}
