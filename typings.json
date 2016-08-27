@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
+    "csv-parse": "registry:dt/csv-parse#1.1.0+20160602150508",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160819131900",
     "multer": "registry:dt/multer#0.0.0+20160818200730",
