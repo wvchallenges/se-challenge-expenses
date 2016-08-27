@@ -12,19 +12,14 @@ const app = express();
 const upload = multer();
 
 app.post('/upload', upload.array('csvfiles'), (req, res) => { 
-  bl.uploadEmployeeExpenseFiles(req.files).then(() => {
-    bl.getTotalExpensesPerMonth().then((data) => {
-      console.log(data);
-      res.send('ok');
-    })
-    .catch((err) => {
-      console.log('failure: ' + err);
-    })
-  })
-  .catch((err) => {
-    console.log('failure: ' + err);
+  bl.uploadEmployeeExpenseFiles(req.files).then(res.send('ok'))
+});
+
+app.get('/expensesPerMonth', (req, res) => {
+  bl.getTotalExpensesPerMonth().then((results) => {
+    res.send(results);
   });
-}); 
+});
 
 dm.initialize()
   .then(() => {
