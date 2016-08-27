@@ -6,6 +6,7 @@
     "multer": "registry:dt/multer#0.0.0+20160818200730",
     "react": "registry:dt/react#0.14.0+20160817201227",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
+    "sqlite3": "registry:dt/sqlite3#2.2.3+20160724070935"
   }
 }
