@@ -1,0 +1,45 @@
+{
+  "name": "se-challenge",
+  "version": "1.0.0",
+  "description": "Wave Software Development Challenge",
+  "main": "server.js",
+  "scripts": {
+    "postinstall": "typings install",
+    "start:server": "babel-node server/server.js",
+    "start:client": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan523/se-challenge.git"
+  },
+  "author": "Daniel Wright",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan523/se-challenge/issues"
+  },
+  "homepage": "https://github.com/dan523/se-challenge#readme",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "csv-parse": "^1.1.7",
+    "express": "^4.14.0",
+    "multer": "^1.2.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "typings": "^1.3.3",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
+  }
+}
