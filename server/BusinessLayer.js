@@ -78,7 +78,7 @@ module.exports = class BusinessLayer {
             // for easy parsing by the client
             let result = [];
             for (let prop in map) {
-                if (map.hasOwnProperty) {
+                if (map.hasOwnProperty(prop)) {
                     result.push({
                         month: parseInt(prop),
                         totalExpenses: map[prop]
