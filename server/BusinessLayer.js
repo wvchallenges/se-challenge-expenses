@@ -60,20 +60,33 @@ module.exports = class BusinessLayer {
      * @returns {Promise}
      */
     getTotalExpensesPerMonth() {
-        // Map the results of the record to an objects containing
-        // the total expenses grouped by month
         return this._dal.getEmployeeExpenseRecords().then((results) => {
-            return results.reduce((prev, curr) => {
-                var date = new Date(curr.date.getFullYear(), curr.date.getMonth()).getTime();
+
+            // Map the results of the record to an objects containing
+            // the total expenses grouped by month
+            let map = results.reduce((prev, curr) => {
+                let date = new Date(curr.date.getFullYear(), curr.date.getMonth()).getTime();
                 if (!prev[date]) {
-                    prev[date] = {
-                        totalExpense: 0
-                    }; 
+                    prev[date] = 0; 
                 }
 
-                prev[date].totalExpense += curr.preTaxAmount + curr.taxAmount;
+                prev[date] += curr.preTaxAmount + curr.taxAmount;
                 return prev;
             }, {});
+
+            // Now that we have the necessary data grouped by month, push it to an array of objects
+            // for easy parsing by the client
+            let result = [];
+            for (let prop in map) {
+                if (map.hasOwnProperty) {
+                    result.push({
+                        month: parseInt(prop),
+                        totalExpenses: map[prop]
+                    })
+                }
+            }
+
+            return result;
         });
     }
 }

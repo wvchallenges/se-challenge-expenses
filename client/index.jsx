@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import FileUpload from './components/FileUpload';
+import App from './components/App';
 
 ReactDOM.render(
-    <FileUpload />,
+    <App />,
     document.getElementById('app')
 );
