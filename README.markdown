@@ -1,4 +1,23 @@
 # Wave Software Development Challenge
+This was built using react, node, express, and sqlite. It was built using Visual Studio Code using NodeJS v6.3.1, for proper intellisense support using typings and easy debugging Visual Studio Code is recommended, however any text editor should do. This should also run properly in older versions of NodeJS due to the usage of babel-node, however this has not been tested.
+
+## Installation Instructions
+Project installation:
+    npm install
+
+## Build and Running Instructions
+To run the server:
+    npm run start:server
+
+To build and run the client:
+    npm run start:client
+
+## usage
+
+
+
+
+
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
 The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
