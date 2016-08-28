@@ -48,14 +48,14 @@ module.exports = class DataManager {
         return new Promise((resolve, reject) => {
 
             if (dataArray && dataArray.length) {
-
-                const stmt = this.db.prepare(queryString);
-                dataArray.forEach(row => stmt.run(row));
-                stmt.finalize((err) => {
-                    if (err) reject(err);
-                    else resolve();
+                this.db.serialize(() => {
+                    const stmt = this.db.prepare(queryString);
+                    dataArray.forEach(row => stmt.run(row));
+                    stmt.finalize((err) => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
                 });
-
             } else {
                 reject('dataArray is null or empty');
             }
@@ -72,10 +72,12 @@ module.exports = class DataManager {
      */
     select(queryString, params) {
         return new Promise((resolve, reject) => {
-            this.db.all(queryString, params, (err, rows) => {
-                if (err) reject(err);
-                else resolve(rows);
-            })
+            this.db.serialize(() => {
+                this.db.all(queryString, params, (err, rows) => {
+                    if (err) reject(err);
+                    else resolve(rows);
+                });
+            });
         });
     }
 }
