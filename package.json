@@ -4,7 +4,7 @@
   "description": "Wave Software Development Challenge",
   "main": "server.js",
   "scripts": {
-    "start:server": "node server/server.js",
+    "start:server": "babel-node server/server.js",
     "start:client": "webpack-dev-server"
   },
   "repository": {
