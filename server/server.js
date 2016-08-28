@@ -11,6 +11,13 @@ const bl = new BusinessLayer(dal);
 const app = express();
 const upload = multer();
 
+// allow Cross origin since client is hosted on different port than server
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.post('/upload', upload.array('csvfiles'), (req, res) => { 
   bl.uploadEmployeeExpenseFiles(req.files)
     .then(res.send('ok'))

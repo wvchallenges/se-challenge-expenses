@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import FileUpload from './components/FileUpload';
+
 ReactDOM.render(
-    <div>Hello from React</div>,
+    <FileUpload />,
     document.getElementById('app')
 );

@@ -2,6 +2,7 @@ module.exports = {
   entry: [
     './client/index.jsx'
   ],
+  devtool: 'source-map',
   module: {
     loaders: [{
       test: /\.jsx?$/,
