@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Wave SE Challenge by Ian Carreon</title>
+        <meta name="description" content="">
+
+        <style>
+        .padding_left_50, h1, h3, h5 { 
+            padding-left: 50px;
+        }
+                    
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 16%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        </style>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>        
+
+    </head>
+    <body>
+        <h1>Wave Software Development Challenge</h1>
+        <h5>By Ian Carreon, iancrrn@gmail.com</h5>        
+        <hr>
+        
+        <!-- Basic upload form -->
+        <div style="padding-left:50px">
+            <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>{{ form.non_field_errors }}</p>
+                <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+                <p>
+                    {{ form.file.errors }}
+                    {{ form.file }}
+                </p>
+                <p><input type="submit" value="Upload"/></p>
+            </form>
+        </div>
+                
+        <hr>
+        <h3>Expense Report</h3>
+        <hr>
+        <!-- Total expenses amount by month for each year -->
+        {% if data %}
+            <div style="padding-left:50px">
+                {% for d in data %}
+                
+                     <h4>Year: {{d.year}}</h4>
+                     <table>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total amount</th>
+                        </tr>
+                         
+                     {% for i in d.month_list %}
+                          <tr>
+                            <td>{{i.month}}</td>
+                            <td>${{i.total}}</td>
+                          </tr>
+                     {% endfor %}
+                     </table>
+                     <br>
+
+                {% endfor %}
+            </div>
+        {% else %}
+            {% if error_msg %}
+                <div class='padding_left_50'>
+                    <p style='color:red'>{{error_msg}}</p>
+                </div>
+
+            {% else %}
+                <div class='padding_left_50'>
+                    <p>No data - please upload a file.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        
+
+    </body>
+</html>
