@@ -1,0 +1,13 @@
+{
+  "name": "wave-code-challenge",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js",
+    "monitor": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.10.6",
+    "mysql": "^2.5.4",
+    "formidable": "^1.0.17"
+  }
+}

@@ -1,0 +1,75 @@
+.btn:focus, .upload-btn:focus{
+  outline: 0 !important;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #77d25f;
+}
+
+.row {
+  margin-top: 80px;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
+}
+
+h4 {
+  padding-bottom: 30px;
+  color: #B8BDC1;
+}
+
+h2 {
+  margin-top: 15px;
+  color: #68757E;
+}
+
+.panel {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th.title {
+    font-weight: bold;
+}
+
+th.content {
+    font-weight: 400;
+}
+
+#upload-input {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 450px;
+  }
+}
