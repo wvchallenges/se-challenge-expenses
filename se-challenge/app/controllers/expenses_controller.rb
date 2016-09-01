@@ -10,8 +10,7 @@ class ExpensesController < ApplicationController
 		@expense_totals = Expense.month_totals(array_of_expenses)
 
 		array_of_expenses.each do |expense|
-			puts expense
-			# Expense.create(expense)
+			Expense.create(expense)
 		end
 
 		@expense = Expense.new

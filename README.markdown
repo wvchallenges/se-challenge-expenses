@@ -1,4 +1,3 @@
-#####################################################
 Thank you for taking the time to evaluate my submission for the SeChallenge.
 
 I decided to write the solution in Ruby/Rails, as I currently work with Ruby in my workplace, and am more familiar
@@ -14,5 +13,4 @@ I must admit, I am not an expert in Ruby/Rails, nor with web development in gene
  - passion and drive to get things done
 These personal qualities have proved me to be successful in my current/past positions. I hope to speak with you sometime soon!
 
-	- Lucas Kim
-#####################################################
+- Lucas Kim
