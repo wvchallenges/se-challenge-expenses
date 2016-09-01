@@ -1,0 +1,24 @@
+<h1>Upload Your Expenses!</h1>
+<p>Please choose a file in .csv format</p>
+
+<%= form_for @expense do |f| %>
+  	<%= f.file_field :csv_file %>
+  	<br />
+  	<div class="actions">
+    	<%= f.submit "Upload" %>
+	</div>
+<% end %>
+
+<br />
+<table>
+  <tr>
+    <th>Month/Year</th>
+    <th>Expense Total</th>
+  </tr>
+<% @expense_totals.each do |month_total| %>
+  <tr>
+    <td><%= month_total[0] %></td>
+    <td>$<%= number_with_precision(month_total[1], :precision => 2, :delimiter => ',') %></td>
+  </tr>
+<% end %>
+</table>
