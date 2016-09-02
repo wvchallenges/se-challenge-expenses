@@ -1,0 +1,16 @@
+#csv-form__file-input {
+    display: none;
+}
+.csv-form__filename {
+    display: none;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.csv-form__filename--shown {
+    display: block;
+}
+.csv-form__file-label, .csv-form__upload-btn {
+    width: 100%;
+    margin-bottom:20px;
+}
