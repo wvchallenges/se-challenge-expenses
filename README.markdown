@@ -1,7 +1,32 @@
 # Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+To run the app:
+
+1. Clone the repo
+> git clone git@github.com:findcongwang/se-challenge.git
+2. Bundle
+> bundle install
+3. Migrate the database
+> rake db:migrate
+4. Run the server
+> rails s
+
+For minimal setup, SQLite was used for DB and Bootstrap for basic UI.
+
+The following models were scaffolded, to properly store the imported data.
+
+- Expense
+- Category
+- Employee
+- Tax
+
+Money-rails was used for integer money handling, uploading a file multiple types will not create duplicate records (could enforce as model validation but specs not given).
+
+---
+
+Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview.
+
+The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!)
 
 There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
 
@@ -12,7 +37,7 @@ Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Fe
 ## Submission Instructions
 1. Fork this project on github. You will need to create an account if you don't already have one.
 1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
+1. Push all of your changes to your fork on github and submit a pull request.
 1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
@@ -43,7 +68,7 @@ There are many ways that this application could be built; we ask that you build 
 Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
 
 ## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Evaluation of your submission will be based on the following criteria.
 
 1. Did your application fulfill the basic requirements?
 1. Did you document the method for setting up and running your application?
