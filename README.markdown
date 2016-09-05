@@ -3,12 +3,19 @@
 To run the app:
 
 1. Clone the repo
+
 > git clone git@github.com:findcongwang/se-challenge.git
+
 2. Bundle
+
 > bundle install
+
 3. Migrate the database
+
 > rake db:migrate
+
 4. Run the server
+
 > rails s
 
 For minimal setup, SQLite was used for DB and Bootstrap for basic UI.
