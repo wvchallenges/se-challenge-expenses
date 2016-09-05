@@ -22,15 +22,34 @@ class ExpensesController < ApplicationController
   def import
     csv = CSV.parse(params[:file].tempfile, :headers => true)
     csv.each do |row|
-      Expense.create!(
+
+      # find_or_create_by does not work with money-rails under Sqlite
+      exp = Expense.where(
         date: Date.strptime(row["date"],'%m/%d/%Y'),
         category: Category.find_or_create_by(name: row['category']),
         employee: Employee.find_or_create_by(name: row['employee name'], address: row['employee address']),
         expense_description: row["expense description"],
-        pre_tax_amount: row['pre-tax amount'].to_money,
         tax: Tax.find_or_create_by(name: row['tax name']),
-        tax_amount: row['tax amount'].to_money
-      )
+      ).first
+
+      if exp.nil?
+        # create the expenses
+        Expense.create!(
+          date: Date.strptime(row["date"],'%m/%d/%Y'),
+          category: Category.find_or_create_by(name: row['category']),
+          employee: Employee.find_or_create_by(name: row['employee name'], address: row['employee address']),
+          expense_description: row["expense description"],
+          pre_tax_amount: row['pre-tax amount'].to_money,
+          tax: Tax.find_or_create_by(name: row['tax name']),
+          tax_amount: row['tax amount'].to_money
+        )
+      else
+        # update values with file
+        exp.update(
+          pre_tax_amount: row['pre-tax amount'].to_money,
+          tax_amount: row['tax amount'].to_money
+        )
+      end
     end
     redirect_to expenses_url
   end
