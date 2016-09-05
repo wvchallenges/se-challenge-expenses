@@ -5,13 +5,13 @@
   = @expense.date
 %p
   %b Category:
-  = @expense.category_id
+  = @expense.category.name
 %p
   %b Employee:
-  = @expense.employee_id
+  = @expense.employee.name
 %p
   %b Employee address:
-  = @expense.employee_address
+  = @expense.employee.address
 %p
   %b Expense description:
   = @expense.expense_description
@@ -20,7 +20,7 @@
   = @expense.pre_tax_amount
 %p
   %b Tax:
-  = @expense.tax_id
+  = @expense.tax.name
 %p
   %b Tax amount:
   = @expense.tax_amount
