@@ -32,12 +32,12 @@
     - @expenses.each do |expense|
       %tr
         %td= expense.date
-        %td= expense.category_id
-        %td= expense.employee_id
-        %td= expense.employee_address
+        %td= expense.category.name
+        %td= expense.employee.name
+        %td= expense.employee.address
         %td= expense.expense_description
         %td= expense.pre_tax_amount
-        %td= expense.tax_id
+        %td= expense.tax.name
         %td= expense.tax_amount
         %td= link_to 'Show', expense
         %td= link_to 'Edit', edit_expense_path(expense)

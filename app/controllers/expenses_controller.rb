@@ -1,4 +1,5 @@
 class ExpensesController < ApplicationController
+  require 'csv'
   before_action :set_expense, only: [:show, :edit, :update, :destroy]
 
   # GET /expenses
@@ -19,7 +20,19 @@ class ExpensesController < ApplicationController
 
   # POST /expenses/import
   def import
-    raise
+    csv = CSV.parse(params[:file].tempfile, :headers => true)
+    csv.each do |row|
+      Expense.create!(
+        date: Date.strptime(row["date"],'%m/%d/%Y'),
+        category: Category.find_or_create_by(name: row['category']),
+        employee: Employee.find_or_create_by(name: row['employee name'], address: row['employee address']),
+        expense_description: row["expense description"],
+        pre_tax_amount: row['pre-tax amount'].to_money,
+        tax: Tax.find_or_create_by(name: row['tax name']),
+        tax_amount: row['tax amount'].to_money
+      )
+    end
+    redirect_to expenses_url
   end
 
   # GET /expenses/1/edit

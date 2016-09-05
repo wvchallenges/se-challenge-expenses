@@ -5,9 +5,9 @@ class CreateExpenses < ActiveRecord::Migration
       t.integer :category_id
       t.integer :employee_id
       t.string :expense_description
-      t.integer :pre_tax_amount
+      t.integer :pre_tax_amount_cents
       t.integer :tax_id
-      t.integer :tax_amount
+      t.integer :tax_amount_cents
 
       t.timestamps null: false
     end

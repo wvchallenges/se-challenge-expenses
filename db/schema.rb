@@ -31,11 +31,11 @@ ActiveRecord::Schema.define(version: 20160905151140) do
     t.integer  "category_id"
     t.integer  "employee_id"
     t.string   "expense_description"
-    t.integer  "pre_tax_amount"
+    t.integer  "pre_tax_amount_cents"
     t.integer  "tax_id"
-    t.integer  "tax_amount"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.integer  "tax_amount_cents"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "taxes", force: :cascade do |t|
