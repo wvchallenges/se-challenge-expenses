@@ -1,0 +1,38 @@
+= form_for @expense do |f|
+  - if @expense.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@expense.errors.count, "error")} prohibited this expense from being saved:"
+      %ul
+        - @expense.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-xs-12
+      .field
+        = f.label :date
+        = f.date_select :date
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :category_id
+        = f.select(:category_id, Category.all.collect {|a| [a.name, a.id]}, {}, { class: 'form-control' })
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :employee_id
+        = f.select(:employee_id, Employee.all.collect {|a| [a.name, a.id]}, {}, { class: 'form-control' })
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :expense_description
+        = f.text_field :expense_description, class: 'form-control'
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :pre_tax_amount
+        = f.number_field :pre_tax_amount, class: 'form-control'
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :tax_id
+        = f.select(:tax_id, Tax.all.collect {|a| [a.name, a.id]}, {}, { class: 'form-control' })
+    .col-xs-12.col-sm-6.col-md-4
+      .field
+        = f.label :tax_amount
+        = f.text_field :tax_amount, class: 'form-control'
+    .actions.col-xs-12
+      = f.submit 'Save', class: 'btn btn-primary'
