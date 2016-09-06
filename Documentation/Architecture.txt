@@ -1,0 +1,28 @@
+** Technologies
+Server Side
+- C# 
+- ASP.NET Web API (a bit of MVC)
+- Dapper
+- PostgreSQL (or MS SQL Server)
+
+Client Side
+ - Bootstrap
+ - SASS
+ - TypeScript
+ - jQuery
+ - Angular JS
+ - Jasmine
+
+
+** Architecture
+Server Side
+ - Controllers 
+   - One ASP.NET MVC Controller to serve the landing page
+ - Services 
+ - Data access
+
+Client side
+ - Views
+ - Controllers
+ - Services 
+   - Domain-specific/ utilities/ communication with server

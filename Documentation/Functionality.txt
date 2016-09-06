@@ -1,0 +1,18 @@
+Client Side
+ - An interface to import the employee expense data from CSV file, including:
+   - Web form to get the source CSV file [mandatory]
+     - Validate that the file is in CSV format [nice to have]
+   - An "in progress" view [nice to have]
+   - The result view that will include: 
+     - A message indicating Success state of the import [nice to have]
+     - A count of failed records (if any) [nice to have]
+     - An explanation (i.e. a duplicate) [nice to have] 
+     - A table showing the summary of the imported data [mandatory]
+
+Server Side
+ - A service to import the records[mandatory]
+   - Service loggs errors [nice to have]
+   - Service returns 
+     - status of the operation [nice to have]
+     - list of failed records [nice to have]
+     - list of successful records [mandatory]
