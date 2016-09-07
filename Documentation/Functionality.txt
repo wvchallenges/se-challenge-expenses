@@ -16,3 +16,8 @@ Server Side
      - status of the operation [nice to have]
      - list of failed records [nice to have]
      - list of successful records [mandatory]
+
+Out of Scope
+ - Authentication
+ - Proper error handling
+ - Proper notification system
