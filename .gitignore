@@ -1,6 +1,7 @@
 # eclipse
 .project
 .pydevproject
+.settings
 
 # virtualenv
 Include/
