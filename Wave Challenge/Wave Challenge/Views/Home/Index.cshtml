@@ -14,7 +14,7 @@
             <button class="btn btn-primary hide" id="importFile">Import</button>
         </div>
     </div>
-    <div class="row">
+    <div class="row hide" id="progress">
         <div class="col-xs-12 text-center">
                         <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
             <span class="sr-only">Loading...</span>
@@ -25,4 +25,8 @@
     <div id="file"></div>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-<script src="../../Scripts/FileUploader.js"></script>
+
+
+<script src="../../Scripts/Application/Utilities/FileUtility.js"></script>
+<script src="../../Scripts/Application/ExpenseImportService.js"></script>
+<script src="../../Scripts/Application/ExpenseImportController.js"></script>
