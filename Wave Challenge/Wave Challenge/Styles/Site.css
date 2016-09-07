@@ -8,10 +8,21 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.row {
+    margin-bottom:15px;
+}
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+@media screen and (min-width: 768px) {
+    .jumbotron h1 {
+        font-size: 40px;
+        margin-bottom: 70px;
+    }
+}
+
+.fileNameLabelNotSelected {
+    font-style: italic;
+}
+
+.fileNameLabel {
+    font-size: 16px;
 }

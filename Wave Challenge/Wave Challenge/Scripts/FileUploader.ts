@@ -1,7 +1,29 @@
-﻿$().ready(function () {
-
-    function handleFileImport() {
+﻿
         // TODO: extract code specific to Expense Import to its own module
+
+// Add label showing path to file
+
+
+
+
+namespace FileUploader {
+    export function onFileInputChange() {
+        if (this.files.length> 0) {
+            var fileName = this.files[0].name;
+            var message = "'" + fileName + "' is ready to be imported";
+            $("#fileName").html(message).removeClass("hide");;
+            $("#inputFileButton").removeClass("btn-primary").addClass("btn-default");
+            $("#importFile").removeClass("hide");
+        }
+        else {
+            $("#fileName").html("file path").addClass("hide");
+            $("#inputFileButton").removeClass("btn-default").addClass("btn-primary");
+            $("#importFile").addClass("hide");
+
+        }
+    }
+
+    export function handleFileImport() {
         var selectedCsv = (<HTMLInputElement>$("#sourceFileInput")[0]).files[0];
 
         if (selectedCsv) {
@@ -26,4 +48,9 @@
             // TODO: handle
         }
     }
-});
+    
+}
+
+$("#sourceFileInput").change(FileUploader.onFileInputChange);
+
+$("#importFile").click(FileUploader.handleFileImport);

@@ -22,6 +22,7 @@ namespace Wave_Challenge
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Styles/3rdParty/Bootstrap/bootstrap.css",
+                      "~/Styles/3rdParty/font-awesome-4.6.3/css/font-awesome.min.css",
                       "~/Styles/site.css"));
         }
     }
