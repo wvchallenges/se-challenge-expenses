@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .models import CSVItemReader
+from .models import CSVItemReader, Job
 
 import io
 
@@ -36,3 +36,15 @@ class CSVItemReaderTest(TestCase):
             recordCount = recordCount + 1
             self.assertEquals(row, self.testRows[numHeaderRows + recordCount - 1])
         self.assertEquals(csvItemReader.headerRows, self.testRows[:numHeaderRows])
+
+class JobTest(TestCase):
+    
+    def test_negativeBatchInterval_valueError(self):
+        self.invalidBatchIntervalTest(-1)
+    
+    def test_nonNaturalNumberBatchInterval_valueError(self):
+        self.invalidBatchIntervalTest(1.01)
+    
+    def invalidBatchIntervalTest(self, value):
+        with self.assertRaises(ValueError):
+            Job(None, batchInterval=value)

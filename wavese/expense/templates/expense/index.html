@@ -1,6 +1,6 @@
 <form action="{% url 'expense:index' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    Source Id: <input name="sourceId" type="text" /><br/>
+    Source Id: <input name="csvSourceId" type="text" /><br/>
     Local File: <input name="expenses" type="file" /><br/>
     <input name="submit" type="submit" />
 </form>

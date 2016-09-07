@@ -1,5 +1,40 @@
 from django.db import models
 
+# batch processing bookkeeping
+class Job(models.Model):
+    def __init__(self, itemReader, batchInterval=1, params={}):
+        if (batchInterval < 1 or batchInterval != int(batchInterval)):
+            raise ValueError("batchInterval must be a positive integer")
+        self.batchInterval = batchInterval
+        self.itemReader = itemReader
+        self.params = params
+    
+    def before(self):
+        pass
+    
+    def after(self):
+        pass
+    
+    def run(self):
+        self.before()
+        batch = []
+        for row in self.itemReader:
+            batch.append(row)
+            if (len(batch) >= self.batchInterval):
+                self.processBatch(batch)
+                batch = []
+        # TODO self.tail is for testing purposes.  remove from final product 
+        self.tail = self.processBatch(batch)
+        return self.tail
+    
+    def processBatch(self, batch):
+        return batch
+
+class JobParameters(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    key = models.CharField(max_length = 50)
+    value = models.CharField(max_length = 50)
+
 # domain model
 class CSVSource(models.Model):
     pass
@@ -27,7 +62,7 @@ class Expense(models.Model):
     preTaxAmount = models.DecimalField(max_digits=10, decimal_places=2)
     taxAmount = models.DecimalField(max_digits=10, decimal_places=2)
 
-# batch item processing
+# batch item processing components
 import csv
 
 """
@@ -49,3 +84,8 @@ class CSVItemReader:
     
     def headers(self):
         return self.headerRows
+    
+class CSVJob(Job):
+    def before(self):
+        # make sure source id exists
+        CSVSource.objects.get(pk=self.params['csvSourceId'])

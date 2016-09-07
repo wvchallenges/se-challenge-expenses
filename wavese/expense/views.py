@@ -3,24 +3,19 @@ from django.shortcuts import render
 from django.http import Http404
 from django.http.response import HttpResponse
 
-from .models import CSVItemReader
+from .models import CSVItemReader, CSVJob
 from io import TextIOWrapper
 
-batchInterval = 5
+defaultBatchInterval = 5
 
 def index(request):
     if (request.method == 'GET'): 
         return render(request, 'expense/index.html', {})
     elif (request.method == 'POST'): 
+        params = {'csvSourceId' : request.POST['csvSourceId']}
         csvItemReader = CSVItemReader(TextIOWrapper(request.FILES['expenses'].file, "utf-8"), numHeaderRows=1)
-        batch = []
-        for row in csvItemReader:
-            batch.append(row)
-            if (len(batch) >= batchInterval):
-                processBatch(batch)
-                batch = []
-        processBatch(batch)
-        return HttpResponse(batch)
+        job = CSVJob(csvItemReader, batchInterval=defaultBatchInterval, params=params)
+        return HttpResponse(job.run())
     else:
         raise Http404()
 

@@ -1,0 +1,4 @@
+# use this only for end-to-end testing purposes
+- model: expense.CSVSource
+  pk: 1
+  fields: {}
