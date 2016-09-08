@@ -47,14 +47,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Npgsql, Version=3.1.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.3.1.7\lib\net451\Npgsql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -131,12 +140,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\Web API\DataImportController.cs" />
+    <Compile Include="Database\Connection.cs" />
+    <Compile Include="Database\ExpenseImportData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExpenseImportRecords.cs" />
+    <Compile Include="Models\ExpenseRecord.cs" />
     <Compile Include="Models\ImportResult.cs" />
+    <Compile Include="Models\MonthlyExpenseTotal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExpenseImportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Styles\3rdParty\Bootstrap\bootstrap.css" />
@@ -187,6 +200,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Application\ExpenseImportController.ts" />
     <TypeScriptCompile Include="Scripts\Application\ExpenseImportService.ts" />
+    <TypeScriptCompile Include="Scripts\Application\Utilities\DateTimeUtility.ts" />
+    <TypeScriptCompile Include="Scripts\Application\Utilities\DomManipulationUtility.ts" />
     <TypeScriptCompile Include="Scripts\Application\Utilities\FileUtility.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
