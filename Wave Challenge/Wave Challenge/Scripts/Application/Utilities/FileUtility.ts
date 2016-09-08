@@ -26,9 +26,7 @@
             let record = {};
             let propertyNames: string[] = [];
             let propertyName: string;
-
-            // DEBUG
-            let output = [];
+            
 
             let lines;
             let lineValues;
@@ -50,14 +48,8 @@
 
                 // pushobject to jsonFileRecords
 
-                jsonFileRecords.push(record);
-
-                // DEBUG
-                output.push('<li>' + lines[i] + '<br>');
-            }
-
-            // DEBUG
-            document.getElementById('file').innerHTML = 'File contents:<ul>' + output.join('') + '</ul>';
+                jsonFileRecords.push(record);                
+            }           
 
             promise.resolve(jsonFileRecords);
         });
@@ -162,6 +154,7 @@
                 }
             }
             // Last character 
+            currentCharacter = line.charAt(line.length-1);
             switch (line.charAt(line.length)) {
                 case '"': {
                     if (isFieldQuoted) {
@@ -174,6 +167,7 @@
                     currentValue += currentCharacter;
                     propertyValues.push(currentValue);
                     propertyValues.push('');
+                    break;  
                 }
                 default: {
                     currentValue += currentCharacter;
