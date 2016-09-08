@@ -8,7 +8,16 @@
 
 
             // Send JSON to server for processing
-                $.post("/api/Imports/ImportExpenseRecords", JSON.stringify(jsonFile));
+                $.ajax({
+                    type: "POST",
+                    url: "/api/DataImport/ImportExpenseRecords",
+                    data: JSON.stringify(jsonFile),
+                    success: function () { },
+                    contentType: "application/json", // Thank you Stackoverflow!!!
+                    dataType: "json"
+                });
+                
+
                 // Then
             // Act on result
 

@@ -37,6 +37,11 @@
             lines = text.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
             propertyNames = lines[0].split(",");
 
+            for (let i = 0; i < propertyNames.length; i++) { 
+                propertyName = propertyNames[i];
+                propertyNames[i] = ToPascalCase(propertyName);
+            }
+
             // Proccess record values
             for (let i = 1; i < lines.length; i++) {
 
@@ -197,5 +202,10 @@
         return lineObject;
     }
 
-
+    export let ToPascalCase = (str:string) => {
+        return str.replace('-', ' ')
+            .replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); })
+            .replace(' ', '')
+            .replace(' ', '');
+    }
 }
