@@ -1,0 +1,40 @@
+For the database I have chosen PostgreSQL, since it is free, well supported and relational.
+
+Audience expectations: some experience with administering PostgreSql
+Installation Instructions:
+
+
+1) Install PostgreSQL 9.5.4.
+ - Name admin account "postgres"
+ - Set admin account passowrd to "WaveAdmin123$"
+2) Open pgAdmin
+3) Create new login role, name it "AccountingDbUser".
+ - Set the password to "Wave123$"
+3) Create new database, name it "AccountingDb" and make "AccountingDbUser" an owner.
+
+	CREATE DATABASE "AccountingDb"
+	  WITH ENCODING='UTF8'
+	       OWNER="AccountingDbUser"
+	       CONNECTION LIMIT=-1;
+
+4) Create "EmployeeExpense" table with the following script:
+
+CREATE TABLE public."EmployeeExpense"
+(
+   "Date" date NOT NULL, 
+   "Category" character varying(128) NOT NULL, 
+   "EmployeeName" character varying(128) NOT NULL, 
+   "EmployeeAddress" character varying(256) NOT NULL, 
+   "ExpenseDescription" character varying(128) NOT NULL, 
+   "PreTaxAmount" numeric(16,2) NOT NULL, 
+   "TaxName" character varying(64) NOT NULL, 
+   "TaxAmount" numeric(16,2) NOT NULL, 
+   "Id" serial NOT NULL, 
+   CONSTRAINT "PK_EmployeeExpense" PRIMARY KEY ("Id")
+) 
+WITH (
+  OIDS = FALSE
+)
+;
+
+5) Done
