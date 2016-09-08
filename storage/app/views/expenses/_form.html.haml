@@ -1,0 +1,8 @@
+%h3.ui.header
+  Upload Expenses
+= form_tag upload_expenses_path, multipart: true, html: {class: "ui form"} do |f|
+  .field
+    = file_field_tag :file
+  .field
+    %button.ui.button Submit 
+    
