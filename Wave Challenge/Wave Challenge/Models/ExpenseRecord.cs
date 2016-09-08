@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Wave_Challenge.Models
 {
-    public class ExpenseImportRecords
+    public class ExpenseRecord
     {
         public DateTime Date { get; set; }
         public string Category { get; set; }
