@@ -2,12 +2,17 @@ class ExpensesController < ApplicationController
   include ExpenseHelper
 
   def index
+    @expense = Expense.new
     @expenses = display_data Expense.all
   end
 
-  def upload
-    Expense.upload(params[:file])
-    redirect_to root_url
+  def create
+    expenses = Expense.upload(params[:file])
+    @grouped_expenses = display_data expenses
+    respond_to do |format|
+      format.js
+    end
+    #redirect_to root_url
   end
 
   private

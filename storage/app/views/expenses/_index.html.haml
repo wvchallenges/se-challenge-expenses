@@ -7,4 +7,4 @@
       %th Total Expense
   %tbody
     - expenses.each do |expense|
-      = render 'expenses/new_row', expense: expense
+      = render 'expenses/new_row', expense: expense, hidden: false

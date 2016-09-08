@@ -141,6 +141,7 @@ GEM
     rdoc (4.2.2)
       json (~> 1.4)
     ref (2.0.0)
+    remotipart (1.2.1)
     ruby_parser (3.8.2)
       sexp_processor (~> 4.1)
     sass (3.4.22)
@@ -197,6 +198,7 @@ DEPENDENCIES
   less-rails
   less-rails-semantic_ui
   rails (= 4.2.4)
+  remotipart (~> 1.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
