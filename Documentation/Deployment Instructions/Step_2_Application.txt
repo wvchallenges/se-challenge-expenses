@@ -1,0 +1,32 @@
+Below are the instructions for deploying it to your own IIS server.
+I have tested these on Windows 10 with IIS 10. 
+
+Part I. Create Deployment package
+1) Open solution in Visual Studio 2015 (Community or higher)
+2) In "Solution Explorer", right-click on the "Wave Challenge" project, click on "Publish". "Publish Web" window will pop up.
+3) Select "Demo" profile. Click Next
+4) In "Package location" field, enter the path to where you want the deployment package to be saved, as long as the package name.
+For example "C:\Wave\wave_app.zip"
+5) Click "Publish". Package is ready.
+
+Part II. Create a website in IIS
+1) Open IIS
+2) In the "Connections" pane, expand your server.
+3) Right-click on "Sites" -> Add Website
+4) Set site name to "WaveChallenge"
+5) Set Physical path to the one where you want the application to be installed in.
+6) Set host name to localhost. Click Add
+
+
+Part III. Import Deployment Package to IIS
+-- I assume your IIS is configured for ASP.NET applications
+1) In IIS, navigate to "WaveChallenge" website
+2) In the Actions pane, under Deploy section, click on "Import Application...". 
+Note: if there is no "Deploy" section there, install Web Deploy 3.5 and Web Deployment Tool 2.1 from Web Platform Installer. Re-open IIS.
+3) Select the Deployment Package that we created in Part I. Hit "Open"
+4) Proceed with "Next" all the way and click "Finish" at the end.
+
+Part IV. Test
+1) While in IIS, navigate to "ChallengeApp" under "WaveChallenge" website.
+2) In the Action pane -> Manage Application -> Browse Website section click on "Browse localhost on *:80 (http)" link.
+3) Test the application. 

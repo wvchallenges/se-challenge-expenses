@@ -1,5 +1,5 @@
 Implementation Round 1
-- Web form to get the source CSV file (Client Side)
-- A table showing the summary of the imported data (Client Side)
-- A service to import the records (Server Side)
-  - Service returns a list of successful records
+-(DONE) Web form to get the source CSV file (Client Side)
+-(DONE) A table showing the summary of the imported data (Client Side)
+-(DONE) A service to import the records (Server Side)
+ 

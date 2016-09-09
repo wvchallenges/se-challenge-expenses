@@ -1,15 +1,17 @@
+The instructions are for installing the application and database on the same Windows machine.
+I have tested these on Windows 10 with IIS 10. 
+
 For the database I have chosen PostgreSQL, since it is free, well supported and relational.
-
 Audience expectations: some experience with administering PostgreSql
-Installation Instructions:
 
+Installation Instructions:
 
 1) Install PostgreSQL 9.5.4.
  - Name admin account "postgres"
  - Set admin account passowrd to "WaveAdmin123$"
 2) Open pgAdmin
 3) Create new login role, name it "AccountingDbUser".
- - Set the password to "Wave123$"
+ - Set the password to "WorkGreat1!"
 3) Create new database, name it "AccountingDb" and make "AccountingDbUser" an owner.
 
 	CREATE DATABASE "AccountingDb"
@@ -37,4 +39,4 @@ WITH (
 )
 ;
 
-5) Done
+5) Done.

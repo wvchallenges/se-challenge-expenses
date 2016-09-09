@@ -7,11 +7,8 @@ Server Side
 
 Client Side
  - Bootstrap
- - SASS
  - TypeScript
  - jQuery
- - Angular JS
- - Jasmine
 
 
 ** Architecture
