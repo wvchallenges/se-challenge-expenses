@@ -20,6 +20,13 @@ namespace Wave_Challenge
                       "~/Scripts/3rdParty/Bootstrap/bootstrap.js",
                       "~/Scripts/3rdParty/respond/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                      "~/Scripts/Application/Utilities/DateTimeUtility.js",
+                      "~/Scripts/Application/Utilities/FileUtility.js",
+                      "~/Scripts/Application/Utilities/DomManipulationUtility.js",
+                      "~/Scripts/Application/ExpenseImportService.js",
+                      "~/Scripts/Application/ExpenseImportController.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Styles/3rdParty/Bootstrap/bootstrap.css",
                       "~/Styles/3rdParty/font-awesome-4.6.3/css/font-awesome.min.css",

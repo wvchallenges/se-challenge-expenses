@@ -159,6 +159,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\3rdParty\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\3rdParty\Bootstrap\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\Demo.pubxml" />
+    <None Include="Properties\PublishProfiles\WaveChallenge.pubxml" />
     <None Include="Scripts\3rdParty\jQuery\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\3rdParty\jQuery\jquery-1.10.2.js" />
     <Content Include="Scripts\3rdParty\jQuery\jquery-1.10.2.min.js" />
@@ -170,6 +172,10 @@
     <Content Include="Scripts\3rdParty\modernizr-2.6.2.js" />
     <Content Include="Scripts\3rdParty\respond\respond.js" />
     <Content Include="Scripts\3rdParty\respond\respond.min.js" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\css\font-awesome.css" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\css\font-awesome.min.css" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\HELP-US-OUT.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -184,6 +190,39 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\fonts\FontAwesome.otf" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\animated.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\bordered-pulled.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\core.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\fixed-width.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\font-awesome.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\icons.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\larger.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\list.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\mixins.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\path.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\rotated-flipped.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\screen-reader.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\stacked.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\less\variables.less" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\font-awesome.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_animated.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_bordered-pulled.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_core.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_fixed-width.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_icons.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_larger.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_list.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_mixins.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_path.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_rotated-flipped.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_screen-reader.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_stacked.scss" />
+    <Content Include="Styles\3rdParty\font-awesome-4.6.3\scss\_variables.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
