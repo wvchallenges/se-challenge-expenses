@@ -1,22 +1,35 @@
-from django.db import models
-
+from django.db import models, transaction
 from datetime import datetime
 from decimal import Decimal
 from locale import atof
-import locale
+import locale, uuid
 
 # batch processing bookkeeping
-class Job:
+class Job(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
     def __init__(self, itemReader, itemProcessor, itemWriter, batchInterval=1, params={}):
         if (batchInterval < 1 or batchInterval != int(batchInterval)):
             raise ValueError("batchInterval must be a positive integer")
+        
+        super(Job, self).__init__()
+        
         self.batchInterval = batchInterval
         self.itemReader = itemReader
         self.itemProcessor = itemProcessor
         self.itemProcessor.job = self
         self.itemWriter = itemWriter
         self.params = params
-    
+        
+        self.save()
+        
+    @transaction.atomic
+    def save(self):
+        super(Job, self).save()
+        for key, value in self.params.items():
+            JobParameter(job=self, key=key, value=value).save()
+        
     def before(self):
         pass
     
@@ -38,7 +51,12 @@ class Job:
         for item in batch:
             outputItems.append(self.itemProcessor.process(item))
         self.itemWriter.write(outputItems)
-
+        
+class JobParameter(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    key = models.CharField(max_length = 50)
+    value = models.CharField(max_length = 50)
+    
 class ItemProcessor:
     
     def process(self, item):
@@ -69,7 +87,8 @@ class Expense(models.Model):
     tax = models.ForeignKey(Tax, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    source = models.ForeignKey(CSVSource, on_delete=models.CASCADE)
+    source = models.ForeignKey(CSVSource, on_delete=models.DO_NOTHING, null=True)
+    job = models.ForeignKey(Job, on_delete=models.DO_NOTHING, null=True)
     date = models.DateField()
     description = models.CharField(max_length = 50)
     preTaxAmount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -98,18 +117,15 @@ class CSVItemReader:
     def headers(self):
         return self.headerRows
     
-class CSVJob(Job):
-    def before(self):
-        self.csvSource = CSVSource.objects.get(pk=self.params['csvSourceId'])
-        
 class CSVRowToExpenseModelProcessor(ItemProcessor):
     def process(self, item):
+        job = self.job
+        csvSource = CSVSource.objects.get(pk=job.params['csvSourceId'])
         locale.setlocale(locale.LC_ALL, 'english-us') # XXX potentially NOT cross-platform, windows-specific 
-        expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), description=item[4], preTaxAmount=Decimal(atof(item[5].strip())), taxAmount=Decimal(atof(item[7].strip())))
-        expense.tax, taxCreated = Tax.objects.get_or_create(source=self.job.csvSource, description=item[6])
-        expense.category, categoryCreated = Category.objects.get_or_create(source=self.job.csvSource, description=item[1])
-        expense.employee, employeeCreated = Employee.objects.get_or_create(source=self.job.csvSource, name=item[2], address=item[3])
-        expense.source = self.job.csvSource
+        expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), description=item[4], preTaxAmount=Decimal(atof(item[5].strip())), taxAmount=Decimal(atof(item[7].strip())), source=csvSource, job=job)
+        expense.tax, taxCreated = Tax.objects.get_or_create(source=csvSource, description=item[6])
+        expense.category, categoryCreated = Category.objects.get_or_create(source=csvSource, description=item[1])
+        expense.employee, employeeCreated = Employee.objects.get_or_create(source=csvSource, name=item[2], address=item[3])
         return expense
     
 class ExpenseItemWriter(ItemWriter):

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import Http404
 from django.http.response import HttpResponse
 
-from .models import CSVItemReader, CSVRowToExpenseModelProcessor, ExpenseItemWriter, CSVJob
+from .models import CSVItemReader, CSVRowToExpenseModelProcessor, ExpenseItemWriter, Job
 from .models import Expense
 from io import TextIOWrapper
 
@@ -17,7 +17,7 @@ def index(request):
         csvItemReader = CSVItemReader(TextIOWrapper(request.FILES['expenses'].file, "utf-8"), numHeaderRows=1)
         csvRowToExpenseModelProcessor = CSVRowToExpenseModelProcessor()
         expenseItemWriter = ExpenseItemWriter()
-        job = CSVJob(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, batchInterval=defaultBatchInterval, params=params)
+        job = Job(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, batchInterval=defaultBatchInterval, params=params)
         job.run()
         return HttpResponse(Expense.objects.all())
     else:
