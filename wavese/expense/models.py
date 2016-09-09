@@ -1,12 +1,20 @@
 from django.db import models
 
+from datetime import datetime
+from decimal import Decimal
+from locale import atof
+import locale
+
 # batch processing bookkeeping
-class Job(models.Model):
-    def __init__(self, itemReader, batchInterval=1, params={}):
+class Job:
+    def __init__(self, itemReader, itemProcessor, itemWriter, batchInterval=1, params={}):
         if (batchInterval < 1 or batchInterval != int(batchInterval)):
             raise ValueError("batchInterval must be a positive integer")
         self.batchInterval = batchInterval
         self.itemReader = itemReader
+        self.itemProcessor = itemProcessor
+        self.itemProcessor.job = self
+        self.itemWriter = itemWriter
         self.params = params
     
     def before(self):
@@ -23,18 +31,23 @@ class Job(models.Model):
             if (len(batch) >= self.batchInterval):
                 self.processBatch(batch)
                 batch = []
-        # TODO self.tail is for testing purposes.  remove from final product 
-        self.tail = self.processBatch(batch)
-        return self.tail
+        self.processBatch(batch)
     
     def processBatch(self, batch):
-        return batch
+        outputItems = []
+        for item in batch:
+            outputItems.append(self.itemProcessor.process(item))
+        self.itemWriter.write(outputItems)
 
-class JobParameters(models.Model):
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    key = models.CharField(max_length = 50)
-    value = models.CharField(max_length = 50)
-
+class ItemProcessor:
+    
+    def process(self, item):
+        return item
+    
+class ItemWriter:
+    def write(self, items):
+        pass
+    
 # domain model
 class CSVSource(models.Model):
     pass
@@ -87,5 +100,18 @@ class CSVItemReader:
     
 class CSVJob(Job):
     def before(self):
-        # make sure source id exists
-        CSVSource.objects.get(pk=self.params['csvSourceId'])
+        self.csvSource = CSVSource.objects.get(pk=self.params['csvSourceId'])
+        
+class CSVRowToExpenseModelProcessor(ItemProcessor):
+    def process(self, item):
+        locale.setlocale(locale.LC_ALL, 'english-us') # XXX potentially NOT cross-platform, windows-specific 
+        expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), description=item[4], preTaxAmount=Decimal(atof(item[5].strip())), taxAmount=Decimal(atof(item[7].strip())))
+        expense.tax, taxCreated = Tax.objects.get_or_create(source=self.job.csvSource, description=item[6])
+        expense.category, categoryCreated = Category.objects.get_or_create(source=self.job.csvSource, description=item[1])
+        expense.employee, employeeCreated = Employee.objects.get_or_create(source=self.job.csvSource, name=item[2], address=item[3])
+        expense.source = self.job.csvSource
+        return expense
+    
+class ExpenseItemWriter(ItemWriter):
+    def write(self, items):
+        Expense.objects.bulk_create(items)
