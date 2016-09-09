@@ -1,0 +1,43 @@
+﻿<div class="jumbotron">
+    <h1 class="text-center">Legacy Expense Import</h1>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <input type="file" id="sourceFileInput" accept=".csv" style="display:none">
+            <label for="sourceFileInput" id="inputFileButton" class="btn btn-primary">Select CSV file</label>
+        </div>
+        <div class="col-xs-12 text-center">
+            <span id="fileName" class="text-muted fileNameLabel hide ">file name</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-primary hide" id="importFile">Import</button>
+        </div>
+    </div>
+    <div class="row hide" id="spinner">
+        <div class="col-xs-12 text-center">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+</div>
+<div id="expenseReport" class="row hide">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6">
+        <div id="expenseReportAlert" class="alert alert-success text-center" role="alert">The file was successfully imported.</div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading text-center">Monthly Expense Report</div>
+
+            <table class="table table-striped table-bordered text-right">
+                <thead>
+                    <tr> <th class="text-right">Month</th> <th class="text-right">Total Expenses</th>  </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+
+@Scripts.Render("~/bundles/app")

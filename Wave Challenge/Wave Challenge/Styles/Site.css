@@ -1,0 +1,43 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+h1 {
+    font-family: 'UnifrakturMaguntia', cursive;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.row {
+    margin-bottom: 15px;
+}
+
+@media screen and (min-width: 768px) {
+    .jumbotron h1 {
+        font-size: 52px;
+        margin-bottom: 70px;
+    }
+}
+
+.fileNameLabel {
+    font-size: 16px;
+}
+
+.jumbotron{
+    margin-bottom:0;
+    padding-bottom:30px;
+}
+
+#expenseReport {
+    padding-bottom:45px;
+    margin: 0 0 30px;
+    background-color: #eeeeee;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius:6px
+
+}
