@@ -2,7 +2,7 @@ Below are the instructions for deploying it to your own IIS server.
 I have tested these on Windows 10 with IIS 10. 
 
 Part I. Create Deployment package
-1) Open solution in Visual Studio 2015 (Community or higher)
+1) Open solution (/se-challenge/Wave Challenge/Wave Challenge.sln) in Visual Studio 2015 (Community or higher)
 2) In "Solution Explorer", right-click on the "Wave Challenge" project, click on "Publish". "Publish Web" window will pop up.
 3) Select "Demo" profile. Click Next
 4) In "Package location" field, enter the path to where you want the deployment package to be saved, as long as the package name.
