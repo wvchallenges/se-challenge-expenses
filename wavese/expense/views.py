@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from django.db.models import Sum
-from django.db.models.functions import TruncYear, TruncMonth
+from django.db.models.functions import TruncMonth
 from django.http import Http404
 from django.http.response import HttpResponse
 

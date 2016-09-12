@@ -5,11 +5,19 @@ from locale import atof
 import locale, uuid
 
 # batch processing bookkeeping
+class JobExecutionListener:
+    def before(self):
+        pass
+    
+    def after(self):
+        pass
+    
+
 class Job(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
-    def __init__(self, itemReader, itemProcessor, itemWriter, batchInterval=1, params={}):
+    def __init__(self, itemReader, itemProcessor, itemWriter, jobExecutionListener=JobExecutionListener(), batchInterval=1, params={}):
         if (batchInterval < 1 or batchInterval != int(batchInterval)):
             raise ValueError("batchInterval must be a positive integer")
         
@@ -20,6 +28,7 @@ class Job(models.Model):
         self.itemProcessor = itemProcessor
         self.itemProcessor.job = self
         self.itemWriter = itemWriter
+        self.jobExecutionListener = jobExecutionListener
         self.params = params
         
         self.save()
@@ -33,14 +42,8 @@ class Job(models.Model):
         for key, value in self.params.items():
             JobParameter(job=self, key=key, value=value).save()
         
-    def before(self):
-        pass
-    
-    def after(self):
-        pass
-    
     def run(self):
-        self.before()
+        self.jobExecutionListener.before()
         batch = []
         for row in self.itemReader:
             batch.append(row)
@@ -48,6 +51,7 @@ class Job(models.Model):
                 self.processBatch(batch)
                 batch = []
         self.processBatch(batch)
+        self.jobExecutionListener.after()
     
     def processBatch(self, batch):
         outputItems = []
