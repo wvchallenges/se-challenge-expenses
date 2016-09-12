@@ -73,6 +73,7 @@ class ItemWriter:
     
 # domain model
 class CSVSource(models.Model):
+    defaultLocale = models.CharField(max_length = 50, default='english-us')
     pass
     
 class Tax(models.Model):
@@ -126,7 +127,7 @@ class CSVRowToExpenseModelProcessor(ItemProcessor):
     def process(self, item):
         job = self.job
         csvSource = CSVSource.objects.get(pk=job.params['csvSourceId'])
-        locale.setlocale(locale.LC_ALL, 'english-us') # XXX potentially NOT cross-platform, windows-specific 
+        locale.setlocale(locale.LC_ALL, csvSource.defaultLocale) # XXX potentially NOT cross-platform, windows-specific 
         expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), 
             description=item[4], 
             preTaxAmount=Decimal(atof(item[5].strip())), 
