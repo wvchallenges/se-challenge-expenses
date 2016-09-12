@@ -19,9 +19,14 @@ def index(request):
         csvItemReader = CSVItemReader(TextIOWrapper(request.FILES['expenses'].file, "utf-8"), numHeaderRows=1)
         csvRowToExpenseModelProcessor = CSVRowToExpenseModelProcessor()
         expenseItemWriter = ExpenseItemWriter()
-        job = Job(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, batchInterval=defaultBatchInterval, params=params)
+        job = Job(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, 
+            batchInterval=defaultBatchInterval, params=params)
         job.run()
-        return HttpResponse(Expense.objects.filter(job=job).annotate(truncMonth=TruncMonth('date')).values('truncMonth').annotate(preTaxAmount=Sum('preTaxAmount'), taxAmount=Sum('taxAmount')))
+        querySet = Expense.objects.filter(job=job) \
+            .annotate(truncMonth=TruncMonth('date')) \
+            .values('truncMonth') \
+            .annotate(preTaxAmount=Sum('preTaxAmount'), taxAmount=Sum('taxAmount'))
+        return HttpResponse(querySet)
     else:
         raise Http404()
 

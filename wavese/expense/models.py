@@ -24,6 +24,9 @@ class Job(models.Model):
         
         self.save()
         
+    # Save the Job and its parameters in a single transaction so that no information is lost.  A one-to-many relation 
+    # between Job and JobParameter makes sense because a JobParameter makes no sense outside the context of a Job. 
+    # Django does not have this relationship so it needs to be done manually.  
     @transaction.atomic
     def save(self):
         super(Job, self).save()
@@ -122,10 +125,16 @@ class CSVRowToExpenseModelProcessor(ItemProcessor):
         job = self.job
         csvSource = CSVSource.objects.get(pk=job.params['csvSourceId'])
         locale.setlocale(locale.LC_ALL, 'english-us') # XXX potentially NOT cross-platform, windows-specific 
-        expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), description=item[4], preTaxAmount=Decimal(atof(item[5].strip())), taxAmount=Decimal(atof(item[7].strip())), source=csvSource, job=job)
+        expense = Expense(date=datetime.strptime(item[0], '%m/%d/%Y').strftime('%Y-%m-%d'), 
+            description=item[4], 
+            preTaxAmount=Decimal(atof(item[5].strip())), 
+            taxAmount=Decimal(atof(item[7].strip())), 
+            source=csvSource, 
+            job=job)
         expense.tax, taxCreated = Tax.objects.get_or_create(source=csvSource, description=item[6])
         expense.category, categoryCreated = Category.objects.get_or_create(source=csvSource, description=item[1])
-        expense.employee, employeeCreated = Employee.objects.get_or_create(source=csvSource, name=item[2], address=item[3])
+        expense.employee, employeeCreated = Employee.objects.get_or_create(source=csvSource, 
+            name=item[2], address=item[3])
         return expense
     
 class ExpenseItemWriter(ItemWriter):
