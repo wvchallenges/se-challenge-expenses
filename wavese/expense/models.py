@@ -31,8 +31,6 @@ class Job(models.Model):
         self.jobExecutionListener = jobExecutionListener
         self.params = params
         
-        self.save()
-        
     # Save the Job and its parameters in a single transaction so that no information is lost.  A one-to-many relation 
     # between Job and JobParameter makes sense because a JobParameter makes no sense outside the context of a Job. 
     # Django does not have this relationship so it needs to be done manually.  

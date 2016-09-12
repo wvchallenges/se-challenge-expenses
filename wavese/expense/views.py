@@ -21,6 +21,7 @@ def index(request):
         expenseItemWriter = ExpenseItemWriter()
         job = Job(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, 
             batchInterval=defaultBatchInterval, params=params)
+        job.save()
         job.run()
         querySet = Expense.objects.filter(job=job) \
             .annotate(truncMonth=TruncMonth('date')) \
