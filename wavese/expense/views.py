@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.db.models import Sum
+from django.db.models.functions import TruncYear, TruncMonth
 from django.http import Http404
 from django.http.response import HttpResponse
 
@@ -19,7 +21,7 @@ def index(request):
         expenseItemWriter = ExpenseItemWriter()
         job = Job(csvItemReader, csvRowToExpenseModelProcessor, expenseItemWriter, batchInterval=defaultBatchInterval, params=params)
         job.run()
-        return HttpResponse(Expense.objects.all())
+        return HttpResponse(Expense.objects.filter(job=job).annotate(truncMonth=TruncMonth('date')).values('truncMonth').annotate(preTaxAmount=Sum('preTaxAmount'), taxAmount=Sum('taxAmount')))
     else:
         raise Http404()
 
