@@ -8,7 +8,7 @@ Assuming Python is installed ...
 
 The Django built-in development server was used to test this.  This can be started with by typing 
 'python manage.py runserver' in the wavese directory.  The Web form that handles CSV uploads can be accessed through 
-"127.0.0.1:8080".
+"127.0.0.1:8080/expense".
 
 To test uploads out-of-the-box, provide "1" as the CSV source id.
 
