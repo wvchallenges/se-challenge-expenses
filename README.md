@@ -31,13 +31,20 @@
 
 ## How to install:
 
-``` cd <project dir>; bundle ```
+``` 
+  cd <project dir>
+  bundle 
+  rake db:migrate
+```
 
 ## How to run:
 
 ### Server: 
 
-``` rails s ```
+``` 
+  rails s 
+# navigate to localhost:3000 in your browser
+```
 
 ### Tests:
 

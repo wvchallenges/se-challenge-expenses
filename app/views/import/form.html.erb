@@ -1,0 +1,13 @@
+<h1>Import your csv file</h1>
+<p>
+  <%= form_tag('/') do |f| %>
+    <p>
+    <label for="file">File to Upload</label>
+    <br>
+    <%= file_field_tag "file" %>
+    </p>
+    <p>
+      <%= submit_tag %>
+    </p>
+  <% end %>
+</p>

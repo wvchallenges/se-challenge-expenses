@@ -1,0 +1,19 @@
+<h1>Import#results</h1>
+<p>Find me in app/views/import/results.html.erb</p>
+<table>
+  <thead>
+    <tr>
+      <td>Year and Month</td>
+      <td>Amount</td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @report.each do |row| %>
+    <tr>
+      <td><%= row[:year_month] %></td>
+      <td><%= row[:amount] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
