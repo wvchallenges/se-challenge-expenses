@@ -4,26 +4,17 @@ class ImportController < ApplicationController
   def form
   end
 
-  # assume file exists and is well formed csv file according to spec in README.markdown
+  # Assumptions:
+  #   - File always exists
+  #   - Is always well formed csv file (according to spec in README.markdown)
   def results
-    idx=0
-    hash = {}
-    CSV.foreach(params[:file]) do |row|
-      idx+=1
-      next if idx == 1
+    report = MonthlyExpenseReport.new
+    # TODO: delegate to a csv parser
+    CSV.foreach(params[:file], skip_lines: /^date,category.*$/) do |row|
       item = LineItem.from(row)
       item.save
-      year_month = item.item_date.strftime('%Y-%m')
-      hash[year_month] ||= 0
-      hash[year_month] += item.item_amount
+      report.add(item)
     end
-    @report = report_on_all
-  end
-
-  def report_on_all
-    #select sum(item_amount), strftime('%Y-%m', item_date) as year_month from line_items group by year_month
-    report = LineItem.select("sum(item_amount) as amount, strftime('%Y-%m', item_date) as year_month"). 
-      group('year_month')
-    report
+    return render json: report.monthly.to_json
   end
 end

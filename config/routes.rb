@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   post 'import/results'
 
+  get 'import/report'
+
   root to: 'import#form', via: 'get'
   root to: 'import#results', via: 'post'
 

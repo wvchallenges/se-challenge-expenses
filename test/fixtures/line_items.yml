@@ -2,10 +2,10 @@
 
 one:
   item_date: 2016-09-15
-  item_category: MyString
+  item_name: MyString
   item_amount: 1.5
 
 two:
   item_date: 2016-09-15
-  item_category: MyString
+  item_name: MyString
   item_amount: 1.5

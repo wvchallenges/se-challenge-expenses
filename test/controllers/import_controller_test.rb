@@ -7,7 +7,7 @@ class ImportControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get results" do
-    get import_results_url
+    post import_results_url, params: { file: 'test/fixtures/data_example.csv' }
     assert_response :success
   end
 

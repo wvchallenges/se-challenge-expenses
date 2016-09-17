@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class LineItemTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test ".from(row)" do
+    assert_equal true, false
+  end
 end
