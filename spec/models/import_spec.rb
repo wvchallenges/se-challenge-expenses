@@ -2,11 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Import, type: :model do
 
-  it { is_expected.not_to be_valid }
-  context "uploaded_file is not blank" do
-    subject { Import.new uploaded_file: "foobar" }
-    it { is_expected.to be_valid }
-  end
+  it { is_expected.to have_and_belong_to_many(:expenses) }
+  it { is_expected.to validate_presence_of(:uploaded_file).with_message "must be selected" }
 
   describe "FileUploadConcern" do
     it "should include the module" do
@@ -14,4 +11,5 @@ RSpec.describe Import, type: :model do
     end
   end
 
+  it { is_expected.to callback(:process_uploaded_file).after(:commit).on(:create) }
 end
