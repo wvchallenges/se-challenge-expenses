@@ -1,0 +1,24 @@
+<h1 class="display-4">Imported data</h1>
+<hr class="m-y-2">
+
+<p class="lead">Total monthly expenses imported from <mark><%= import.original_filename %></mark></p>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-stripe">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th class="text-md-right">Total pretax amount</th>
+          <th class="text-md-right">Total tax amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2016-09</td>
+          <td class="text-md-right"><%= number_to_currency(2400) %></td>
+          <td class="text-md-right"><%= number_to_currency(123.23) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
