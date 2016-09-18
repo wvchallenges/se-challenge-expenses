@@ -11,6 +11,18 @@
 // about supported directives.
 //
 //= require jquery
+//= require tether
+//= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function() {
+  $(".custom-file-input").on("change", function() {
+    var input       = $(this),
+        placeholder = $(input).parents(".custom-file").find(".custom-file-control"),
+        content     = $(input).val().replace(/\\/g, '/').replace(/.*\//, '');
+
+    placeholder.attr("data-content", content);
+  });
+});
