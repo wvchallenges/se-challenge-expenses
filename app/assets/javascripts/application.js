@@ -19,10 +19,12 @@
 
 $(function() {
   $(".custom-file-input").on("change", function() {
-    var input       = $(this),
-        placeholder = $(input).parents(".custom-file").find(".custom-file-control"),
-        content     = $(input).val().replace(/\\/g, '/').replace(/.*\//, '');
+    var input             = $(this),
+        placeholder       = $(input).parents(".custom-file").find(".custom-file-control"),
+        originalFilename  = $(input).parents(".custom-file").find(".original-filename"),
+        content           = $(input).val().replace(/\\/g, '/').replace(/.*\//, '');
 
     placeholder.attr("data-content", content);
+    originalFilename.val(content);
   });
 });

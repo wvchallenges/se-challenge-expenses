@@ -15,9 +15,11 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+gem 'file_uploader'
+
 group :development, :test do
   gem 'pry-byebug', platform: :mri
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
