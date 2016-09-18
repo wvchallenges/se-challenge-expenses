@@ -17,3 +17,4 @@
 .byebug_history
 *.swp
 pg_data/
+public/upload

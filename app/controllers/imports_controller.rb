@@ -1,13 +1,7 @@
 class ImportsController < ApplicationController
   
-  def new
-    @import = Import.new
-  end
-
   def create
-    @import = Import.new import_params
-
-    if @import.save
+    if import.save
     else
       render "new"
     end

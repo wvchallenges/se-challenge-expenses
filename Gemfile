@@ -16,6 +16,7 @@ source 'https://rails-assets.org' do
 end
 
 gem 'file_uploader'
+gem 'decent_exposure', '3.0.0'
 
 group :development, :test do
   gem 'pry-byebug', platform: :mri
