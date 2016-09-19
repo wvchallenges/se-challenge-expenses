@@ -1,5 +1,6 @@
 class Import < ApplicationRecord
   has_and_belongs_to_many :expenses, join_table: "imported_expenses"
+  has_many :monthly_expenses
   validates :uploaded_file, presence: { message: "must be selected" }
 
   include FileUploadConcern

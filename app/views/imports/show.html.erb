@@ -13,11 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>2016-09</td>
-          <td class="text-md-right"><%= number_to_currency(2400) %></td>
-          <td class="text-md-right"><%= number_to_currency(123.23) %></td>
-        </tr>
+        <% import.monthly_expenses.each do |exp| %>
+          <tr>
+            <td><%= exp.month %></td>
+            <td class="text-md-right"><%= number_to_currency(exp.total_pretax_amount) %></td>
+            <td class="text-md-right"><%= number_to_currency(exp.total_tax_amount) %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
