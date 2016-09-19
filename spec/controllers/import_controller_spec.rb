@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe ImportController do
   describe '#results' do
-    let(:file) { 'spec/support/files/data_example.csv' }
+    let(:file) { Rack::Test::UploadedFile.new('spec/support/files/data_example.csv') }
     let(:expected_report) {
       {
       "2013-09" => 400.0,
