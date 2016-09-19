@@ -1,13 +1,35 @@
-<h1>Import your csv file</h1>
-<p>
-  <%= form_tag('/') do |f| %>
-    <p>
-    <label for="file">File to Upload</label>
-    <br>
-    <%= file_field_tag "file" %>
-    </p>
-    <p>
-      <%= submit_tag %>
-    </p>
-  <% end %>
-</p>
+<div class="container">
+  <div class="valign-wrapper">
+    <div class="center-block">
+      <div>
+        <h5>Import your csv file</h5>
+        <%= form_tag('/') do |f| %>
+          <p>
+          <label for="file">File to Upload</label>
+          <br>
+          <%= file_field_tag "file" %>
+          </p>
+          <p>
+            <%= submit_tag 'Upload', id: 'upload' %>
+          </p>
+        <% end %>
+      </div>
+      <br>
+      <div id="report">
+        <div class="divider"></div>
+        <h5>Expense Report</h5>
+        <table>
+          <thead>
+            <tr>
+              <td>Date</td>
+              <td>Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

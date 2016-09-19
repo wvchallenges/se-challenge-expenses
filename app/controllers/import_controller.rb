@@ -10,7 +10,7 @@ class ImportController < ApplicationController
   def results
     report = MonthlyExpenseReport.new
     # TODO: delegate to a csv parser
-    CSV.foreach(params[:file], skip_lines: /^date,category.*$/) do |row|
+    CSV.foreach(params[:file].path, skip_lines: /^date,category.*$/) do |row|
       item = LineItem.from(row)
       item.save
       report.add(item)
