@@ -23,10 +23,10 @@ def index(request):
         job.save()
         job.run()
         monthlyExpenses = Expense.objects.filter(job=job) \
-            .annotate(truncMonth=TruncMonth('date')) \
-            .values('truncMonth') \
-            .annotate(preTaxAmount=Sum('preTaxAmount'), taxAmount=Sum('taxAmount'), 
-                totalExpenseAmount=Sum('preTaxAmount') + Sum('taxAmount'))
+            .annotate(trunc_month=TruncMonth('date')) \
+            .values('trunc_month') \
+            .annotate(pre_tax_amount=Sum('preTaxAmount'), tax_amount=Sum('taxAmount'), 
+                total_expense_amount=Sum('preTaxAmount') + Sum('taxAmount'))
         context = {'monthlyExpenses' : monthlyExpenses}
         return render(request, 'expense/monthlyExpenses.html', context)
     else:

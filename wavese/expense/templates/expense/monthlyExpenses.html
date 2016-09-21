@@ -1,6 +1,6 @@
 Monthly Expenses
 <ul>
 {% for monthlyExpense in monthlyExpenses %}
-    <li>{{monthlyExpense.truncMonth | date:"F Y"}} - {{ monthlyExpense.totalExpenseAmount }}</li>
+    <li>{{monthlyExpense.trunc_month | date:"F Y"}} - {{ monthlyExpense.total_expense_amount }}</li>
 {% endfor %}
 </ul>
