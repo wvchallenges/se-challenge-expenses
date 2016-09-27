@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-right">
+  <button onClick="window.print()">
+    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+  </button>
+</div>
+
+<div  >
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-center">Month</th>
+        <th class="text-center">Total Expense ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in monthlyExpenses %}
+      <tr>
+        <td>{{item.month}}</td>
+        <td>{{item.total}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div>
+    <embed type="image/svg+xml" src="/graph" width="800" height="800"/>
+  </div>
+</div>
+
+
+{% endblock %}
