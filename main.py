@@ -1,16 +1,16 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, ForeignKey, Integer, String, func, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
-from database_setup import Expense
 import csv
 import os
-from werkzeug.utils import secure_filename
 import pygal
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, ForeignKey
+from sqlalchemy import Integer, String, func, DateTime
+from werkzeug.utils import secure_filename
+from database_setup import Expense
 from pygal.style import CleanStyle
+from flask import Flask, render_template, request, redirect
+from flask import url_for, flash, send_from_directory
+
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['csv'])
@@ -27,9 +27,6 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-
-
-
 
 
 @app.route('/',  methods=['GET', 'POST'])
@@ -65,7 +62,8 @@ def fileMainPage(filename):
 @app.route('/uploads/report', methods=['GET'])
 def monthlyExpenseReport():
     monthlyExpenses = generateMonthlyExpense()
-    return render_template('monthlyExpense.html', monthlyExpenses=monthlyExpenses)
+    return render_template('monthlyExpense.html',
+                           monthlyExpenses=monthlyExpenses)
 
 
 @app.route('/graph')
@@ -88,12 +86,12 @@ def allowed_file(filename):
 
 def importToDB(filename):
     emptyExpenseTable()
-    f = open(app.config['UPLOAD_FOLDER']+"/"+filename, 'r');
+    f = open(app.config['UPLOAD_FOLDER']+"/"+filename, 'r')
     reader = csv.reader(f)
     i = 0
     for row in reader:
         # skip header row
-        if (i!=0):
+        if (i != 0):
             addExpense(row)
         else:
             i += 1
@@ -105,23 +103,30 @@ def emptyExpenseTable():
 
 
 def addExpense(row):
-    newItem = Expense(date=row[0], category=row[1], employee=row[2], address=row[3], description=row[4], pre_tax=row[5].replace(',',''), tax_name=row[6], tax_amount=row[7].replace(',',''))
+    newItem = Expense(
+        date=row[0], category=row[1], employee=row[2],
+        address=row[3], description=row[4], pre_tax=row[5].replace(',', ''),
+        tax_name=row[6], tax_amount=row[7].replace(',', ''))
     session.add(newItem)
     session.commit()
 
 
 def generateMonthlyExpense():
-    result = session.query(func.sum(Expense.pre_tax).label('pre_tax'),\
-    func.sum(Expense.tax_amount).label('tax'),\
-    func.date_trunc('month',Expense.date).label('month'))\
-    .group_by(func.date_trunc('month',Expense.date))\
-    .order_by('month')
+    result = session.query(
+        func.sum(Expense.pre_tax).label('pre_tax'),
+        func.sum(Expense.tax_amount).label('tax'),
+        func.date_trunc('month', Expense.date).label('month'))\
+        .group_by(func.date_trunc('month', Expense.date))\
+        .order_by('month')
 
     monthlyExpenses = []
-    company.monthlyExpenses =[]
+    company.monthlyExpenses = []
     for row in result.all():
-        company.monthlyExpenses.append(MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
-        monthlyExpenses.append(MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
+        company.monthlyExpenses.append(
+            MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
+
+        monthlyExpenses.append(
+            MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
     return monthlyExpenses
 
 
@@ -136,14 +141,14 @@ class MonthlyExpense():
         self.tax = tax
         self.total = self.preTax + self.tax
 
+
 class Company():
     monthlyExpenses = []
     name = ""
-
 
 
 if __name__ == '__main__':
     company = Company()
     app.secret_key = 'kexin'
     app.debug = True
-    app.run(host = '0.0.0.0', port = 5000)
+    app.run(host='0.0.0.0', port=5000)
