@@ -1,20 +1,20 @@
 ## How to set up this project
 create an empty vagrant directory  
-cd vagrant_directory  
-git pull the files from this github repository  
-vagrant up  
+⋅⋅⋅cd vagrant_directory  
+⋅⋅⋅git pull the files from this github repository  
+⋅⋅⋅vagrant up  
 
 go to shared vagrant directory:  
-    cd /vagrant  
+⋅⋅⋅cd /vagrant  
 create database company:  
-    psql  
-    create database company;  
-    \q  
+⋅⋅⋅psql  
+⋅⋅⋅create database company;  
+⋅⋅⋅\q  
 set up database:  
-    python database_setup.py  
-    (You might need to change the passwords setting at line 31 to be able to connect to the database)  
+⋅⋅⋅python database_setup.py  
+⋅⋅⋅(You might need to change the passwords setting at line 31 to be able to connect to the database)  
 start website:  
-    python main.py  
+⋅⋅⋅python main.py  
 
 open browser, type: localhost: 5000/  
 
@@ -30,7 +30,7 @@ employee(p_id, name, address)
 Instead of saving each expense row directly to the database, this design can reduce data redundancy
 
 
-### front-end
+### Front-end
 * I used some Bootstrap for styling the web pages and created charts with Pygal framework.
 * I also used Flask(Jinja) to style the top menu button to improve user experience.
   It changes border color when selected.
