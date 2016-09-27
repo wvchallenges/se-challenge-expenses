@@ -6,7 +6,7 @@ from itertools import groupby
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from sqlalchemy import func, extract
+from sqlalchemy import func, extract, desc
 
 UPLOAD_FOLDER = '/tmp'
 ALLOWED_EXTENSIONS = set(['csv'])
@@ -96,14 +96,14 @@ def query_monthly_expense():
         chronologically.
     '''
     expenses = db.session.query(
-        extract('month', Expense.date),
-        extract('year', Expense.date),
-        func.sum(Expense.pretax_amount),
-        func.sum(Expense.tax_amount),
+        extract('month', Expense.date).label('month'),
+        extract('year', Expense.date).label('year'),
+        func.sum(Expense.pretax_amount).label('pretax_amount'),
+        func.sum(Expense.tax_amount).label('tax_amount'),
     ).group_by(
         extract('month', Expense.date),
         extract('year', Expense.date)
-    ).all()
+    ).order_by(desc('year')).order_by(desc('month')).all()
 
     return expenses
 
@@ -128,4 +128,4 @@ def upload_file():
 
     expenses = query_monthly_expense()
 
-    return render_template('main.html')
+    return render_template('main.html', expenses=expenses)

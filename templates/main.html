@@ -18,6 +18,28 @@
   <input type="submit" value="Upload">
 </form>
 
+<h3>Monthly Expenses</h3>
+{% if expenses %}
+<table>
+  <tr>
+    <th>Month & Year</th>
+    <th>Pre-tax Amount ($)</th>
+    <th>Tax Amount ($)</th>
+    <th>Total ($)</th>
+  </tr>
+  {% for expense in expenses %}
+  <tr>
+    <td>{{ "%02d/%04d" % (expense.month, expense.year) }}</td>
+    <td>{{ "%.02f" % expense.pretax_amount }}</td>
+    <td>{{ "%.02f" % expense.tax_amount }}</td>
+    <td>{{ "%0.2f" % (expense.pretax_amount + expense.tax_amount) }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+  <p>There are currently no monthly expenses.</p>
+{% endif %}
+
 </body>
 
 </html>
