@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, ForeignKey
 from sqlalchemy import Integer, String, func, DateTime
 from werkzeug.utils import secure_filename
-from database_setup import Expense
+from database_setup import Expense, Employee
 from pygal.style import CleanStyle
 from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, send_from_directory
@@ -14,6 +14,8 @@ from flask import url_for, flash, send_from_directory
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['csv'])
+HEADER = ['date', 'category', 'employee name', 'employee address',
+          'expense description', 'pre-tax amount', 'tax name', 'tax amount']
 
 
 engine = create_engine('postgresql://vagrant:kexin@localhost/company')
@@ -41,11 +43,11 @@ def mainPage():
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            flash('No selected file')
+            flash('No selected file', 'error')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            company = Company(filename)
+            company.name = filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash("File " + filename + " uploaded")
             importToDB(filename)
@@ -88,13 +90,17 @@ def importToDB(filename):
     emptyExpenseTable()
     f = open(app.config['UPLOAD_FOLDER']+"/"+filename, 'r')
     reader = csv.reader(f)
-    i = 0
+    isHeader = True
     for row in reader:
         # skip header row
-        if (i != 0):
-            addExpense(row)
+        if (not isHeader):
+            importRow(row)
         else:
-            i += 1
+            if (checkHeader(row)):
+                isHeader = False
+            else:
+                flash("File " + filename + " is not supported.", 'error')
+                break
 
 
 def emptyExpenseTable():
@@ -102,13 +108,28 @@ def emptyExpenseTable():
     session.commit()
 
 
-def addExpense(row):
-    newItem = Expense(
-        date=row[0], category=row[1], employee=row[2],
-        address=row[3], description=row[4], pre_tax=row[5].replace(',', ''),
+def importRow(row):
+    employeeId = session.query(Employee.p_id).\
+                               filter(Employee.name == row[2]).scalar()
+    if (employeeId is None):
+        newEmployee = Employee(name=row[2], address=row[3])
+        session.add(newEmployee)
+        session.commit()
+        employeeId = session.query(Employee.p_id).\
+            filter(Employee.name == row[2]).scalar()
+
+    newExpense = Expense(
+        date=row[0], category=row[1], employee=employeeId,
+        description=row[4], pre_tax=row[5].replace(',', ''),
         tax_name=row[6], tax_amount=row[7].replace(',', ''))
-    session.add(newItem)
+    session.add(newExpense)
     session.commit()
+
+
+def checkHeader(row):
+    if (row != HEADER):
+        return False
+    return True
 
 
 def generateMonthlyExpense():
