@@ -14,11 +14,11 @@
 <body>
     <div class="container">
         <section class="row page-header header_site text-center">
-            <section class="col-xs-6">
+            <section class="col-xs-6" style="border-style: dotted; border-color: {{style1}};">
                 <i class="glyphicon glyphicon-plus"></i>
-                <a href={{url_for('mainPage', filename=filename)}}>Import New File</a>
+                <a  href={{url_for('mainPage', filename=filename)}}>Import New File</a>
             </section>
-            <section class="col-xs-6">
+            <section class="col-xs-6" style="border-style: dotted; border-color: {{style2}};">
                 <i class="glyphicon glyphicon-file"></i>
                 <a href={{url_for('monthlyExpenseReport', filename=filename)}}>View Report</a>
             </section>

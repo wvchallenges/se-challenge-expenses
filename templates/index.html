@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<title>Upload new File</title>
-<h1>Upload File</h1>
-<form action="{{url_for('mainPage')}}" method=post enctype=multipart/form-data>
-  <label class="btn btn-default btn-file">
-     <input type="file" name=file >
-  </label>
-  <button type=submit class="btn btn-primary">Upload</button>
-</form>
+<div>
+  <title>Upload new File</title>
+  <h1>Upload File</h1>
+  <form action="{{url_for('mainPage')}}" method=post enctype=multipart/form-data>
+    <label class="btn btn-default btn-file">
+       <input type="file" name=file >
+    </label>
+    <button type=submit class="btn btn-primary">Upload</button>
+  </form>
+
+</div>
+
 
 {% endblock %}

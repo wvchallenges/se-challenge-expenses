@@ -3,6 +3,7 @@ import sys
 from sqlalchemy import Column, ForeignKey, Integer, String, Date, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy import create_engine
 
 Base = declarative_base()
@@ -28,4 +29,7 @@ class Employee(Base):
 
 
 engine = create_engine('postgresql://vagrant:kexin@localhost/company')
+# if (not database_exists(engine.url)):
+#     create_database(engine.url)
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)

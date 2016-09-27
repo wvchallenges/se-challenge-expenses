@@ -17,6 +17,9 @@ ALLOWED_EXTENSIONS = set(['csv'])
 HEADER = ['date', 'category', 'employee name', 'employee address',
           'expense description', 'pre-tax amount', 'tax name', 'tax amount']
 
+CSS_SELECT = "#1ab2ff"
+CSS_UNSELECT = "white"
+
 
 engine = create_engine('postgresql://vagrant:kexin@localhost/company')
 app = Flask(__name__)
@@ -53,19 +56,19 @@ def mainPage():
             importToDB(filename)
             return redirect(url_for('fileMainPage', filename=filename))
 
-    return render_template('index.html')
+    return render_template('index.html', style1=CSS_SELECT, style2=CSS_UNSELECT)
 
 
 @app.route('/uploads/<filename>', methods=['GET'])
 def fileMainPage(filename):
-    return render_template('fileMain.html', filename=filename)
+    return render_template('fileMain.html', filename=filename, style1=CSS_UNSELECT, style2=CSS_UNSELECT)
 
 
 @app.route('/uploads/report', methods=['GET'])
 def monthlyExpenseReport():
     monthlyExpenses = generateMonthlyExpense()
     return render_template('monthlyExpense.html',
-                           monthlyExpenses=monthlyExpenses)
+                           monthlyExpenses=monthlyExpenses, style1=CSS_UNSELECT, style2=CSS_SELECT)
 
 
 @app.route('/graph')
