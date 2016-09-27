@@ -6,7 +6,7 @@ from itertools import groupby
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from sqlalchemy import func
+from sqlalchemy import func, extract
 
 UPLOAD_FOLDER = '/tmp'
 ALLOWED_EXTENSIONS = set(['csv'])
@@ -25,7 +25,7 @@ TAX_AMOUNT = 'tax amount'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 
 db = SQLAlchemy(app)
 
@@ -68,12 +68,6 @@ def allowed_filename(filename):
     '''
     return filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
-def month_year_grouper(item):
-    '''
-        Return the (month, year) tuple for the given item.
-    '''
-    return item.date.month, item.date.year
-
 def read_file_to_db(csv_file):
     '''
         Read the file into database.
@@ -98,25 +92,20 @@ def query_monthly_expense():
     '''
         Query monthly expenses from database.
 
-        Return a list of ("mm/yyyy", pretax_amount, tax_amount) tuples sorted
+        Return a list of (month, year, pretax_amount, tax_amount) tuples sorted
         chronologically.
     '''
     expenses = db.session.query(
-        Expense.date,
-        Expense.pretax_amount,
-        Expense.tax_amount,
-    ).order_by(Expense.date).all()
+        extract('month', Expense.date),
+        extract('year', Expense.date),
+        func.sum(Expense.pretax_amount),
+        func.sum(Expense.tax_amount),
+    ).group_by(
+        extract('month', Expense.date),
+        extract('year', Expense.date)
+    ).all()
 
-    monthly_expenses = []
-    for (month, year), items in groupby(expenses, month_year_grouper):
-        pretax_amount = 0
-        tax_amount = 0
-        for i in items:
-            pretax_amount += i.pretax_amount
-            tax_amount += i.tax_amount
-        monthly_expenses.append(((month, year), pretax_amount, tax_amount))
-
-    return monthly_expenses
+    return expenses
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
