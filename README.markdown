@@ -1,50 +1,39 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+## How to set up this project
+create an empty vagrant directory
+cd vagrant_directory
+git pull the files from this github repository
+vagrant up
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+go to shared vagrant directory:
+    cd /vagrant
+create database company:
+    psql
+    create database company;
+    \q
+set up database:
+    python database_setup.py
+    (You might need to change the passwords setting at line 31 to be able to connect to the database)
+start website:
+    python main.py
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+open browser, type: localhost: 5000/
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+## Implementation
+### Back-end
+* I set up a virtual development environment using Vagrant and installed Apache2, PostgreSQL, Flask, and SQLAlchemy.
+* PostgreSQL database communicates with the program through SQLAlchemy.
+* I also used Flask to set up HTML templates and URLs.
+* Database schema:
+expense(id, data, category, employee, description, pre_tax, tax_name, tax_amount)
+employee(p_id, name, address)
+Instead of saving each expense row directly to the database, this design can reduce data redundancy
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
-
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
-
-### What your web-based application must do:
-
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
-
- An example input file named `data_example.csv` is included in this repo.
-
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
-
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
-
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
-
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
-
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+### front-end
+* I used some Bootstrap for styling the web pages and created charts with Pygal framework.
+* I also used Flask(Jinja) to style the top menu button to improve user experience.
+  It changes border color when selected.
+* A print button is provided so that user can print the page with one click.
+  I used window.print() function instead of generating a PDF file for a fast solution.
+  I will try to use Pdfkit later.
