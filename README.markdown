@@ -1,22 +1,21 @@
 ## How to set up this project
-create an empty vagrant directory  
-⋅⋅⋅cd vagrant_directory  
-⋅⋅⋅git pull the files from this github repository  
-⋅⋅⋅vagrant up  
+* create an empty vagrant directory  
+cd vagrant_directory  
+git pull the files from this github repository  
+vagrant up  
 
-go to shared vagrant directory:  
-⋅⋅⋅cd /vagrant  
-create database company:  
-⋅⋅⋅psql  
-⋅⋅⋅create database company;  
-⋅⋅⋅\q  
-set up database:  
-⋅⋅⋅python database_setup.py  
-⋅⋅⋅(You might need to change the passwords setting at line 31 to be able to connect to the database)  
-start website:  
-⋅⋅⋅python main.py  
-
-open browser, type: localhost: 5000/  
+* go to shared vagrant directory:  
+cd /vagrant  
+* create database company:  
+psql  
+create database company;  
+\q  
+* set up database:  
+python database_setup.py  
+(You might need to change the passwords setting at line 31 to be able to connect to the database)  
+* start server:  
+python main.py  
+* open browser, type: localhost: 5000/  
 
 
 ## Implementation
