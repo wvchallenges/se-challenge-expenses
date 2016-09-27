@@ -3,7 +3,7 @@ import csv
 from datetime import datetime
 from itertools import groupby
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from sqlalchemy import func, extract, desc
@@ -71,24 +71,34 @@ def allowed_filename(filename):
 def read_file_to_db(csv_file):
     '''
         Read the file into database.
+
+        Return a list of Expenses read from the file and commited to the
+        database.
     '''
-    reader = csv.DictReader(csv_file)
-    for line in reader:
-        expense = Expense(
-            datetime.strptime(line[DATE], DATE_FORMAT),
-            line[CATEGORY],
-            line[EMPLOYEE_NAME],
-            line[EMPLOYEE_ADDRESS],
-            line[EXPENSE_DESCRIPTION],
-            line[PRETAX_AMOUNT].replace(',', ''),
-            line[TAX_NAME],
-            line[TAX_AMOUNT].replace(',', '')
-        )
-        db.session.add(expense)
-    db.session.commit()
+    try:
+        expenses = []
+        reader = csv.DictReader(csv_file)
+        for line in reader:
+            expense = Expense(
+                datetime.strptime(line[DATE], DATE_FORMAT),
+                line[CATEGORY],
+                line[EMPLOYEE_NAME],
+                line[EMPLOYEE_ADDRESS],
+                line[EXPENSE_DESCRIPTION],
+                line[PRETAX_AMOUNT].replace(',', ''),
+                line[TAX_NAME],
+                line[TAX_AMOUNT].replace(',', '')
+            )
+            expenses.append(expense)
+            db.session.add(expense)
+        db.session.commit()
+        return expenses
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        raise e
 
-
-def query_monthly_expense():
+def query_monthly_expenses():
     '''
         Query monthly expenses from database.
 
@@ -107,12 +117,34 @@ def query_monthly_expense():
 
     return expenses
 
+def calculate_monthly_expenses(expenses):
+    '''
+        Compute monthly expenses from the given list of expenses.
+
+        Return a list of (month, year, pretax_amount, tax_amount) tuples sorted
+        chronologically.
+    '''
+    monthly_expenses = {}
+    for e in expenses:
+        month_year = datetime(e.date.year, e.date.month, 1)
+        pretax = 0
+        tax = 0
+        if month_year in monthly_expenses:
+            _, _, pretax, tax = monthly_expenses[month_year]
+        monthly_expenses[month_year] = (e.date.month,
+                                        e.date.year,
+                                        pretax + e.pretax_amount,
+                                        tax + e.tax_amount)
+    return monthly_expenses.itervalues()
+
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     '''
         POST - process file upload
         GET - display monthly expenses and file upload form.
     '''
+    filename = ''
+    monthly_expenses = []
     if request.method == 'POST':
         # check if post has a file part
         if 'file' not in request.files:
@@ -124,8 +156,13 @@ def upload_file():
         if f and f.filename == '':
             return redirect(request.url)
 
-        read_file_to_db(f)
+        try:
+            expenses = read_file_to_db(f)
+        except Exception as e:
+            abort(500)
+        monthly_expenses = calculate_monthly_expenses(expenses)
+        filename = f.filename
 
-    expenses = query_monthly_expense()
-
-    return render_template('main.html', expenses=expenses)
+    return render_template('main.html',
+                           expenses=monthly_expenses,
+                           filename=filename)

@@ -3,6 +3,7 @@
 
 <head>
   <title>Wave Software Development Challenge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -19,25 +20,26 @@
 </form>
 
 <h3>Monthly Expenses</h3>
-{% if expenses %}
-<table>
-  <tr>
-    <th>Month & Year</th>
-    <th>Pre-tax Amount ($)</th>
-    <th>Tax Amount ($)</th>
-    <th>Total ($)</th>
-  </tr>
-  {% for expense in expenses %}
-  <tr>
-    <td>{{ "%02d/%04d" % (expense.month, expense.year) }}</td>
-    <td>{{ "%.02f" % expense.pretax_amount }}</td>
-    <td>{{ "%.02f" % expense.tax_amount }}</td>
-    <td>{{ "%0.2f" % (expense.pretax_amount + expense.tax_amount) }}</td>
-  </tr>
-  {% endfor %}
-</table>
+{% if filename and expenses %}
+  <p>Total expenses by month in {{ filename }}.</p>
+  <table>
+    <tr>
+      <th>Month & Year</th>
+      <th>Pre-tax Amount ($)</th>
+      <th>Tax Amount ($)</th>
+      <th>Total ($)</th>
+    </tr>
+    {% for month, year, pretax, tax in expenses %}
+    <tr>
+      <td>{{ "%02d/%04d" % (month, year) }}</td>
+      <td>{{ "%.02f" % pretax }}</td>
+      <td>{{ "%.02f" % tax }}</td>
+      <td>{{ "%0.2f" % (pretax + tax) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 {% else %}
-  <p>There are currently no monthly expenses.</p>
+  <p>Upload a file to view its total expenses by month.</p>
 {% endif %}
 
 </body>
