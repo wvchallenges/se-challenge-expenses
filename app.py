@@ -62,25 +62,24 @@ def allowed_filename(filename):
     '''
     return filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
-def read_file_to_db(filepath):
+def read_file_to_db(csv_file):
     '''
         Read the file into database.
     '''
-    with open(filepath, 'rb') as csv_file:
-        reader = csv.DictReader(csv_file)
-        for line in reader:
-            expense = Expense(
-                datetime.strptime(line[DATE], DATE_FORMAT),
-                line[CATEGORY],
-                line[EMPLOYEE_NAME],
-                line[EMPLOYEE_ADDRESS],
-                line[EXPENSE_DESCRIPTION],
-                line[PRETAX_AMOUNT].replace(',', ''),
-                line[TAX_NAME],
-                line[TAX_AMOUNT].replace(',', '')
-            )
-            db.session.add(expense)
-        db.session.commit()
+    reader = csv.DictReader(csv_file)
+    for line in reader:
+        expense = Expense(
+            datetime.strptime(line[DATE], DATE_FORMAT),
+            line[CATEGORY],
+            line[EMPLOYEE_NAME],
+            line[EMPLOYEE_ADDRESS],
+            line[EXPENSE_DESCRIPTION],
+            line[PRETAX_AMOUNT].replace(',', ''),
+            line[TAX_NAME],
+            line[TAX_AMOUNT].replace(',', '')
+        )
+        db.session.add(expense)
+    db.session.commit()
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -99,10 +98,6 @@ def upload_file():
         if f and f.filename == '':
             return redirect(request.url)
 
-        if f and allowed_filename(f.filename):
-            filename = secure_filename(f.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            f.save(filepath)
-            return read_file_to_db(filepath)
+        read_file_to_db(f)
 
     return render_template('main.html')
