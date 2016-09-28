@@ -158,10 +158,10 @@ def upload_file():
 
         try:
             expenses = read_file_to_db(f)
+            monthly_expenses = calculate_monthly_expenses(expenses)
+            filename = f.filename
         except Exception as e:
             abort(500)
-        monthly_expenses = calculate_monthly_expenses(expenses)
-        filename = f.filename
 
     return render_template('main.html',
                            expenses=monthly_expenses,
