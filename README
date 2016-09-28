@@ -1,0 +1,23 @@
+# Wave Software Development Challenge
+
+## Software Requirements
+* Python 2.7
+* PostgreSQL 9.3
+
+Refer to [this guide](https://techarena51.com/index.php/flask-sqlalchemy-postgresql-tutorial/)
+to set up a PostgreSQL user, password, and database.
+
+## Set-up
+Ensure that the software in the Software Requirements are installed. Perform
+the following inside the `se-challenge` directory.
+1. Run `pip install -r requirements.txt`
+2. Modify line 28 in `app.py` with your user, pasword and database.
+```
+28. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
+```
+
+## Running
+Run the following from inside the `se-challenge` directory
+1. `export FLASK_APP=app.py`
+2. `flask run`
+Optionally, run `export FLASK_DEBUG=1` to run with debugger on.
