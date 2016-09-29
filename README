@@ -3,7 +3,8 @@
 ## Assumptions
 The solution to the challenge makes the following assumptions in addition to
 the ones given in the challenge description:
-* Monthly expenses for the last file uploaded to the server are displayed.
+* Monthly expenses for the last file uploaded to the server while it is online
+are displayed.
 * Employees in the files can be uniquely identified by their name and address
 combination.
 
@@ -20,7 +21,7 @@ the following inside the `se-challenge` directory.
 1. Run `pip install -r requirements.txt`
 2. Modify line 28 in `app.py` with your user, pasword and database.
 ```
-28. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
+33. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 ```
 3. Run the `python` interpreter from command line. We need to create the tables
 for the application.

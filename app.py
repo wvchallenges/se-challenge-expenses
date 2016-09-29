@@ -6,12 +6,17 @@ from itertools import groupby
 from flask import Flask, request, redirect, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from werkzeug.contrib.cache import SimpleCache
 from sqlalchemy import func, extract, desc
 
 UPLOAD_FOLDER = '/tmp'
 ALLOWED_EXTENSIONS = set(['csv'])
 MAX_STR_LEN = 256
 DATE_FORMAT = '%m/%d/%Y'
+
+# Notable cache keys
+LAST_FILENAME = 'last_filename'
+LAST_MONTHLY = 'last_monthly'
 
 # CSV field names
 DATE = 'date'
@@ -28,6 +33,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 
 db = SQLAlchemy(app)
+last_cache = SimpleCache(default_timeout=0)
+upload_cache = SimpleCache(default_timeout=0)
 
 class Expense(db.Model):
     '''
@@ -122,7 +129,7 @@ def calculate_monthly_expenses(expenses):
                                         e.date.year,
                                         pretax + e.pretax_amount,
                                         tax + e.tax_amount)
-    return monthly_expenses.itervalues()
+    return monthly_expenses.values()
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -130,8 +137,10 @@ def upload_file():
         POST - process file upload
         GET - display monthly expenses and file upload form.
     '''
-    filename = ''
-    monthly_expenses = []
+    filename, monthly_expenses = last_cache.get_many(
+        LAST_FILENAME,
+        LAST_MONTHLY
+    )
     if request.method == 'POST':
         # check if post has a file part
         if 'file' not in request.files:
@@ -147,8 +156,12 @@ def upload_file():
             expenses = read_file_to_db(f)
             monthly_expenses = calculate_monthly_expenses(expenses)
             filename = f.filename
+            last_cache.set_many({
+                LAST_FILENAME: filename,
+                LAST_MONTHLY: monthly_expenses
+            })
         except Exception as e:
-            return redirect(requrest.url)
+            return redirect(request.url)
 
     return render_template('main.html',
                            expenses=monthly_expenses,
