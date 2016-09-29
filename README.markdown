@@ -39,10 +39,11 @@ to set up a PostgreSQL user, password, and database.
 ## Set-up
 Ensure that the software in the Software Requirements are installed for your
 operating system. Perform the following inside the `se-challenge` directory.
+
 1. Run `pip install -r requirements.txt`
-2. Modify line 28 in `app.py` with your user, pasword and database.
+2. Modify line 34 in `app.py` with your user, pasword and database.
 ```
-33. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
+34. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 ```
 3. Run the `python` interpreter from command line. We need to create the tables
 for the application.
@@ -55,9 +56,11 @@ for the application.
 The application is now ready to be run.
 
 ## Running
-Run the following from inside the `se-challenge` directory
+Run the following from inside the `se-challenge` directory:
+
 1. `export FLASK_APP=app.py`
 2. `flask run`
+
 Optionally, run `export FLASK_DEBUG=1` to run with debugger on.
 
 Visit `http://localhost:5000/` to view the application.
