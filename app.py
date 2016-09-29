@@ -3,7 +3,7 @@ import csv
 from datetime import datetime
 from itertools import groupby
 
-from flask import Flask, request, redirect, render_template, abort
+from flask import Flask, request, redirect, render_template, abort, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from werkzeug.contrib.cache import SimpleCache
@@ -29,6 +29,7 @@ TAX_NAME = 'tax name'
 TAX_AMOUNT = 'tax amount'
 
 app = Flask(__name__)
+app.secret_key = 'secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 
@@ -58,14 +59,6 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(MAX_STR_LEN), nullable=False)
     address = db.Column(db.String(MAX_STR_LEN), nullable=False)
-
-def allowed_filename(filename):
-    '''
-        Check that the given filename is allowed.
-
-        Return True if the filename is allowed. Otherwise, return False.
-    '''
-    return filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
 def read_file_to_db(csv_file):
     '''
@@ -157,12 +150,14 @@ def upload_file():
     if request.method == 'POST':
         # check if post has a file part
         if 'file' not in request.files:
+            flash('No file part.')
             return redirect(request.url)
 
         f = request.files['file']
 
         # check empty file name
         if f and f.filename == '':
+            flash('Empty file part.')
             return redirect(request.url)
 
         try:
@@ -174,6 +169,7 @@ def upload_file():
                 LAST_MONTHLY: monthly_expenses
             })
         except Exception as e:
+            flash('Error occurred during file processing.')
             return redirect(request.url)
 
     return render_template('main.html',
