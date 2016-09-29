@@ -1,10 +1,26 @@
 # Wave Software Development Challenge
 
-## Assumptions
-The solution to the challenge makes the following assumptions in addition to
-the ones given in the challenge description:
-* Employees in the files can be uniquely identified by their name and address
-combination.
+## Notable Design Choices
+
+The given expense data contains redudant data by including an employee name and
+address on each expense item. To reduce the size of the data the database
+caused by the redundant employee information, we create a separate table for 
+employee information. Expense items in the Expense table contain a foreign key 
+to the employee that is responsible for submitting the expense.
+
+We use an in-memory caching to cache employees that have had expenses added
+recently to reduce hitting the database during file uploads. A query to the
+Employee table for each line of expense from the uploaded file is necessary
+because the employee responsible for the expense may already exist in the
+database. In the case of large files with many rows of expenses, this leads to
+a very high workload on the database. Since a single file is very likely to 
+repeat employes, the in-memory cache can reduce the probability that the
+database will be hit with a query, subsquently leading to a reduction of the
+workload on the database.
+
+## Assumption
+The solution to the challenge crated with the assumption that employees in the
+files can be uniquely identified by their name and address combination.
 
 ## Software Requirements
 The application was developed and designed with the following software
@@ -36,7 +52,7 @@ for the application.
 >>> db.create_all()
 >>> quit()
 ```
-The application is now ready.
+The application is now ready to be run.
 
 ## Running
 Run the following from inside the `se-challenge` directory
