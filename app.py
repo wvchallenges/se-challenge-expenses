@@ -34,7 +34,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@loca
 
 db = SQLAlchemy(app)
 last_cache = SimpleCache(default_timeout=0)
-upload_cache = SimpleCache(default_timeout=0)
+employee_cache = SimpleCache(default_timeout=0)
 
 class Expense(db.Model):
     '''
@@ -79,23 +79,31 @@ def read_file_to_db(csv_file):
         reader = csv.DictReader(csv_file)
         for line in reader:
 
-            employee = Employee.query.filter_by(
-                name=line[EMPLOYEE_NAME],
-                address=line[EMPLOYEE_ADDRESS]
-            ).first()
+            employee_id = employee_cache.get(line[EMPLOYEE_NAME] +
+                                             line[EMPLOYEE_ADDRESS])
 
-            if not employee:
-                employee = Employee(
+            if not employee_id:
+                employee = Employee.query.filter_by(
                     name=line[EMPLOYEE_NAME],
                     address=line[EMPLOYEE_ADDRESS]
-                )
-                db.session.add(employee)
-                db.session.commit()
+                ).first()
+
+                if not employee:
+                    employee = Employee(
+                        name=line[EMPLOYEE_NAME],
+                        address=line[EMPLOYEE_ADDRESS]
+                    )
+                    db.session.add(employee)
+                    db.session.commit()
+
+                employee_cache.set(employee.name + employee.address,
+                                   employee.id)
+                employee_id = employee.id
 
             expense = Expense(
                 date=datetime.strptime(line[DATE], DATE_FORMAT),
                 category=line[CATEGORY],
-                employee=employee.id,
+                employee=employee_id,
                 description=line[EXPENSE_DESCRIPTION],
                 pretax_amount=line[PRETAX_AMOUNT].replace(',',''),
                 tax_name=line[TAX_NAME],
@@ -106,10 +114,11 @@ def read_file_to_db(csv_file):
             expenses.append(expense)
 
         db.session.commit()
-        return expenses
     except Expense as e:
         db.session.rollback()
         raise e
+
+    return expenses
 
 def calculate_monthly_expenses(expenses):
     '''
