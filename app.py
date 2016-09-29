@@ -34,31 +34,23 @@ class Expense(db.Model):
         Expense model
     '''
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.DateTime)
-    category = db.Column(db.String(MAX_STR_LEN))
-    employee_name = db.Column(db.String(MAX_STR_LEN))
-    employee_address = db.Column(db.String(MAX_STR_LEN))
-    expense_description = db.Column(db.Text)
-    pretax_amount = db.Column(db.Float)
-    tax_name = db.Column(db.String(MAX_STR_LEN))
-    tax_amount = db.Column(db.Float)
+    date = db.Column(db.DateTime, nullable=False)
+    category = db.Column(db.String(MAX_STR_LEN), nullable=False)
+    employee = db.Column(db.Integer,
+                         db.ForeignKey('employee.id'),
+                         nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    pretax_amount = db.Column(db.Float, nullable=False)
+    tax_name = db.Column(db.String(MAX_STR_LEN), nullable=False)
+    tax_amount = db.Column(db.Float, nullable=False)
 
-    def __init__(self,
-                date,
-                category,
-                employee_name,
-                employee_address,
-                expense_description,
-                pretax_amount,
-                tax_name,
-                tax_amount):
-        self.date = date
-        self.category = category
-        self.employee_name = employee_name
-        self.expense_description = expense_description
-        self.pretax_amount = pretax_amount
-        self.tax_name = tax_name
-        self.tax_amount = tax_amount
+class Employee(db.Model):
+    '''
+        Employee model
+    '''
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(MAX_STR_LEN), nullable=False)
+    address = db.Column(db.String(MAX_STR_LEN), nullable=False)
 
 def allowed_filename(filename):
     '''
@@ -79,43 +71,38 @@ def read_file_to_db(csv_file):
         expenses = []
         reader = csv.DictReader(csv_file)
         for line in reader:
+
+            employee = Employee.query.filter_by(
+                name=line[EMPLOYEE_NAME],
+                address=line[EMPLOYEE_ADDRESS]
+            ).first()
+
+            if not employee:
+                employee = Employee(
+                    name=line[EMPLOYEE_NAME],
+                    address=line[EMPLOYEE_ADDRESS]
+                )
+                db.session.add(employee)
+                db.session.commit()
+
             expense = Expense(
-                datetime.strptime(line[DATE], DATE_FORMAT),
-                line[CATEGORY],
-                line[EMPLOYEE_NAME],
-                line[EMPLOYEE_ADDRESS],
-                line[EXPENSE_DESCRIPTION],
-                line[PRETAX_AMOUNT].replace(',', ''),
-                line[TAX_NAME],
-                line[TAX_AMOUNT].replace(',', '')
+                date=datetime.strptime(line[DATE], DATE_FORMAT),
+                category=line[CATEGORY],
+                employee=employee.id,
+                description=line[EXPENSE_DESCRIPTION],
+                pretax_amount=line[PRETAX_AMOUNT].replace(',',''),
+                tax_name=line[TAX_NAME],
+                tax_amount=line[TAX_AMOUNT].replace(',','')
             )
-            expenses.append(expense)
+
             db.session.add(expense)
+            expenses.append(expense)
+
         db.session.commit()
         return expenses
-    except Exception as e:
+    except Expense as e:
         db.session.rollback()
-        db.session.flush()
         raise e
-
-def query_monthly_expenses():
-    '''
-        Query monthly expenses from database.
-
-        Return a list of (month, year, pretax_amount, tax_amount) tuples sorted
-        chronologically.
-    '''
-    expenses = db.session.query(
-        extract('month', Expense.date).label('month'),
-        extract('year', Expense.date).label('year'),
-        func.sum(Expense.pretax_amount).label('pretax_amount'),
-        func.sum(Expense.tax_amount).label('tax_amount'),
-    ).group_by(
-        extract('month', Expense.date),
-        extract('year', Expense.date)
-    ).order_by(desc('year')).order_by(desc('month')).all()
-
-    return expenses
 
 def calculate_monthly_expenses(expenses):
     '''
@@ -161,7 +148,7 @@ def upload_file():
             monthly_expenses = calculate_monthly_expenses(expenses)
             filename = f.filename
         except Exception as e:
-            abort(500)
+            return redirect(requrest.url)
 
     return render_template('main.html',
                            expenses=monthly_expenses,
