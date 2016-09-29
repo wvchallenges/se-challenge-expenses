@@ -3,21 +3,26 @@
 ## Assumptions
 The solution to the challenge makes the following assumptions in addition to
 the ones given in the challenge description:
-* Monthly expenses for the last file uploaded to the server while it is online
-are displayed.
 * Employees in the files can be uniquely identified by their name and address
 combination.
 
 ## Software Requirements
+The application was developed and designed with the following software
+versions on Ubuntu 14.04:
 * Python 2.7
 * PostgreSQL 9.3
+
+On Ubuntu, run the following command to install the required software:
+```
+sudo apt-get install python postgresql
+```
 
 Refer to [this guide](https://techarena51.com/index.php/flask-sqlalchemy-postgresql-tutorial/)
 to set up a PostgreSQL user, password, and database.
 
 ## Set-up
-Ensure that the software in the Software Requirements are installed. Perform
-the following inside the `se-challenge` directory.
+Ensure that the software in the Software Requirements are installed for your
+operating system. Perform the following inside the `se-challenge` directory.
 1. Run `pip install -r requirements.txt`
 2. Modify line 28 in `app.py` with your user, pasword and database.
 ```
