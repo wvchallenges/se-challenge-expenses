@@ -125,7 +125,7 @@ def calculate_monthly_expenses(expenses):
         Compute monthly expenses from the given list of expenses.
 
         Return a list of (month, year, pretax_amount, tax_amount) tuples sorted
-        chronologically.
+        in reverse chronological order.
     '''
     monthly_expenses = {}
     for e in expenses:
@@ -138,7 +138,11 @@ def calculate_monthly_expenses(expenses):
                                         e.date.year,
                                         pretax + e.pretax_amount,
                                         tax + e.tax_amount)
-    return monthly_expenses.values()
+    monthly_expenses =  monthly_expenses.values()
+    monthly_expenses.sort(key=lambda e: e[0])   # sort by month
+    monthly_expenses.sort(reverse=True, key=lambda e: e[1])   # sort by year
+
+    return monthly_expenses
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
