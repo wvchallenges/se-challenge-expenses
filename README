@@ -1,5 +1,12 @@
 # Wave Software Development Challenge
 
+## Assumptions
+The solution to the challenge makes the following assumptions in addition to
+the ones given in the challenge description:
+* Monthly expenses for the last file uploaded to the server are displayed.
+* Employees in the files can be uniquely identified by their name and address
+combination.
+
 ## Software Requirements
 * Python 2.7
 * PostgreSQL 9.3
@@ -15,9 +22,20 @@ the following inside the `se-challenge` directory.
 ```
 28. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/<database>'
 ```
+3. Run the `python` interpreter from command line. We need to create the tables
+for the application.
+4. In the Python interpreter, type the following:
+```
+>>> from app import db
+>>> db.create_all()
+>>> quit()
+```
+The application is now ready.
 
 ## Running
 Run the following from inside the `se-challenge` directory
 1. `export FLASK_APP=app.py`
 2. `flask run`
 Optionally, run `export FLASK_DEBUG=1` to run with debugger on.
+
+Visit `http://localhost:5000/` to view the application.
