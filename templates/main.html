@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Wave Software Development Challenge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>Wave Software Development Challenge</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form action="" method="post" enctype="multipart/form-data">
+  <fieldset>
+    <legend>Upload file</legend>
+    <label for="file">File name: </label>
+    <input type="file" name="file" id="file">
+  </fieldset>
+  <input type="submit" value="Upload">
+</form>
+
+<h3>Monthly Expenses</h3>
+{% if filename and expenses %}
+  <p>Total expenses by month in {{ filename }}.</p>
+  <table>
+    <tr>
+      <th>Month & Year</th>
+      <th>Pre-tax Amount ($)</th>
+      <th>Tax Amount ($)</th>
+      <th>Total ($)</th>
+    </tr>
+    {% for month, year, pretax, tax in expenses %}
+    <tr>
+      <td>{{ "%02d/%04d" % (month, year) }}</td>
+      <td>{{ "%.02f" % pretax }}</td>
+      <td>{{ "%.02f" % tax }}</td>
+      <td>{{ "%0.2f" % (pretax + tax) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>Upload a file to view its total expenses by month.</p>
+{% endif %}
+
+</body>
+
+</html>
