@@ -1,27 +1,39 @@
-<% provide(:title, 'Manage Tax Name') %>
-<br/>
-<%= link_to "Create Tax Name", new_tax_name_path, class: "btn btn-success" %>
-<br/><br/>
+<% provide(:title, "Manage Tax Name") %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Create Tax Name</h3>
+      <%= link_to "Create Tax Name", new_tax_name_path, class: "btn btn-success" %>
+      <br/><br/>
+    <h3>Tax Name List</h3>
+    <br/>
+  </div>
+</div>
 <% if @tax_names.count == 0 %>
-  <h3>Currently No Tax Name in Database</h3>
+  <div class="row center">
+    <h3>Currently No Tax Name in Database</h3>
+  </div>
 <% else %>
-  <table class="table table-striped">
-    <tr>
-      <td><b>No.</b></td>
-      <td><b>Name</b></td>
-      <td><b>Options</b></td>
-    </tr>
-    <% @tax_names.each_with_index do |tax_name, index| %>
-    <tr>
-      <td><%= index + 1 %></td>
-      <td><%= tax_name.name %></td>
-      <td>
-        <%= link_to "show", tax_name_path(tax_name) %>
-        <%= link_to "edit", edit_tax_name_path(tax_name) %>
-        <%= link_to "delete", tax_name, method: :delete,
-        data: { confirm: "Related expense records will also be deleted. Continue?" } %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 center">
+      <table class="table table-striped">
+        <tr>
+          <td><b>No.</b></td>
+          <td><b>Name</b></td>
+          <td><b>Options</b></td>
+        </tr>
+        <% @tax_names.each_with_index do |tax_name, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= tax_name.name %></td>
+          <td>
+            <%= link_to "show", tax_name_path(tax_name) %>
+            <%= link_to "edit", edit_tax_name_path(tax_name) %>
+            <%= link_to "delete", tax_name, method: :delete,
+            data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 <% end %>

@@ -1,8 +1,20 @@
 <% provide(:title, "Tax Name: " + @tax_name.name) %>
-<h3>Tax Name Info</h3>
-  <p><%= "Name: " + @tax_name.name %></p>
-  <%= link_to "Edit Tax Name Info", edit_tax_name_path(@tax_name), class: "btn btn-primary" %>
-  <%= link_to "Delete Tax Name", @tax_name, method: :delete, class: "btn btn-danger",
-      data: { confirm: "Related expense records will also be deleted. Continue?" } %>
-<br/><br/>
-<h3><%= "Expense Records of " + @tax_name.name %></h3>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Tax Name Info</h3>
+      <p><%= "Name: " + @tax_name.name %></p>
+      <%= link_to "Edit Tax Name Info", edit_tax_name_path(@tax_name), class: "btn btn-primary" %>
+      <%= link_to "Delete Tax Name", @tax_name, method: :delete, class: "btn btn-danger",
+          data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+    <br/><br/>
+    <h3><%= "Expense Records of " + @tax_name.name %></h3>
+    <br/>
+  </div>
+</div>
+<% if @expenses.count == 0 %>
+  <div class="row center">
+    <h3><%= "No Expense Record Under This Tax Name" %></h3>
+  </div>
+<% else %>
+  <%= render "shared/expense_table", object: @expenses %>
+<% end %>

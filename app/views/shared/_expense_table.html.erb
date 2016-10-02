@@ -1,0 +1,32 @@
+<div class="row center">
+  <table class="table table-striped">
+    <tr>
+      <td><b>No.</b></td>
+      <td><b>Date</b></td>
+      <td><b>Pre-tax Amount</b></td>
+      <td><b>Tax Amount</b></td>
+      <td><b>Description</b></td>
+      <td><b>Employee</b></td>
+      <td><b>Category</b></td>
+      <td><b>Tax Name</b></td>
+      <td><b>Options</b></td>
+    </tr>
+    <% @expenses.each_with_index do |expense, index| %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= expense.date.strftime("%m/%d/%Y") %></td>
+      <td><%= number_with_precision(expense.pre_tax_amount, precision: 2, delimiter: ',') %></td>
+      <td><%= number_with_precision(expense.tax_amount, precision: 2, delimiter: ',') %></td>
+      <td><%= expense.description %></td>
+      <td><%= link_to expense.employee.name, employee_path(expense.employee) %></td>
+      <td><%= link_to expense.category.name, category_path(expense.category) %></td>
+      <td><%= link_to expense.tax_name.name, tax_name_path(expense.tax_name) %></td>
+      <td>
+        <%= link_to "edit", edit_expense_path(expense) %>
+        <%= link_to "delete", expense, method: :delete,
+        data: { confirm: "Are you sure to delete this expense record?" } %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

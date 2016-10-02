@@ -13,12 +13,13 @@ class TaxNamesController < ApplicationController
       flash[:success] = "Tax Name created."
       redirect_to @tax_name
     else
-      render 'new'
+      render "new"
     end
   end
   
   def show
     @tax_name = TaxName.find(params[:id])
+    @expenses = @tax_name.expenses
   end
   
   def edit
@@ -31,7 +32,7 @@ class TaxNamesController < ApplicationController
       flash[:success] = "Tax Name info updated."
       redirect_to @tax_name
     else
-      render 'edit'
+      render "edit"
     end
   end
   

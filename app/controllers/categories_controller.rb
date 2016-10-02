@@ -13,12 +13,13 @@ class CategoriesController < ApplicationController
       flash[:success] = "Category created."
       redirect_to @category
     else
-      render 'new'
+      render "new"
     end
   end
   
   def show
     @category = Category.find(params[:id])
+    @expenses = @category.expenses
   end
   
   def edit
@@ -31,7 +32,7 @@ class CategoriesController < ApplicationController
       flash[:success] = "Category info updated."
       redirect_to @category
     else
-      render 'edit'
+      render "edit"
     end
   end
   

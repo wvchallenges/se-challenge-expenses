@@ -1,0 +1,18 @@
+<% provide(:title, "Manage Expense Record") %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Add Expense Record</h3>
+      <%= link_to "Add Record From File", expenses_upload_path, class: "btn btn-success" %>
+      <%= link_to "Add Record Manually", new_expense_path, class: "btn btn-success" %>
+      <br/><br/>
+    <h3>Expense Record List</h3>
+    <br/>
+  </div>
+</div>
+<% if @expenses.count == 0 %>
+  <div class="row center">
+    <h3>Currently No Expense Record in Database</h3>
+  </div>
+<% else %>
+  <%= render "shared/expense_table", object: @expenses %>
+<% end %>

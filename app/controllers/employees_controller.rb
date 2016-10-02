@@ -13,12 +13,13 @@ class EmployeesController < ApplicationController
       flash[:success] = "Employee created."
       redirect_to @employee
     else
-      render 'new'
+      render "new"
     end
   end
   
   def show
     @employee = Employee.find(params[:id])
+    @expenses = @employee.expenses
   end
   
   def edit
@@ -31,7 +32,7 @@ class EmployeesController < ApplicationController
       flash[:success] = "Employee info updated."
       redirect_to @employee
     else
-      render 'edit'
+      render "edit"
     end
   end
   

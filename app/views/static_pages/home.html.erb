@@ -1,7 +1,54 @@
-<% provide(:title, 'Home') %>
-<h3>Options</h3>
-<%= link_to "Manage Employee", employees_path, class: "btn btn-primary" %>
-<%= link_to "Manage Category", categories_path, class: "btn btn-primary" %>
-<%= link_to "Manage Tax Name", tax_names_path, class: "btn btn-primary" %>
-<br/><br/>
-<h3>Monthly Expense</h3>
+<% provide(:title, "Home") %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Options</h3>
+      <div class="row">
+        <div class="col-md-4">
+          <%= link_to "Add Record From File", expenses_upload_path, class: "btn btn-success btn-wide" %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "Add Record Manually", new_expense_path, class: "btn btn-success btn-wide" %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "Manage Expense Record", expenses_path, class: "btn btn-success btn-wide" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <%= link_to "Manage Employee", employees_path, class: "btn btn-primary btn-wide" %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "Manage Category", categories_path, class: "btn btn-primary btn-wide" %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "Manage Tax Name", tax_names_path, class: "btn btn-primary btn-wide" %>
+        </div>
+      </div>
+    <h3>Monthly Expenses</h3>
+    <br/>
+  </div>
+</div>
+<% if @expense_months.length == 0 %>
+  <div class="row center">
+    <h3><%= "No Expense Record in Database" %></h3>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 center">
+      <table class="table table-striped">
+        <tr>
+          <td><b>No.</b></td>
+          <td><b>Month</b></td>
+          <td><b>Total Expenses Amount</b></td>
+        </tr>
+        <% @expense_months.each_with_index do |(key, value), index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= key %></td>
+          <td><%= number_with_precision(value, precision: 2, delimiter: ',') %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+<% end %>
