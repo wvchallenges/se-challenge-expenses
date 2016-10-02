@@ -14,7 +14,7 @@
     <% @expenses.each_with_index do |expense, index| %>
     <tr>
       <td><%= index + 1 %></td>
-      <td><%= expense.date.strftime("%m/%d/%Y") %></td>
+      <td><%= expense.date.strftime("%Y/%m/%d") %></td>
       <td><%= number_with_precision(expense.pre_tax_amount, precision: 2, delimiter: ',') %></td>
       <td><%= number_with_precision(expense.tax_amount, precision: 2, delimiter: ',') %></td>
       <td><%= expense.description %></td>

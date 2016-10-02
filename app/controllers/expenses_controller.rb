@@ -57,6 +57,36 @@ class ExpensesController < ApplicationController
   end
   
   def file
+    @file = params[:upload][:file]
+    @override = params[:upload][:override]
+    if @file == nil
+      flash[:danger] = "Please choose a file to upload."
+      render "upload"
+    else
+      if @override == "1"
+        Expense.destroy_all
+        Employee.destroy_all
+        Category.destroy_all
+        TaxName.destroy_all
+      end
+      @file_content = @file.read
+      require "csv"
+      CSV.parse(@file_content, headers: true) do |row|
+        @expense = Expense.new
+        @expense.date = Date.strptime(row['date'], "%m/%d/%Y")
+        @expense.description = row['expense description']
+        @expense.pre_tax_amount = BigDecimal.new(row['pre-tax amount'].tr(",",""))
+        @expense.tax_amount = BigDecimal.new(row['tax amount'].tr(",",""))
+        
+        @expense.saveRecord(
+          row['employee name'],
+          row['employee address'],
+          row['category'],
+          row['tax name'])
+      end
+      flash[:success] = "File is parsed successfully."
+      redirect_to root_url
+    end
   end
   
   private
