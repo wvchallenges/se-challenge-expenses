@@ -6,10 +6,20 @@
     <%= u.text_field :employee_name, class: "form-control", value: @employee_name_origin %>
     <%= u.label "Employee Address" %>
     <%= u.text_field :employee_address, class: "form-control", value: @employee_address_origin %>
+    <small>
+      <li>New employee will be created if not exist.</li>
+      <li>Existing employee will be updated with new address.</li>
+    </small><br/>
     <%= u.label "Category Name" %>
     <%= u.text_field :category_name, class: "form-control dropdown", value: @category_name_origin %>
+    <small>
+      <li>New category will be created if not exist.</li>
+    </small><br/>
     <%= u.label "Tax Name" %>
     <%= u.text_field :tax_name, class: "form-control dropdown", value: @tax_name_origin %>
+    <small>
+      <li>New tax name will be created if not exist.</li>
+    </small><br/>
   <% end %>
   
   <%= f.label :date %>

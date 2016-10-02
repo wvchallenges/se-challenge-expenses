@@ -20,8 +20,10 @@ class Expense < ApplicationRecord
       if not employee.save
         return false
       end
-    elsif not employee.update_attributes(address: employee_address)
-      return false
+    elsif employee_address != "" && employee.address != employee_address
+      if not employee.update_attributes(address: employee_address)
+        return false
+      end
     end
     self.employee_id = employee.id
     
@@ -46,6 +48,6 @@ class Expense < ApplicationRecord
   
   def saveRecord(employee_name, employee_address, category_name, tax_name_name)
     self.getExtraInfo(employee_name, employee_address, category_name, tax_name_name)
-    self.save!
+    self.save
   end
 end
