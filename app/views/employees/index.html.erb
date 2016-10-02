@@ -1,0 +1,25 @@
+<% provide(:title, 'Manage Employee') %>
+<br/>
+<%= link_to "Create Employee", new_employee_path, class: "btn btn-success" %>
+<br/><br/>
+<table class="table table-striped">
+  <tr>
+    <td><b>No.</b></td>
+    <td><b>Name</b></td>
+    <td><b>Address</b></td>
+    <td><b>Options</b></td>
+  </tr>
+  <% @employees.each_with_index do |employee, index| %>
+  <tr>
+    <td><%= index + 1 %></td>
+    <td><%= employee.name %></td>
+    <td><%= employee.address %></td>
+    <td>
+      <%= link_to "show", employee_path(employee) %>
+      <%= link_to "edit", edit_employee_path(employee) %>
+      <%= link_to "delete", employee, method: :delete,
+      data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+    </td>
+  </tr>
+  <% end %>
+</table>

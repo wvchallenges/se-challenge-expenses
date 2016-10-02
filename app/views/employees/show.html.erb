@@ -1,0 +1,9 @@
+<% provide(:title, "Employee: " + @employee.name) %>
+<h3>Employee Info</h3>
+  <p><%= "Name: " + @employee.name %></p>
+  <p><%= "Address: " + @employee.address %></p>
+  <%= link_to "Edit Employee Info", edit_employee_path(@employee), class: "btn btn-primary" %>
+  <%= link_to "Delete Employee", @employee, method: :delete, class: "btn btn-danger",
+      data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+<br/><br/>
+<h3><%= "Expense Records of " + @employee.name %></h3>
