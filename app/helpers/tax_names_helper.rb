@@ -1,0 +1,2 @@
+module TaxNamesHelper
+end
