@@ -1,0 +1,27 @@
+<% provide(:title, 'Manage Category') %>
+<br/>
+<%= link_to "Create Category", new_category_path, class: "btn btn-success" %>
+<br/><br/>
+<% if @categories.count == 0 %>
+  <h3>Currently No Categories in Database</h3>
+<% else %>
+  <table class="table table-striped">
+    <tr>
+      <td><b>No.</b></td>
+      <td><b>Name</b></td>
+      <td><b>Options</b></td>
+    </tr>
+    <% @categories.each_with_index do |category, index| %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= category.name %></td>
+      <td>
+        <%= link_to "show", category_path(category) %>
+        <%= link_to "edit", edit_category_path(category) %>
+        <%= link_to "delete", category, method: :delete,
+        data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>

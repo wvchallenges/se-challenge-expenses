@@ -1,0 +1,8 @@
+<% provide(:title, "Category: " + @category.name) %>
+<h3>Category Info</h3>
+  <p><%= "Name: " + @category.name %></p>
+  <%= link_to "Edit Category Info", edit_category_path(@category), class: "btn btn-primary" %>
+  <%= link_to "Delete Category", @category, method: :delete, class: "btn btn-danger",
+      data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+<br/><br/>
+<h3><%= "Expense Records of " + @category.name %></h3>
