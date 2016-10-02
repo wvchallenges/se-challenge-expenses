@@ -1,0 +1,38 @@
+<%= form_for(@expense) do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  
+  <%= f.fields_for(:extra) do |u| %>
+    <%= u.label "Employee Name" %>
+    <%= u.text_field :employee_name, class: "form-control", value: @employee_name_origin %>
+    <%= u.label "Employee Address" %>
+    <%= u.text_field :employee_address, class: "form-control", value: @employee_address_origin %>
+    <small>
+      <li>New employee will be created if not exist.</li>
+      <li>Existing employee will be updated with new address.</li>
+    </small><br/>
+    <%= u.label "Category Name" %>
+    <%= u.text_field :category_name, class: "form-control dropdown", value: @category_name_origin %>
+    <small>
+      <li>New category will be created if not exist.</li>
+    </small><br/>
+    <%= u.label "Tax Name" %>
+    <%= u.text_field :tax_name, class: "form-control dropdown", value: @tax_name_origin %>
+    <small>
+      <li>New tax name will be created if not exist.</li>
+    </small><br/>
+  <% end %>
+  
+  <%= f.label :date %>
+  <%= f.date_field :date, class: "form-control" %>
+  
+  <%= f.label :pre_tax_amount %>
+  <%= f.text_field :pre_tax_amount, class: "form-control" %>
+  
+  <%= f.label :tax_amount %>
+  <%= f.text_field :tax_amount, class: "form-control" %>
+  
+  <%= f.label :description %>
+  <%= f.text_area :description, size: "24x6", class: "form-control" %>
+  
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,21 @@
+<% provide(:title, "Employee: " + @employee.name) %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Employee Info</h3>
+      <p><%= "Name: " + @employee.name %></p>
+      <p><%= "Address: " + @employee.address %></p>
+      <%= link_to "Edit Employee Info", edit_employee_path(@employee), class: "btn btn-primary" %>
+      <%= link_to "Delete Employee", @employee, method: :delete, class: "btn btn-danger",
+          data: { confirm: "Related expense records will also be deleted. Continue?" } %>
+    <br/><br/>
+    <h3><%= "Expense Records of " + @employee.name %></h3>
+    <br/>
+  </div>
+</div>
+<% if @expenses.count == 0 %>
+  <div class="row center">
+    <h3><%= "No Expense Record Under This Employee" %></h3>
+  </div>
+<% else %>
+  <%= render "shared/expense_table", object: @expenses %>
+<% end %>

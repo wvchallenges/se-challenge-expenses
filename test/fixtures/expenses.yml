@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-10-01
+  description: MyText
+  pre_tax_amount: 9.99
+  tax_amount: 9.99
+  employee: one
+  category: one
+  tax_name: one
+
+two:
+  date: 2016-10-01
+  description: MyText
+  pre_tax_amount: 9.99
+  tax_amount: 9.99
+  employee: two
+  category: two
+  tax_name: two
