@@ -24,7 +24,7 @@
           <%= link_to "Manage Tax Name", tax_names_path, class: "btn btn-primary btn-wide" %>
         </div>
       </div>
-    <h3>Monthly Expenses</h3>
+    <h3 id="data">Monthly Expenses</h3>
     <br/>
   </div>
 </div>
@@ -39,7 +39,7 @@
         <tr>
           <td><b>No.</b></td>
           <td><b>Month</b></td>
-          <td><b>Total Expenses Amount</b></td>
+          <td><b>Month Total Expenses</b></td>
         </tr>
         <% @expense_months.each_with_index do |(key, value), index| %>
         <tr>
@@ -49,6 +49,14 @@
         </tr>
         <% end %>
       </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 center">
+      <%= line_chart(@expense_months) %>
+    </div>
+    <div class="col-md-6 center">
+      <%= pie_chart(@expense_months) %>
     </div>
   </div>
 <% end %>

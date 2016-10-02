@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails',                   '5.0.0.1'
-gem 'bootstrap-sass', '3.3.6'
 gem 'bcrypt',                  '3.1.11'
 gem 'faker',                   '1.6.3'
 gem 'carrierwave',             '0.11.2'
@@ -17,6 +16,7 @@ gem 'coffee-rails',            '4.2.1'
 gem 'jquery-rails',            '4.1.1'
 gem 'turbolinks',              '5.0.1'
 gem 'jbuilder',                '2.4.1'
+gem "chartkick"
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'

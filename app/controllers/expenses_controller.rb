@@ -33,6 +33,10 @@ class ExpensesController < ApplicationController
     @tax_name_origin = @expense.tax_name.name
   end
   
+  def download
+    send_file(Rails.root.join('app' , 'assets', 'data_example.csv'))
+  end
+  
   def update
     @expense = Expense.find(params[:id])
     @expense.assign_attributes(expense_params)
@@ -62,6 +66,9 @@ class ExpensesController < ApplicationController
     if @file == nil
       flash[:danger] = "Please choose a file to upload."
       render "upload"
+    elsif File.extname(@file.original_filename) != ".txt" && File.extname(@file.original_filename) != ".csv"
+      flash[:danger] = "Please upload file with correct type. We support txt/csv file."
+      render "upload"
     else
       if @override == "1"
         Expense.destroy_all
@@ -85,7 +92,7 @@ class ExpensesController < ApplicationController
           row['tax name'])
       end
       flash[:success] = "File is parsed successfully."
-      redirect_to root_url
+      redirect_to root_url(anchor: "data")
     end
   end
   

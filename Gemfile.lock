@@ -57,6 +57,7 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    chartkick (2.1.1)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -354,6 +355,7 @@ DEPENDENCIES
   bootstrap-will_paginate (= 0.0.10)
   byebug (= 9.0.0)
   carrierwave (= 0.11.2)
+  chartkick
   coffee-rails (= 4.2.1)
   faker (= 1.6.3)
   fog (= 1.38.0)
