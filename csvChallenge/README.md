@@ -39,6 +39,7 @@ With the returning object from the get_or_create call, I was able to just use th
 
 The data went into the models pretty nicely with the exceptions of the date format and the amounts. Solved by reformatting the date, and stripping the comma as well as casting the string into a float object. I decided to calculate the total amount of the expense, to put the penalty on write instead of read, where a bottle neck already exists because the absence of a cached result.
 
+
 #### The View (The ACTUAL View)
 Simple. The design of the front-end is as simple as the specification needed it to be. The templating however was a lot of fun and super useful to use. Great to use for not repeating myself. Django has some really great ways to format both the date and dollar amount.
 
@@ -48,8 +49,9 @@ Could also return other reports on the data, category or employee based would be
 
 ### Usage
 - Get the server going with ```python manage.py runserver```
+- Go to ```http://127.0.0.1:8000/waveCSVChallenge/```
 - Upload a CSV and it will show the month - year total expense amounts
-
+- For admin page ```http://127.0.0.1:8000/waveCSVChallenge/````
 
 
 ### Installation
