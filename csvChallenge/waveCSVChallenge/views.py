@@ -16,7 +16,7 @@ def expenseDetail(request):
     # RAW SQL to get the total_amount per month-year, not in love with this
     # way, could be better, especially the primary key id work around
     expensesByMonth = Expenses.objects.raw(
-        "SELECT SUM(total_amount) AS monthTotal, strftime('%m-%Y', date) AS 'id' FROM waveCSVChallenge_Expenses GROUP BY strftime('%m-%Y', date);")
+        "SELECT SUM(total_amount) AS monthTotal, date AS 'id' FROM waveCSVChallenge_Expenses GROUP BY strftime('%m-%Y', date) ORDER BY date;")
     return render(request, 'waveCSVChallenge/expensesByMonth.html', {'expensesByMonth': expensesByMonth})
 
 # Gets the CSV file and calls the saveExpense method for each record

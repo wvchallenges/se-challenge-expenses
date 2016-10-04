@@ -24,7 +24,7 @@ Tables:
 
 ![Database Scribbles](https://raw.githubusercontent.com/lawrencewong/se-challenge/master/DatabaseScribbles.jpg )
 
-#### The Controller
+#### The Controller (The view.py)
 The controller I made is super simple with a bunch of areas for improvement. It serves up two pages, gets the month/year total amount query and saves the it to the database from the upload CSV.
 
 I used a raw query to retrieve data from the database. I was not in love with this solution, seemed like there should be a more Django-y way of getting the correct data. Maybe a more complicated model query with .value and .annotate. This would maybe avoid a work around I put in to spoof a 'Primary Key' in the query. I am retrieving the date as the id. This query's data could also be cached so save computation on every read, when there isn't new data. Future improvements could also query just the newest data instead of the entire history of the expenses.
@@ -38,6 +38,13 @@ Saving the new expense logs in the CSV was also a breeze using Django's query se
 With the returning object from the get_or_create call, I was able to just use that object and place it into the foreign key columns of the new expense record. Initially I thought I was going to need to use the ID of the object but it was way more intuitive. Awesome!
 
 The data went into the models pretty nicely with the exceptions of the date format and the amounts. Solved by reformatting the date, and stripping the comma as well as casting the string into a float object. I decided to calculate the total amount of the expense, to put the penalty on write instead of read, where a bottle neck already exists because the absence of a cached result.
+
+#### The View (The ACTUAL View)
+Simple. The design of the front-end is as simple as the specification needed it to be. The templating however was a lot of fun and super useful to use. Great to use for not repeating myself. Django has some really great ways to format both the date and dollar amount.
+
+I ran into the [infamous floating point bug](https://docs.python.org/2/tutorial/floatingpoint.html#representation-error), that need to be fixed via formatting. I have run into this problem from my work projects and it still fascinates me that we have such limitations.
+
+Could also return other reports on the data, category or employee based would be really neat. Graphs and other metrics!
 
 ### Usage
 - Get the server going with ```python manage.py runserver```

@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'waveCSVChallenge/style.css' %}" />
+    <title>CSV Challenge</title>
+</head>
+
+</html>
+
+<body>
+    <div id="Header">
+        <h1>CSV CHALLENGE</h1>
+    </div>
+    <div id="form">
+        {% block form %} {% endblock %}
+    </div>
+    <div id="expensesByMonth">
+        {% block expensesByMonth %} {% endblock %}
+    </div>
+    <div class="nav-link">
+        <a href="https://github.com/lawrencewong/se-challenge">Source Code</a>
+    </div>
+</body>
+</html>

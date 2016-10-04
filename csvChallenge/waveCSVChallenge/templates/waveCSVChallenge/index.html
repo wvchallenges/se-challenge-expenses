@@ -1,7 +1,19 @@
-<h1>Wave CSV Challenge</h1>
-<form action="{% url 'waveCSVChallenge:uploadCSV' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" accept=".csv" name="csvFile" />
-    <button type="submit">Upload</button>
-</form>
-<a href="expensesByMonth/">View Expenses By Month</a>
+{% extends "waveCSVChallenge/base.html" %} {% block form %}
+<div class="nav-link">
+    <a href="expensesByMonth/">View Expenses by Month</a>
+</div>
+<div id="form-content">
+    <h2>Employee Expense Logger</h2>
+    <p>Upload a CSV containing expense logs for the data to be stored in
+        the database. The expenses per month-year will be displayed in the
+        table.
+        <a href="https://raw.githubusercontent.com/wvchallenges/se-challenge/master/data_example.csv">Sample CSV File</a>
+    </p>
+    <br>
+    <form action="{% url 'waveCSVChallenge:uploadCSV' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" accept=".csv" name="csvFile" />
+        <button type="submit">Upload CSV</button>
+    </form>
+</div>
+{% endblock %}

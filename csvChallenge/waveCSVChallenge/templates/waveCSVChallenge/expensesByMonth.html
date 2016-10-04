@@ -1,13 +1,19 @@
-<table>
-    <tr>
-        <th>Month - Year</th>
-        <th>Total Expenses</th>
-    </tr>
-    {% for eachMonth in expensesByMonth %}
-    <tr>
-        <td>{{eachMonth.id}}</td>
-        <td>{{eachMonth.monthTotal|floatformat:2}}</td>
-    </tr>
-    {% endfor %}
-</table>
-<a href="{% url 'waveCSVChallenge:index' %}">Back</a>
+{% extends "waveCSVChallenge/base.html" %} {% block expensesByMonth %}
+<div class="nav-link">
+    <a href="{% url 'waveCSVChallenge:index' %}">Upload another CSV</a>
+</div>
+<div id="table-content">
+    <table>
+        <tr>
+            <th>Month - Year</th>
+            <th>Total Expenses</th>
+        </tr>
+        {% for eachMonth in expensesByMonth %}
+        <tr>
+            <td>{{eachMonth.id|date:"F Y"}}</td>
+            <td>${{eachMonth.monthTotal|floatformat:2}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
