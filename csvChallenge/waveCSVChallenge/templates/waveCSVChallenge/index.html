@@ -1,2 +1,7 @@
-<h2>LAWRNECE</h2>
-<input id="fileSelect" type="file" accept=".csv" />
+<h1>Wave CSV Challenge</h1>
+<form action="{% url 'waveCSVChallenge:uploadCSV' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" accept=".csv" name="csvFile" />
+    <button type="submit">Upload</button>
+</form>
+<a href="expensesByMonth/">View Expenses By Month</a>

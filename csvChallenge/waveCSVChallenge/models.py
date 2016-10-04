@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Func, F, Sum
 
 
 class Employees(models.Model):
@@ -12,7 +13,6 @@ class ExpenseCategories(models.Model):
 
 class TaxInformation(models.Model):
     tax_name = models.CharField(max_length=100)
-    tax_rate = models.DecimalField(max_digits=6, decimal_places=4)
 
 
 class Expenses(models.Model):

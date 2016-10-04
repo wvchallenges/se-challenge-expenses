@@ -1,0 +1,13 @@
+<table>
+    <tr>
+        <th>Month - Year</th>
+        <th>Total Expenses</th>
+    </tr>
+    {% for eachMonth in expensesByMonth %}
+    <tr>
+        <td>{{eachMonth.id}}</td>
+        <td>{{eachMonth.monthTotal|floatformat:2}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'waveCSVChallenge:index' %}">Back</a>
