@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 from io import TextIOWrapper
-from decimal import Decimal
 from .models import *
 
 # Serves up the hompage of the application
