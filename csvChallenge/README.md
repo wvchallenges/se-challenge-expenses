@@ -21,6 +21,7 @@ Tables:
 - Employees: Holds the name and address of the employee. Could split the full_name into first and last, same goes for address. Possible pitfall, moving or changing name of an employee that is in the records more than once. This problem could be solved if every unique employee was given an employee number. Could use the ID but with this automatic upload and save there would need to be human intervention to differentiate people with the same name and same address.
 - Categories: Holds the names of the expense category.
 - Tax: Holds the name of the tax. At first I wanted to put in the tax rate for the given tax name. This could be derived from the sample CSV, but some of the numbers where off. If they were accurate however I would have placed the tax rate column back in. This also raises some questions on Keeping the tax rate updated VS Having the tax amount in the expenses table make sense.
+- Expenses: Holds all of the expense records. This table has three foreign keys, from the employees, categories and tax tables. I set up the database to have these rows deleted if any of the foreign objects who map to the record was deleted. This might be a problem in a real world setting, because it deletes historical records. Could just redact the employee info. I also made the decision to add the total_amount column because this would save computation on reads and place the penalty on writes.
 
 ![Database Scribbles](https://raw.githubusercontent.com/lawrencewong/se-challenge/master/DatabaseScribbles.jpg )
 
