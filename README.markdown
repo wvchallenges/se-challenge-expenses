@@ -4,6 +4,11 @@ Once you're done, please submit a paragraph or two in your `README` about what y
 ### Requirements    
 I fulfilled the requirements, since the app takes a csv file as input, uploads it via a form, the server parses the contents, saves them into a database and finally the a table with the aggregated expenses is rendered.
 
+### Tech
+Angular.js  
+Express.js (Node.js)  
+PostgreSQL
+
 ### Setup the app   
 ##### Setup (App):
     npm install  
