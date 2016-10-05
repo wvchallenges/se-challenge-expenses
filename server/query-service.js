@@ -15,7 +15,6 @@ var queryService = (function() {
       });
     },
     createExpense: function(payload) {
-      logger.log('entered expense', payload.employeeId);
       var query = 'INSERT INTO expenses (employee_id, expense_date, category, description, pre_tax_amount, tax_name, tax_amount) ' +
         'VALUES ($1, to_date($2, \'MM-DD-YYYY\'), $3, $4, $5, $6, $7);';
       var values = [payload.employeeId, payload.expenseDate, payload.category, payload.description, payload.preTaxAmount, payload.taxName, payload.taxAmount];        
