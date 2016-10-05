@@ -1,0 +1,12 @@
+ <div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <form name="upload" class="form" data-ng-submit="addFile()">
+        <input type="file" name="file" multiple 
+       onchange="angular.element(this).scope().uploadedFile(this)" />
+       <button type="submit">Upload </button>
+      </form>     
+    </div>
+  </div>
+  <div class="response-table"></div>
+</div>
