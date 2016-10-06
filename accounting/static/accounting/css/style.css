@@ -7,3 +7,8 @@
 .dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }
 
 html, body { background: #F3F4F5; }
+
+.btn-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

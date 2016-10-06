@@ -1,30 +1,27 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
 from .forms import UploadFileForm
-import pandas
-import numpy
 
+from .helpers.processCSV import process_csv
 
 def index(request):
     return render(request, 'accounting/upload.html')
 
 def upload(request):
+
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
+
         if form.is_valid():
-            temp(request.FILES['file'])
-            return HttpResponseRedirect('/success/url/')
+            process_csv(request.FILES['file'])
+            return render(request, 'accounting/upload.html')
+
+        else:
+            toastr.error('Something wen\'t wrong. Please try again later.')
     else:
-        form = UploadFileForm()
+        form = UploadFileForm() 
+
     return render(request, 'accounting/upload.html', {'form': form})
-
-
-def temp(f):
-	
-	k = pandas.DataFrame(f)
-
-	return render(request, 'accounting/upload.html', {'form': form})
-
 
 
 # Create your views here.
