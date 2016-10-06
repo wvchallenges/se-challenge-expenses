@@ -1,0 +1,60 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'accounting/css/jumbotron-narrow.css'%}" rel="stylesheet">
+
+    <!-- dropzone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
+    <link href="{% static 'accounting/css/style.css'%}" rel="stylesheet">
+
+    <script src="{% static 'accounting/js/app.js'%}"></script>
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Wave SE Challenge</h3>
+      </div>
+
+
+      <!-- IMPORTANT enctype attribute! -->
+        <form action="{% url 'accounting:upload' %}" method="post" id="my-dropzone" enctype="multipart/form-data" class="dropzone dz-clickable">
+            {% csrf_token %}
+            <div class="dz-message">Drag and drop your .csv file here, or click to upload.</div>
+        </form>
+        
+      <footer class="footer">
+        <p>&copy; 2016 A rockstar startup in Toronto</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
