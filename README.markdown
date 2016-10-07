@@ -16,7 +16,7 @@ My implementation is clean and minimal and does exactly, and only, what is it su
    ```
    pip install Django==1.10.2
    ```
-   Verify that Python can find Django. Type **python** in your terminal and then the following, and make sure the version number is printed successfully. 
+   Verify that Python can find Django. Execute **python** in your terminal and then the following, and make sure the version number is printed successfully. 
    ```
    >>> import django
    >>> print(django.get_version())
