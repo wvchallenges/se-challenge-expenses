@@ -4,7 +4,7 @@ Dropzone.options.myDropzone = {
   paramName: "file",
   maxFilesize: 2,
   maxFiles: 1,
-  autoProcessQueue : false, // Prevent dropzone from uploading automatically
+  // autoProcessQueue : false, // Prevent dropzone from uploading automatically
   dictMaxFilesExceeded: 'You can only upload one file at a time.',
   dictFileTooBig: 'The maximum filesize allowed is 2 MB.',
   dictInvalidFileType: 'Please only upload a single .csv file.',
@@ -30,18 +30,18 @@ Dropzone.options.myDropzone = {
       toastr.info('You\'re currently looking at all data that has been uploaded until now.')
     }
 
-    // Upload only when the Upload button is clicked. 
-    submitButton.addEventListener("click", function() {
+    // // Upload only when the Upload button is clicked. 
+    // submitButton.addEventListener("click", function() {
 
-      // Check if no files are attached. If yes, show error message.
-        if (myDropzone.files.length == 0) {
-          toastr.error('Please upload a .csv file and try again.')
-        }
+    //   // Check if no files are attached. If yes, show error message.
+    //     if (myDropzone.files.length == 0) {
+    //       toastr.error('Please upload a .csv file and try again.')
+    //     }
 
-        else {
-          myDropzone.processQueue();
-        }
-    });
+    //     else {
+    //       myDropzone.processQueue();
+    //     }
+    // });
 
     }
 

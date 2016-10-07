@@ -50,13 +50,15 @@
       <form action="." method="POST" id="my-dropzone" enctype="multipart/form-data" class="dropzone dz-clickable">
           {% csrf_token %}
           <div class="dz-message">Drag and drop a .csv file here, or click to browse.<br>
-          <span class="note">Once selected, click the Upload button!</span>
+          <span class="note">Selected files will be uploaded automatically.</span>
+          <span class="note"><!-- Once selected, click the Upload button! --></span>
+
           </div>
       </form>         
-      <button class="btn-margin btn-primary btn center-block" id='submit-all'>
+<!--       <button class="btn-margin btn-primary btn center-block" id='submit-all'>
           <i class="glyphicon glyphicon-upload"></i>
           <span>Upload!</span>
-      </button>
+      </button> -->
       
       <!-- Display the following table only if the Expenses relation contains tuples. -->
       {% if expenses %}
