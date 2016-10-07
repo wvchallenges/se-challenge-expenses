@@ -23,12 +23,15 @@
     <!-- dropzone.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
+
+    <!-- Custom css -->
     <link href="{% static 'accounting/css/style.css'%}" rel="stylesheet">
 
     <!-- Load the toastr non-blocking notifications library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
 
+    <!-- Custom JS -->
     <script src="{% static 'accounting/js/app.js'%}"></script>
 
     <title>Accounting Software</title>
@@ -39,25 +42,30 @@
 
     <div class="container">
       <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-          </ul>
-        </nav>
         <h3 class="text-muted">Wave SE Challenge</h3>
       </div>
 
 
       <!-- IMPORTANT enctype attribute! -->
-        <form action="{% url 'accounting:upload' %}" method="POST" id="my-dropzone" enctype="multipart/form-data" class="dropzone dz-clickable">
-            {% csrf_token %}
-            <div class="dz-message">Drag and drop your .csv file here, or click to upload.</div>
-        </form>
-        <button class="btn-margin btn-primary btn center-block" type="submit" id='submit-all'>
+      <form action="." method="POST" id="my-dropzone" enctype="multipart/form-data" class="dropzone dz-clickable">
+          {% csrf_token %}
+          <div class="dz-message">Drag and drop a .csv file here, or click to browse.<br>
+          <span class="note">Once selected, click the Upload button!</span>
+          </div>
+      </form>         
+      <button class="btn-margin btn-primary btn center-block" id='submit-all'>
           <i class="glyphicon glyphicon-upload"></i>
           <span>Upload!</span>
       </button>
-        
+      
+      <!-- Display the following table only if the Expenses relation contains tuples. -->
+      {% if expenses %}
+      <div id="expense_table">
+        <h3>Month-wise Aggregated Expenses</h3>
+        {% autoescape off %}{{ expenses }}{% endautoescape %}
+      </div>
+      {% endif %}
+    
       <footer class="footer">
         <p>&copy; 2016 A rockstar startup in vibrant Toronto</p>
       </footer>

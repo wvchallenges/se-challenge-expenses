@@ -1,27 +1,33 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
 from .forms import UploadFileForm
 
 from .helpers.processCSV import process_csv
+from .helpers.loadExistingRecords import get_expenses
 
 def index(request):
-    return render(request, 'accounting/upload.html')
 
-def upload(request):
+    # Get existing expenses to show them on UI.
+    results = get_expenses()
 
     if request.method == 'POST':
+
         form = UploadFileForm(request.POST, request.FILES)
+        
+        # Get uploaded file, parse the .csv and add data to the relational database.
+        process_csv(request.FILES['file'])
 
-        if form.is_valid():
-            process_csv(request.FILES['file'])
-            return render(request, 'accounting/upload.html')
+        # Compute stats and return as an HTML table.
+        results = get_expenses()
 
-        else:
-            toastr.error('Something wen\'t wrong. Please try again later.')
+        # Send response to client that includes the results.
+        return render(request, 'accounting/home.html', {
+            'expenses': results
+        })
+
+    # Test if any expenses exist. If yes, send them to client as a HTML table.
+    if results:
+        return render(request, 'accounting/home.html', {'expenses': results})
+
+    # Else, send normal response.
     else:
-        form = UploadFileForm() 
-
-    return render(request, 'accounting/upload.html', {'form': form})
-
-
-# Create your views here.
+        return render(request, 'accounting/home.html')

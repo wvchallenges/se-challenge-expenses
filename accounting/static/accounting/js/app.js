@@ -1,43 +1,49 @@
+// Options for the dropzone.
+
 Dropzone.options.myDropzone = {
-  paramName: "file", // The name that will be used to transfer the file
-  maxFilesize: 2, // MB
+  paramName: "file",
+  maxFilesize: 2,
   maxFiles: 1,
-  autoProcessQueue : false,
+  autoProcessQueue : false, // Prevent dropzone from uploading automatically
   dictMaxFilesExceeded: 'You can only upload one file at a time.',
   dictFileTooBig: 'The maximum filesize allowed is 2 MB.',
   dictInvalidFileType: 'Please only upload a single .csv file.',
   acceptedFiles: '.csv',
   addRemoveLinks: true,
 
-  accept: function(file, done) {
-    if (file.name == "justinbieber.jpg") {
-      done("Naha, you don't.");
-    }
-    else { done(); }
+  // Do this when a file is successfully uploaded.
+  success: function() {
+    toastr.success('Success!' )
+    location.reload();
   },
 
+  // Initialize the dropzone and find out if the DOM contains the expenses table.
   init : function() {
-    
+
     var submitButton = document.querySelector("#submit-all")
     myDropzone = this;
 
+    var elementExists = document.getElementById("expense_table");
+
+    // If expenses table is on the DOM, display info message to the user. 
+    if(elementExists) {
+      toastr.info('You\'re currently looking at all data that has been uploaded until now.')
+    }
+
+    // Upload only when the Upload button is clicked. 
     submitButton.addEventListener("click", function() {
 
+      // Check if no files are attached. If yes, show error message.
         if (myDropzone.files.length == 0) {
           toastr.error('Please upload a .csv file and try again.')
         }
 
-        myDropzone.processQueue();
-        // Tell Dropzone to process all queued files.
+        else {
+          myDropzone.processQueue();
+        }
     });
 
-    // You might want to show the submit button only when
-    // files are dropped here:
-    this.on("addedfile", function() {
-        // Show submit button here and/or inform user to click it.
-    });
-
-}
+    }
 
 };
 

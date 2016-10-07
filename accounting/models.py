@@ -1,5 +1,6 @@
 from django.db import models
 
+# The Employees model represents a real world Employees entity set.
 class Employees(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
@@ -7,6 +8,7 @@ class Employees(models.Model):
     def __str__(self):
         return self.name
 
+# The Expenses model represents a real world Expenses entity set. It includes an employee's id as a foreign key. 
 class Expenses(models.Model):
     employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
     date = models.DateTimeField()
@@ -19,6 +21,7 @@ class Expenses(models.Model):
     def __str__(self):
         return self.description
 
+# This model is used for file uploads.
 class UploadFile(models.Model):
     file = models.FileField(upload_to='files/%Y/%m/%d')
 
