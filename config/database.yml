@@ -1,25 +1,31 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
+
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   pool: 5
   timeout: 5000
+  host: 10.0.2.2
+  port: 5432
 
-development:
+development: &development
   <<: *default
-  database: db/development.sqlite3
+  database: fileimporter
+  username: postgres
+  password: 123456
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
+test: &test
   <<: *default
-  database: db/test.sqlite3
+  database: fileimporter_test
+  username: postgres
+  password: 123456
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: fileimporter
+  username: <%= ENV['FILEIMPORTER_DATABASE_USER'] %>
+  password: <%= ENV['FILEIMPORTER_DATABASE_PASSWORD'] %>
+
+cucumber:
+  <<: *test
