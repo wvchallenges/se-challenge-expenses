@@ -1,0 +1,14 @@
+
+
+#dropzone { margin-bottom: 3rem; }
+
+.dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; }
+.dropzone .dz-message { font-family: Roboto, "Open Sans", sans-serif; font-size: 20px; font-weight: 300;  color: #646C7F; text-rendering: optimizeLegibility; }
+.dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }
+
+html, body { background: #F3F4F5; }
+
+.btn-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
