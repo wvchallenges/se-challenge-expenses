@@ -1,50 +1,48 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+# Wave Software Development Challenge Completed by Harsh Gadgil
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+## What the application does - Overview:
+The web application provides an interface to upload a .csv file. The data from the .csv file is then stored into a relational database. A table that aggregates the expenses by each month is then displayed to the user. 
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+## What the application does - Implementation details:
+The application is implemented using Python/Django. This app is *not* intended to be used in production; and thus stores data in a SQLite RDBMS, which is relatively simpler to set up than more functional databases such as MySQL and Oracle SQL. The redundancy in the initial data is resolved by normalization resulting in two tables: Employees and Expenses. I felt that it was unnecessary to normalize further unless it would further optimize the database design. The [Pandas][1] data analysis library is used for data processing, pushing data to and reading data from SQL relations, and generating data as an HTML table. Using the CSV module would have been inefficient, not to mention tedious. The [dropzone.js][2] library is used to provide a drag and drop interface, as well as a clickable interface, for uploading files. Finally, the [toastr][3] library is used for displaying notifications on the UI. 
 
-We prefer that you use either Ruby/Ruby on Rails or Python/Django; however, this is not a hard requirement. Please contact us if you'd like to use something else.
+## Why I'm proud of my implementation:
+My implementation is clean and minimal and does exactly, and only, what is it supposed to be do, and does (tries?) to do it well. The UI only has two major elements: a dropzone and the output table. Initially I had an upload button that would trigger a POST request to upload the file, but I later realized that it was unnecessary. I'm particularly proud of the unintrusive and elegant notifications displayed to the user using the toastr library. I'm also proud of using the Pandas data analysis library that allows for fast data processing, since its critical code paths have been written in Cython. 
 
-Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+## Installation instructions:
+1. Install the [Anaconda][4] scientific distribution, which installs Python, Pandas, numpy and other related libraries for data processing. It is also possible to install dependencies separately. Anaconda 4.2.0, with Python 3.5 has been tested with this application.
+2. Install Django, the web framework used to develop this application. Open a command prompt/terminal and execute the following:
 
-## Submission Instructions
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
+   ```
+   pip install Django==1.10.2
+   ```
+   Verify that Python can find Django. Type **python** in your terminal and then the following, and make sure the version number is printed successfully. 
+   ```
+   >>> import django
+   >>> print(django.get_version())
+   1.10.2
+   ```
+3. Clone this repository using:
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+   ```
+   git clone https://github.com/opensorceror/se-challenge.git
+   ```
+   Alternatively, download a .zip file of the repository.
+4. Navigate to the project directory and run the following command:
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+   ```
+   python manage.py runserver <port_number>
+   ```
+   If `port_number` is not specified, a default port number 8000 is used.
+5. Navigate to **localhost:\<port_number>** in a browser. 
 
-### What your web-based application must do:
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
+## Future work and potential improvements:
+1. When the file is uploaded, I do not verify whether it contains the expected columns. This should be done in a production app, and upon invalid input, an message should be displayed.
+2. Manual input in .csv files is prone to errors. Columns may contain mixed datatypes, and column names in different files may not always agree. For example, *pre-tax amount* can be written instead as *pre tax amount*. Since my current code relies heavily on these names being consistent, it might fail miserably in production if users upload files with inconsistent headers. In this case I would use a string similarity function such as Edit-distance or Jaro-Winkler to compare input header strings with expected, and only proceed if they are above a similarity threshold T. This threshold would need to be experimentally determined.  
 
- An example input file named `data_example.csv` is included in this repo.
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
-
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
-
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
-
-Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.
-
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did your application fulfill the basic requirements?
-1. Did you document the method for setting up and running your application?
-1. Did you follow the instructions for submission?
+[1]: https://github.com/pydata/pandas
+[2]: https://github.com/enyo/dropzone
+[3]: https://github.com/CodeSeven/toastr
+[4]: https://www.continuum.io/downloads
