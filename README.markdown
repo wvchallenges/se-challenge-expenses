@@ -27,7 +27,7 @@ My implementation is clean and minimal and does exactly, and only, what is it su
    ```
    git clone https://github.com/opensorceror/se-challenge.git
    ```
-   Alternatively, download a .zip file of the repository.
+   Alternatively, download a [.zip file][5] of the repository.
 4. Navigate to the project directory and run the following command:
 
    ```
@@ -46,3 +46,4 @@ My implementation is clean and minimal and does exactly, and only, what is it su
 [2]: https://github.com/enyo/dropzone
 [3]: https://github.com/CodeSeven/toastr
 [4]: https://www.continuum.io/downloads
+[5]: https://github.com/opensorceror/se-challenge/archive/master.zip
