@@ -38,7 +38,7 @@ My implementation is clean and minimal and does exactly, and only, what is it su
 
 
 ## Future work and potential improvements:
-1. When the file is uploaded, I do not verify whether it contains the expected columns. This should be done in a production app, and upon invalid input, an message should be displayed.
+1. When the file is uploaded, I do not verify whether it contains the expected columns. This should be done in a production app, and upon invalid input, an error message should be displayed.
 2. Manual input in .csv files is prone to errors. Columns may contain mixed datatypes, and column names in different files may not always agree. For example, *pre-tax amount* can be written instead as *pre tax amount*. Since my current code relies heavily on these names being consistent, it might fail miserably in production if users upload files with inconsistent headers. In this case I would use a string similarity function such as Edit-distance or Jaro-Winkler to compare input header strings with expected, and only proceed if they are above a similarity threshold T. This threshold would need to be experimentally determined.  
 
 
