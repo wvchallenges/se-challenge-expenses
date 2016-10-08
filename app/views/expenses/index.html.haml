@@ -1,0 +1,14 @@
+- if flash[:notice]
+  = flash[:notice]
+
+= form_tag import_expenses_path, multipart: true do
+  = file_field_tag :csv_file, accept: 'text/csv'
+  = submit_tag
+
+#expenses
+  - @expenses.each do |expense|
+    .expense
+      .date= expense.expense_date
+      .pretax_amount= expense.pretax_amount
+      .employee
+        .name= expense.employee.name
