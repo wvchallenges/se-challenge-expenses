@@ -16,3 +16,6 @@ The UI. I spent some time laying-out the UI so it kind of looks like how
 real expenses data may be displayed. Here Bootstrap saved me quite a bit of time.
 
 The database is normalized.
+
+## Live demo
+[https://byw-se-challenge.herokuapp.com](https://byw-se-challenge.herokuapp.com)
