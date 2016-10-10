@@ -1,0 +1,9 @@
+"this","is",123,"a","normal","line"
+"line","with "an" internal","quote"
+"short line","with
+an
+"internal quote", 1 comma and
+linebreaks"
+un "quot" ed,text,with,1,2,3,numbers
+"quoted","number","series","1,2,3"
+"invalid \xAB utf-8"

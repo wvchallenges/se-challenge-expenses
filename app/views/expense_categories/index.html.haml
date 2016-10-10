@@ -1,0 +1,11 @@
+.panel.panel-default
+  .panel-heading
+    Expense Categories
+  .panel-body
+    - if @expense_categories.empty?
+      .empty.info List is empty
+    - else
+      %table#expense_categories.table.table-striped
+        - @expense_categories.each do |category|
+          %tr
+            %td= category.name

@@ -1,0 +1,36 @@
+.panel.panel-default
+  .panel-heading
+    Expenses
+  .panel-body
+
+    - if @expenses.empty?
+      .empty.info List is empty
+    - else
+      %table#expenses.table.table-striped
+        %tr
+          %th Date
+          %th Category
+          %th Employee
+          %th Pre-tax
+          %th Tax 
+          %th Description
+        - @expenses.each do |expense|
+          %tr.expense
+            %td.date= expense.expense_date
+            %td.category= expense.expense_category.name
+            %td.employee
+              %span.name{'data-toggle': 'popover',
+                         'data-placement': 'right',
+                         'data-trigger': 'hover',
+                         title: expense.employee.name,
+                         'data-content': expense.employee.address}
+                .glyphicon.glyphicon-info-sign
+                = expense.employee.name
+            %td.pretax_amount<
+              = number_to_currency expense.pretax_amount
+            %td.tax
+              %span.tax_name.label.label-default
+                = expense.tax.name
+              %span.amount<
+                = number_to_currency expense.tax_amount
+            %td.description= expense.description
