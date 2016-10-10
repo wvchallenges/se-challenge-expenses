@@ -9,9 +9,26 @@ class ExpensesController < ApplicationController
   end
 
   def import
+
     csv_file = params[:csv_file]
 
-    CSV.parse(csv_file.read, headers: true) do |row|
+    if !csv_file
+      @error_message = 'Please select a file!'
+      render :upload
+    else
+      parse_and_populate(csv_file)
+      redirect_to expenses_path
+    end
+
+  rescue CSV::MalformedCSVError
+    @error_message = 'Malformed CSV file!'
+    render :upload
+  end
+
+  private
+
+  def parse_and_populate(file)
+    CSV.parse(file.read, headers: true) do |row|
 
       employee = Employee.find_or_initialize_by(
         name: row['employee name'],
@@ -36,8 +53,5 @@ class ExpensesController < ApplicationController
       )
 
     end
-
-    redirect_to expenses_path
   end
-
 end

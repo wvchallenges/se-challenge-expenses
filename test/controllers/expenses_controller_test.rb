@@ -63,4 +63,18 @@ class ExpensesControllerTest < ActionController::TestCase
     assert_equal 1, ExpenseCategory.where(name: 'Travel').count
   end
 
+  test '#import should alert user of empty file' do
+    post :import, csv_file: nil
+
+    assert_equal 'Please select a file!', assigns(:error_message) 
+    assert_template :upload
+  end
+
+  test '#import should alert user of malformed CSV' do
+    post :import, csv_file: fixture_file_upload('/files/bad_csv.csv')
+
+    assert_equal 'Malformed CSV file!', assigns(:error_message)
+    assert_template :upload
+  end
+
 end
