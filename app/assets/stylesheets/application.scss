@@ -18,13 +18,16 @@
 @import "expenses";
 @import "employees";
 
+body {
+    padding-top: 28px;
+}
+
 body > .alert {
     text-align: center;
 }
 
 #navbar {
-    @include make-md-column(3);
-    margin-top: 20px;
+    @include make-md-column(2);
 
     a {
         text-align: right;
@@ -32,8 +35,7 @@ body > .alert {
 }
 
 #main {
-    @include make-md-column(9);    
-    margin-top: 20px;
+    @include make-md-column(10);    
 }
 
 .empty.info {

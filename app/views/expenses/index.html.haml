@@ -27,12 +27,10 @@
                 .glyphicon.glyphicon-info-sign
                 = expense.employee.name
             %td.pretax_amount<
-              $
-              = expense.pretax_amount
+              = number_to_currency expense.pretax_amount
             %td.tax
               %span.tax_name.label.label-default
                 = expense.tax.name
               %span.amount<
-                $
-                = expense.tax_amount
+                = number_to_currency expense.tax_amount
             %td.description= expense.description
