@@ -10,7 +10,7 @@
 * Run `rails s` to start the server.
 * Visit [http://localhost:3000](http://localhost:3000).
 
-## What I like this implementation
+## What I like about this implementation
 
 The UI. I spent some time laying-out the UI so it kind of looks like how
 real expenses data may be displayed. Here Bootstrap saved me quite a bit of time.
