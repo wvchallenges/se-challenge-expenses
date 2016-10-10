@@ -1,14 +1,38 @@
-- if flash[:notice]
-  = flash[:notice]
+.panel.panel-default
+  .panel-heading
+    Expenses
+  .panel-body
 
-= form_tag import_expenses_path, multipart: true do
-  = file_field_tag :csv_file, accept: 'text/csv'
-  = submit_tag
-
-#expenses
-  - @expenses.each do |expense|
-    .expense
-      .date= expense.expense_date
-      .pretax_amount= expense.pretax_amount
-      .employee
-        .name= expense.employee.name
+    - if @expenses.empty?
+      .empty.info List is empty
+    - else
+      %table#expenses.table.table-striped
+        %tr
+          %th Date
+          %th Category
+          %th Employee
+          %th Pre-tax
+          %th Tax 
+          %th Description
+        - @expenses.each do |expense|
+          %tr.expense
+            %td.date= expense.expense_date
+            %td.category= expense.expense_category.name
+            %td.employee
+              %span.name{'data-toggle': 'popover',
+                         'data-placement': 'right',
+                         'data-trigger': 'hover',
+                         title: expense.employee.name,
+                         'data-content': expense.employee.address}
+                .glyphicon.glyphicon-info-sign
+                = expense.employee.name
+            %td.pretax_amount<
+              $
+              = expense.pretax_amount
+            %td.tax
+              %span.tax_name.label.label-default
+                = expense.tax.name
+              %span.amount<
+                $
+                = expense.tax_amount
+            %td.description= expense.description

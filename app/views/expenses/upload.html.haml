@@ -1,0 +1,14 @@
+.panel.panel-default
+  .panel-heading
+    Batch Upload
+  .panel-body
+    = form_tag import_expenses_path, id: 'batch_upload', multipart: true do
+      - if @error_message
+        .alert.alert-danger
+          = @error_message
+      .input-group
+        .input-group-addon
+          .glyphicon.glyphicon-folder-open
+        = file_field_tag :csv_file, accept: 'text/csv', class: 'form-control'
+        .input-group-btn
+          = submit_tag 'upload', class: 'btn btn-default'

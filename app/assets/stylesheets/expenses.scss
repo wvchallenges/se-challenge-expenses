@@ -1,3 +1,31 @@
 // Place all the styles related to the Expenses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+form#batch_upload {
+    @include make-row();
+    margin: 10px;
+    input[type="file"] {
+        color: #aaa;
+        font-size: 0.8em;
+    }
+}
+
+#expenses {
+    .expense {
+        .date {
+            color: #aaa;
+        }
+        .pretax_amount {
+            font-weight: bold;
+        }
+        .tax {
+            .amount {
+                font-weight: bold;
+            }
+        }
+        .tax_name {
+            margin-right: 5px;
+        }
+    }
+}

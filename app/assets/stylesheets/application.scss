@@ -10,6 +10,39 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@import "expenses";
+@import "employees";
+
+body > .alert {
+    text-align: center;
+}
+
+#navbar {
+    @include make-md-column(3);
+    margin-top: 20px;
+
+    a {
+        text-align: right;
+    }
+}
+
+#main {
+    @include make-md-column(9);    
+    margin-top: 20px;
+}
+
+.empty.info {
+    font-style: italic;
+    color: #aaa;
+    padding: 1em; 
+    font-size: 1.2em;
+}
+
+.table {
+    margin-bottom: 0;
+}

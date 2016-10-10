@@ -1,0 +1,16 @@
+.panel.panel-default
+  .panel-heading
+    Employees
+  .panel-body
+
+    - if @employees.empty?
+      .empty.info List is empty
+    - else
+      %table.table.table-striped
+        %tr
+          %th Name
+          %th Address
+        - @employees.each do |employee|
+          %tr.employee
+            %td= employee.name
+            %td= employee.address

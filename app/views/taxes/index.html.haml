@@ -1,0 +1,11 @@
+.panel.panel-default
+  .panel-heading
+    Taxes
+  .panel-body
+    - if @taxes.empty?
+      .empty.info List is empty
+    - else
+      %table#taxes.table.table-striped
+        - @taxes.each do |tax|
+          %tr
+            %td= tax.name
