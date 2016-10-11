@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WaveHomework.Models.TotalExpensesByMonth>
+
+<h1>Expenses</h1>
+<table border="1">
+    <tr>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Total Expenses</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.Month)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+        </tr>
+    }
+</table>
