@@ -23,17 +23,20 @@
         * Note:
             + We can have a Tax Category table if Pre-tax Amount, Tax Name, and Tax Amount follow some relationships.
             + Some useful database techniques can be applied: indexing, stored procedures, cascading, etc.
-3. Extra thoughts about a REST API
+3. Querying data
+    - Use a simple SQL query instead of ORM. (https://goo.gl/av4qc1)
+    - Can store this query as a stored procedure later if needed.
+4. Extra thoughts about a REST API
     - An API is helpful if we need to query the data from different apps.
     - This type of aggregated query (Sum of expense) is not very Restful in my opinion. We can make some simple endpoints like "/expense/pretaxtotal?period=month" for simple queries.
     - If we want a more structured and scalable API, we may want to look into OData or Facebook's GraphQL.
 
 ## Important files
 Most of the files are generated from ASP.NET template. Please focus on these files:
-- Controllers: HomeController, ExpensesController (https://goo.gl/6uizAT)
-- Views: Home/Index.cshtml, Expense/montly.cshtlm (https://goo.gl/Okqsbt)
-- Models: Expense, TotalExpensesByMonth, WaveContext (https://goo.gl/3EnfSb)
-- DatabaseHelper (https://goo.gl/mUjBgN)
+- Controllers: HomeController, ExpensesController (https://goo.gl/uZQaJw)
+- Views: Home/Index.cshtml, Expense/montly.cshtlm (https://goo.gl/WN57eK)
+- Models: Expense, TotalExpensesByMonth, WaveContext (https://goo.gl/P1W9nZ)
+- DatabaseHelper (https://goo.gl/av4qc1)
 
 ## Setup
 - Install SQL Server Express: https://www.microsoft.com/en-ca/download/details.aspx?id=52679
