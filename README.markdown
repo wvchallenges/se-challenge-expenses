@@ -34,7 +34,7 @@
 ## Important files
 Most of the files are generated from ASP.NET template. Please focus on these files:
 - Controllers: HomeController, ExpensesController (https://goo.gl/uZQaJw)
-- Views: Home/Index.cshtml, Expense/montly.cshtlm (https://goo.gl/WN57eK)
+- Views: Home/Index.cshtml, Expense/montly.cshtlm (https://goo.gl/L5I88N)
 - Models: Expense, TotalExpensesByMonth, WaveContext (https://goo.gl/P1W9nZ)
 - DatabaseHelper (https://goo.gl/av4qc1)
 
