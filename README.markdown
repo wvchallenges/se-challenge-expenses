@@ -45,7 +45,7 @@ Most of the files are generated from ASP.NET template. Please focus on these fil
     * The connection string I use is: "Server=.\SQLEXPRESS;Database=Wave;Trusted_Connection=True"
 - Install Visual Studio Community: https://www.visualstudio.com/vs/community/
     * Please check the option to include Web Development (ASP.NET)
-- Remove the Migration folder (https://goo.gl/Amkb6e)
+- Remove the Migration folder (https://goo.gl/FVSCGr)
     * For simplicity we can just remove the Migration folder and initialize again
     * Open Package Manager Console in Visual Studio and apply 3 commands consequently: Enable-Migrations, Add-Migration Initial, Update-Database (follow this link for more details if needed: https://goo.gl/0aYbJt)
 - Click F5 to start the web app in debug mode
