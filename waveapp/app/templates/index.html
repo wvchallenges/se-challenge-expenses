@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Wave App Upload</title>
+  </head>
+  <body>
+  	<p>Hello, please upload your file below.</p>
+    <form action='upload' method="post" enctype="multipart/form-data">
+    	<p><input type='file' name='file'></br></br>
+    	<input type='submit' value='Upload'></p>
+    </form>
+    {% if upload == "true" %}
+    <p>File uploaded succesfully!</p>
+    {% elif upload == "false" %}
+    <p>Error uploading file.</p>
+    {% endif %}
+
+    {% if expenseDict is defined %}
+    <table>
+      {% for key, value in expenseDict.iteritems() %}
+          <tr><td align="left" width="120px">{{ key }}</td><td align="right">{{ value }}</td></tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </body>
+</html>
