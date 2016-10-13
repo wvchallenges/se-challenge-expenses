@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @company.date %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @company.category %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @company.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @company.address %>
+</p>
+
+<p>
+  <b>Exp desc:</b>
+  <%= @company.exp_desc %>
+</p>
+
+<p>
+  <b>Pre tax:</b>
+  <%= @company.pre_tax %>
+</p>
+
+<p>
+  <b>Tax name:</b>
+  <%= @company.tax_name %>
+</p>
+
+<p>
+  <b>Tax amount:</b>
+  <%= @company.tax_amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
