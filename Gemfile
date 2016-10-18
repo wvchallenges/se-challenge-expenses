@@ -61,3 +61,6 @@ gem 'smarter_csv'
 gem 'slim'
 
 gem 'simple_form'
+
+gem 'bootstrap-sass'
+

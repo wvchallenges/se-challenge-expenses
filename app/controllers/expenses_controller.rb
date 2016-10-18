@@ -24,7 +24,7 @@ class ExpensesController < ApplicationController
     csv_file = params[:file]
     if csv_file
       Expense.import(csv_file)
-      flash[:notice] = "CSV Uploaded Successfully"
+      flash[:success] = "CSV Uploaded Successfully"
       redirect_to root_path
     else
       flash[:error] = "Select a File to Import!"
@@ -33,7 +33,7 @@ class ExpensesController < ApplicationController
 
   def delete_all_expenses
     if (Expense.destroy_all)
-      flash[:notice] = "Expenses Deleted Successfully"
+      flash[:success] = "Expenses Deleted Successfully"
     else
       flash[:error] = "Falied to delete expenses"
     end

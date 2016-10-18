@@ -1,46 +1,47 @@
-h1 Welcome to CSV File Importer
-br
-
-=form_tag import_file_expenses_path :multipart=>true do
-  h3 Step 1 - Select a file
-  =file_field_tag :file, :required=>true
+.container
+  h1.cen Welcome to CSV File Importer
   br
-  h3 Step 2 - Click on the button below
-  =submit_tag "Import Expenses"
 
--if flash[:error]
-  br
-  .error
-    =flash[:error]
+  #import-file
+    =form_tag import_file_expenses_path :multipart=>true do
+      h3 Step 1 - Select a file
+      .form-group
+        =file_field_tag :file, :required=>true, class:'btn btn-warning'
+      h3 Step 2 - Click on the button below
+      .form-group
+        =submit_tag "Import Expenses", class: 'btn btn-primary'
+
+  .clearfix
+
+  #messages
+  -if flash[:success]
+    .alert.alert-success
+      = flash[:success]
+
+  - if flash[:error]
+    .alert.alert-danger
+      = flash[:error]
+
+  #output
+  -if @total_per_month.any?
+    table.table
+      thead
+        tr
+          th
+            | Month
+          th
+            | Total
+      tbody
+          - @total_per_month.each do |key, value|
+            tr
+              td
+                = key
+              td
+                = '%.2f' % value.to_s
     br
+    .pull-left
+      = link_to 'See List of Expenses', list_path, class: 'btn btn-link'
 
-- if flash[:notice]
-  br
-  .notice
-    = flash[:notice]
-    br
-
--if @total_per_month.any?
-  p Output - Monthly Expenses
-  table border="1"
-    thead
-      tr
-        th
-          | Month
-        th
-          | Total
-    tbody
-        - @total_per_month.each do |key, value|
-          tr
-            td
-              = key
-            td
-              = '%.2f' % value.to_s
-
-  br
-  = link_to 'See List of Expenses', list_path
-  br
-  br
-  =form_tag delete_all_expenses_path do
-    =submit_tag "Delete All Expenses"
-
+    .pull-right
+      =form_tag delete_all_expenses_path do
+        =submit_tag "Delete All Expenses", class: 'btn btn-primary'
