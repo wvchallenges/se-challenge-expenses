@@ -50,6 +50,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :test, :development do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'rspec-rails', '~> 2.0'
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'selenium-webdriver'
 end
 
+gem 'smarter_csv'
+
+gem 'slim'
+
+gem 'simple_form'

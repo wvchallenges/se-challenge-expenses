@@ -2,7 +2,6 @@ class ExpensesController < ApplicationController
 
   def index
     @expenses = Expense.all
-    @expense = Expense.new
   end
 
   def import_file
@@ -12,7 +11,7 @@ class ExpensesController < ApplicationController
       flash[:notice] = "CSV Uploaded Successfully"
       redirect_to root_path
     else
-      flash[:error] = "Select a File to Import"
+      flash[:error] = "Select a File to Import!"
     end
   end
 
