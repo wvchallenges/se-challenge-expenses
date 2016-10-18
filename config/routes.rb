@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root to: 'expenses#index'
 
+  get 'list', :to=>'expenses#list'
+  post 'delete_all_expenses', :to=>'expenses#delete_all_expenses'
+
   resources :expenses do
     collection {post :import_file}
   end

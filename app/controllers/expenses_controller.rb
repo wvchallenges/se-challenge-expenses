@@ -1,6 +1,22 @@
+require 'date'
+
 class ExpensesController < ApplicationController
 
   def index
+    @total_per_month = {}
+    expenses = Expense  .all
+    expenses.each do |e|
+      month = Date::MONTHNAMES[e.date.month]
+      total = e.pre_tax_amount+e.tax_amount
+      if @total_per_month.keys.include? month
+        @total_per_month[month]+=total
+      else
+        @total_per_month[month]=total
+      end
+    end
+  end
+
+  def list
     @expenses = Expense.all
   end
 
@@ -13,6 +29,15 @@ class ExpensesController < ApplicationController
     else
       flash[:error] = "Select a File to Import!"
     end
+  end
+
+  def delete_all_expenses
+    if (Expense.destroy_all)
+      flash[:notice] = "Expenses Deleted Successfully"
+    else
+      flash[:error] = "Falied to delete expenses"
+    end
+    redirect_to root_path
   end
 
 end
