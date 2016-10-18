@@ -17,3 +17,12 @@ Then(/^I should see the message "([^"]*)"$/) do |message|
   page.should have_content(message)
 end
 
+Then(/^I should see the monthly expenses$/) do
+  page.should have_content('3012.68')
+  page.should have_content('784.75')
+  page.should have_content('2391.41')
+  page.should have_content('430.00')
+  page.should have_content('1625.40')
+end
+
+
