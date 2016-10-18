@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Migrate New Expense File</title>
+</head>
+<body>
+
+    {% if monthly_exp %}
+        <h3>Monthly Expenses From Uploaded File</h3>
+        <table border="1">
+            <tr>
+                <td>Month</td>
+                <td>Expense</td>
+            </tr>
+
+            {% for key, value in monthly_exp %}
+            <tr>
+                <td>{{key.month}} {{key.year}}</td>
+                <td>{{value}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <h3>Upload</h3>
+
+    <form action="{% url 'subsidiary:upload' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+        <p>{{ form.non_field_errors }}</p>
+
+            <p>{{ form.expfile.label_tag }}</p>
+
+            <p>
+                {{ form.expfile.errors }}
+                {{ form.expfile }}
+        </p>
+
+    <input type="submit" value="Upload" />
+</form>
+</body>
+</html>
