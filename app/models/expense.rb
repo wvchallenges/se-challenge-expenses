@@ -17,7 +17,7 @@ class Expense < ApplicationRecord
       expense.expense_description = exp[:expense_description]
       expense.pre_tax_amount = exp[:pre_tax_amount].gsub(',','').to_f
       expense.tax_name = exp[:tax_name]
-      expense.tax_amount = exp[:tax_amount]
+      expense.tax_amount = exp[:tax_amount].gsub(',','').to_f
       expense.save
     end
 
