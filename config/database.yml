@@ -1,0 +1,31 @@
+
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  host: 10.0.2.2
+  port: 5432
+
+development: &development
+  <<: *default
+  database: fileimporter
+  username: postgres
+  password: 123456
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  <<: *default
+  database: fileimporter_test
+  username: postgres
+  password: 123456
+
+production:
+  <<: *default
+  database: fileimporter
+  username: <%= ENV['FILEIMPORTER_DATABASE_USER'] %>
+  password: <%= ENV['FILEIMPORTER_DATABASE_PASSWORD'] %>
+
+cucumber:
+  <<: *test
