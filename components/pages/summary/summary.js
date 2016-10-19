@@ -32,29 +32,6 @@ var Summary = React.createClass({
 
     return MONTHS[parseInt(month)];
   },
-  drawExpenseSummary(chartID) {
-    if (this.state.expenses.length > 0) {
-      var data = _.map(this.state.expenses, function(expense) {
-        return [this.getMonth(expense.Month)+'-'+expense.Year, parseInt(expense.Total)];
-      }.bind(this));
-      data.unshift(["Month/Year", "Total Expenses ($)"]);
-
-      var chart_data = google.visualization.arrayToDataTable(data);
-
-      var options = {
-        chartArea: {width: '80%', height: '80%'},
-        hAxis: {
-          title: 'Expenses ($)'
-        },
-        vAxis: {
-        },
-        legend: {position: 'none'}
-      }
-
-      var chart = new google.visualization.BarChart(document.getElementById(chartID));
-      chart.draw(chart_data, options);
-    }
-  },
   render() {
     return (
       <div id="summary" className="page container">
@@ -89,12 +66,6 @@ var Summary = React.createClass({
     )
   }
 });
-
-/*
-<div className="chart-container">
-  <GoogleChart drawChart={this.drawExpenseSummary} />
-</div>
-*/
 
 export default Summary
 export { Summary }
