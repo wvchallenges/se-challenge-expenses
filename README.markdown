@@ -76,7 +76,7 @@ If any modifications are required, the app is structured in the following way:
 If any client side ReactJS code is edited, it must be cross-compiled again by issuing `webpack` from the command line.  The output of `webpack` is stored in `static\js\index.js`
 
 ## Comments
-Some items I'd like to point out with my submission are the ease of use for the end user.  Notably, a drag-and-drop interface for uploading files.  Invalid (i.e. non .csv) files are not allowed to be uploaded.  The target area will highlight green when an acceptable file is present.  After a file is uploaded, feedback is given to the user to indicate whether the upload and processing was successful.
+Some items I'd like to point out with my submission relate to the ease of use for the end user.  Notably, a drag-and-drop interface for uploading files.  Invalid (i.e. non .csv) files are not allowed to be uploaded.  The target area will highlight green when an acceptable file is present.  After a file is uploaded, feedback is given to the user to indicate whether the upload and processing was successful.
 
 During processing the data is split up and saved in 4 tables (employee, tax, category, and expenses) without the end user needing to understand anything 'behind the scenes'.  Currently if presented with new 'employee', 'tax' or 'categories' in the uploaded file, records will be created in the appropriate table.  By splitting up the records into 4 tables, we could 'fix' the 3 support tables (employee, tax, category) to prevent junk data from being uploaded.  It also allows provides a bit of future proofing should the need to add additional fields for the employee, tax or category records.
 
