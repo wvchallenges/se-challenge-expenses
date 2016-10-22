@@ -1,3 +1,13 @@
+# Installation
+
+1. Clone repo `git clone git@github.com:pav31/se-challenge.git`
+1. `cd se-challenge` 
+1. `bundle install`
+1. `rake db:setup`
+1. `rails s`
+1. Open in browser http://localhost:3000
+1. Enjoy! ;-)
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
