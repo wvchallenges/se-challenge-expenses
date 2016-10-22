@@ -1,0 +1,4 @@
+= form_tag upload_employees_path, multipart: true do
+  .form-group
+    = file_field_tag :file
+  = submit_tag "Submit", class: "btn btn-success"
