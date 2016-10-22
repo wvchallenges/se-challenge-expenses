@@ -1,4 +1,30 @@
-%p#notice= notice
-= link_to 'Edit', edit_employee_path(@employee)
-|
-= link_to 'Back', employees_path
+%h1 Employee Information
+%p
+  %b Date
+  = @employee.date
+%p
+  %b Category
+  = @employee.category
+%p
+  %b Employee name
+  = @employee.name
+%p
+  %b Employee address
+  = @employee.address
+%p
+  %b Expense description
+  = @employee.expense_description
+%p
+  %b Pre-tax amount
+  = @employee.pre_tax_amount
+%p
+  %b Tax name
+  = @employee.tax_name
+%p
+  %b Tax amount
+  = @employee.tax_amount
+%p
+  %b Post-tax amount
+  = @employee.post_tax_amount
+
+= link_to 'Employees', employees_path, class: 'btn btn-info'
