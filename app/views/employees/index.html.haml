@@ -1,0 +1,14 @@
+%p#notice= notice
+%h1 Employees
+%table
+  %thead
+    %tr
+      %th{:colspan => "3"}
+  %tbody
+    - @employees.each do |employee|
+      %tr
+        %td= link_to 'Show', employee
+        %td= link_to 'Edit', edit_employee_path(employee)
+        %td= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Employee', new_employee_path
