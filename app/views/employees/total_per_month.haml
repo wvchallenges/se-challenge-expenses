@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%h2 Total expenses amount per-month
+- if @total_expenses.present?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Month
+        %th Total expenses amount
+    %tbody
+      - @total_expenses.each do |month, amount|
+        %tr
+          %td= month.strftime("%B-%Y")
+          %td= amount
+- else
+  %h3 Nothing to show
+
+%br
+
+= link_to 'Employees', employees_path, class: 'btn btn-info'
+= link_to 'Upload Data', new_employee_path, class: 'btn btn-success'

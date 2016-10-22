@@ -1,0 +1,26 @@
+%p#notice= notice
+%h1 Employees
+- if @employees.present?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Date
+        %th Category
+        %th Employee name
+        %th
+        %th
+    %tbody
+      - @employees.each do |employee|
+        %tr
+          %td= employee.date
+          %td= employee.category
+          %td= employee.name
+          %td= link_to 'Show', employee
+          %td= link_to 'Delete', employee, method: :delete, data: { confirm: 'Are you sure?' }
+- else
+  %h3 Nothing to show
+
+%br
+
+= link_to 'Total expenses per-month', total_per_month_employees_path, class: 'btn btn-info'
+= link_to 'Upload Data', new_employee_path, class: 'btn btn-success'
