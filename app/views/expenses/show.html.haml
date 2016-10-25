@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @expense.date
+%p
+  %b Category:
+  = @expense.category.name
+%p
+  %b Employee:
+  = @expense.employee.name
+%p
+  %b Employee address:
+  = @expense.employee.address
+%p
+  %b Expense description:
+  = @expense.expense_description
+%p
+  %b Pre tax amount:
+  = @expense.pre_tax_amount
+%p
+  %b Tax:
+  = @expense.tax.name
+%p
+  %b Tax amount:
+  = @expense.tax_amount
+
+= link_to 'Edit', edit_expense_path(@expense)
+\|
+= link_to 'Back', expenses_path

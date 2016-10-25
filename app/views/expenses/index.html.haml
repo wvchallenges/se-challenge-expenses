@@ -1,0 +1,53 @@
+%h1 Listing Expenses
+
+= link_to 'Add Expenses', new_expense_path
+
+%hr
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Month
+      %th Total Expenses Pre-Tax
+      %th Total Tax
+      %th Total Expenses Tax
+  %tbody
+    - @expenses.group_by{ |exp| exp.date.beginning_of_month }.each do |mon_exp|
+      %tr
+        - mon_pre_tax = mon_exp.second.map(&:pre_tax_amount).inject(0, &:+)
+        - mon_tax = mon_exp.second.map(&:tax_amount).inject(0, &:+)
+        %td= mon_exp.first.strftime('%b %Y')
+        %td= mon_pre_tax
+        %td= mon_tax
+        %td= mon_pre_tax - mon_tax
+%hr
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Date
+      %th Category
+      %th Employee
+      %th Employee address
+      %th Expense description
+      %th Pre tax amount
+      %th Tax
+      %th Tax amount
+      %th
+      %th
+      %th
+
+  %tbody
+    - @expenses.each do |expense|
+      %tr
+        %td= expense.date
+        %td= expense.category.name
+        %td= expense.employee.name
+        %td= expense.employee.address
+        %td= expense.expense_description
+        %td= expense.pre_tax_amount
+        %td= expense.tax.name
+        %td= expense.tax_amount
+        %td= link_to 'Show', expense
+        %td= link_to 'Edit', edit_expense_path(expense)
+        %td= link_to 'Destroy', expense, :method => :delete, :data => { :confirm => 'Are you sure?' }
