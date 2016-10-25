@@ -44,7 +44,7 @@ var config = {
     })],
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?presets[]=es2015', exclude: /node_modules/ },
+      { test: /\.js$/, loader: 'babel?presets[]=es2015&presets[]=react', exclude: /node_modules/ },
     ]
   }
 };

@@ -6,11 +6,11 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <%= javascript_include_tag *webpack_asset_paths("application") %>
   </head>
 
   <body>
     <%= yield %>
+
+    <%= javascript_include_tag *webpack_asset_paths("application") %>
   </body>
 </html>
