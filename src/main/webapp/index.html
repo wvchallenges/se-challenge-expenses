@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Kenan Unal - Wave Coding Challenge</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	 <div class="container ">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+	    <h1>Hello, Wave Team!</h1>
+		<form id="formUploadExpense">
+			<div class="form-group">
+				<p class="help-block">Browse and select expense report</p>
+			    <input type="file" name="exampleInputFile" id="exampleInputFile">
+			 </div>
+			 <button type="submit" class="btn btn-default">Upload</button>
+		</form>
+	</div>
+	<h2>Expense Summary <small>by month</small></h2>
+	<div class="table-responsive" id="summary"></div>
+	<h6 class="text-center">(c)2016 Kenan Unal - (416)450-6043</h6>
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    	$("#formUploadExpense").submit(function(e) {
+    		$("#summary").html("<span class='label label-info'>Please wait</span>")
+    		e.preventDefault();
+    		var formData = new FormData($("#formUploadExpense"));
+    		$.ajax({
+    		       url : 'api/expenses',
+    		       type : 'POST',
+    		       data : formData,
+    		       processData: false,  // tell jQuery not to process the data
+    		       async: false,
+    		       cache: false,
+    		       contentType: false,
+    		       enctype: 'multipart/form-data',  
+    		       success : function(data) {
+    		           setTimeout(printExpenseSummary, 100);
+    		       }
+    		});
+    	});
+    	
+	    function printExpenseSummary() {
+	    	$.getJSON( "api/expenses/summary", function( data ) {
+	    		$("#summary").empty();
+	    		 var items = [];
+	    		 items.push("<tr><td>Year</td><td>Month</td><td>Total</td>");
+	    		 $.each( data, function( key, val ) {
+	    			    items.push( "<tr id='" + key + "'><td >" + val.year + "</td><td >" + val.month + "</td><td >" + val.total + "</td></tr>" );
+	    		  });
+	    			 
+    			  $( "<table/>", {
+    			    "class": "table table-striped",
+    			    html: items.join( "" )
+    			  }).appendTo( "#summary" );
+	    	});
+	    }
+    });
+    </script>
+  </body>
+</html>
