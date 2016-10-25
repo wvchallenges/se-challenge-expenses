@@ -1,0 +1,22 @@
+{
+  "name": "se-challenge",
+  "version": "1.0.0",
+  "description": "Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daegren/se-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daegren/se-challenge/issues"
+  },
+  "homepage": "https://github.com/daegren/se-challenge#readme"
+}
