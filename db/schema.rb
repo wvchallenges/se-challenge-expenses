@@ -38,13 +38,14 @@ ActiveRecord::Schema.define(version: 20161027172408) do
 
   create_table "expense_entries", force: :cascade do |t|
     t.date     "date"
+    t.string   "description"
     t.integer  "pre_tax_amount"
-    t.integer  "post_tax_amount"
+    t.integer  "tax_amount"
     t.integer  "category_id"
     t.integer  "tax_type_id"
     t.integer  "employee_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.index ["category_id"], name: "index_expense_entries_on_category_id", using: :btree
     t.index ["employee_id"], name: "index_expense_entries_on_employee_id", using: :btree
     t.index ["tax_type_id"], name: "index_expense_entries_on_tax_type_id", using: :btree
