@@ -1,7 +1,7 @@
 # Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview.
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!)
 
 There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
 
@@ -12,7 +12,7 @@ Send your submission to [dev.careers@waveapps.com](dev.careers@waveapps.com). Fe
 ## Submission Instructions
 1. Fork this project on github. You will need to create an account if you don't already have one.
 1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
+1. Push all of your changes to your fork on github and submit a pull request.
 1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
@@ -43,8 +43,41 @@ There are many ways that this application could be built; we ask that you build 
 **Once you're done, please submit a paragraph or two in your `README` about what you are particularly proud of in your implementation, and why.**
 
 ## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Evaluation of your submission will be based on the following criteria.
 
 1. Did your application fulfill the basic requirements?
 1. Did you document the method for setting up and running your application?
 1. Did you follow the instructions for submission?
+
+# Submission
+My submission for the Wave Software Development Challenge.
+
+## System requirements and configuration
+The submission uses NodeJS and MySQL, both are required installed before any installation steps below.
+
+1. In the root folder, run - `npm install` to download all of the app's dependencies.
+1. Open and edit the `\config\server.js` file to edit the NodeJS server details.  The default is: localhost:8000
+1. Open and edit the `\config\database.js` file to edit the MySQL server details.  The default is: root:root@localhost:3306
+
+## Running
+After completing the configuration steps above, run the app using `node index.js`
+
+## Editting
+If any modifications are required, the app is structured in the following way:
+
+1. `\components` - Client side ReactJS source files
+1. `\config` - Server side configuration files
+1. `\routes` - Server side route handling
+1. `\static` - Client side static files (css, javascript, html, etc...)
+1. `\uploads` - The location of uploaded files
+1. `\index.js` - Entry point for server side NodeJS code
+1. `\source.js` - Entry point for client side ReactJS code
+
+If any client side ReactJS code is edited, it must be cross-compiled again by issuing `webpack` from the command line.  The output of `webpack` is stored in `static\js\index.js`
+
+## Comments
+Some items I'd like to point out with my submission relate to the ease of use for the end user.  Notably, a drag-and-drop interface for uploading files.  Invalid (i.e. non .csv) files are not allowed to be uploaded.  The target area will highlight green when an acceptable file is present.  After a file is uploaded, feedback is given to the user to indicate whether the upload and processing was successful.  If the file was not successfully uploaded (i.e. a csv with incompatible data) an error is given.
+
+During processing the data is split up and saved in 4 tables (employee, tax, category, and expenses) without the end user needing to understand anything 'behind the scenes'.  The tables are created automatically on first run (or subsequent runs if the db has been deleted).  Currently, if presented with new 'employee', 'tax' or 'categories' in the uploaded file, records will be created in their corresponding table.  By splitting up the records into 4 tables, we could 'fix' the 3 support tables (employee, tax, category) to prevent junk data from being uploaded using a FK constraint.  It also allows provides a bit of future proofing should the need to add additional fields for the employee, tax or category records.
+
+When the data has been uploaded and successfully processed, redirected automatically to the summary page (total expenses amount per-month).  A full page is also available should anyone need to view all data.

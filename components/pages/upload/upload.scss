@@ -1,0 +1,19 @@
+@import './../../base.scss';
+
+#upload {
+  .dropzone {
+    border: 4px dotted $light-grey;
+    height: 10em;
+    line-height: 10em;
+    text-align: center;
+    font-size: 2em;
+
+    &.active {
+      border: 4px dotted $good-green;
+      background-color: $white;
+    }
+    &.error {
+      border: 4px dotted $good-green;
+    }
+  }
+}
