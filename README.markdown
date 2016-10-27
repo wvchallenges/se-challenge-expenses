@@ -11,6 +11,8 @@ If you don't have pip installed:
 ```bash
 sudo apt-get install python-setuptools
 sudo easy_install pip
+#and might as well get this tool
+sudo pip install virtualenv
 ```
 
 #### installation
