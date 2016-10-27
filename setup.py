@@ -7,5 +7,5 @@ setup(
     packages=['wtest'],
     include_package_data=True,
     zip_safe=True,
-    install_requires=['Flask','MySQL-python','python-dateutil']
+    install_requires=['Flask','flask-cors','MySQL-python','python-dateutil']
 )
