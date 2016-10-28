@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe CSVProcessor, type: :integration do
-  let(:csv_file) { create(:csv_file, :saved, :simple) }
+  let(:csv_file) { create(:csv_file, :simple) }
 
   context '.proccess' do
 
