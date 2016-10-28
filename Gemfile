@@ -32,6 +32,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'webpack-rails'
 
+gem 'bootstrap', '~> 4.0.0.alpha5'
+
 gem 'sidekiq'
 
 gem 'rspec', '~> 3.0'

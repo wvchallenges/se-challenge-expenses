@@ -10,6 +10,8 @@ class CSVWorker
 
     if res
       csv_file.processed!
+    else
+      csv_file.failed_processing!
     end
   end
 end

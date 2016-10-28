@@ -32,9 +32,9 @@ class HomeController < ApplicationController
   end
 
   def report
-    csv_file = CSVFile.find_by_check_id(params[:check_id])
+    @csv_file = CSVFile.find_by_check_id(params[:check_id])
 
-    @report = ReportGenerator.generate_expense_report(csv_file)
+    @report = ReportGenerator.generate_expense_report(@csv_file)
 
     render :report
   end

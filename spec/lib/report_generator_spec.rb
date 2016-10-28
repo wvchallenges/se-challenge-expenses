@@ -13,8 +13,8 @@ RSpec.describe ReportGenerator do
     result = subject
 
     expect(result).to be_a Hash
-    expect(result['01-2012']).to eq(expense_entry.total_expense + expense_entry2.total_expense)
-    expect(result['02-2012']).to eq(expense_entry3.total_expense)
+    expect(result['2012-01']).to eq(expense_entry.total_expense + expense_entry2.total_expense)
+    expect(result['2012-02']).to eq(expense_entry3.total_expense)
   end
 
   it 'sorts results based on date' do

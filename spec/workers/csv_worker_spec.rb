@@ -24,6 +24,6 @@ RSpec.describe CSVWorker, type: :integration do
 
     subject
 
-    expect(csv_file.reload).to have_failed_processing
+    expect(csv_file.reload).to be_failed_processing
   end
 end
