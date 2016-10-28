@@ -27,12 +27,14 @@ class HomeController < ApplicationController
     elsif csv_file.processing?
       render :check_status
     elsif csv_file.processed?
-      redirect_to :report, check_id: csv_file.check_id
+      redirect_to action: :report, check_id: csv_file.check_id
     end
   end
 
   def report
-    @csv_file = CSVFile.find_by_check_id(params[:check_id])
+    csv_file = CSVFile.find_by_check_id(params[:check_id])
+
+    @report = ReportGenerator.generate_expense_report(csv_file)
 
     render :report
   end

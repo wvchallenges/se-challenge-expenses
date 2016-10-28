@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <td>
+      Date
+    </td>
+    <td>
+      Total Expenses
+    </td>
+  </thead>
+  <% @report.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key %>
+      </td>
+      <td>
+        <%= '%.2f' % (value.to_f / 100) %>
+    </tr>
+  <% end %>
+</table>

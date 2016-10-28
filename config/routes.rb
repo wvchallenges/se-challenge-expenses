@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   post 'upload', to: 'home#upload'
   get 'check_status/:check_id', to: 'home#check_status'
-  get 'report', to: 'home#report'
+  get 'report/:check_id', to: 'home#report'
 
   namespace :api do
     put :tax_report, to: 'forms#process_tax_report'
