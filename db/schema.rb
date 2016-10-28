@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027172408) do
+ActiveRecord::Schema.define(version: 20161028162624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20161027172408) do
     t.integer  "employee_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "csv_file_id"
     t.index ["category_id"], name: "index_expense_entries_on_category_id", using: :btree
     t.index ["employee_id"], name: "index_expense_entries_on_employee_id", using: :btree
     t.index ["tax_type_id"], name: "index_expense_entries_on_tax_type_id", using: :btree

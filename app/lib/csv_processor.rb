@@ -30,7 +30,8 @@ class CSVProcessor
         tax_amount: (tax_amount.to_f * 100).to_i,         # ditto
         employee: employee,
         category: category,
-        tax_type: type
+        tax_type: type,
+        csv_file: csv_file
       )
     end
 

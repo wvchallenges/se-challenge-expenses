@@ -1,4 +1,6 @@
 class CSVFile < ApplicationRecord
+  has_many :expense_entries
+
   STATUS_FILE_UPLOADED = 'file_uploaded'
   STATUS_PROCESSING = 'processing'
   STATUS_PROCESSED = 'processed'

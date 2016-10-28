@@ -84,6 +84,12 @@ RSpec.describe CSVProcessor, type: :integration do
         expect(ExpenseEntry.first.tax_type).to eq(tax_type)
       end
     end
+
+    it 'associates the csv file to the created expense entry' do
+      subject
+
+      expect(ExpenseEntry.first.csv_file).to eq(csv_file)
+    end
   end
 
 end
