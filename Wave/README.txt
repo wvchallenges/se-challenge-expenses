@@ -18,21 +18,21 @@ How the Framework Works:
 status to the caller (Using SignalR)
 4. Once the post is successfull the request is complete and an status is shown to the user.
 5. A Job which is listening to the Queue picks up the message, deserializes and and starts processing
-6. The Job processes the expense parallely using multiple therad to speed up the processing and database entry
+6. The Job processes the expense parallely using multiple thread to speed up the processing and database entry
 7. The Database is relation and Tables design is normalized
 8. There are 4 Tables, Employee, ExpenseCategory, TaxState and Expense
 9. Employee, ExpenseCategory and TaxState are lookup tables and gets populated if for ex an EmployeeName is new otherwise
 returns a primary key to be used as reference in Expense Table
 10. The Job also sends real time progress in percentage to the Web Front End using SignalR
 12. The user is receiving realtime feedback on progress
-13. Once the data migration is complete a Completed status is showin to user and the
-summary of upload which is total expence by month.
+13. Once the data migration is complete a Completed status is shown to user and the
+summary of upload result is shown which is total expence by month.
 
 What I am proud of:
 -------------------
-I love design and designing for performance and scalibility is my passion.
-From overall architecture perspective this solution is Realtime, scalable and delivers high performance
-From Lowlevel Solution design, object Oriented principle, Dependency Injection is used, which makes changes very easy
+I love design and designing for performance and scalability is my passion.
+From overall architecture perspective this solution is Realtime, scalable, efficient and delivers high performance
+From Lowlevel Solution design, object Oriented principle of Dependency Injection is used
 From Web Front End, I have used Knockout Framework which is very lightweight modular framework
 SignalR - for ReaTime communication
 Bootstrap for responsive design
@@ -45,7 +45,7 @@ Unit Test - Planning to use  XUnit and I always aim for 100% test coverage
 
 Bug: 
 Please remove any extra comma from the csv data such as in Ammount Column
-I have included a csv file in the solution please use that, I have removed sich extra comma from it.
+I have included a csv file in the solution please use that, I have removed such extra comma from it.
 The framework does not take such comma into consideration and assumes after every comma is a new column
 
 Solution Structure:
