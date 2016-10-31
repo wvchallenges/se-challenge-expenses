@@ -62,8 +62,8 @@ To Set Up:
 ----------
 1. Please run the Database deployment script first in an on premise sql server or cloud sql server
 the database script is included in the solution.
-once created, please update the connection string int the Wave.JobProcessing Project Appconfig file
-Alternatively, leave the connection string in the project intact, It has my Azure SQl Credential. You can use it
+once created, please update the connection string in the Wave.JobProcessing Project Appconfig file
+Alternatively, leave the connection string in the project intact, It has my Azure SQl Credential. You can use it for testing this solution
 
 2. SetUp a Service Bus Queue
 on Microsof Azure Portal, create a service Bus Namespace and update the connection string
@@ -88,7 +88,8 @@ http://waveempmigrationapi.azurewebsites.net/
 6. If you have chosen to deploy Web API then grab the endpoint and update the endpoint in constants.js file in the UI
 project.
 
-7. Deploy and Run the UI project or hit the following deployed URL and get the experience
+7. Deploy and Run the UI project or hit the following deployed URL, Upload the csv file included in this solution and get the experience
+You can login to the database and see the data migration
 http://waveemployeemigration.azurewebsites.net/
 
 
