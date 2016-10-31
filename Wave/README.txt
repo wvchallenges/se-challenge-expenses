@@ -41,6 +41,7 @@ Unit Test - Planning to use  XUnit and I always aim for 100% test coverage
 
 Bug: 
 Please remove any extra comma from the csv data such as in Ammount Column
+I have included a csv file in the solution please use that, I have removed sich extra comma from it.
 The framework does not take such comma into consideration and assumes after every comma is a new column
 
 Solution Structure:
