@@ -81,7 +81,7 @@ Either Deploy on Cloud or Run Locally on IIS or from Visual Studio Directly (IIS
 A Web API is already deployed on my Azure Account, link below:
 http://waveempmigrationapi.azurewebsites.net/
 
-6. If you have chosen to deploy Web API then grab the endpoin and update the endpoint in constants.js file in the UI
+6. If you have chosen to deploy Web API then grab the endpoint and update the endpoint in constants.js file in the UI
 project.
 
 7. Deploy and Run the UI project or hit the following deployed URL and get the experience
