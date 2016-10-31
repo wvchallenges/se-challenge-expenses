@@ -14,15 +14,19 @@ How the Framework Works:
 -----------------------
 1. From the Web FrontEnd a user selects an Expense CSV File as given in sample and click on upload
 2. The Web frontend establishes a connection with the REST API Backend and posts the file
-3. The Web API receives the file, validates it, creates an object model and post it in a queue, while simultaneously relaying
+3. The Web API receives the file, validates it, creates an object model and post it to a queue, while simultaneously relaying
 status to the caller (Using SignalR)
 4. Once the post is successfull the request is complete and an status is shown to the user.
 5. A Job which is listening to the Queue picks up the message, deserializes and and starts processing
 6. The Job processes the expense parallely using multiple therad to speed up the processing and database entry
-7. The Job also sends real time progress to the Web Front End using SignalR
-8. The user is receiving realtime feedback
-9. Once the data migration is complete a Completed status is showin to user and the
-summary of upload which is total expence by month uploaded in the file.
+7. The Database is relation and Tables design is normalized
+8. There are 4 Tables, Employee, ExpenseCategory, TaxState and Expense
+9. Employee, ExpenseCategory and TaxState are lookup tables and gets populated if for ex an EmployeeName is new otherwise
+returns a primary key to be used as reference in Expense Table
+10. The Job also sends real time progress in percentage to the Web Front End using SignalR
+12. The user is receiving realtime feedback on progress
+13. Once the data migration is complete a Completed status is showin to user and the
+summary of upload which is total expence by month.
 
 What I am proud of:
 -------------------
