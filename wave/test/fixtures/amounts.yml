@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  d: 2015-09-04
+  category: MyString
+  employee_name: MyString
+  expense_description: MyString
+  pre_tax_amount: 1.5
+  tax_name: MyString
+  tax_amount: 1.5
+  total_tax: 1.5
+
+two:
+  d: 2015-09-04
+  category: MyString
+  employee_name: MyString
+  expense_description: MyString
+  pre_tax_amount: 1.5
+  tax_name: MyString
+  tax_amount: 1.5
+  total_tax: 1.5
