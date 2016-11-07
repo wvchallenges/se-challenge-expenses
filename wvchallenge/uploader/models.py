@@ -12,11 +12,15 @@ class WvDateField(models.DateField):
 
 
 class Expense(models.Model):
+    # decided to use date column type to facilitate easy date manipulations without 
+    # incurring the extra overhead of converting to and from string 
     expense_date = WvDateField(auto_now=False, auto_now_add=False)
     category = models.CharField(max_length=64)
     employee_name = models.CharField(max_length=128)
     employee_address = models.TextField()
     expense_description = models.CharField(max_length=256)
+    # keeping amount fields as numeric, handling removing commas by using locales in the view
+    # Using numeric type simplifies aggregation without extra conversions to and from string
     pretax_amount = models.DecimalField(max_digits=7, decimal_places=2)
     tax_name = models.CharField(max_length=64)
     tax_amount = models.DecimalField(max_digits=7, decimal_places=2)
