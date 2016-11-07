@@ -5,7 +5,7 @@ The expenses in the form of csv files are stored in wave's database for easy int
 In addition to migration, the application also reports aggregate expenses per month to track expenditure trends at the acquired company. 
 
 ### Instructions on running the application
-1. navigate to `<checkout-dir>/wvchallenge`
+1. navigate to `<checkout-dir>/se-challenge/wvchallenge`
 1. requires Python 3
 1. create database structure `python manage.py migrate`
 1. run the application using `python manage.py runserver`
