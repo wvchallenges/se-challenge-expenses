@@ -11,7 +11,7 @@ In addition to migration, the application also reports aggregate expenses per mo
 1. run the application using `python manage.py runserver`
 1. open your favourite browser and type `http://<ip_addr/hostname>:8000`
 
-### Proud
+### Proud of the following 
 1. only requires django framework and nothing else 
 1. using DateField inheritance to convert input date format into django's required date format 
 1. correctly handling decimal numbers by using locales rather than stripping comma separators from string and converting striped strings to numeric
