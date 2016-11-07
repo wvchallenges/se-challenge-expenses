@@ -3,8 +3,8 @@ import datetime
 
 '''
 WvDateField - Class to convert date field format.
-DJango exports date in 'YYYY-MM-DD' format. This class
-coverts the same date to 'MM/DD/YYYY'
+Django expects date in 'YYYY-MM-DD' format, but our input format is 'mm/dd/yyyy'
+Class converts date to django format
 '''
 class WvDateField(models.DateField):
     def get_prep_value(self,value):
