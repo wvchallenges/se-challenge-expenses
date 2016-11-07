@@ -16,10 +16,3 @@ In addition to migration, the application also reports aggregate expenses per mo
 1. using DateField inheritance to convert input date format into django's required date format 
 1. correctly handling decimal numbers by using locales rather than stripping comma separators from string and converting striped strings to numeric
 1. using modern material design in compliance with Wave's color themes
-
-### Concerns
-1. no csv validation
-1. did not test with large files, but per docs, using chunks should prevent killing the server if large file is uploaded
-
-
-
