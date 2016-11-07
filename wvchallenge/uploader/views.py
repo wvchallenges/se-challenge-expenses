@@ -53,8 +53,6 @@ def index(request):
     if request.method == 'POST':
         # validate form input
         if not 'expense' in request.FILES:
-            #TODO: for debugging, must be removed
-            Expense.objects.all().delete()
             return HttpResponseRedirect('/')
 
         data = request.FILES['expense']
