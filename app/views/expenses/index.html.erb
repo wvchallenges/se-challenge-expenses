@@ -1,0 +1,45 @@
+<div class="container">
+  <h1>Expenses Upload Form</h1>
+
+  <!-- upload form -->
+  <%= form_tag upload_expenses_expenses_path, multipart: true do %>
+    <p>Please choose the expense file to upload to the database<p>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <%= file_field_tag :expense_file, :class => 'file-loading form-control' %>
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary form-control">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- expense review table -->
+  <% if @expense_by_month.size > 0 %>
+    <h3>Expense Summary View by Month</h3>
+    <div class="row" style="margin-top:20px">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <tr>
+            <th> Year </th>
+            <th class="text-right"> Month </th>
+            <th class="text-right"> Pre-tax Expenses </th>
+            <th class="text-right"> Tax Amount </th>
+            <th class="text-right"> Total Expenses </th>
+          </tr>
+          <% @expense_by_month.each do |expense| %>
+          <tr>
+            <td><%= expense[0].year %></td>
+            <td class="text-right"><%= expense[0].month %></td>
+            <td class="text-right"><%= number_to_currency(expense[1].sum{|e| e.pre_tax_amount.to_f}, :unit => '$') %></td>
+            <td class="text-right"><%= number_to_currency(expense[1].sum{|e| e.tax_amount.to_f}, :unit => '$') %></td>
+            <td class="text-right"><%= number_to_currency(expense[1].sum{|e| e.pre_tax_amount.to_f + e.tax_amount.to_f}, :unit => '$') %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

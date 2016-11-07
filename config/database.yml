@@ -1,0 +1,12 @@
+# SQLite version 3.x
+#   gem install mysql2
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'mysql2'
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: se-challenge-robert
+  username: root
+  pool: 5
+  timeout: 5000
