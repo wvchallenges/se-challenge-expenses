@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <title>Migrate Expenses</title>
+</head>
+<body class="grey lighten-5">
+    <div class="col">
+        <div class="row">
+            <div class="col center-align card-panel centered s6 push-s3 teal-text">
+                <h4>Welcome to Wave</h4> <br/>
+            </div>  
+        </div>
+        <div class="row">
+            <form class="col s6 push-s3" enctype="multipart/form-data" method="POST" action="/">    
+                {% csrf_token %}
+                <div class="teal-text lighten-3">
+                    Migrate your employees' expense reports into waveapps database   
+                </div>
+                <div class="teal-text lighten-3">
+                    <input type="file" name="expense" id="expense"> 
+                </div>
+                <hr>
+                <div> 
+                    <input class="btn" type="submit" value="Migrate"> 
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            {%if expenses %}
+            <table class="striped col s6 push-s3">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Expenses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for elem in expenses %}
+                    <tr>
+                        <td>{{elem.month}}</td>
+                        <td>{{elem.expense}} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="col card-panel s6 push-s3 teal lighten-5">
+                No expenses uploaded. Please upload the csv file containing employee expenses
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
