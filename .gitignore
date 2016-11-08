@@ -1,0 +1,16 @@
+# eclipse
+.project
+.pydevproject
+.settings
+
+# virtualenv
+Include/
+Lib/
+Scripts/
+pip-selfcheck.json
+
+# python
+__pycache__
+
+# django
+db.sqlite3
