@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Wave App to import CSV file: Home</title>
+  {% load staticfiles %}
+  <link rel="icon" type="image/png" href={% static 'wave.png' %} />
+  <link rel="stylesheet" type="text/css" href="{% static 'wave.css' %}" />
+</head>
+<body>
+  <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <input class="File" type="file" id="file" name="file" accept=".csv" required><br><br>
+  <input type="submit" value="Click to Upload">
+  </form>
+</body>
+</html>
+
