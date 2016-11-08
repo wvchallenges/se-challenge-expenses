@@ -14,10 +14,11 @@ fs = FileSystemStorage()
 def home(request):
     if request.method == "POST" and request.FILES['file']:
         File = request.FILES['file']
-        if path.isfile(settings.MEDIA_ROOT + '/' + File.name):
-            remove(settings.MEDIA_ROOT + '/' + File.name)
+        FilePath = settings.MEDIA_ROOT + '/' + File.name
+        if path.isfile(FilePath):
+            remove(FilePath)
         Name = fs.save(File.name, File)
-        Lines = reader(open(settings.MEDIA_ROOT + '/' + File.name))
+        Lines = reader(open(FilePath))
         Lines.__next__()  # skip the header
         write_to_database(Lines)
         return render(request, 'success.html', {'Name': Name, 'List': read_from_database()})
@@ -52,5 +53,5 @@ def read_from_database():
         m = m + 1
         if m > 12:
             y = y + 1
-            m = 0
+            m = 1
     return L

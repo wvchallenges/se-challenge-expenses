@@ -8,12 +8,17 @@ body {
 
 input[type="file"]::-webkit-file-upload-button{
     font-size: 30px;
+    background-color: cyan;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+input[type=file]:hover {
+    background-color: darkcyan;
 }
 
 input{
