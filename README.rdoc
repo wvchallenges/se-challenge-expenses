@@ -1,0 +1,22 @@
+== README
+
+This app was developed using Ruby 2.1.2p95, Rails 4.1.1 and SQLite 3 for the backend database. Ensure that you have all the gems outlined in the Gemfile located in the app's main directory.
+
+== Getting Started
+
+1. At the command prompt, navigate to the application's directory. If this is the first time you're running the app you must perform a migration to set up the database.
+       "~$ rake db:migrate"
+
+2. Start the web server:
+       "~$ rails server"
+
+3. Go to http://localhost:3000/ and you'll see the app
+
+NOTE: Each additional file you submit will add to the overall expenses table (duplicate expenses will not be added twice). And the Montly Totals will be updated accordingly.
+
+== Challenge
+
+I am particularly proud of the simple and minimilistic way that I have coded and designed the user interface for this challenge. The importing of the file take sup only a few lines of code and uses Ruby's built in CSV libraries. This app was developed and requires no addition software or plugins to be run or modified. Again touching on the minimilistic approach, the import method is a part of the Expenses model, such that it could be used to import data from any controller (if another were added). I enjoy being able to intoduce modularity such as this whenever possible. I also am proud of the design and styling of the app. As this was a quick challenge I just went for something simple yet elegant in my opinion that didn't require any creation of additional assets. I hope that you agree with what I've said here and I hope I will be speaking with you soon :)
+
+
+== Author: Gordon Krull
