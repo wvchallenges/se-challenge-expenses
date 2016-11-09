@@ -1,0 +1,11 @@
+ <%= form_tag import_info_expenses_path, multipart: true do %>
+  <div style="padding:2cm 4cm 3cm 4cm;"> 
+      <div>
+          <div style="line-height:25px;">
+              <%= label_tag(:file, "Upload file") %>
+              <%= file_field_tag :file, class: "form-control" %>
+          </div>
+          <br />
+          <%= submit_tag('Submit', class: 'btn btn-default') %>
+      </div>
+<%end%>

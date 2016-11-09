@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<%= @expense.date %> <br/>
+<%= @expense.employee.name %> <br/>
+<%= @expense.employee.address %> <br/>
+<%= @expense.category %> <br/>
+<%= @expense.expense_description %> <br/>
+<%= @expense.pre_tax_amount%> <br/>
+<%= @expense.tax_name %> <br/>
+<%= @expense.tax_amount  %> <br/>
+
+<%= link_to 'Edit', edit_expense_path(@expense) %> |
+<%= link_to 'Back', expenses_path %>
