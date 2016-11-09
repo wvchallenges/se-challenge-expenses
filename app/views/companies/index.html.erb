@@ -1,0 +1,72 @@
+<h1>Listing companies</h1>
+<div class="media">
+  <div class="media-body">
+    <%if !@companies.empty? %>
+      <table border="1">
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Employee Name</th>
+          <th>Employee Address</th>
+          <th>Expense Description</th>
+          <th>Pre-tax Amount</th>
+          <th>Tax Name</th>
+          <th>Tax Amount</th>
+        </tr>
+        <% @month = @companies[0].date.month %>
+    	 <% @total = 0 %>
+        <% @companies.each do |company| %>
+        <% if @month == company.date.month %>
+          <% @mnt = company.date.strftime("%B") %>
+          <% @tmoney = (company.pre_tax.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+          <% @tamt = (company.tax_amount.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+          <tr>
+           <td><%= company.date %></td>
+            <td><%= company.category %></td>
+            <td><%= company.name %></td>
+            <td><%= company.address %></td>
+            <td><%= company.exp_desc %></td>
+            <td>$<%= @tmoney %></td>
+            <td><%= company.tax_name %></td>
+            <td>$<%= @tamt %></td>
+          </tr>
+          <% @total += company.pre_tax + company.tax_amount %>
+        <% else %>
+          <% @tt = (@total.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+          <% @tmoney = (company.pre_tax.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+          <% @tamt = (company.tax_amount.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+          <tr> 
+            <th colspan="7">Total for: <%= @mnt %></th>
+            <th>$<%= @tt %></th>
+          </tr>
+          <tr>
+            <td><%= company.date %></td>
+            <td><%= company.category %></td>
+            <td><%= company.name %></td>
+            <td><%= company.address %></td>
+            <td><%= company.exp_desc %></td>
+            <td>$<%= @tmoney %></td>
+            <td><%= company.tax_name %></td>
+            <td>$<%= @tamt %></td>
+          </tr>
+          <% @month = company.date.month %>
+          <% @total = company.pre_tax + company.tax_amount %>
+        <% end %>
+      <% end %>
+      <% @tt = (@total.truncate(2).to_s("F") + "00")[/.*\..{2}/] %>
+      <tr> 
+        <th colspan="7">Total for: <%= @mnt %></th>
+        <th>$<%= @tt %></th>
+      </tr>
+    </table>
+    <% end %>
+  </dif>
+</dif>
+<br />
+<h3>Import Companies</h3>
+<%= form_tag import_companies_path, multipart: true do %>
+    <%= file_field_tag :file, accept: '.csv' %>
+    <%= submit_tag "Upload Company File" %>
+<% end %>
+
+

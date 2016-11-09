@@ -1,0 +1,22 @@
+# Wave Software Development Challenge
+Applicants for the [Software Engineering Manager](https://wave.bamboohr.co.uk/jobs/view.php?id=34) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+Github username:jbronfenbrener
+Email address: jbronfenbrener@gmail.com
+
+## Project Description
+Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+
+### The web-based application does:
+
+1. The app accepts (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
+1. The following assumptions have been made:
+ 1. Columns will always be in that order.
+ 2. There will always be data in each column.
+ 3. There will always be a header line.
+
+The application has been built on Ruby (version 1.9.3) on Rails (version 3.2.21) on Windows 10 OS.
+The database: PostgeSQL contains one table: companies.
+The application is very simple and it does not require any additional software. 
+
+
+
