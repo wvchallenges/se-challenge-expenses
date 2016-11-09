@@ -1,0 +1,30 @@
+== README
+
+This is my submitted solution for the Wave Software Development Challenge. 
+
+=== Quick Install
+
+This was made and bundled using Ubuntu 15.04. You'll find all the bundled programs and their corresponding version on the Gemfile.
+
+* Install Ruby and Rails ( Ruby > 2.2.2, Rails > 4.2.2)
+
+* Create a directory and install git
+
+* Clone repo into your own
+
+* Navigate to appropriate folder (wave)
+
+> bundle install
+
+> (bundle exec) rake db:migrate
+
+> rails server
+
+
+=== Thoughts
+
+As a fullstack developer I tried to put in enough time for every aspect of the application. I decided to leave the monthly aggregations to javascript where it pulls the data from the server. I made some quick CSS and JS magic to make it look a little cleaner on the front end. Money is always a tough one, given the time, I decided to use some regex to grab the string data, and BigDecimal to store the money data.
+
+This is an open ended challenege and we are recommended to only spend a few hours working on it, so naturally, there are a few things that could use some work on my current implementation.
+
+The application currently does not aggregate data, it simply destroys the available data and replaces it with a new upload. This could probably work to instead continually add data to the database. Not enough work was made into validation for files and type of data that is being handled. multiple views and a useful front end framework could be used (react? angular?).A better relational model for the data could be used, probably separating taxes form the rest of the receipt, creating a many to many relationship.
