@@ -1,0 +1,16 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Excludes:
+    - db/**/*
+
+Metrics/LineLength:
+  Max: 100
+
+Rails:
+  Enabled: true
+
+Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
