@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20161109186320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.date    "date"
+    t.integer "category_id"
+    t.integer "employee_id"
+    t.text    "description"
+    t.integer "pre_tax_amount_cents",    default: 0,     null: false
+    t.string  "pre_tax_amount_currency", default: "USD", null: false
+    t.integer "tax_id"
+    t.integer "tax_amount_cents",        default: 0,     null: false
+    t.string  "tax_amount_currency",     default: "USD", null: false
+    t.index ["category_id"], name: "index_expenses_on_category_id", using: :btree
+    t.index ["employee_id"], name: "index_expenses_on_employee_id", using: :btree
+    t.index ["tax_id"], name: "index_expenses_on_tax_id", using: :btree
+  end
+
+  create_table "taxes", force: :cascade do |t|
+    t.string "name"
+  end
 
 end

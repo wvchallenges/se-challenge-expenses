@@ -34,6 +34,7 @@ group :development, :test do
 end
 
 gem 'haml-rails'
+gem 'money-rails'
 
 group :test do
   gem 'rspec-rails'
