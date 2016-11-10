@@ -1,18 +1,7 @@
 require 'csv'
 
 describe ExpenseImportService do
-  # rubocop:disable Metrics/AbcSize
-  def assert_expense_equal(actual, expected)
-    expect(actual.date).to eq(expected.date)
-    expect(actual.category_name).to eq(expected.category_name)
-    expect(actual.employee_name).to eq(expected.employee_name)
-    expect(actual.employee_address).to eq(expected.employee_address)
-    expect(actual.description).to eq(expected.description)
-    expect(actual.pre_tax_amount).to eq(expected.pre_tax_amount)
-    expect(actual.tax_name).to eq(expected.tax_name)
-    expect(actual.tax_amount).to eq(expected.tax_amount)
-  end
-  # rubocop:enable Metrics/AbcSize
+  let(:service) { described_class.new }
 
   describe '#import' do
     let(:csv_raw) do
@@ -24,11 +13,11 @@ describe ExpenseImportService do
     let(:csv_row) { CSV.parse(csv_raw, headers: true).first }
 
     it 'creates an expense' do
-      service = described_class.new
+      expect { service.import(csv_row) }.to change(Expense, :count).by(1)
+    end
 
-      expect { service.import csv_row }.to change(Expense, :count).by(1)
-
-      expense = Expense.last
+    it 'creates an expense with correct info' do
+      expense = service.import(csv_row)
       assert_expense_equal(
         expense,
         OpenStruct.new(
@@ -56,11 +45,13 @@ describe ExpenseImportService do
     let(:csv_file) { CSV.parse(csv_raw, headers: true) }
 
     it 'creates expenses' do
-      service = described_class.new
-
       expect { service.import_file csv_file }.to change(Expense, :count).by(2)
+    end
 
-      expense = Expense.find_by description: 'Taxi ride'
+    it 'creates expenses with correct info' do
+      expenses = service.import_file csv_file
+
+      expense = expenses[0]
       assert_expense_equal(
         expense,
         OpenStruct.new(
@@ -75,7 +66,7 @@ describe ExpenseImportService do
         )
       )
 
-      expense = Expense.find_by description: 'Paper'
+      expense = expenses[1]
       assert_expense_equal(
         expense,
         OpenStruct.new(
@@ -91,4 +82,17 @@ describe ExpenseImportService do
       )
     end
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def assert_expense_equal(actual, expected)
+    expect(actual.date).to eq(expected.date)
+    expect(actual.category_name).to eq(expected.category_name)
+    expect(actual.employee_name).to eq(expected.employee_name)
+    expect(actual.employee_address).to eq(expected.employee_address)
+    expect(actual.description).to eq(expected.description)
+    expect(actual.pre_tax_amount).to eq(expected.pre_tax_amount)
+    expect(actual.tax_name).to eq(expected.tax_name)
+    expect(actual.tax_amount).to eq(expected.tax_amount)
+  end
+  # rubocop:enable Metrics/AbcSize
 end

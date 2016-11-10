@@ -4,7 +4,7 @@ class ExpenseImportService < ApplicationService
   end
 
   def import_file(csv_file)
-    csv_file.each do |row|
+    csv_file.map do |row|
       import(row)
     end
   end
