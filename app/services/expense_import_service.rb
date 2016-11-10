@@ -1,6 +1,12 @@
 class ExpenseImportService < ApplicationService
-  def import(expense_row)
-    Expense.create! parse_attributes(expense_row.to_hash)
+  def import(csv_row)
+    Expense.create! parse_attributes(csv_row.to_hash)
+  end
+
+  def import_file(csv_file)
+    csv_file.each do |row|
+      import(row)
+    end
   end
 
   private
