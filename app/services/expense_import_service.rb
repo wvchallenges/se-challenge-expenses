@@ -7,39 +7,41 @@ class ExpenseImportService < ApplicationService
 
   def parse_attributes(original_attributes)
     attributes = {}
+
+    attributes.merge! parse_category(original_attributes)
+    attributes.merge! parse_employee(original_attributes)
+    attributes.merge! parse_tax(original_attributes)
+
     attributes[:date] = date original_attributes.delete('date')
-    attributes[:category_id] = category_id original_attributes.delete('category')
-
-    employee_name = original_attributes.delete 'employee name'
-    employee_address = original_attributes.delete 'employee address'
-    attributes[:employee_id] = employee_id(employee_name, employee_address)
-
     attributes[:description] = original_attributes.delete 'expense description'
     attributes[:pre_tax_amount] = original_attributes.delete 'pre-tax amount'
-
-    tax_name = original_attributes.delete 'tax name'
-    attributes[:tax_id] = tax_id(tax_name)
-
     attributes[:tax_amount] = original_attributes.delete 'tax amount'
 
     attributes
   end
 
+  def parse_category(original_attributes)
+    category_name = original_attributes.delete('category')
+    category = Category.find_or_create_by!(name: category_name)
+    { category_id: category.id }
+  end
+
+  def parse_employee(original_attributes)
+    employee_name = original_attributes.delete 'employee name'
+    employee_address = original_attributes.delete 'employee address'
+    employee = Employee.find_or_create_by!(name: employee_name) do |new_employee|
+      new_employee.address = employee_address
+    end
+    { employee_id: employee.id }
+  end
+
+  def parse_tax(original_attributes)
+    tax_name = original_attributes.delete 'tax name'
+    tax = Tax.find_or_create_by!(name: tax_name)
+    { tax_id: tax.id }
+  end
+
   def date(original_date)
     Date.strptime original_date, '%m/%d/%Y'
-  end
-
-  def category_id(category_name)
-    Category.find_or_create_by!(name: category_name).id
-  end
-
-  def employee_id(employee_name, employee_address)
-    Employee.find_or_create_by!(name: employee_name) do |new_employee|
-      new_employee.address = employee_address
-    end.id
-  end
-
-  def tax_id(tax_name)
-    Tax.find_or_create_by!(name: tax_name).id
   end
 end

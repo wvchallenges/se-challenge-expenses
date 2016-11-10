@@ -6,21 +6,11 @@ class Expense < ActiveRecord::Base
   monetize :pre_tax_amount_cents
   monetize :tax_amount_cents
 
-  validates_presence_of :date, :category, :employee, :description, :pre_tax_amount, :tax, :tax_amount
+  validates :date, :category, :employee, :description, :pre_tax_amount, :tax, :tax_amount,
+            presence: true
 
-  def category_name
-    category.name
-  end
-
-  def employee_name
-    employee.name
-  end
-
-  def employee_address
-    employee.address
-  end
-
-  def tax_name
-    tax.name
-  end
+  delegate :name, to: :category, prefix: true
+  delegate :name, to: :employee, prefix: true
+  delegate :address, to: :employee, prefix: true
+  delegate :name, to: :tax, prefix: true
 end

@@ -1,4 +1,7 @@
 class Employee < ActiveRecord::Base
-  validates_presence_of :name, :address
-  validates_uniqueness_of :name
+  validates :name, :address,
+            presence: true
+
+  validates :name,
+            uniqueness: true
 end
