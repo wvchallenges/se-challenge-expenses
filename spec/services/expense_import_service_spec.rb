@@ -4,7 +4,7 @@ describe ExpenseImportService do
   let(:service) { described_class.new upload }
   let(:upload) { FactoryGirl.create :upload }
 
-  describe '#import_file' do
+  describe 'importing file' do
     let(:file) do
       file = Tempfile.new
       file.write csv_raw

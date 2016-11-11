@@ -7,7 +7,7 @@ describe MonthlyReportService do
     FactoryGirl.create :expense, attrs
   end
 
-  describe '#monthly_reports' do
+  describe 'generates monthly reports' do
     context 'with no expenses' do
       it 'returns empty hash' do
         reports = service.monthly_reports
