@@ -1,9 +1,10 @@
 class PagesController < ApplicationController
   def home
-    @reports = MonthlyReportService.new
+    @uploads = Upload.all.map { |upload| UploadPresenter.new(upload) }
+    @selected_upload = Upload.find(params[:upload_id]) if params[:upload_id]
+    @reports = MonthlyReportService.new(@selected_upload)
                                    .monthly_reports
                                    .map { |month, data| MonthlyReportPresenter.new(month, data) }
-    @uploads = Upload.all.map { |upload| UploadPresenter.new(upload) }
   end
 
   def upload

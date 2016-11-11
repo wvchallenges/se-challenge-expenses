@@ -21,5 +21,11 @@
 
 - unless @reports.empty?
   %div
-    %h5 Monthly reports
+    %h5
+      Monthly reports
+      %span.small
+        - if @selected_upload
+          (for expenses in #{@selected_upload.file_name} file)
+        - else
+          (for all expenses from all uploads)
     = render 'reports', reports: @reports

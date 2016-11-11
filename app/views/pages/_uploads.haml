@@ -9,5 +9,5 @@
     - uploads.each do |upload|
       %tr
         %td= upload.id
-        %td= upload.file_name
+        %td= link_to upload.file_name, { upload_id: upload.id }
         %td= upload.uploaded_at
