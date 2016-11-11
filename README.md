@@ -1,24 +1,41 @@
-# README
+# Expense Monster
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[ ![Codeship Status for hungryzi/se-challenge](https://codeship.com/projects/15dbab60-8a38-0134-e269-5a7c9acf56e8/status?branch=submission-zi)](https://codeship.com/projects/184407)
 
-Things you may want to cover:
+### *Omnomnom must eat expenses!*
+A simple Rails app that imports expenses data from CSV to PostgreSQL database and shows a quick summary of expenses by month.
 
-* Ruby version
+## Setup
 
-* System dependencies
+### Requirements
 
-* Configuration
+- `ruby 2.3.0`
+- `bundler` gem.
+- `PostgreSQL`
 
-* Database creation
+### Setup commands
 
-* Database initialization
+```
+git clone git@github.com:hungryzi/se-challenge.git
+cd se-challenge
+git checkout submission-zi
+bundle install
+bundle exec rails db:setup
+```
 
-* How to run the test suite
+### Run app
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+bundle exec rails server
+```
 
-* Deployment instructions
+After that command runs successfully, the app should be running on [http://localhost:3000](http://localhost:3000)
 
-* ...
+### Run test
+
+```
+bundle exec rspec spec
+```
+
+
+
