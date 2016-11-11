@@ -14,7 +14,7 @@ This app demonstrates my practices and workflows when working on a Rails app.
 - TDD with RSpec, Capybara..
 - Rubocop & Overcommit to enforce styleguide.
 
-This is not my first time working on an app to import CSV files. From my past experience, CSV files are often malformed (missing column, wrong data type..). I've tried to make it easier for users in this case. First of, the whole uploading process is wrapped in a Transaction, so there is no situation where a file is processed halfway and user doesn't know where it fails and how s/he can continue. Secondly, if the error is in the data, the error messages shows the line where processing stopped so user to easily investigate. I've uploaded an example of a malformed file for you to try out [here](https://gist.githubusercontent.com/hungryzi/846f62cf890086e06b8967519b9d9716/raw/84dc69f572b50445bf442d4621da77bbd00e6f7c/invalid_data.csv). 
+This is not my first time working on an app to import CSV files. From my past experience, CSV files are often malformed (missing column, wrong data type..). I've tried to make it easier for users in this case. First of, the whole uploading process is wrapped in a transaction, so there is no situation where a file is processed halfway and user doesn't know where it fails and how s/he can continue. Secondly, if the error is in the data, the error messages shows the line where processing stopped so user can easily investigate. I've uploaded an example of a malformed file for you to try out [here](https://gist.githubusercontent.com/hungryzi/846f62cf890086e06b8967519b9d9716/raw/84dc69f572b50445bf442d4621da77bbd00e6f7c/invalid_data.csv). 
 
 Hope you enjoy using the app!
 
@@ -34,9 +34,9 @@ Hope you enjoy using the app!
 ### Setup commands
 
 ```
-$ git clone git@github.com:hungryzi/se-challenge.git
+$ git clone https://github.com/hungryzi/se-challenge.git
 $ cd se-challenge
-$ git checkout submission-zi\
+$ git checkout submission-zi
 $ gem install bundler
 $ bundle install
 $ bundle exec rails db:setup
@@ -51,7 +51,7 @@ $ bundle exec rails server
 
 After that command runs successfully, the app should be running on [http://localhost:3000](http://localhost:3000)
 
-### Run test
+### Run tests
 
 ```
 $ bundle exec rspec spec
