@@ -10,7 +10,14 @@
 
   = render 'form'
 
-.my-1
+%hr.my-2
+
+- unless @uploads.empty?
+  %div
+    %h5 Uploads
+    = render 'uploads', uploads: @uploads
+
+%hr.my-2
 
 - unless @reports.empty?
   %div

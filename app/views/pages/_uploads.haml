@@ -1,0 +1,14 @@
+%table.table.table-striped.table-sm
+  %thead
+    %tr
+      %th ID
+      %th Original file name
+      %th Uploaded At
+
+  %tbody
+    - uploads.each do |upload|
+      - upload = UploadPresenter.new(upload)
+      %tr
+        %td= upload.id
+        %td= upload.file_name
+        %td= upload.uploaded_at

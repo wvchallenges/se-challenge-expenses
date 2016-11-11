@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   def home
     @reports = MonthlyReportService.new.monthly_reports
+    @uploads = Upload.all
   end
 
   def upload
