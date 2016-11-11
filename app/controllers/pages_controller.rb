@@ -10,6 +10,7 @@ class PagesController < ApplicationController
 
     begin
       ExpenseImportService.new.import_file CSV.open(file.path, headers: true)
+      flash[:success] = 'Success!'
     rescue ExpenseImportService::ImportError => error
       flash[:danger] = error.message
     end
