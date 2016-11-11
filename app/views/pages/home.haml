@@ -23,9 +23,11 @@
   %div
     %h5
       Monthly reports
-      %span.small
-        - if @selected_upload
-          (for expenses in #{@selected_upload.file_name} file)
-        - else
-          (for all expenses from all uploads)
+    .alert.alert-info
+      - if @selected_upload
+        These are reports for expenses in `#{@selected_upload.file_name}` file.
+        = link_to 'Show reports for all expenses instead', root_path
+      - else
+        These are reports for all expenses in the system. Filter by file by clicking on a file name above.
+
     = render 'reports', reports: @reports
