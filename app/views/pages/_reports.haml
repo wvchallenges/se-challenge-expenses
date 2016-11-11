@@ -1,12 +1,14 @@
-%table
-  %tr
-    %th Date
-    %th Pre-tax amount
-    %th Tax amount
+%table.table.table-striped.table-sm
+  %thead
+    %tr
+      %th Date
+      %th.text-xs-right Pre-tax amount
+      %th.text-xs-right Tax amount
 
-  - reports.each do |month, data|
-    - report = MonthlyReportPresenter.new(month, data)
-    %tr{ data: { test: report.month } }
-      %td= report.month
-      %td= report.pre_tax_amount
-      %td= report.tax_amount
+  %tbody
+    - reports.each do |month, data|
+      - report = MonthlyReportPresenter.new(month, data)
+      %tr{ data: { test: report.month } }
+        %td= report.month
+        %td.text-xs-right= report.pre_tax_amount
+        %td.text-xs-right= report.tax_amount

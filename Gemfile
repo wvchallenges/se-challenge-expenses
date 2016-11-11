@@ -39,6 +39,7 @@ end
 
 gem 'haml-rails'
 gem 'money-rails'
+gem 'bootstrap', '~> 4.0.0.alpha5'
 
 group :test do
   gem 'rspec-rails'

@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv": "Content-Type" }/
+    %meta{ 'http-equiv' => "X-UA-Compatible", content: "IE=edge" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
+    %title Expense Monster
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+
+    .container-fluid
+      .row
+        .col-xs-12.col-md-3
+          = render 'layouts/sidebar'
+
+        .col-xs-12.col-md-9
+          = yield
