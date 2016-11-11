@@ -7,7 +7,13 @@ class PagesController < ApplicationController
 
   def upload
     file = params[:file]
-    ExpenseImportService.new.import_file CSV.open(file.path, headers: true)
+
+    begin
+      ExpenseImportService.new.import_file CSV.open(file.path, headers: true)
+    rescue ExpenseImportService::ImportError => error
+      flash[:danger] = error.message
+    end
+
     redirect_to action: :home
   end
 end

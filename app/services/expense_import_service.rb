@@ -1,11 +1,12 @@
 class ExpenseImportService < ApplicationService
   class ImportError < StandardError
-    MESSAGE = 'Failed to process line #%s (where line #0 is the header). ' \
+    MESSAGE = "Failed to process line #%s (where line #0 is the header):\n" \
+              '%s' \
               'None of the expenses have been uploaded. ' \
               'Please fix that line and try again.'.freeze
 
-    def self.intialize_for_line(line_index)
-      new(MESSAGE % line_index)
+    def self.intialize_for_line(line_index, csv_row)
+      new format(MESSAGE, line_index, csv_row.to_csv)
     end
   end
 
@@ -21,7 +22,7 @@ class ExpenseImportService < ApplicationService
         begin
           import(row)
         rescue StandardError
-          raise ImportError.intialize_for_line(row_index)
+          raise ImportError.intialize_for_line(row_index, row)
         end
       end
     end

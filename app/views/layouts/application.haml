@@ -17,4 +17,5 @@
 
         .col-xs-12.col-md-9
           .app--main.container-fluid.mt-1.pt-1
+            = render 'layouts/flash' if flash.present?
             = yield

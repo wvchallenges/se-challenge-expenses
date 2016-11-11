@@ -104,11 +104,13 @@ describe ExpenseImportService do
       end
 
       it 'raise ImportError' do
-        error_message = 'Failed to process line #2 (where line #0 is the header). ' \
-                        'None of the expenses have been uploaded. ' \
-                        'Please fix that line and try again.'
+        message = "Failed to process line #2 (where line #0 is the header):\n" \
+                  '9/30/2013,,Larry Page,"1600 Amphitheatre Parkway, Mountain View, CA 94043"' \
+                  ",Paper, 200.00 ,CA Sales tax, 15.00\n" \
+                  'None of the expenses have been uploaded. ' \
+                  'Please fix that line and try again.'
         expect { service.import_file csv_file }.to raise_error(ExpenseImportService::ImportError,
-                                                               error_message)
+                                                               message)
       end
     end
   end

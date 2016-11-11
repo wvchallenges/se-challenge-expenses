@@ -1,0 +1,3 @@
+- flash.keys.each do |key|
+  .alert{ class: "alert-#{key}" }
+    = simple_format flash[key]
