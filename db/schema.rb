@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109186320) do
+ActiveRecord::Schema.define(version: 20161111172420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20161109186320) do
     t.integer "tax_id"
     t.integer "tax_amount_cents",        default: 0,     null: false
     t.string  "tax_amount_currency",     default: "USD", null: false
+    t.integer "upload_id"
     t.index ["category_id"], name: "index_expenses_on_category_id", using: :btree
     t.index ["employee_id"], name: "index_expenses_on_employee_id", using: :btree
     t.index ["tax_id"], name: "index_expenses_on_tax_id", using: :btree
@@ -41,6 +42,12 @@ ActiveRecord::Schema.define(version: 20161109186320) do
 
   create_table "taxes", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string   "file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
