@@ -11,11 +11,11 @@ class MonthlyReportPresenter < ApplicationPresenter
   end
 
   def pre_tax_amount
-    humanized_money(data[:pre_tax_amount])
+    humanized_money_with_symbol(data[:pre_tax_amount])
   end
 
   def tax_amount
-    humanized_money(data[:tax_amount])
+    humanized_money_with_symbol(data[:tax_amount])
   end
 
   private
