@@ -31,5 +31,26 @@ describe MonthlyReportService do
         )
       end
     end
+
+    context 'scoped by upload' do
+      let(:upload) { FactoryGirl.create :upload }
+
+      before do
+        create upload: upload, date: '2016-11-7', pre_tax_amount: Money.new(10_050), tax_amount: Money.new(2_050)
+        create upload: upload, date: '2016-09-1', pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000)
+
+        create date: '2016-11-8', pre_tax_amount: Money.new(20_000), tax_amount: Money.new(1_000)
+      end
+
+      it 'ignores other expenses' do
+        reports = described_class.new(upload).monthly_reports
+
+        expect(reports).to eq(
+          '2016-11' => { pre_tax_amount: Money.new(10_050), tax_amount: Money.new(2_050) },
+          '2016-10' => { pre_tax_amount: Money.new(0), tax_amount: Money.new(0) },
+          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
+        )
+      end
+    end
   end
 end

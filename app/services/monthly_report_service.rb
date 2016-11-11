@@ -1,4 +1,8 @@
 class MonthlyReportService < ApplicationService
+  def initialize(upload = nil)
+    @upload = upload
+  end
+
   def monthly_reports
     reports = initialize_reports
 
@@ -14,6 +18,8 @@ class MonthlyReportService < ApplicationService
 
   private
 
+  attr_reader :upload
+
   def expenses_grouped_by_month
     result = connection.exec_query(expenses_grouped_by_month_query.to_sql)
     result.to_hash
@@ -21,10 +27,15 @@ class MonthlyReportService < ApplicationService
 
   def expenses_grouped_by_month_query
     expenses = expenses_table
-    expenses.project(year_month_column,
-                     expenses[:pre_tax_amount_cents].sum.as('pre_tax_amount_cents'),
-                     expenses[:tax_amount_cents].sum.as('tax_amount_cents'))
-            .group('year_month')
+    query = expenses.project(year_month_column,
+                             expenses[:pre_tax_amount_cents].sum.as('pre_tax_amount_cents'),
+                             expenses[:tax_amount_cents].sum.as('tax_amount_cents'))
+                    .group('year_month')
+    upload.present? ? scope_by_upload(query) : query
+  end
+
+  def scope_by_upload(query)
+    query.where(expenses_table[:upload_id].eq(upload.id))
   end
 
   def year_month_column
@@ -44,6 +55,8 @@ class MonthlyReportService < ApplicationService
   def expenses_start_and_end_dates
     expenses = expenses_table
     query = expenses.project(expenses[:date].minimum, expenses[:date].maximum)
+    query = scope_by_upload(query) if upload.present?
+
     result = connection.select_one(query.to_sql)
     [result['min'], result['max']]
   end
@@ -68,6 +81,6 @@ class MonthlyReportService < ApplicationService
   end
 
   def expenses_table
-    Arel::Table.new(:expenses)
+    Expense.arel_table
   end
 end
