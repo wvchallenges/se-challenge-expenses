@@ -14,3 +14,12 @@
  */
 
 @import 'bootstrap-custom';
+
+body {
+  background-color: lighten($brand-primary, 50%);
+}
+
+.app--main {
+  background-color: #fff;
+  height: 100%;
+}

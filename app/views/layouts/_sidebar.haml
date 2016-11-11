@@ -1,7 +1,10 @@
-%h3 Expense Monster
+%h2 Expense Monster
 
-.alert.alert-info
-  This app runs on a free Heroku dyno that sleeps (monsters do sleep) while unused. The first response will take a while as the dyno is waking up.
-
-.alert.alert-info
-  This version of the app only support small files, which can be uploaded and processed within 30 seconds (Heroku's request timeout limit).
+%p Notes:
+%ul
+  %li
+    %h5 Slow first request?
+    %p This app runs on a free Heroku dyno that sleeps (monsters do sleep) while unused. The first response will take a while as the dyno is waking up.
+  %li
+    %h5 Connection timeout?
+    %p This version of the app only support small files, which can be uploaded and processed within 30 seconds (Heroku's request timeout limit).
