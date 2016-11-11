@@ -6,8 +6,7 @@
       %th.text-xs-right Tax amount
 
   %tbody
-    - reports.each do |month, data|
-      - report = MonthlyReportPresenter.new(month, data)
+    - reports.each do |report|
       %tr{ data: { test: report.month } }
         %td= report.month
         %td.text-xs-right= report.pre_tax_amount

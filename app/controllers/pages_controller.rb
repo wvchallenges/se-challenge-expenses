@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
   def home
-    @reports = MonthlyReportService.new.monthly_reports
-    @uploads = Upload.all
+    @reports = MonthlyReportService.new
+                                   .monthly_reports
+                                   .map { |month, data| MonthlyReportPresenter.new(month, data) }
+    @uploads = Upload.all.map { |upload| UploadPresenter.new(upload) }
   end
 
   def upload

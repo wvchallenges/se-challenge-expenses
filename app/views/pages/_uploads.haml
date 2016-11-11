@@ -7,7 +7,6 @@
 
   %tbody
     - uploads.each do |upload|
-      - upload = UploadPresenter.new(upload)
       %tr
         %td= upload.id
         %td= upload.file_name
