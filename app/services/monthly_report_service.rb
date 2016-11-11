@@ -4,8 +4,8 @@ class MonthlyReportService < ApplicationService
 
     expenses_grouped_by_month.each do |row|
       reports[row['year_month']] = {
-        pre_tax_amount_cents: row['pre_tax_amount_cents'],
-        tax_amount_cents: row['tax_amount_cents']
+        pre_tax_amount: Money.new(row['pre_tax_amount_cents']),
+        tax_amount: Money.new(row['tax_amount_cents'])
       }
     end
 

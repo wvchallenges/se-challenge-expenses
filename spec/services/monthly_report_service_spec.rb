@@ -17,8 +17,8 @@ describe MonthlyReportService do
     it 'shows correct numbers' do
       reports = service.monthly_reports
       expect(reports).to eq(
-        '2016-11' => { pre_tax_amount_cents: 30_050, tax_amount_cents: 3_050 },
-        '2016-09' => { pre_tax_amount_cents: 10_000, tax_amount_cents: 1_000 }
+        '2016-11' => { pre_tax_amount: Money.new(30_050), tax_amount: Money.new(3_050) },
+        '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
       )
     end
   end

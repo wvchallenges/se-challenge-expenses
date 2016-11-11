@@ -1,0 +1,11 @@
+%table
+  %tr
+    %th Date
+    %th Pre-tax amount
+    %th Tax amount
+
+  - rows.each do |date, data|
+    %tr{ data: { test: date } }
+      %td= date
+      %td= humanized_money data[:pre_tax_amount]
+      %td= humanized_money data[:tax_amount]
