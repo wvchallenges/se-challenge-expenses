@@ -11,7 +11,9 @@ describe MonthlyReportService do
     context 'with no expenses' do
       it 'returns empty hash' do
         reports = service.monthly_reports
-        expect(reports).to eq({})
+        expect(reports).to eq(
+          'Total' => { pre_tax_amount: Money.new(0), tax_amount: Money.new(0) }
+        )
       end
     end
 
@@ -27,7 +29,8 @@ describe MonthlyReportService do
         expect(reports).to eq(
           '2016-11' => { pre_tax_amount: Money.new(30_050), tax_amount: Money.new(3_050) },
           '2016-10' => { pre_tax_amount: Money.new(0), tax_amount: Money.new(0) },
-          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
+          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) },
+          'Total' =>   { pre_tax_amount: Money.new(40_050), tax_amount: Money.new(4_050) }
         )
       end
     end
@@ -48,7 +51,8 @@ describe MonthlyReportService do
         expect(reports).to eq(
           '2016-11' => { pre_tax_amount: Money.new(10_050), tax_amount: Money.new(2_050) },
           '2016-10' => { pre_tax_amount: Money.new(0), tax_amount: Money.new(0) },
-          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
+          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) },
+          'Total' =>   { pre_tax_amount: Money.new(20_050), tax_amount: Money.new(3_050) }
         )
       end
     end

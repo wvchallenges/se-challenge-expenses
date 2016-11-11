@@ -6,13 +6,20 @@ class MonthlyReportService < ApplicationService
   def monthly_reports
     reports = initialize_reports
 
+    total_pre_tax_amount = Money.new(0)
+    total_tax_amount = Money.new(0)
+
     expenses_grouped_by_month.each do |row|
-      reports[row['year_month']] = {
-        pre_tax_amount: Money.new(row['pre_tax_amount_cents']),
-        tax_amount: Money.new(row['tax_amount_cents'])
-      }
+      pre_tax_amount = Money.new(row['pre_tax_amount_cents'])
+      tax_amount = Money.new(row['tax_amount_cents'])
+
+      total_pre_tax_amount += pre_tax_amount
+      total_tax_amount += tax_amount
+
+      reports[row['year_month']] = { pre_tax_amount: pre_tax_amount, tax_amount: tax_amount }
     end
 
+    reports['Total'] = { pre_tax_amount: total_pre_tax_amount, tax_amount: total_tax_amount }
     reports
   end
 
