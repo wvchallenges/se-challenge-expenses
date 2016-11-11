@@ -2,11 +2,13 @@ class Expense < ActiveRecord::Base
   belongs_to :category
   belongs_to :employee
   belongs_to :tax
+  belongs_to :upload
 
   monetize :pre_tax_amount_cents
   monetize :tax_amount_cents
 
-  validates :date, :category, :employee, :description, :pre_tax_amount, :tax, :tax_amount,
+  validates :category, :employee, :tax, :upload,
+            :date, :description, :pre_tax_amount, :tax_amount,
             presence: true
 
   delegate :name, to: :category, prefix: true

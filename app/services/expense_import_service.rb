@@ -1,4 +1,26 @@
+require 'csv'
+
 class ExpenseImportService < ApplicationService
+  def initialize(upload)
+    @upload = upload
+  end
+
+  def import_file(path)
+    csv_file = CSV.open(path, headers: true)
+
+    Expense.transaction do
+      row_index = 0
+      csv_file.map do |row|
+        row_index += 1
+        begin
+          import(row, upload)
+        rescue StandardError
+          raise ImportError.intialize_for_line(row_index, row)
+        end
+      end
+    end
+  end
+
   class ImportError < StandardError
     MESSAGE = "Failed to process line #%s (where line #0 is the header):\n" \
               '%s' \
@@ -10,25 +32,13 @@ class ExpenseImportService < ApplicationService
     end
   end
 
-  def import(csv_row)
-    Expense.create parse_attributes(csv_row.to_hash)
-  end
-
-  def import_file(csv_file)
-    Expense.transaction do
-      row_index = 0
-      csv_file.map do |row|
-        row_index += 1
-        begin
-          import(row)
-        rescue StandardError
-          raise ImportError.intialize_for_line(row_index, row)
-        end
-      end
-    end
-  end
-
   private
+
+  attr_reader :upload
+
+  def import(csv_row, upload)
+    upload.expenses.create! parse_attributes(csv_row.to_hash)
+  end
 
   def parse_attributes(original_attributes)
     attributes = {}

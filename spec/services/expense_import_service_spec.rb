@@ -1,40 +1,20 @@
 require 'csv'
 
 describe ExpenseImportService do
-  let(:service) { described_class.new }
-
-  describe '#import' do
-    let(:csv_raw) do
-      # rubocop:disable LineLength
-      "date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount\n" \
-      '9/30/2013,Office Supplies,Larry Page,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Paper, 200.00 ,CA Sales tax, 15.00'
-      # rubocop:enable LineLength
-    end
-    let(:csv_row) { CSV.parse(csv_raw, headers: true).first }
-
-    it 'creates an expense' do
-      expect { service.import(csv_row) }.to change(Expense, :count).by(1)
-    end
-
-    it 'creates an expense with correct info' do
-      expense = service.import(csv_row)
-      assert_expense_equal(
-        expense,
-        OpenStruct.new(
-          date: Date.new(2013, 9, 30),
-          category_name: 'Office Supplies',
-          employee_name: 'Larry Page',
-          employee_address: '1600 Amphitheatre Parkway, Mountain View, CA 94043',
-          description: 'Paper',
-          pre_tax_amount: Money.new(200 * 100),
-          tax_name: 'CA Sales tax',
-          tax_amount: Money.new(15 * 100)
-        )
-      )
-    end
-  end
+  let(:service) { described_class.new upload }
+  let(:upload) { FactoryGirl.create :upload }
 
   describe '#import_file' do
+    let(:file) do
+      file = Tempfile.new
+      file.write csv_raw
+      file.close
+      file
+    end
+    let(:file_path) { file.path }
+
+    subject { service.import_file file_path }
+
     context 'when valid data' do
       let(:csv_raw) do
         # rubocop:disable LineLength
@@ -43,14 +23,17 @@ describe ExpenseImportService do
         '9/30/2013,Office Supplies,Larry Page,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Paper, 200.00 ,CA Sales tax, 15.00'
         # rubocop:enable LineLength
       end
-      let(:csv_file) { CSV.parse(csv_raw, headers: true) }
 
       it 'creates expenses' do
-        expect { service.import_file csv_file }.to change(Expense, :count).by(2)
+        expect { subject }.to change(Expense, :count).by(2)
+      end
+
+      it 'creates 1 upload' do
+        expect { subject }.to change(Upload, :count).by(1)
       end
 
       it 'creates expenses with correct info' do
-        expenses = service.import_file csv_file
+        expenses = subject
 
         expense = expenses[0]
         assert_expense_equal(
@@ -92,25 +75,27 @@ describe ExpenseImportService do
         '9/30/2013,,Larry Page,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Paper, 200.00 ,CA Sales tax, 15.00'
         # rubocop:enable LineLength
       end
-      let(:csv_file) { CSV.parse(csv_raw, headers: true) }
+
+      subject(:suppressed_error_subject) do
+        begin
+          service.import_file file_path
+        rescue ExpenseImportService::ImportError
+        end
+      end
 
       it "doesn't import any expense" do
-        expect do
-          begin
-            service.import_file csv_file
-          rescue ExpenseImportService::ImportError
-          end
-        end.to change(Expense, :count).by(0)
+        expect { suppressed_error_subject }.to change(Expense, :count).by(0)
       end
 
       it 'raise ImportError' do
+        # rubocop:disable LineLength
         message = "Failed to process line #2 (where line #0 is the header):\n" \
-                  '9/30/2013,,Larry Page,"1600 Amphitheatre Parkway, Mountain View, CA 94043"' \
-                  ",Paper, 200.00 ,CA Sales tax, 15.00\n" \
+                  "9/30/2013,,Larry Page,\"1600 Amphitheatre Parkway, Mountain View, CA 94043\",Paper, 200.00 ,CA Sales tax, 15.00\n" \
                   'None of the expenses have been uploaded. ' \
                   'Please fix that line and try again.'
-        expect { service.import_file csv_file }.to raise_error(ExpenseImportService::ImportError,
-                                                               message)
+        # rubocop:enable LineLength
+        expect { service.import_file file_path }.to raise_error(ExpenseImportService::ImportError,
+                                                                message)
       end
     end
   end
