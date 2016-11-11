@@ -1,5 +1,13 @@
 %div
   %h5 Upload CSV
+  %p
+    To import expenses data, please upload a CSV file.
+  %p
+    Expected format:
+    %ul
+      %li file has a header line
+      %li columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
+
   = render 'form'
 
 .my-1
