@@ -12,11 +12,11 @@ class PagesController < ApplicationController
     begin
       Upload.transaction do
         upload = Upload.create file_name: uploaded_file.original_filename
-        ExpenseImportService.new(upload).import_file uploaded_file.path
+        CsvExpenseImportService.new(upload).import_file uploaded_file.path
       end
 
       flash[:success] = 'Success!'
-    rescue ExpenseImportService::ImportError => error
+    rescue CsvExpenseImportService::ImportError => error
       flash[:danger] = error.message
     end
 

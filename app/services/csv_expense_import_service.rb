@@ -1,6 +1,6 @@
 require 'csv'
 
-class ExpenseImportService < ApplicationService
+class CsvExpenseImportService < ApplicationService
   def initialize(upload)
     @upload = upload
   end

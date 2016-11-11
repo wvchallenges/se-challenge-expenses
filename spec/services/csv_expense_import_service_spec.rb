@@ -1,6 +1,6 @@
 require 'csv'
 
-describe ExpenseImportService do
+describe CsvExpenseImportService do
   let(:service) { described_class.new upload }
   let(:upload) { FactoryGirl.create :upload }
 
@@ -76,15 +76,13 @@ describe ExpenseImportService do
         # rubocop:enable LineLength
       end
 
-      subject(:suppressed_error_subject) do
-        begin
-          service.import_file file_path
-        rescue ExpenseImportService::ImportError
-        end
-      end
-
       it "doesn't import any expense" do
-        expect { suppressed_error_subject }.to change(Expense, :count).by(0)
+        expect do
+          begin
+            service.import_file file_path
+          rescue CsvExpenseImportService::ImportError
+          end
+        end.to change(Expense, :count).by(0)
       end
 
       it 'raise ImportError' do
@@ -94,8 +92,8 @@ describe ExpenseImportService do
                   'None of the expenses have been uploaded. ' \
                   'Please fix that line and try again.'
         # rubocop:enable LineLength
-        expect { service.import_file file_path }.to raise_error(ExpenseImportService::ImportError,
-                                                                message)
+        expect { subject }.to raise_error(CsvExpenseImportService::ImportError,
+                                          message)
       end
     end
   end
