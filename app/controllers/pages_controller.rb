@@ -7,20 +7,20 @@ class PagesController < ApplicationController
                                    .map { |month, data| MonthlyReportPresenter.new(month, data) }
   end
 
-  def upload
+  def upload_file
     uploaded_file = params[:file]
 
     begin
       Upload.transaction do
         upload = Upload.create file_name: uploaded_file.original_filename
         CsvExpenseImportService.new(upload).import_file uploaded_file.path
-      end
 
-      flash[:success] = 'Success!'
+        flash[:success] = 'Success!'
+        redirect_to action: :home, upload_id: upload.id
+      end
     rescue CsvExpenseImportService::ImportError => error
       flash[:danger] = error.message
+      redirect_to action: :home
     end
-
-    redirect_to action: :home
   end
 end

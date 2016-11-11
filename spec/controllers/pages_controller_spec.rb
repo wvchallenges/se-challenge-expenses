@@ -1,8 +1,8 @@
 describe PagesController do
-  describe '#upload' do
+  describe '#upload_file' do
     let(:file) { fixture_file_upload(fixture_file_path, 'text/csv') }
 
-    subject { post :upload, params: { file: file } }
+    subject { post :upload_file, params: { file: file } }
 
     context 'when valid' do
       let(:fixture_file_path) { 'simple_example.csv' }
