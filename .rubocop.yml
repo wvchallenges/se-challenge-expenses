@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.3
   Exclude:
     - db/**/*
+    - config/initializers/*
 
 Metrics/LineLength:
   Max: 100

@@ -7,7 +7,7 @@ feature 'Homepage' do
     attach_file('file', fixture_file_path)
     click_on 'Upload'
 
-    within '[data-test=test-month-201312]' do
+    within '[data-test="2013-12"]' do
       expect(page).to have_content('585.00')
     end
   end

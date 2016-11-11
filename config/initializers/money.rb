@@ -1,6 +1,7 @@
 # encoding : utf-8
 
 MoneyRails.configure do |config|
+  config.no_cents_if_whole = false
 
   # To set the default currency
   #
