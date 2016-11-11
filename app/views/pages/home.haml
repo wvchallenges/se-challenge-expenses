@@ -2,6 +2,7 @@
   %h5 Upload CSV
   = render 'form'
 
-%div
-  %h5 Monthly reports
-  = render 'reports', reports: @reports
+- unless @reports.empty?
+  %div
+    %h5 Monthly reports
+    = render 'reports', reports: @reports
