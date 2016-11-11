@@ -8,18 +8,28 @@ describe MonthlyReportService do
   end
 
   describe '#monthly_reports' do
-    before do
-      create date: '2016-11-7', pre_tax_amount: Money.new(10_050), tax_amount: Money.new(2_050)
-      create date: '2016-11-8', pre_tax_amount: Money.new(20_000), tax_amount: Money.new(1_000)
-      create date: '2016-09-1', pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000)
+    context 'with no expenses' do
+      it 'returns empty hash' do
+        reports = service.monthly_reports
+        expect(reports).to eq({})
+      end
     end
 
-    it 'shows correct numbers' do
-      reports = service.monthly_reports
-      expect(reports).to eq(
-        '2016-11' => { pre_tax_amount: Money.new(30_050), tax_amount: Money.new(3_050) },
-        '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
-      )
+    context 'with expenses' do
+      before do
+        create date: '2016-11-7', pre_tax_amount: Money.new(10_050), tax_amount: Money.new(2_050)
+        create date: '2016-11-8', pre_tax_amount: Money.new(20_000), tax_amount: Money.new(1_000)
+        create date: '2016-09-1', pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000)
+      end
+
+      it 'shows correct numbers' do
+        reports = service.monthly_reports
+        expect(reports).to eq(
+          '2016-11' => { pre_tax_amount: Money.new(30_050), tax_amount: Money.new(3_050) },
+          '2016-10' => { pre_tax_amount: Money.new(0), tax_amount: Money.new(0) },
+          '2016-09' => { pre_tax_amount: Money.new(10_000), tax_amount: Money.new(1_000) }
+        )
+      end
     end
   end
 end
