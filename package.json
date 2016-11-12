@@ -5,10 +5,11 @@
   "dependencies": {
     "async": "^2.1.2",
     "bluebird": "^3.4.6",
-    "compression": "~1.0.1",
+    "compression": "^1.6.2",
     "csv": "^1.1.0",
-    "express": "~4.9.0",
+    "express": "^4.14.0",
     "express-fileupload": "0.0.5",
+    "lodash": "^4.16.6",
     "pg-promise": "^5.3.5"
   },
   "devDependencies": {
