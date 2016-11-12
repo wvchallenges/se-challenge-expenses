@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>File Uploaded Results</title>
+  {% load staticfiles %}
+  <link rel="icon" type="image/png" href={% static 'wave.png' %} />
+  <link rel="stylesheet" type="text/css" href="{% static 'wave.css' %}" />
+</head>
+<body>
+<table>
+  <caption>Results of {{Name}}</caption>
+  {% if List %}
+  <thead>
+   <tr>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Total Expenses</th>
+   </tr>
+  </thead>
+  {% endif %}
+  <tbody>
+   {% for r in List %}
+   <tr>
+   <td>  <a style="color:red">{{r.0}}</a></td>
+   <td>  <a style="color:green">{{r.1}}</a></td>
+   <td>  <a style="color:blue">{{r.2|floatformat:2}}</a></td>
+   </tr>
+   {% endfor %}
+  </tbody>
+ </table>
+</body>
+</html>
+
