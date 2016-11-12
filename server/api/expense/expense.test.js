@@ -30,6 +30,9 @@ module.exports.start = function() {
             console.log('Passed: Report')
             resolve()
         })
+        .then(function(){
+            return clearDatabase()
+        })
         .catch(reject)
     })
 }
