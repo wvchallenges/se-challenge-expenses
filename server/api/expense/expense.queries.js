@@ -3,7 +3,7 @@
 const db = require('../../db')
 
 module.exports.expenseReportByMonth = function(cb) {
-    db.any('select to_char(date,\'Mon\') as month, extract(year from date) as year, sum("pre_tax_amount") as expenses from expenses group by 1,2')
+    db.any('select to_char(date,\'Mon\') as month, extract(year from date) as year, sum("pre_tax_amount") as expenses, min(date) as mdate from expenses group by 1,2 order by mdate desc')
     .then(function (data) {
         cb(null, data)
         return null
