@@ -1,0 +1,28 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html ng-app="Expenses">
+    <head>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="js/app.js"></script>
+    </head>
+    <body>
+        <div class="container" id="main" ng-controller="reportCtrl">
+            <h1>Expense Report</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Expenses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="month in expenseReport">
+                        <td>{{month.month}} {{month.year}}</td>
+                        <td>{{month.expenses}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
