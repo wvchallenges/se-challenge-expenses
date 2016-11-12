@@ -41,7 +41,7 @@ def read_from_database():
     DateList = Expense.objects.order_by('date')
     MinDate = DateList[0].date
     MaxDate = DateList[len(DateList) - 1].date
-    Months = MaxDate.month + (MaxDate.year - MinDate.year) * 13 - MinDate.month
+    Months = MaxDate.month + (MaxDate.year - MinDate.year) * 12 - MinDate.month + 1
     y = MinDate.year
     m = MinDate.month
     L = []
