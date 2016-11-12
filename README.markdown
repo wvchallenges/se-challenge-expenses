@@ -10,6 +10,10 @@ This solution uses NodeJS and Postgres. The project is structured with an api se
 
 The web layer is very simple and uses AngularJS to display the agregated monthly expense reports. Gulp is used so that the project auto-reloads during development.
 
+## Assumptions
+
+As mentioned in the project description, there are major assumptions that order of columns in the csv file format will never change, columns cannot have blank values, etc (regular risks of csv). In order to provide some handling for this, a configuration object exists in *server/api/expense/expense.service.js* to map csv column indexes to expected data fields. In terms of error checking, a quick check is done to verify that the header line of the csv file is correct after upload, before processing and storage.
+
 ## Dependencies
 
 1. Install Postgres [Download](https://www.postgresql.org/download/)
