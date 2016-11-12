@@ -24,7 +24,10 @@ As mentioned in the project description, there are major assumptions that order 
 1. npm install
 2. psql -f server/expenses.sql
 
+## Test
+1. npm test
+
 ## Deploy
- 1. npm start
- 2. open http://localhost:9000
+1. npm start
+2. open http://localhost:9000
  
