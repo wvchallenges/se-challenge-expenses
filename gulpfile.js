@@ -4,7 +4,7 @@ const gulp = require('gulp')
 const nodemon = require('gulp-nodemon')
 
 /**
- * Develop
+ * Run in Develop with auto-reload
  */
 gulp.task('default', function() {
   nodemon({
