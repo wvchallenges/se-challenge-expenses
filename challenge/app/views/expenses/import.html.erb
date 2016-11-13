@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-8">
+
+    <h4 class="results-header">
+      Operation completed. <%= Expense.count %> expense records imported.
+    </h4>
+
+    <p>The following is a monthly summary of total expenses</p>
+    <table id="monthly-totals" class="table table-bordered">
+      <tr>
+        <th>Month</th>
+        <th>Pre-tax Total</th>
+        <th>Post-tax Total</th>
+      </tr>
+    <% @monthly_totals.keys.sort.each do |key| %>
+      <tr>
+        <td><%= key.strftime('%B %Y') %></td>
+        <td><%= number_to_currency(@monthly_totals[key][0]) %></td>
+        <td><%= number_to_currency(@monthly_totals[key][1]) %></td>
+      </tr>
+    <% end %>
+    </table>
+
+    <%= link_to 'Go Back', '/' %>
+
+  </div>
+</div>

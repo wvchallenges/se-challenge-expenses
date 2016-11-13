@@ -1,0 +1,12 @@
+== README
+
+This app was developed with Ruby 2.2.2 but should work with any version supported by Rails 4.2.6
+
+To get running:
+* bundle install
+* rake db:setup
+* rails s
+* go to http://localhost:3000
+
+The app uses sqlite3 as its database for simplicity.
+
