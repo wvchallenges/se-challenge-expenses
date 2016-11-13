@@ -1,0 +1,131 @@
+{% load staticfiles  %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Expense Monster - Webapp</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Expense monster, csv file consuming for expense management">
+      	<meta name="keywords" content="Expense, monster, csv files, employees, taxes">
+      	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      	<!-- Latest compiled and minified Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+      	<link rel="stylesheet" href="{% static "css/style.css" %}">
+      	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+      	<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="header">
+			<img class="logo" src="{% static "imgs/monster.gif"%}">
+			<div class="app-name">
+				<h1>Expense Monster</h1>
+			</div>
+			<img class="wave-logo" src="{% static "imgs/wave-logo.png"%}">
+		</div>
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog modal-lg">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Example CSV File</h4>
+		      </div>
+		      <div class="modal-body">
+		        1| <b>date, category, employee name, employee address, expense description, pre-tex amount, tax name, tax amount</b><br>
+		        2| 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06<br>
+		        3| 12/15/2013,Meals and Entertainment,Steve Jobs,"1 Infinite Loop, Cupertino, CA 95014",Team lunch, 235.00 ,CA Sales tax, 17.63 <br>
+		        4| 12/31/2013,Computer - Hardware,Jonathan Ive,"1 Infinite Loop, Cupertino, CA 95014",HP Laptop, 999.00 ,CA Sales tax, 74.93 
+		        <br><br>
+		        <p class="helper">(Do not include line numbers)</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+		<div class="container">
+			<div class="col-md-12">
+				<div class="bubble">
+					<p class="intro">
+						Expense Monster is a web application form used for parsing expense files for companies that don't use databases. Expense monster consumes csv files and stores the data in it's own relational database. The application has 1 main function: to eat_expenses (file_name.csv) which can be run via the django command line or alternatively via this webpage, and to calculate total tax amount while organizing it all neatly in an easy-to-read expense report.
+					</p>
+					<p class="intro">
+						To get started simply upload your csv file. It should look like this <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">example</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="col-md-6">
+				<div class="bubble">
+					<h3>
+						Upload .csv here
+					</h3>
+					<form method="post" action="/" enctype="multipart/form-data">
+						{% csrf_token %}
+						<input type="file" name="csvinput"><br>
+						<button type="submit" class="btn btn-success">Upload</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="bubble">
+					<h3>
+						CSV Upload history
+					</h3>
+					<table class="table table-hover">
+					  <tr>
+					  	<th>#</th>
+					  	<th>Filename</th>
+					  	<th>Date Uploaded</th>
+					  	<th>Remove</th>
+					  </tr>
+					  	{% if csfFiles %}
+						  	{%for csv in csfFiles%}
+						  	<tr>
+						  		<form method="post" action="/csv_file/delete/{{csv.id}}">
+						  			{% csrf_token %}
+							  		<td>{{csv.id}}</td>
+							  		<td>{{csv.filename}}</td>
+							  		<td>{{csv.upload_date}}</td>
+							  		<td><button type="submit" class="remove-csv btn btn-danger btn-xs">X</button></td>
+							  	</form>
+							</tr>
+						  	{% endfor %}
+						 {% else %}
+						 	<p class="helper">[No data available yet, please upload a csv]</p>
+						 {% endif %}
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="col-md-12">
+				<div class="bubble">
+					<h3>
+						Yearly Expense Report Breakdown
+					</h3>
+					<p class="intro">
+						{% if expense_report %}
+							{{expense_report|safe}}
+						{% else %}
+							<p class="helper">[No data available yet, please upload a csv]</p>
+						{% endif %}
+					</p>
+					
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="text-pad">
+				<b>Created by the mad scientist: Dr. Nick Aleks</b>
+				<p class="helper">(Not actual doctor)</p>
+			</div>
+		</div>
+	</body>
+</html>

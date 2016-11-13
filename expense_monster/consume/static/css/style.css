@@ -1,0 +1,65 @@
+
+body {
+	background-color: #9CE5E0;
+}
+
+h1 {
+	font-family: 'Lobster', cursive;
+	color: white;
+	font-size: 45px;
+	text-shadow: 1px 3px #6E416E;
+}
+
+h3 {
+	font-family: 'Open Sans', sans-serif;
+	margin-top: 0px;
+}
+
+.logo {
+	display: inline-block;
+	width: 120px;
+	margin-top: -10px;
+}
+
+.app-name {
+	display: inline-block;
+}
+
+.bubble {
+	background-color: white;
+	padding: 20px;
+	border-radius: 15px;
+	border: 2px solid #6E416E;
+	margin-bottom: 30px;
+}
+
+p.intro {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	color: black;
+}
+p.helper {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 10px;
+	color: purple;
+}
+
+.wave-logo {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 150px;
+}
+
+.footer {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	text-align: right;
+	width: 100vw;
+	position: fixed;
+	bottom: 0px;
+}
+
+.text-pad {
+	padding-right: 20px;
+}
