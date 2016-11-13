@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load aggr %}
+
+{% block extra_tabs %}
+<li><a href="{% url 'upload' %}">Upload</a></li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h2>Expenses</h2>
+            <table class="table">
+                {% regroup object_list by date|date:"M, Y" as expense_by_month %}
+
+                {% for month in  expense_by_month%}
+                    <tr class="info">
+                        <td colspan="8"><span class="lead"> {{ month.grouper }}</span></td>
+                    </tr>
+                    {% for item in month.list %}
+                        <tr>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.employee }}</td>
+                            <td>{{ item.employee_address }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.pre_tax }}</td>
+                            <td>{{ item.tax_name }}</td>
+                            <td>{{ item.tax }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% with month.list|sum_expenses as month_total %}
+                    <tr>
+                        <td colspan="5">After tax: <strong> {{ month_total.total }}</strong></td>
+                        <td colspan="2" class="active">{{ month_total.pre_tax }}</td>
+                        <td class="active">{{ month_total.tax }}</td>
+                    </tr>
+                    {% endwith %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

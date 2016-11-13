@@ -1,3 +1,24 @@
+# Setup instructions
+
+Pre-requirements: Python 3, virtualenv
+
+- Clone the repository
+- Create and activate a new virtualenv with Python >= 3.4 (ex. `mkvirtualenv se_challenge --python=/usr/local/bin/python3`)
+- Install requirements `pip install --upgrade -r requirements.txt`
+- Run Django migrations: `python manage.py migrate`. The app uses SQLite3, so no additional database setup required.
+- Start the app: `python manage.py runserver`
+- Access the app at the specified address ("127.0.0.1:8000" by default)
+
+
+# App description
+
+The app complies with the basic requirements taking assumptions into consideration. 
+Upon upload, the data is processed and stored in SQLite3. Uploaded file is saved as well for logging and after-processing purposes.
+The data is processed as a part of request-response lifetime, which can lead to a overwhelming the server if there're more than one user uses the app. 
+Best practice is to do the asynchronous processing of the file, but for the purpose of this exercise the feature is not implemented, however implementation
+allows an easy extension.
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
