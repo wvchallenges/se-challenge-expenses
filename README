@@ -1,0 +1,45 @@
+# Tsering's CVS Migration Project
+
+This is my submission for the Wave Coding Challenge.
+
+I'm glad to be able to showcase my Django skills by building this small web app.
+
+Given the time constraints, I wasn't able to make it as pretty or as functional as I'd like, but I think this is a good example of my skills.
+
+Here are a few reasons I feel this was a good exercise:
+
+1. I got to use the `csv` module to parse the CSV file
+2. The need for uploading a file got me thinking of using AJAX to display a progress bar
+3. The complexity of the CSV dataset justified building multiple models and ForeignKeys
+4. I got to use the `collections` module to help store and organize my data
+5. I got to use the Django ORM to run queries
+6. I got to use the `datetime` module to convert strings to datetime objects
+
+At the bottom of my README, I've documented some additional ideas to enhance this project.
+
+### Installation
+
+Create a virtualenv
+
+    $ virtualenv /opt/cvs_migration_project_env
+
+Download the latest code from Github and install the requirements.
+
+    $ source /opt/cvs_migration_project_env ; cd /opt/cvs_migration_project_env
+    $ git clone -b develop https://github.com/tpaljor/se-challenge
+    $ pip install -r se-challenge/requirements.txt
+
+Initialize the database and start the development server
+
+    $ cd se-challenge/csv_migration_project/
+    $ python manage.py migrate
+    $ python manage.py runserver
+
+You should now be able to see the site at http://localhost:8000
+
+### Ideas to enhance this project
+
+1. Move some of the business logic in a separate file
+2. Write functional tests and unit tests
+3. Add user registration and login
+4. Save each upload event and have it viewable by the user
