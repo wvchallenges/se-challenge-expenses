@@ -1,0 +1,25 @@
+<div class="row">
+	<%= form_tag documents_path, multipart: true, remote: true, class: 'form-inline' do %>
+	<div class="col-md-4">
+		<div class="form-group">
+			<p class="help-block">Select a .csv file to import employee expenses.</p>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+	  <div class="form-group">
+		  <label for="exampleInputName2">File</label>
+	  	<%= file_field_tag :file, accept:'.csv', class: 'form-control' %>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+	  <div class="form-group">
+			<%= submit_tag "Submit", class: "btn btn-default" %>
+		</div>
+	</div>
+
+	<% end %>
+</div>
+
+<br>

@@ -1,0 +1,43 @@
+<section id="employee_expenses" data-channel="employee_expenses">
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<table id="employee_expenses_table" class="table table-striped table-responsive table-hover">
+				<th class="col-md-1">Date</th>
+				<th class="col-md-1">Category</th>
+				<th class="col-md-1">Employee Name</th>
+				<th class="col-md-1">Employee Address</th>
+				<th class="col-md-1">Expense Description</th>
+				<th class="col-md-1">Pre-tax Amount</th>
+				<th class="col-md-1">Tax Name</th>
+				<th class="col-md-1">Tax Amount</th>
+				<th class="col-md-1">Total</th>
+
+				<% @employee_expense_groups.each_with_index do |group, index| %>
+					<% group_id = group.first.strftime("%m-%Y") %>
+					<tr class="clickable" data-toggle="collapse" id="<%= group_id %>" data-target=".<%= group_id %>">
+				    <td class="col-md-1"><i class="glyphicon glyphicon-plus"></i> <%= group_id %>
+				   	</td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1"></td>
+				   	<td class="col-md-1">
+				   		<%= group.second.inject(0) {|sum, ee| sum + ee[:pre_tax_amount] + ee[:tax_amount]} %>
+				   	</td>
+			    </tr>
+			    <% group.second.each do |employee_expense| %>
+						<%= render 'employee_expenses/employee_expense', {employee_expense: employee_expense, index: index, group_id: group_id} %>
+					<% end %>
+				<% end %>
+			</table>
+
+		</div>
+
+	</div>
+
+</section>

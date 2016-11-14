@@ -1,0 +1,11 @@
+<tr class='collapse <%= 'in' if index == 0 %> <%= group_id %>'>
+	<td class='col-md-1'><%= employee_expense.date.strftime('%m/%d/%Y') %></td>
+	<td class='col-md-1'><%= employee_expense.category.name %></td>
+	<td class='col-md-1'><%= employee_expense.employee.name %></td>
+	<td class='col-md-1'><%= employee_expense.employee.address %></td>
+	<td class='col-md-1'><%= employee_expense.description %></td>
+	<td class='col-md-1'><%= '%.2f' % employee_expense.pre_tax_amount %></td>
+	<td class='col-md-1'><%= employee_expense.tax.name %></td>
+	<td class='col-md-1'><%= '%.2f' % employee_expense.tax_amount %></td>
+	<td class="col-md-1"></td>
+</tr>
