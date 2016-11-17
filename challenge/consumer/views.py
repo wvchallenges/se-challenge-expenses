@@ -1,3 +1,5 @@
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
@@ -18,5 +20,9 @@ class CSVMigrateFormView(FormView):
         return super(CSVMigrateFormView, self).form_valid(form)
 
 
-class ExpenseListView(ListView):
-    model = Expense
+class MonthlyExpenseListView(ListView):
+    def get_queryset(self):
+        return (Expense.objects
+                .annotate(month=TruncMonth('charged_on'))
+                .values('month')
+                .annotate(pretax_total=Sum('pretax_amount')))

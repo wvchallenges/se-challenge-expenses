@@ -1,24 +1,14 @@
 <h1>Expenses</h1>
 <table border=1>
     <thead>
-        <th>Date</th>
-        <th>Employee</th>
-        <th>Employee Address</th>
-        <th>Category</th>
-        <th>Subcategory</th>
-        <th>Description</th>
-        <th>Pre-tax Amount</th>
+        <th>Month</th>
+        <th>Pretax Total</th>
     </thead>
     <tbody>
-        {% for expense in object_list %}
+        {% for month_total in object_list %}
         <tr>
-            <td>{{ expense.charged_on }}</td>
-            <td>{{ expense.employee.name }}</td>
-            <td>{{ expense.employee.address }}</td>
-            <td>{{ expense.category.name }}</td>
-            <td>{{ expense.category.subcategory }}</td>
-            <td>{{ expense.description }}</td>
-            <td>${{ expense.pretax_amount }}</td>
+            <td>{{ month_total.month }}</td>
+            <td>${{ month_total.pretax_total }}</td>
         </tr>
         {% empty %}
         <td colspan=7>No expenses yet.</td>
