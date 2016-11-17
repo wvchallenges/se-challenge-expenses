@@ -1,3 +1,22 @@
+# Installation and usage
+
+1. Create a new virtualenv
+1. Install requisites: `pip install -f requirements.txt`
+1. Ensure the tests are passing: `cd challenge; ./manage.py test`
+1. Start a development server: `./manage.py runserver`
+1. Navigate to the [development server](http://localhost:8000/)
+1. Click the upload button
+1. Find your sample CSV data
+1. Submit the form
+1. ???
+1. PROFIT!!!
+
+# Why am I particularly proud of this work?
+
+* I missed a couple of details from the instructions because I was rushing, and my design wholly withstood the refactoring effort.
+* Test coverage (poor, poor test coverage) that nobody asked for
+* Solves the business problem with a minimal amount of additional requirements, essentially just Django.
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
