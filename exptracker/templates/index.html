@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+{% if expenses|length > 0 %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>month</th>
+        <th>total expense</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for month,expense in monthly_summary %}
+      <tr>
+          <td>{{month|add:1}}</td>
+          <td>{{expense}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th>date</th>
+            <th>category</th>
+            <th>name</th>
+            <th>address</th>
+            <th>description</th>
+            <th>pretax amount</th>
+            <th>tax name</th>
+            <th>tax amount</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for expense in expenses %}
+          <tr>
+              <td>{{expense.date}}</td>
+              <td>{{expense.category.name}}</td>
+              <td>{{expense.employee.first_name}} {{expense.employee.last_name}}</td>
+              <td>{{expense.employee.address}}</td>
+              <td>{{expense.description}}</td>
+              <td>{{expense.pretax}}</td>
+              <td>{{expense.taxname}}</td>
+              <td>{{expense.tax}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+{% else %}
+    <p>You don't seem to have any data</p>
+    <p>Please import using <a href="/upload">this</a></p>
+{% endif %}
+
+{% endblock %}
