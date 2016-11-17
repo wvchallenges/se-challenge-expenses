@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 from . import models as consumer
 
@@ -20,10 +21,29 @@ class CSVMigrator(object):
         lines (iterable): an iterable of comma-separated data.
 
     """
-    _employee_cache = {}
-
     def __init__(self, csvfile):
         self._csvfile = csvfile
+        self._category_cache = {}
+        self._employee_cache = {}
+
+    def get_expense_date(self, original_date):
+        parsed_date = datetime.strptime(original_date, '%m/%d/%Y')
+        return datetime.strftime(parsed_date, '%Y-%m-%d')
+
+    def get_category(self, name):
+        # Name comes little endian
+        name_parts = name.split(" - ")
+        # Switch to big endian
+        name_parts.reverse()
+        category_name = name_parts.pop()
+        subcategory_name = name_parts.pop() if name_parts else ''
+        try:
+            return self._category_cache[(category_name, subcategory_name)]
+        except KeyError:
+            category, _ = consumer.ExpenseCategory.objects.get_or_create(name=name,
+                                                                         subcategory=subcategory_name)
+            self._category_cache[(category.name, category.subcategory)] = category
+            return category
 
     def get_employee(self, name, address):
         try:
@@ -36,13 +56,25 @@ class CSVMigrator(object):
             self._employee_cache[employee.name] = employee
             return employee
 
+    def get_pretax_amount(self, formatted_amount):
+        sanitized_amount = formatted_amount.replace(',', '')
+        return sanitized_amount
+
+    def create_expense(self, expense_date, employee, category, description, pretax_amount):
+        consumer.Expense.objects.create(charged_on=expense_date,
+                                        employee=employee,
+                                        category=category,
+                                        description=description,
+                                        pretax_amount=pretax_amount)
+
     def migrate(self):
         reader = csv.reader(self._csvfile)
         # Skip header row
         reader.next()
         # Proceed through data rows
         for row in reader:
-            employee = self.get_employee(row[EMPLOYEE_NAME], row[EMPLOYEE_ADDRESS])
-
-
-
+            self.create_expense(expense_date=self.get_expense_date(row[DATE]),
+                                employee=self.get_employee(row[EMPLOYEE_NAME], row[EMPLOYEE_ADDRESS]),
+                                category=self.get_category(row[CATEGORY]),
+                                description=row[DESCRIPTION],
+                                pretax_amount=self.get_pretax_amount(row[PRETAX_AMOUNT]))

@@ -1,0 +1,27 @@
+<h1>Expenses</h1>
+<table border=1>
+    <thead>
+        <th>Date</th>
+        <th>Employee</th>
+        <th>Employee Address</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Description</th>
+        <th>Pre-tax Amount</th>
+    </thead>
+    <tbody>
+        {% for expense in object_list %}
+        <tr>
+            <td>{{ expense.charged_on }}</td>
+            <td>{{ expense.employee.name }}</td>
+            <td>{{ expense.employee.address }}</td>
+            <td>{{ expense.category.name }}</td>
+            <td>{{ expense.category.subcategory }}</td>
+            <td>{{ expense.description }}</td>
+            <td>${{ expense.pretax_amount }}</td>
+        </tr>
+        {% empty %}
+        <td colspan=7>No expenses yet.</td>
+        {% endfor %}
+    </tbody>
+</table>
