@@ -2,13 +2,19 @@
 <table border=1>
     <thead>
         <th>Month</th>
-        <th>Pretax Total</th>
+        <th colspan=2>Pretax</th>
+        <th colspan=2>Taxes</th>
+        <th>Grand Total</th>
     </thead>
     <tbody>
         {% for month_total in object_list %}
         <tr>
             <td>{{ month_total.month }}</td>
             <td>${{ month_total.pretax_total }}</td>
+            <td>&plus;</td>
+            <td>${{ month_total.taxes_total }}</td>
+            <td>&equals;</td>
+            <td>${{ month_total.grand_total }}</td>
         </tr>
         {% empty %}
         <td colspan=7>No expenses yet.</td>

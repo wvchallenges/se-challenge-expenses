@@ -5,7 +5,7 @@ from django.db import models
 
 class Employee(models.Model):
     """ An employee with the ability to claim expenses. """
-    name = models.CharField("Full Name", max_length=255, blank=False, help_text="First and last name are expected.")
+    name = models.CharField("Full Name", max_length=255, unique=True, blank=False, help_text="First and last name are expected.")
     address = models.TextField()
 
 
@@ -15,7 +15,7 @@ class ExpenseCategory(models.Model):
     subcategory = models.CharField("Subcategory Name", max_length=255, blank=True, help_text="Allows for more specificity in the reason for an expense.")
 
     class Meta:
-        unique_together = (('name', 'subcategory'))
+        unique_together = (("name", "subcategory"))
 
 
 class Expense(models.Model):

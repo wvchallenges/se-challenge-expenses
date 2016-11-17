@@ -20,7 +20,7 @@ class CSVMigrator(object):
     Migrates CSV lines to consumer model data.
 
     Args:
-        lines (iterable): an iterable of comma-separated data.
+        csvfile (file-like object): A file containing CSV-formatted data
 
     """
     def __init__(self, csvfile):
@@ -29,8 +29,8 @@ class CSVMigrator(object):
         self._employee_cache = {}
 
     def get_expense_date(self, original_date):
-        parsed_date = datetime.strptime(original_date, '%m/%d/%Y')
-        return datetime.strftime(parsed_date, '%Y-%m-%d')
+        parsed_date = datetime.strptime(original_date, "%m/%d/%Y")
+        return datetime.strftime(parsed_date, "%Y-%m-%d")
 
     def get_category(self, name):
         # Name comes little endian
@@ -38,7 +38,7 @@ class CSVMigrator(object):
         # Switch to big endian
         name_parts.reverse()
         category_name = name_parts.pop()
-        subcategory_name = name_parts.pop() if name_parts else ''
+        subcategory_name = name_parts.pop() if name_parts else ""
         try:
             return self._category_cache[(category_name, subcategory_name)]
         except KeyError:
@@ -59,7 +59,7 @@ class CSVMigrator(object):
             return employee
 
     def get_sanitized_amount(self, formatted_amount):
-        sanitized_amount = formatted_amount.replace(',', '')
+        sanitized_amount = formatted_amount.replace(",", "")
         return sanitized_amount
 
     def create_expense(self, expense_date, employee, category, description, pretax_amount, tax_name, tax_amount):

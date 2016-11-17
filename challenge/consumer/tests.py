@@ -11,7 +11,7 @@ SAMPLE_DATA = settings.BASE_DIR + "/../data_example.csv"
 class CSVMigratorTests(TestCase):
     """ Exercises the expected behaviour of CSVMigrator. """
     def setUp(self):
-        self.sample_csv = open(SAMPLE_DATA, 'rb')
+        self.sample_csv = open(SAMPLE_DATA, "rb")
         self.migrator = CSVMigrator(self.sample_csv)
         self.migrator.migrate()
 
@@ -34,7 +34,7 @@ class CSVMigratorTests(TestCase):
 
     def test_expense_count(self):
         """ Should have a total of expenses equal to the sample size. """
-        with open(SAMPLE_DATA, 'rb') as sample:
+        with open(SAMPLE_DATA, "rb") as sample:
             sample_size = len(sample.readlines()) - 1  # Exclude the header row from the size
         expense_count = consumer.Expense.objects.count()
         self.assertEqual(sample_size, expense_count)
