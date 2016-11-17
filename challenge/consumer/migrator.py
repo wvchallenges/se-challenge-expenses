@@ -40,7 +40,7 @@ class CSVMigrator(object):
         try:
             return self._category_cache[(category_name, subcategory_name)]
         except KeyError:
-            category, _ = consumer.ExpenseCategory.objects.get_or_create(name=name,
+            category, _ = consumer.ExpenseCategory.objects.get_or_create(name=category_name,
                                                                          subcategory=subcategory_name)
             self._category_cache[(category.name, category.subcategory)] = category
             return category
