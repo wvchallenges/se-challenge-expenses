@@ -27,10 +27,10 @@ class CSVMigratorTests(TestCase):
         """ Should create an expense category named 'Computer' and subcategory 'Hardware'. """
         computer_hardware = consumer.ExpenseCategory.objects.get(name="Computer", subcategory="Hardware")
 
-
     def test_expense_created(self):
-        """ Should create an expense with the description 'Paper' for $200.00 on 2013-09-30. """
-        paper = consumer.Expense.objects.get(description="Paper", pretax_amount="200.00", charged_on="2013-09-30")
+        """ Should create an expense with the description 'Paper' for $200.00 on 2013-09-30, with Canadian taxes worth $15.00. """
+        paper = consumer.Expense.objects.get(description="Paper", pretax_amount="200.00", charged_on="2013-09-30",
+                                             tax_name="CA Sales tax", tax_amount="15.00")
 
     def test_expense_count(self):
         """ Should have a total of expenses equal to the sample size. """

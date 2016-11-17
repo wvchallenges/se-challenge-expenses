@@ -10,7 +10,9 @@ from . import models as consumer
  EMPLOYEE_NAME,
  EMPLOYEE_ADDRESS,
  DESCRIPTION,
- PRETAX_AMOUNT) = range(0, 6)
+ PRETAX_AMOUNT,
+ TAX_NAME,
+ TAX_AMOUNT) = range(0, 8)
 
 
 class CSVMigrator(object):
@@ -56,16 +58,18 @@ class CSVMigrator(object):
             self._employee_cache[employee.name] = employee
             return employee
 
-    def get_pretax_amount(self, formatted_amount):
+    def get_sanitized_amount(self, formatted_amount):
         sanitized_amount = formatted_amount.replace(',', '')
         return sanitized_amount
 
-    def create_expense(self, expense_date, employee, category, description, pretax_amount):
+    def create_expense(self, expense_date, employee, category, description, pretax_amount, tax_name, tax_amount):
         consumer.Expense.objects.create(charged_on=expense_date,
                                         employee=employee,
                                         category=category,
                                         description=description,
-                                        pretax_amount=pretax_amount)
+                                        pretax_amount=pretax_amount,
+                                        tax_name=tax_name,
+                                        tax_amount=tax_amount)
 
     def migrate(self):
         reader = csv.reader(self._csvfile)
@@ -77,4 +81,6 @@ class CSVMigrator(object):
                                 employee=self.get_employee(row[EMPLOYEE_NAME], row[EMPLOYEE_ADDRESS]),
                                 category=self.get_category(row[CATEGORY]),
                                 description=row[DESCRIPTION],
-                                pretax_amount=self.get_pretax_amount(row[PRETAX_AMOUNT]))
+                                pretax_amount=self.get_sanitized_amount(row[PRETAX_AMOUNT]),
+                                tax_name=row[TAX_NAME],
+                                tax_amount=self.get_sanitized_amount(row[TAX_AMOUNT]))

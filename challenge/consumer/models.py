@@ -25,3 +25,5 @@ class Expense(models.Model):
     category = models.ForeignKey(ExpenseCategory, help_text="The category this expense best belongs to.")
     description = models.CharField(max_length=511, blank=False, help_text="A brief description of the expense.")
     pretax_amount = models.DecimalField(max_digits=12, decimal_places=2, help_text="The dollar amount BEFORE taxes.")
+    tax_name = models.CharField(max_length=63, blank=False, help_text="The type of tax changed for this expense.")
+    tax_amount = models.DecimalField(max_digits=12, decimal_places=2, help_text="The dollar amount charged in taxes for this expense.")
