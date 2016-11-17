@@ -36,6 +36,35 @@ Please modify `README.md` to add:
 1. Instructions on how to build/run your application
 1. A paragraph or two about what you are particularly proud of in your implementation, and why.
 
+### Instructions on how to build/run
+
+This solution was developed and tested using Ubuntu 16.04. It requires Python 2.7, although this should be built into the OS, check by running 'python' at the command line. The solution uses sqlite3 for database creation/interaction. This is already available with Python, so it shouldn't require further installation.
+
+The only external library it uses is web.py for the web interface. This can be acquired using pip (which may also need to be installed). The following command line instructions should work:
+
+sudo apt install python-pip
+sudo pip install web.py
+
+The solution uses only one file, upload.py, which can be found in directory /bin. To start the solution, simply run the following via command line from the main project directory:
+
+python bin/upload.py
+
+The HTTP server will then wait for user interaction. To connect, simply open a browser (the solution was tested using Firefox 49.0.2, for example) and browse to http://localhost:8080/upload
+
+This will present the user interface. To upload a file, click the browse button and choose the appropriate, .csv formatted file (data_example.csv was used for testing). Then click submit and the total expenses per month will appear in a table below the input. If no file is selected, or an invalid format is used, an error message will be presented instead. To stop the HTTP server, type CTRL-C at the command line.
+
+### Why I am proud of this implementation
+
+This is a straightforward solution, that uses minimal resources. It is easy to set up, and only required one external, open-source library (web.py). It is easily customizable for style of the interface. It is robust, from what I have tested, and quickly displays the output with a minimum amount of clicks.
+
+Here is a summary of what was used:
+
+Python 2.7 - A simple yet powerful language, it's used here for processing and parsing.
+sqlite3 - Built into Python for ease of use, this allowed a straightforward way to implement the database, which could be lightweight given the data.
+web.py - An open-source library used to add web functionality to Python, this provided a straightforward way to set up a lightweight server, sufficient for the problem.
+HTML - Used to generate the web form and output table, this was easy to generate using Python.
+CSS - Built into the style tags of the HTML, this allowed for modification of the form and table, and provides a simple way to alter based on preferences.
+
 ## Submission Instructions
 
 1. Fork this project on github. You will need to create an account if you don't already have one.
