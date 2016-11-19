@@ -1,0 +1,40 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.container {
+	display: flex;
+	margin-top: 50px;
+	justify-content: center;
+}
+
+.title {
+	text-align: center;
+	margin: 10px 0px 30px 0px; 
+}
+
+.error {
+	text-align: center;
+	color: red;
+	margin-top: 10px; 
+}
+
+.fileName {
+	text-align: center;
+	margin-top: 10px; 
+}
+
+.inputs {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.inputs label {
+	margin-right: 10px;
+}
+
+.spinner {
+	display: flex;
+	justify-content: center;
+}

@@ -3,34 +3,45 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const app = express()
 const multer  = require('multer')
+const Promise = require('bluebird');
+const parse = Promise.promisify(require('csv-parse'))
+const readFile = Promise.promisify(require('fs').readFile)
 const upload = multer({dest: 'uploads/'})
 
-//Requiring built in node module to read files
-const fs = require('fs')
+//DB Table
+const Files = require('./db_config')
 
-//Sync and require database
-const db = require('./db_config')
+//File format utility
+const formatFile = require('./util_server')
+
 
 // App level middleware
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(express.static('Public'))
 
-// console.log('db', db.models.files)
 
 app.post('/api/uploadFile', upload.single('file'), (req,res) => {
-	console.log('req.file', req.file)
-	fs.readFile(req.file.path, (err, buffer) => {
-		if(err) console.log('err', err)
-    	console.log('buffer', buffer.toString().split('\n'))
-  	})
-	res.end()
+	
+	readFile(req.file.path).then(output => {
+		
+		parse(output.toString()).then(parsedFile => {
+			
+			let formattedFile = formatFile(parsedFile)
+
+			Files.bulkCreate(formattedFile).then(file => {
+				res.status(201).json(file)
+			})
+			.catch(err => res.status(404).send(err))
+
+		})
+		.catch(err => res.status(404).send(err))
+	})
+	.catch(err => res.status(404).send(err))			
 })
 
 
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 
 app.listen(port, () => console.log(`server is listening on port ${port}`))
