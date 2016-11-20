@@ -14,7 +14,7 @@ router.post('/uploadCsv', function(req, res, next){
   var form = new multiparty.Form();
 
   form.parse(req, function(err, fields, files) {
-    bridge.filesToDb(files.files)
+    bridge.filesToDb(files.files, res, next)
   });
 });
 
