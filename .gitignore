@@ -1,3 +1,4 @@
 db.sqlite3
 .python-version
 *.pyc
+scribbs.md
