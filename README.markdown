@@ -1,3 +1,21 @@
+#Submission by: 
+###Lee Mordell
+LinkedIn: https://www.linkedin.com/in/leemordell
+
+###How to run the app:
+
+1. Clone the repo down to your computer
+2. Run `npm install` to install the dependencies
+3. Run `npm start` to start the server
+4. Run `npm run bundle` for webpack to bundle the JS files
+5. On line 3 in the `Server/db_config.js` file, paste in the url where your database is hosted
+6. The app is located at port 8080 in your browser
+
+I'm very happy to submit this application for your consideration. While developing the app, I made design decisions based on my own experience and familiarity with technologies prominent in full-stack Javascript development. On the back-end, I built a Node/Express server and leveraged the Sequelize ORM library to interact with a PostgreSQL database. I chose to build the client using ReactJS. One of my motivators in choosing this library is the ease with which application state can be managed and manipulated within a component. This allowed me to effectively handle errors and update the UI.
+
+Another design decision I made was to put most of the business logic in seperate utility files. On the server side, a utility function formats the parsed csv file in order to post it to the database. On the client side, a utility function takes in the data sent to the database and returns an object that contains a month and its corresponding expenses as key value pairs. One aspect of the app that I'm particularly proud of is its client side validation. Users are unable to upload a file without choosing one first. If a file is unable to be submitted or if a file has been successfully submitted, the UI updates to reflect both cases. Thank you for taking the time to review my submission, I really enjoyed building it.   
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
