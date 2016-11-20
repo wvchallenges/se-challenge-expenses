@@ -5,11 +5,11 @@ Imagine that Wave has just acquired a new company. Unfortunately, the company ha
 ### Documentation:
 
 1. Instructions on how to build/run your application
-  1. Install packages:
+  * Install packages:
   ```
   npm install
   ```
-  2. Setup local mysql database:
+  * Setup local mysql database:
   ```
   mysql -u -root -p
   ```
