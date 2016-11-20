@@ -10,6 +10,7 @@
     "angular-ui-router": "^0.3.2",
     "async": "^2.1.2",
     "body-parser": "~1.15.2",
+    "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
     "csv-parse": "^1.1.7",
     "debug": "~2.2.0",
