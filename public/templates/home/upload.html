@@ -1,0 +1,38 @@
+<h4>
+  Upload CSV file for parsing
+</h4>
+
+<button class="btn btn-primary" type="file" ngf-select="vm.uploadCsv($file, $invalidFiles)"
+          accept=".csv">
+      Upload</button>
+<hr>
+
+<h4>
+  Table for displaying monthly sum
+</h4>
+
+<button class="btn btn-primary" type="input" ng-click="vm.getTable()">Refresh</button>
+<div class="jumbotron table-card">
+  <table ng-model='vm.sums' class="table table-hover">
+    <thead>
+      <tr>
+        <th>
+          Month
+        </th>
+        <th>
+          Sum
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="x in vm.sums">
+        <td>
+          {{x.Month}}
+        </td>
+        <td>
+          {{x.Sum}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
