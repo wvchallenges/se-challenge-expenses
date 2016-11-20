@@ -10,12 +10,12 @@
 
   function Home($http, Upload) {
     /**
-     * @name Account
-     * @desc The factory to be returned
-     * @memberOf thinkster.accounts.services.Account
+     * @name Home
+     * @desc factory for handling $http requests
      */
     var Home = {
-      uploadCsv: uploadCsv,
+      uploadCsv : uploadCsv,
+      getTable : getTable
     };
 
     return Home;
@@ -26,6 +26,13 @@
       Upload.upload({
         url: '/uploadCsv',
         data: {files:file}
+      }).then(successfulCallback, errorCallback);
+    }
+
+    function getTable(successfulCallback, errorCallback) {
+      $http({
+        method : 'GET',
+        url : '/table'
       }).then(successfulCallback, errorCallback);
     }
   }

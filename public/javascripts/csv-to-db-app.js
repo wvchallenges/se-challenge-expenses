@@ -12,7 +12,6 @@ function($stateProvider, $urlRouterProvider) {
     // Home page
     .state('home', {
       url: '/home',
-      // templateUrl: 'templates/home/home.html',
       views: {
         '': {templateUrl: 'templates/home/home.html'},
 
@@ -20,9 +19,6 @@ function($stateProvider, $urlRouterProvider) {
           templateUrl: 'templates/home/upload.html',
           controller: 'HomeController',
           controllerAs: 'vm'
-        },
-        'table-display@home': {
-          templateUrl: 'templates/home/table-display.html'
         }
       }
     })

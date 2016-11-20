@@ -2,7 +2,7 @@ var fs = require('fs')
 var _ = require('underscore');
 var parse = require('csv-parse/lib/sync');
 var mysql = require('mysql');
-var async = require('async');
+var asynch = require('async');
 
 var dbName = 'SeChallenge';
 var tableName = 'Expenses';
@@ -67,38 +67,103 @@ exports.filesToDb = function(files, res, next) {
       return next(err);
     }
 
-    var insertPosts = [];
-
     _.each(files, function(file) {
       var contents = fs.readFileSync(file.path, 'utf8');
       var output = parse(contents, {comment: '#', delimiter: ','});
 
-      _.each(output.slice(1), function(row) {
-        // Date
-        // console.log(row[0]);
-        var date = new Date(row[0]).toISOString().slice(0,10);
-        row[0] = date
-        // console.log(row);
-        post = {
-          Date : date,
-          Category : row[1],
-          EmployeeName : row[2],
-          EmployeeAddress : row[3],
-          ExpenseDescription : row[4],
-          PreTaxAmount : parseFloat(row[5].replace(",","")),
-          TaxName : row[6],
-          TaxAmount : parseFloat(row[7].replace(",",""))
-        }
-
-        connection.query('INSERT INTO ' + tableName + ' SET ?', post,
-        function(err, rows) {
-          if (err) {
-            return next(err);
+      // Async call to make sure res is sent when all tasks are finished
+      asynch.each(output.slice(1), function(row, callback){
+          // Date
+          // console.log(row[0]);
+          var date = new Date(row[0]).toISOString().slice(0,10);
+          row[0] = date
+          // console.log(row);
+          post = {
+            Date : date,
+            Category : row[1],
+            EmployeeName : row[2],
+            EmployeeAddress : row[3],
+            ExpenseDescription : row[4],
+            PreTaxAmount : parseFloat(row[5].replace(",","")),
+            TaxName : row[6],
+            TaxAmount : parseFloat(row[7].replace(",",""))
           }
-        });
-        insertPosts.push(post)
-      }); // each(output)
+
+          connection.query('INSERT INTO ' + tableName + ' SET ?', post,
+          function(err, rows) {
+            if (err) {
+              callback(err)
+              connection.destroy();
+              return next(err);
+            }
+            callback(null)
+          });
+      }, function(err){
+        if (err) return next();
+        console.log("done uploading");
+        connection.destroy();
+        res.end();
+      });
     }); // each(files)
-    res.end();
   }); // connect
+}
+
+/**
+ * Handles GET request to fetch data from table and return it to front-end
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+exports.fetchTable = function(res) {
+  var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'password',
+    database : dbName
+  });
+
+  connection.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return res.sendStatus(500);
+    }
+    console.log('connected as id ' + connection.threadId);
+  });
+
+  ret = [];
+
+  monthsStr = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"];
+
+  months = []
+  for (i=1; i<= 12; i++){
+    months.push(i);
+  }
+
+  asynch.each(months, function(month, callback){
+    connection.query('select sum(PreTaxAmount) as Sum from Expenses where \
+    month(Date)=' + month, function(error, results) {
+      if (error) {
+        callback(error);
+        res.sendStatus(500);
+        connection.destroy();
+      }
+
+      var val = results[0].Sum;
+      if (!val) val = 0;
+
+      entry = {
+        Month : monthsStr[months.indexOf(month)],
+        Sum : val
+      }
+      ret.push(entry);
+      callback(null)
+    });
+  }, function(err){
+    if (err) {
+      res.sendStatus(500);
+      connection.destroy();
+    }
+    res.send(ret);
+    connection.destroy();
+  });
 }

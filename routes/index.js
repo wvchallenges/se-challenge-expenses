@@ -18,4 +18,9 @@ router.post('/uploadCsv', function(req, res, next){
   });
 });
 
+/* Handle table data fetching */
+router.get('/table', function (req, res) {
+  bridge.fetchTable(res)
+})
+
 module.exports = router;
