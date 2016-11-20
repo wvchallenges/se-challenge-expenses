@@ -7,7 +7,7 @@ export default (files) => {
 
 		let date = new Date(file.date)
 		let monthAndYear = `${date.getMonth() + 1}/${date.getFullYear()}`
-
+		console.log('file data', file.date, file.pre_tax_amount, file.tax_amount)
 		if(!totalExpensesByMonth[monthAndYear]) {
 			totalExpensesByMonth[monthAndYear] = file.pre_tax_amount + file.tax_amount
 		} else {
@@ -16,6 +16,6 @@ export default (files) => {
 			totalExpensesByMonth[monthAndYear] = newSum
 		}
 	})
-
+	console.log('totalExpensesByMonth', totalExpensesByMonth)
 	return totalExpensesByMonth
 }

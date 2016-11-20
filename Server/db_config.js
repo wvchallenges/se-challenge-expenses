@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const db = new Sequelize('postgres://lwqdmmsk:I_BlQDSJnLyKOeCZFJbKF_1QoyG0kKxp@elmer.db.elephantsql.com:5432/lwqdmmsk')
+const db = new Sequelize('')
 
 
 const Files = db.define('files', {

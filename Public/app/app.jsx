@@ -138,7 +138,8 @@ export default class App extends Component {
 		const { buttonStyle, buttonMsg } = this.state
 		return (
 		<div>
-			<h1 className='title'>Wave Software Engineer Coding Challenge</h1>
+			<h1 className='center-text'>Wave Software Engineer Coding Challenge</h1>
+			<h4 className='center-text'>by Lee Mordell</h4>
 			<div className='inputs'>
 				<label className="btn btn-default btn-file">
 				Choose a file<input 
