@@ -1,0 +1,15 @@
+% layout 'default';
+% if (my $msg = flash 'message') {
+  <b><%= $msg %></b><br>
+% }
+  Welcome <%= session 'user' %>.<br>
+
+  Use this page to upload your expenses file to our central database:<br>
+
+    %= form_for upload => (enctype => 'multipart/form-data', method => 'post') => begin
+      %= file_field 'expenses'
+      %= submit_button 'Upload'
+    % end
+  
+%= link_to Logout => 'logout'
+

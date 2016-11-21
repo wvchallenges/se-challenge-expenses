@@ -1,0 +1,95 @@
+% layout 'default';
+% if ($report) {
+<p>
+  Report ID: <%=$report->{id}%><br>
+  Description: <%=$report->{description}%><br>
+  Uploaded File: <%= $report->{file}%><br>
+  Loaded by: <%= $report->{loaded_by}%><br>
+  Created on: <%= $report->{created}%><br>
+</p>
+
+% for(my $yi=0;$yi<scalar @{$report->{years}} ;$yi++) {
+<h1 style="background-color:greay;font-size:+2">
+  Year: <%= $report->{years}->[$yi]%>
+</h1>
+% for(my $mi=0;$mi<scalar @{$report->{months_by_year}->[$yi]} ;$mi++) {
+  % my $month_total = 0;
+<h2 style="background-color:greay;font-size:+2">
+  Month: <%= $report->{month_name}->{$report->{months_by_year}->[$yi]->[$mi]}%></em>
+</h2>
+<style>
+table, th, td {
+    border: 1px solid blue;
+}
+</style>
+<table>
+  <th>
+    Date
+  </th>
+  <th>
+    Employee
+  </th>
+  <th style=text-align:left;>
+    Category
+  </th>
+  <th style=text-align:left;>
+    Description
+  </th>
+  <th>
+    Amount
+  </th>
+  <th>
+    Tax
+  </th>
+  <th>
+    Total
+  </th>
+  
+  % for(my $li=0;$li<scalar @{$report->{lines_by_month}->[$mi]} ;$li++) {
+  % my %line = %{$report->{lines_by_month}->[$mi]->[$li]};
+    <tr style=vertical-align:top;>
+      <td>
+        <%= $line{date}  %>
+      </td>
+      <td style=text-align:left>
+        <%= $line{lastname}  %>, <%= $line{firstname}%><br/>
+        <%= $line{address} %>
+      </td>
+      <td style=text-align:left;>
+        <%= $line{category}  %>
+      </td>
+      <td style=text-align:left;>
+        <%= $line{description}  %>
+      </td>
+      <td style=text-align:right;>
+        $<%= $line{amount}  %>
+      </td>
+      <td style=text-align:right>
+        $<%= $line{tax_amount}  %><br/>
+        <%= $line{tax}  %>:<%= $line{tax_rate}  %>%
+      </td>
+      <td>
+        $<%= $line{total}  %>
+      </td>
+    </tr>
+    % $month_total += $line{total};
+    % }
+    <tr style=font-size:1.2em;>
+      <td colspan=6; style=text-align:right;>
+        <b>Month Total</b>
+      </td>
+      <td>
+        <b>$<%= sprintf("%.2f", $month_total) %><b>
+      </td>
+    </tr>
+</table>
+% }
+% }
+
+% } else {
+
+<p>
+   Could not parse expense report file. Please check file format and try again.
+ </p>
+
+% }
