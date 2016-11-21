@@ -1,0 +1,38 @@
+{
+  "name": "wave-coding-challenge",
+  "version": "1.0.0",
+  "description": "Coding Challenge for Wave",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon Server/server.js",
+    "bundle": "node_modules/.bin/webpack -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmordell/se-challenge.git"
+  },
+  "author": "Lee Mordell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmordell/se-challenge/issues"
+  },
+  "homepage": "https://github.com/lmordell/se-challenge#readme",
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "body-parser": "^1.15.2",
+    "csv-parse": "^1.1.7",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0",
+    "pg": "^6.1.0",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "sequelize": "^3.25.1",
+    "webpack": "^1.13.3"
+  }
+}
