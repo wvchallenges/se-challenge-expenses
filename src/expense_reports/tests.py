@@ -1,6 +1,9 @@
 from django.core.urlresolvers import reverse, resolve
 from django.test import TestCase
 from .views import upload, detail
+from .models import Expense, ExpenseReport
+from .forms import ExpenseReportForm
+from datetime import date
 
 
 class ExpenseImportTest(TestCase):
@@ -26,3 +29,24 @@ class ExpenseImportTest(TestCase):
             response,
             reverse("expense_reports:detail", args=[1])
         )
+
+    def test_expense_model_creation(self):
+        expense = Expense.objects.create(
+            date=date.today(),
+            category="a category",
+            employee_name="First Name, Last Name",
+            employee_address="123 Fake Street, Falsehood ON H0H0H0",
+            expense_description="Expensive",
+            pretax_amount=20.00,
+            tax_name="Some Tax",
+            tax_amount=2.00
+        )
+        self.assertTrue(isinstance(expense, Expense))
+
+    def test_report_model_creation(self):
+        expense_report = ExpenseReport.objects.create()
+        self.assertTrue(isinstance(expense_report, ExpenseReport))
+
+    def test_report_upload_form_forces_file_upload(self):
+        expense_report_form = ExpenseReportForm()
+        self.assertTrue(not expense_report_form.is_valid())
