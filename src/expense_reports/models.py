@@ -25,4 +25,4 @@ class Expense(models.Model):
     )
 
 class ExpenseReport(models.Model):
-    report = models.FileField(upload_to="expense_reports/", null=True)
+    report = models.FileField(upload_to="expense_reports", null=True)

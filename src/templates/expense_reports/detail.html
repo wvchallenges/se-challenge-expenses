@@ -5,6 +5,29 @@
         <title></title>
     </head>
     <body>
-        <h1>Yup...this is a detail report</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Pre-Tax Amount</th>
+                    <th>Tax Amount</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for month in monthly_totals  %}
+                    {% if month.1.0.pretax_amount__sum and month.1.1.tax_amount__sum %}
+                        <tr>
+                            <td>{{ month.0 }}</td>
+                            <td>{{ month.1.0.pretax_amount__sum }}</td>
+                            <td>{{ month.1.1.tax_amount__sum }}</td>
+                            <td>{{ month.1.0.pretax_amount__sum|add:month.1.1.tax_amount__sum }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <a href="{% url 'homepage' %}">Upload Another</a>
     </body>
 </html>
