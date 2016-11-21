@@ -20,7 +20,7 @@ export default class App extends Component {
 		this.submitFile = this.submitFile.bind(this)
 		this.renderTable = this.renderTable.bind(this)
 		this.renderMessages = this.renderMessages.bind(this)
-		this.displayFileName = this.displayFileName.bind(this)
+		this.addFileToUpload = this.addFileToUpload.bind(this)
 	}
 
 
@@ -65,7 +65,7 @@ export default class App extends Component {
 		}
 	}
 
-	displayFileName() {
+	addFileToUpload() {
 		this.setState({ 
 			hasFile: true,
 			buttonStyle: 'btn-primary',
@@ -99,7 +99,7 @@ export default class App extends Component {
 		const data = new FormData()
 		data.append('file', file)
 
-		var settings = {
+		const settings = {
 		  "async": true,
 		  "crossDomain": true,
 		  "url": "/api/uploadFile",
@@ -115,7 +115,8 @@ export default class App extends Component {
 
 		$.ajax(settings).done(response => {
 		  let monthlyExpenses = calculateMonthlyExpenses(JSON.parse(response))
-		  this.setState({ monthlyExpenses, 
+		  this.setState({ 
+		  	monthlyExpenses, 
 		  	isFetchingData: false, 
 		  	hasFile: false ,
 		  	buttonStyle: 'btn-success',
@@ -146,7 +147,7 @@ export default class App extends Component {
 						type='file' 
 						id='file' 
 						name='file'
-						onChange={this.displayFileName} 
+						onChange={this.addFileToUpload} 
 						style={{'display': 'none' }} />
 				</label>
 				<button 

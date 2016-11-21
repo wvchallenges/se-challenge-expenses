@@ -1,6 +1,4 @@
-const Files = require('./db_config')
-const parse = require('csv-parse')
-
+//Function returns an array of objects formatted to post to the database
 module.exports = (file) => {
 
 	//Gets rid of file headers
@@ -8,7 +6,6 @@ module.exports = (file) => {
 
 	let comma = /([,])/g
 
-	// Format file to parse string at each index 
 	let parsedFile = fileRows.map(line => {
 
 		//If num has comma, deletes comma to parse num

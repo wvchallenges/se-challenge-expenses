@@ -1,21 +1,24 @@
 //Object to hold monthly expense data
-let totalExpensesByMonth = {} 
+let totalExpensesByMonth = {}
 
-export default (files) => {
+ 
+export default (fileEntries) => {
 
-	files.forEach(file => {
+    fileEntries.forEach(entry => {
 
-		let date = new Date(file.date)
-		let monthAndYear = `${date.getMonth() + 1}/${date.getFullYear()}`
-		console.log('file data', file.date, file.pre_tax_amount, file.tax_amount)
-		if(!totalExpensesByMonth[monthAndYear]) {
-			totalExpensesByMonth[monthAndYear] = file.pre_tax_amount + file.tax_amount
-		} else {
-			
-			let newSum = totalExpensesByMonth[monthAndYear] + file.pre_tax_amount + file.tax_amount
-			totalExpensesByMonth[monthAndYear] = newSum
-		}
-	})
-	console.log('totalExpensesByMonth', totalExpensesByMonth)
-	return totalExpensesByMonth
+        let date = new Date(entry.date)
+        let monthAndYear = `${date.getMonth() + 1}/${date.getFullYear()}`
+        	//If the month doesn't exist, set it as an object key
+        if (!totalExpensesByMonth[monthAndYear]) {
+
+            totalExpensesByMonth[monthAndYear] = entry.pre_tax_amount + entry.tax_amount
+
+        } else {
+        	//If the month already exists, increase the expense amount with current entry amounts
+            let newSum = totalExpensesByMonth[monthAndYear] + entry.pre_tax_amount + entry.tax_amount
+            totalExpensesByMonth[monthAndYear] = newSum
+        }
+    })
+
+    return totalExpensesByMonth
 }

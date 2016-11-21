@@ -27,7 +27,7 @@ app.post('/api/uploadFile', upload.single('file'), (req,res) => {
 		parse(output.toString()).then(parsedFile => {
 			
 			let formattedFile = formatFile(parsedFile)
-
+			//Post formatted file entries to the DB
 			Files.bulkCreate(formattedFile).then(file => {
 				res.status(201).json(file)
 			})

@@ -43,14 +43,14 @@ const Files = db.define('files', {
 )
 
 
-Files.sync({ force: true })
+Files.sync()
 
 db.authenticate()
     .then(function(err) {
         console.log('Successful Connection to the database');
     })
     .catch(function(err) {
-        console.log('+++line 10 config.database.js: cannot connect to the database ', err);
+        console.log('Cannot connect to the database ', err);
     });
 
 module.exports = Files;
