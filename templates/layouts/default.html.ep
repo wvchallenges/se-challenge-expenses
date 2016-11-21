@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Waveapps SE Challenge</title></head>
+  <body><%= content %></body>
+</html>
