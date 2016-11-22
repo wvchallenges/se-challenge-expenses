@@ -98,3 +98,5 @@ ENV/
 *.pyc
 db.sqlite3
 media
+uploads
+staticfiles
