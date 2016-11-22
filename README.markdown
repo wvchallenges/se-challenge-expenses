@@ -1,4 +1,9 @@
-# Wave Software Development Challenge
+# Table of Contents
+1. ###### Wave Software Development Challenge
+2. ###### How To Run This Project ?
+3. ###### Am I Proud Of My Implementation ? 
+
+# 1. Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
 The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
@@ -57,3 +62,42 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+# How To Run This Project ?
+
+1-Setting a [virtual environment](https://virtualenv.pypa.io/en/stable/):
+```
+$ mkdir venv
+$ virtualenv venv
+$ source venv/bin/activate
+```
+2-Cloning the project
+```
+cd venv
+git clone https://github.com/addonis1990/se-challenge.git
+cd se-challenge
+```
+3-Installing dependencies:
+```
+pip install -r requirements.txt
+```
+4-Performing migration
+```     
+python manage.py migrate
+```
+
+5-Running the project:
+```     
+python manage.py runserver
+```
+
+6- Go to your browser and open this link: `http://127.0.0.1:8000/`
+
+
+# Am I Proud Of My Implementation ?
+Definitely, I take pride in every bit of code I write. Truth should be said, this was not a complex project that required  a set of delicate decisions, complex designs and several tradeoffs to build. However, it was interesting to learn how to deal with csv files using Python language and the Django Framework. When it comes to database, I believe the way I designed my models/tables is very natural and straightforward. I created 2 models (Employee, Category) that are both pointing  to a third model (Expense) via a one to many relationship. There should be no confusion understanding them and figuring out the relationships that tie them. Also, I embraced the way Django structures projects.  My project is clearly structured in three main parts:
+* ‘wavechallenge’ directory: This is where we can tune the project on a high level. This directory includes mainly the webapp settings and the url settings. 
+* ’db’ directory: where data is being stored in a sqlite database
+* ‘expensemanager’ directory: this where all the magic happens. This directory represents the django app that will handle the csv file and returns the required results.
+
+The latter directory includes also a few lines of codes that I really had fun writing them. One thing that I wanted to do in this project is to show the expenses-per-month table in a chronological order and display months in this format: \[month in letters\] \[Year\] (Example: November 2016). The input csv file is more likely to be unsorted and the date format is very basic (digits separated by slashes)  and thus I had to find a solution that would incorporate simplicity with efficiency to display the desired order. In order to solve this problem, I used python dictionaries eventhough they are intrinsically an unordered data structure and tweaked them to get the sorted list.
