@@ -1,8 +1,14 @@
-Django==1.10.3
-psycopg2==2.6.2
 dj-database-url==0.4.1
+Django==1.10.3
+django-bootstrap3==7.1.0
 django-dotenv==1.4.1
 django-environ==0.4.0
 django-tables2==1.2.6
 flake8==3.0.4
 flake8-docstrings==1.0.2
+mccabe==0.5.2
+psycopg2==2.6.2
+pycodestyle==2.0.0
+pydocstyle==1.1.1
+pyflakes==1.2.3
+six==1.10.0
