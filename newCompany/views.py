@@ -9,7 +9,7 @@ from newCompany.forms import FileUploader
 from datetime import datetime
 import csv
 
-# Create your views here.
+# View for seeing all data uploaded from CSV File
 
 
 def data(request):
@@ -21,6 +21,8 @@ def data(request):
 
     return HttpResponse(template.render(context, request))
 
+# View to upload the CSV file
+
 
 def upload(request):
     if request.method == 'POST':
@@ -29,6 +31,8 @@ def upload(request):
 
         return monthly(request)
     return render(request, 'newCompany/upload.html')
+
+# View of the montly tax reports
 
 
 def monthly(request):
