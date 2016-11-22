@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<style>
+html {
+    text-align: center
+}
+body {
+    display: inline-block;
+    margin: 0px auto;
+    text-align: center;
+}
+    h3 {
+        line-height: 30px;
+    }
+    mark {
+        background-color: lightblue;
+    }
+</style>
+<head>
+    <title>Monthly Expenses</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+</head>
+
+<body>
+<h3>Monthly Expenses for <mark><strong>{{ file_name }}</strong></mark></h3><br>
+<ul class="list-group">
+    {% for date, expense in expenses.items() %}
+        <div class="well"><strong>{{ date }}</strong> - {{ "${0:.2f}".format(expense) }}</div>
+    {% endfor %}
+</ul>
+<small>Expenses are sorted by date.</small>
+</body>
+</html>

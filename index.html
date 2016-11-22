@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+    small {
+        color: grey;
+    }
+
+    html {
+        display: table;
+        text-align: center
+    }
+
+    body {
+        display: table-cell;
+        margin: 0px auto;
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+<head>
+    <title>Wave Challenge</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+</head>
+<body class="color">
+    <div class=center>
+        <h1>Upload File</h1>
+        <form action="" method=post enctype=multipart/form-data>
+            <label class="btn btn-default btn-file">
+                Choose file <input type=file name=file style="display: none;">
+            </label>
+            <label class="btn btn-default btn-file">
+                Upload <input type=submit value=Upload style="display: none;">
+            </label>
+        </form>
+    </div>
+    <br><small>Please choose a CSV file, and click 'Upload' to view monthly expenditures.</small>
+</body>
+</html>
