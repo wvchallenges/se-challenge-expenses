@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.urlresolvers import reverse
 
 class Expense(models.Model):
     expense_report = models.ForeignKey(
@@ -24,5 +24,9 @@ class Expense(models.Model):
         null=True
     )
 
+
 class ExpenseReport(models.Model):
     report = models.FileField(upload_to="expense_reports", null=True)
+
+    def get_absolute_url(self):
+        return reverse("expense_reports:detail", args=[self.pk])

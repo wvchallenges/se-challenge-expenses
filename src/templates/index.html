@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% block head_scripts %}
+
+{% endblock head_scripts %}
 {% block content %}
     <main>
-        <form action="{%  url 'expense_reports:upload' %}" method="post" enctype="multipart/form-data">
+        <form id="upload_form" action="{%  url 'expense_reports:upload' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="submit">
+            <h1>Upload an Expense Report</h1>
+            {{ form.report }}
+            <label for="{{ form.report.id_for_label }}" class="button">Upload</label>
         </form>
     </main>
 {% endblock content %}
+{% block footer_scripts %}
+<script type="text/javascript">
+document.getElementById("id_report").onchange = function() {
+    document.getElementById("upload_form").submit();
+};
+</script>
+{% endblock footer_scripts %}

@@ -6,6 +6,7 @@ from .models import Expense
 from datetime import datetime
 from decimal import Decimal
 import csv
+import calendar
 
 def expense_report_file_handler(expense_report_object):
     with open(expense_report_object.report.path, "r") as csv_file:
@@ -33,37 +34,30 @@ def upload(request):
         if form.is_valid():
             file = form.save()
             expense_report_file_handler(file)
-            return redirect(reverse("expense_reports:detail", args=[file.pk]))
+            return redirect(file)
         else:
             return redirect(reverse("homepage"))
     else:
         return redirect(reverse("homepage"))
 
 def detail(request, expense_report):
-    months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ]
     monthly_totals = []
+
     expenses = Expense.objects.filter(expense_report=expense_report)
     for month in range(1, 13):
         expenses_by_month = expenses.filter(date__month=month)
-        monthly_totals.append([
-            expenses_by_month.aggregate(Sum("pretax_amount")),
-            expenses_by_month.aggregate(Sum("tax_amount")),
-        ])
-    monthly_totals = list(zip(months, monthly_totals))
-    print(monthly_totals)
+        pretax_amount = expenses_by_month\
+            .aggregate(Sum("pretax_amount"))["pretax_amount__sum"]
+        tax_amount = expenses_by_month\
+            .aggregate(Sum("tax_amount"))["tax_amount__sum"]
+        if pretax_amount:
+            monthly_totals.append({
+                "name": calendar.month_name[month],
+                "pretax_amount": pretax_amount,
+                "tax_amount": tax_amount,
+                "total": pretax_amount + tax_amount
+            })
+
     return render(
         request,
         "expense_reports/detail.html",

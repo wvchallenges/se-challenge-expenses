@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+{% block content%}
+    <main>
         <table>
             <thead>
                 <tr>
@@ -16,18 +12,18 @@
             </thead>
             <tbody>
                 {% for month in monthly_totals  %}
-                    {% if month.1.0.pretax_amount__sum and month.1.1.tax_amount__sum %}
+                    {% if month.total %}
                         <tr>
-                            <td>{{ month.0 }}</td>
-                            <td>{{ month.1.0.pretax_amount__sum }}</td>
-                            <td>{{ month.1.1.tax_amount__sum }}</td>
-                            <td>{{ month.1.0.pretax_amount__sum|add:month.1.1.tax_amount__sum }}</td>
+                            <td>{{ month.name }}</td>
+                            <td>{{ month.pretax_amount }}</td>
+                            <td>{{ month.tax_amount }}</td>
+                            <td>{{ month.total }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>
         </table>
         <br>
-        <a href="{% url 'homepage' %}">Upload Another</a>
-    </body>
-</html>
+        <a class="button" href="{% url 'homepage' %}">Upload Another</a>
+    </main>
+{% endblock content%}
