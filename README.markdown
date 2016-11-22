@@ -1,7 +1,28 @@
 # Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+## Setup
+
+1. Download [Docker for Mac](https://docs.docker.com/docker-for-mac/)
+2. Start Docker for Mac
+3. From the command line:
+	- Launch the app with: `docker-compose up -d dev`
+4. Done :D
+
+## Why I am proud of this implementation:
+
+I decided to use Django because it makes it very hard to write boilerplate code and I hope I demonstrated that with this application. Everything written in the app is purposeful and relates to the business logic set by the requirements given.
+
+The views (controllers in tradition MVC) are short and trigger the correct actions, the models handle data storage validation and the parsing of the csv, and the templates (views) display the correct data at the right times.
+
+My main goal with this challenge was to keep the app super simple and not complicate things as the requirements were small. I have some experience using Docker and wanted whoever is looking at this code to be able to get set up super fast.
+
+
+## Information about the challenge
+
+
+Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview.
+
+The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!)
 
 There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
 
@@ -40,7 +61,7 @@ Please modify `README.md` to add:
 
 1. Fork this project on github. You will need to create an account if you don't already have one.
 1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
+1. Push all of your changes to your fork on github and submit a pull request.
 1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
@@ -49,11 +70,11 @@ Please modify `README.md` to add:
 1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
 
 ## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Evaluation of your submission will be based on the following criteria.
 
-1. Did you follow the instructions for submission? 
+1. Did you follow the instructions for submission?
 1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
+1. Were models/entities and other components easily identifiable to the reviewer?
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+1. Does your solution use appropriate datatypes for the problem as described?
