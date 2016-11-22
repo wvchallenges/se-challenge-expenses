@@ -1,0 +1,7 @@
+*.log
+*.pot
+*.pyc
+
+.DS_Store
+
+db/db.sqlite3
