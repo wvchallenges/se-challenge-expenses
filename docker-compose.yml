@@ -1,0 +1,18 @@
+dev:
+  build: .
+  command: bash -c './manage.py migrate && ./manage.py runserver 0.0.0.0:8080'
+  environment:
+    DJANGO_SETTINGS_MODULE: wsdc.settings
+    PYTHONUNBUFFERED: '1'
+    PORT: '8080'
+    DATABASE_URL: 'postgres://postgres:@postgres:5432/postgres'
+  ports:
+    - '8080:8080'
+  volumes:
+    - '.:/app/user'
+  links:
+    - postgres
+postgres:
+  image: postgres:9.5
+  ports:
+    - '5432:5432'
