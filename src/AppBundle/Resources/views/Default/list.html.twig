@@ -1,0 +1,39 @@
+<div id="monthly-expenses" class="table-responsive">
+  <table class="table table-striped">
+        <thead>
+            <tr> 
+                <th>Year</th> 
+                <th>Month</th> 
+                <th>Pre Tax Total</th>
+                <th>Tax Total</th>
+            </tr> 
+        </thead> 
+        <tbody> 
+            {% for expense in expenses %}
+            <tr> 
+                <td>{{ expense.expenseYear }}</td> 
+                <td>{{ (expense.expenseYear~'-'~expense.expenseMonth~'-01')|date('M') }}</td> 
+                <td>{{ expense.preTaxSum|localizedcurrency('USD') }}</td>
+                <td>{{ expense.taxSum|localizedcurrency('USD') }}</td>  
+            </tr> 
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        {% if expenses.getTotalItemCount == 0 %}
+            <tr>
+                <td colspan="4">
+                    <div class="alert alert-info text-center" role="alert">
+                        <p>Upload a new Expense data file above to begin.</p>
+                    </div>
+                </td>
+            </tr>
+        {% else  %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    {{ knp_pagination_render(expenses, null, {}, {'paginationData': 'data-target="#expenses-data"'}) }}
+                </td>
+            </tr>
+        {% endif %}
+        </tfoot>
+  </table>
+</div>
