@@ -73,22 +73,23 @@ $ source venv/bin/activate
 ```
 2-Cloning the project
 ```
-cd venv
-git clone https://github.com/addonis1990/se-challenge.git
-cd se-challenge
+$ cd venv
+$ git clone https://github.com/addonis1990/se-challenge.git
+$ cd se-challenge
 ```
 3-Installing dependencies:
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 4-Performing migration
-```     
-python manage.py migrate
+```
+$ mkdir db
+$ python manage.py migrate
 ```
 
 5-Running the project:
 ```     
-python manage.py runserver
+$ python manage.py runserver
 ```
 
 6- Go to your browser and open this link: `http://127.0.0.1:8000/`
