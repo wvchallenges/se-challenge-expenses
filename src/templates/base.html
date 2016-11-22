@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Volkhov:700" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="{% static 'styling.css' %}"  media="screen,projection"/>
+    </head>
+    <body>
+        {% block content %}
+            Stuff goes in here
+        {% endblock content %}
+        {% block footer_scripts %}
+        {% endblock footer_scripts %}
+    </body>
+</html>
