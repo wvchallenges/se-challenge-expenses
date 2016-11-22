@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'expensemanager/style.css' %}" />
+    <meta charset="utf-8">
+    <title>Wave Software Development Challenge </title>
+</head>
+
+<body>
+    <ul id="topbar-ul">
+        <li id="topbar-li">Wave Software Development Challenge </li>
+    </ul>
+
+    <!-- List of expenses sorted by month -->
+    {% if expense_per_month %}
+    <ul>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Month</th>
+                    <th class="text-left">Total Expenses</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {% for expense in expense_per_month %}
+                <tr>
+                    <td class="text-left">{{expense.0}}</td>
+                    <td class="text-left">{{expense.1}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </ul>
+    {% endif %}
+    <!-- Upload form -->
+    <ul>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+            <p>
+                {{ form.file.errors }} {{ form.file }}
+            </p>
+            <p>
+                <input type="submit" value="Upload" />
+            </p>
+        </form>
+    </ul>
+</body>
+
+</html>
