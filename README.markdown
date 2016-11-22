@@ -1,7 +1,7 @@
 # Table of Contents
-1. ###### Wave Software Development Challenge
-2. ###### How To Run This Project ?
-3. ###### Am I Proud Of My Implementation ? 
+1. Wave Software Development Challenge
+2. How To Run This Project ?
+3. Am I Proud Of My Implementation ? 
 
 # 1. Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
@@ -63,7 +63,7 @@ Evaluation of your submission will be based on the following criteria.
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
 
-# How To Run This Project ?
+# 2. How To Run This Project ?
 
 1-Setting a [virtual environment](https://virtualenv.pypa.io/en/stable/):
 ```
@@ -94,7 +94,7 @@ python manage.py runserver
 6- Go to your browser and open this link: `http://127.0.0.1:8000/`
 
 
-# Am I Proud Of My Implementation ?
+# 3. Am I Proud Of My Implementation ?
 Definitely, I take pride in every bit of code I write. Truth should be said, this was not a complex project that required  a set of delicate decisions, complex designs and several tradeoffs to build. However, it was interesting to learn how to deal with csv files using Python language and the Django Framework. When it comes to database, I believe the way I designed my models/tables is very natural and straightforward. I created 2 models (Employee, Category) that are both pointing  to a third model (Expense) via a one to many relationship. There should be no confusion understanding them and figuring out the relationships that tie them. Also, I embraced the way Django structures projects.  My project is clearly structured in three main parts:
 * ‘wavechallenge’ directory: This is where we can tune the project on a high level. This directory includes mainly the webapp settings and the url settings. 
 * ’db’ directory: where data is being stored in a sqlite database
