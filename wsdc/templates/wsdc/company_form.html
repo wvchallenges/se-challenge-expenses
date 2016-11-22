@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load django_tables2 %}
+
+{% block content %}
+  <h2>Create a company</h2>
+  <div>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+        {% endbuttons %}
+    </form>
+  </div>
+
+  {% if object %}
+    {% render_table employees %}
+  {% endif %}
+{% endblock %}

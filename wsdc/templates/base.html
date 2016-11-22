@@ -1,0 +1,37 @@
+{% load staticfiles %}
+{% load static %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+  </head>
+  <body>
+    <a href="{% url 'company_list' %}">
+      <h1 style="text-align:center;">
+        Wave SE Challenge
+      </h1>
+    </a>
+    <div class="row">
+      <div class="col-md-2"/>
+        <a href="{% url 'company_create' %}">
+          <button class="btn btn-primary" style="margin-left: 10px;">
+            Create a Company
+          </button>
+        </a>
+      </div>
+      <div class="col-md-8">
+        {% block content %}
+        {% endblock %}
+      </div>
+      <div class="col-md-2"/>
+      </div>
+    </div>
+  </body>
+</html>

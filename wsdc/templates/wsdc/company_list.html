@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Company Listing</h2>
+  <div class="list-group">
+    {% for company in object_list %}
+      <a href="{% url 'company_edit' company.id %}">
+        <button type="button" class="list-group-item">
+          {{ company.name }}
+        </button>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}
