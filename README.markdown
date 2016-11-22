@@ -1,3 +1,7 @@
+# Solution
+
+My solution is in https://github.com/jimgraham/se-challenge/tree/master/waexpenses
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 

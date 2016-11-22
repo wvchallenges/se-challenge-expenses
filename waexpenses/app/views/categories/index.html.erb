@@ -1,0 +1,31 @@
+<h2>All Categories</h2>
+
+<table class="expense_data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Parent Category</th>
+      <th>Total spent (including child categories)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= link_to category.full_name, category %></td>
+        <td><%= category.description %></td>
+        <td>
+          <% if category.parent %>
+            <%= link_to category.parent.full_name, category.parent %>
+          <% end %>
+        </td>
+        <td  class="numerical">
+          <%= number_to_currency(category.calculate_total_expense_including_children()) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

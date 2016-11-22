@@ -1,0 +1,19 @@
+<h2>All Taxes</h2>
+
+<table class="expense_data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Total paid</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @taxes.each do |tax| %>
+      <tr>
+        <td><%= link_to tax.name, tax %></td>
+        <td class="numerical"><%= number_to_currency(tax.calculate_total) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

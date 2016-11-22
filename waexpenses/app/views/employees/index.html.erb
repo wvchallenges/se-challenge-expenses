@@ -1,0 +1,22 @@
+<h2>All Employees</h2>
+
+<table class="expense_data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Total Expenses</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= link_to  employee.name, employee %></td>
+        <td><%= employee.address %></td>
+        <td class="numerical"><%= number_to_currency(employee.calculate_total_expenses()) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,7 @@
+<% i = taxes.count  %>
+<% taxes.each do |tax| %>
+  <%= link_to(tax) do %>
+    <% i -= 1 %>
+    <%= tax.name %><% if i > 0 %>, <% end %>
+   <% end %>
+<% end %>

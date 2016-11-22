@@ -1,0 +1,17 @@
+<h2>Expenses by Month</h2>
+<table class="expense_data">
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Total Expenses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%  @dates_and_totals.sort.reverse.each do |date, expense| %>
+      <tr>
+        <td><%= date %></td>
+        <td class="numerical"><%= number_to_currency(expense) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
