@@ -57,3 +57,22 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+## Installation Instructions
+1. Vagrant (~1.8.4) is required for ease of development. Virtualbox is used as the VM provider.
+1. Execute `vagrant up` to deploy the development environment. This will take a bit of time depending on your machine.
+1. Once the environment has deployed you can load `https://localhost:8443` in your browser. ***Note*** If there is already another Vagrant machine already running, your ports may have conflicts. Execute `vagrant port` to see the assigned ports to the new machine and access accordingly.
+1. The development environment uses snakeoil SSL certificates. You will need to add the exception to continue through the security issue.
+1. This has been tested on Chrome and Firefox.
+1. The Vagrant scripts describe the build environment. 
+
+### Implementation Details
+- The project is based on Symfony / PHP. I used exiting code as scaffolding for speed of development. 
+- The Expense model was not expanded on due to the nature of the information. I could have created an Employee model and Tax model however the data in the Expense model would still have been recorded as denormalized for performance and record keeping.
+- I really like asynchronous programming and tried to utilise those concepts. The last todo item would have been AJAX File Uploads which I never got around to. 
+- I used RabbitMQ and Redis though I could probably have done everything in Redis. However architecturaly, It really is overkill for the project requirements.
+- The RabbitMQ Consumer is started on `vagrant up` and will process file uploads of which details are published to the queue. 
+- I was thinking about WebSockets though I would prefer a pure JS solution in that case. 
+- I could also have added more messaging / notification messages. I also did not write any tests though I should have.
+- Spent way more than a few hours, but as my passion is programming in general, I enjoyed it. However, I really don't believe demonstrating something you're particularly proud of can be dome in such a short amount of time.
+    

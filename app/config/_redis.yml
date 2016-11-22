@@ -1,0 +1,77 @@
+               
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "redis://%redis_master%/1"
+#            dsn:
+#                - "redis://%redis_dsn_master%"
+#                - "redis://%redis_dsn_slave%"
+#            options:
+#                replication: true
+            logging: "%kernel.debug%"
+        session:
+            type: predis
+            alias: session
+            dsn: "redis://%redis_master%/2"
+#            dsn:
+#                - "redis://%redis_dsn_master%"
+#                - "redis://%redis_dsn_slave1%"
+#            options:
+#                replication: true
+            logging: "%kernel.debug%"
+        cache:
+            type: predis
+            alias: cache
+            dsn: "redis://%redis_master%/3"
+            logging: false
+#            options:
+#                connection_persistent: true
+#                profile: 2.2
+#                connection_timeout: 10
+#                read_write_timeout: 30
+#        cluster:
+#            type: predis
+#            alias: cluster
+#            dsn:
+#                - redis://127.0.0.1/1?alias=master
+#                - redis://127.0.0.2/2
+#                - redis://pw@/var/run/redis/redis-1.sock/10
+#                - redis://pw@127.0.0.1:63790/10
+#            options:
+#                profile: 2.4
+#                connection_timeout: 10
+#                connection_persistent: true
+#                read_write_timeout: 30
+#                iterable_multibulk: false
+#                throw_errors: true
+#                cluster: Snc\RedisBundle\Client\Predis\Connection\PredisCluster
+#                replication: false
+    # session:
+    #    client: session
+    #    prefix: "%session.name%"
+    #    ttl: 1800
+        # locking: false
+#    doctrine:
+#        metadata_cache:
+#            client: cache
+#            entity_manager: default
+#            document_manager: default
+#        result_cache:
+#            client: cache
+#            entity_manager: [default] #, read]
+#            document_manager: [default, slave1, slave2]
+#            namespace: "dcrc:"
+#        query_cache:
+#            client: cache
+#            entity_manager: default
+#        second_level_cache:
+#            client: cache
+#            entity_manager: default
+#    monolog:
+#        client: cache
+#        key: monolog
+#    swiftmailer:
+#        client: default
+#        key: swiftmailer

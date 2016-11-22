@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Wave Software Development Challenge</h1>
+            <p>This application takes a CSV data-file of expenses as input and imports the data into an SQL Database.</p>
+            <p>Below is a table of the total expenses amount per-month represented by the uploaded file.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form(uploadForm) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="expenses-list" data-route="{{ path('homepage_expenses') }}" data-check="{{ path('file_check') }}">
+                <div class="alert alert-info text-center" role="alert">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

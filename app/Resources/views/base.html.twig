@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/main.min.css') }}"/>
+        {% block stylesheets %}{% endblock %}
+       
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    </head>
+    <body>    
+
+        {% block body %}{% endblock %}
+
+        {% if app.environment == 'dev' %}
+        <script type="text/javascript" src="{{ asset('js/main.dev.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
+        {% else %}
+        <script type="text/javascript" src="{{ asset('js/main.min.js') }}" async></script>
+        {% endif %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
