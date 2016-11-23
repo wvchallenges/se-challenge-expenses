@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Wave Challenge</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+   	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+
+	<script type="text/javascript">
+	function doStuff() {
+
+		var fileList = document.getElementById('InputFile').files;
+
+		// Was a file selected?
+		if (fileList.length < 1) {
+			alert ("Please select a file first");
+		} else {
+
+			// Attempt to upload with an http PUT operation
+			var selectedFile = fileList[0];
+			//console.log ("File:", selectedFile);
+			//alert ("File: " + selectedFile.name + " selected, " + selectedFile.size + " bytes");
+
+/*			var s3 = new AWS.S3();
+			var params = {
+				Bucket: 'wavechallengedata',
+  				Key: 'env.js',
+  			}
+			s3.putObject (params, function (err, data) {
+				if (err) {
+					console.log ("6B231004", err);
+				} else {
+
+					alert ("Upload successful");
+				}
+			});
+*/
+
+			var rpc = new XMLHttpRequest ();
+
+			rpc.open("PUT", "https://wavechallengedata.s3.amazonaws.com/env.js");
+
+			//?AWSAccessKeyId=AKIAJAFRE63KT2JMTL6Q&Expires=1479969921&Signature=%2BVf3T9q%2F7uOnYek5Oh4nO8V0Fk8%3D");
+
+			//rpc.setRequestHeader("Access-Control-Allow-Origin", "");
+	//Access-Control-Allow-Origin
+			var formData = new FormData();
+			formData.append ("AWSAccessKeyId", "AKIAJAFRE63KT2JMTL6Q");
+			formData.append ("Expires", "1479969921");
+			formData.append ("Signature", "%2BVf3T9q%2F7uOnYek5Oh4nO8V0Fk8%3D")
+			formData.append ('file', selectedFile)
+
+			rpc.send(formData);
+		}
+	}
+
+	</script>
+
+</head>
+
+<body style="background-color: #315980">
+
+	<!-- Amazon SDK -->
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.3.min.js"></script>
+
+	<!-- Container #1 -->
+	<div class="container-fluid" style="background-color: #0C81C8">
+
+		<!-- Spacer row -->
+		<div class="row p-t-0">
+			<div class="col-md-12 text-center">
+				&nbsp;
+			</div>
+		</div>
+
+		<!-- Top row: Logo, Log In, and Signup buttons -->
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+<!-- 				<form action="https://wavechallengedata.s3.amazonaws.com/env.js" enctype="multipart/form-data" method="PUT">
+					<input type="hidden" name="AWSAccessKeyId" value="AKIAJAFRE63KT2JMTL6Q">
+					<input type="hidden" name="Expires" value="1479882535">
+					<input type="hidden" name="Signature" value="1Hm3Z8ToQRWQM801GZxQ4HOPRbo%3D">
+					<label class="btn btn-default btn-file">
+					    Browse <input type="file" style="display: none;">
+					    <input type="submit">
+					</label>
+				</form>
+ -->
+
+<!-- 				<form>
+				  	<div class="form-group">
+				    	<label for="exampleInputFile">Please select your .CSV file</label>
+				    	<input type="file" class="form-control-file" id="InputFile">
+				  	</div>
+
+				  	<button type="submit" class="btn btn-primary" onclick="doStuff()">Submit</button>
+				</form>
+ -->
+			    	<label>Please select your .CSV file</label>
+			    	<input type="file" id="InputFile">
+				  	<button onclick="doStuff()">Submit</button>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+	</div> <!-- End div -->
+
+</body>
+</html>

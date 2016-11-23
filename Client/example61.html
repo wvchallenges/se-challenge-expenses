@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>synchronizeMe</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #315980">
+
+	<!-- Needed for Login with Amazon -->
+	<div id="amazon-root"></div>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.3.min.js"></script>
+
+	<!-- Container #1 -->
+	<div class="container-fluid" style="background-color: #0C81C8">
+
+		<!-- Spacer row -->
+		<div class="row p-t-0">
+			<div class="col-md-12 text-center">
+				&nbsp;
+			</div>
+		</div>
+
+		<!-- Top row: Logo, Log In, and Signup buttons -->
+		<div class="row">
+
+			<div class="col-md-4">
+				<img alt="synchronizeMe.com Logo Preview" src="Logo-4.png" width="25%" height="25%"/>
+			</div>
+
+			<div class="col-md-4">
+				&nbsp;
+			</div>
+
+			<div class="col-md-4">
+				<a href="#" id="login" class="btn btn-primary" style="color:white; background-color: #5FB84E">
+					Log In or Sign Up
+				</a>
+			</div>
+
+		</div>
+
+		<!-- Row: Sales text -->
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center" style="color: white;">
+					synchronizeMe gets more out of your existing hardware
+				</h1>
+			</div>
+		</div>
+		
+		<!-- Spacer row -->
+		<div class="row p-t-0">
+			<div class="col-md-12 text-center">
+				&nbsp;
+			</div>
+		</div>
+
+		<!-- Row: More sales text -->
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+				<p class="text-center" style="color: white">
+					The synchronizeMe web service lets you coordinate computer processes world-wide to squeeze more processing
+					minutes out of every hour without upgrading any hardware.  Coordinate systems anywhere
+					in the world for resource sharing, simple failover, or complicated transactions flows.
+				</p>
+			</div>
+			
+			<div class="col-md-4"> </div>
+		</div>
+
+		<!-- Spacer row -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+			&nbsp;
+			</div>
+		</div>
+		
+		<!-- Sign Up button -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a href="#" id="login-1" class="btn btn-primary" style="color:white; background-color: #5FB84E">
+					Log In or Sign Up - It's Free
+				</a>
+			</div>
+		</div>
+		
+		<!-- Spacer row -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+			&nbsp;
+			</div>
+		</div>
+		
+		<!-- MODAL "Still in alpha testing..."  -->
+		<div class="modal fade" id="NotAvailable" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content" style="color: white; background-color: #2ca1e8">
+					<div class="modal-header">
+						<img alt="synchronizeMe.com Logo Preview" src="Logo-4-Lite.png" width="20%" height="20%"
+						  	style="align: center"
+						/>
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<h3 style="text-align: center">
+							Our apologies, synchronizeMe is currently in alpha testing and is not yet available
+							to the general public.
+						</h3>
+					</div>
+					<div class="modal-footer">
+						<h5 style="text-align: center">
+							Would you like to be a beta-tester?  Please contact <a href="mailto:Warren@synchronizeMe.com" style="color: white">Warren@synchronizeMe.com</a>
+						</h5>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- SECTION 2 - Sequence Diagram -->
+	<div class="container-fluid">
+
+	<!-- Row: How it works Title -->
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="lead text-center" style="color: white;">
+					How It Works
+				</h2>
+			</div>
+		</div>
+
+		<!-- Big row: Visitor sequence diagram -->
+		<div class="row">
+			<div class="col-md-3">
+			</div>
+
+			<div class="col-md-6 text-center">
+				<img src="VisitorSequenceDiagram-03.png" width="75%" height="75%"/>
+			</div>
+
+			<div class="col-md-3">
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Rows: Bullet list following the sequence diagram -->
+
+	<!-- Spacer row -->
+	<div class="row">
+		<div class="col-md-12">
+		&nbsp;
+		</div>
+	</div>
+
+	<!-- "A Few Notes" section -->
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+
+		<!-- "Bullet list -->
+		<div class="col-md-4" style="color: white">
+			<h2 class="lead text-center">A few notes...</h2>
+			<ul>
+				<li>All calls to <i>synchronizeMe</i> are made over https</li>
+				<li>Calls made by <i>synchronizeMe</i> to your processes can be either http or https</li>
+				<li>A lock can be held for up to 90 days</li>
+				<li>Multiple callers can complete for the same lock</li>
+				<li>You can have as many locks as needed - no limit</li>
+			</ul>
+		</div>
+
+		<div class="col-md-4">
+		</div>
+	</div>
+
+	<!-- Spacer row -->
+	<div class="row">
+		<div class="col-md-12">
+		&nbsp;
+		</div>
+	</div>
+	<!-- Spacer row -->
+	<div class="row">
+		<div class="col-md-12">
+		&nbsp;
+		</div>
+	</div>
+
+	<!-- "Use Cases" section -->
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+
+		<!-- "Bullet list -->
+		<div class="col-md-4" style="color: white">
+			<h2 class="lead text-center">Typical Use Cases</h2>
+
+			<p><i>synchronizeMe</i> is a general-purpose lock manager that can be used in a wide variety of situations. Here
+			are some of the many possibilities:</p>
+
+			<ul>
+				<li>You've confined certain computing tasks to certain hours of the day so they
+				don't conflict with other tasks.  If they coordinated their activities with
+				<i>synchronizeMe</i> instead, they could run any time.</li>
+				<li>You have a computing job that has maxed out the machine it's on, and can't run on
+				two boxes simultaneously without failing. Upgrade that job to use <i>synchronizeMe</i>
+				for sensitive resources, and you can run as many instances as you like.</li>
+				<li>You need to coordinate access to one or more resources with an external company, or
+				between different application stacks or multiple data centers</li>
+				<li>You want a backup system to take over when a primary system shuts down</li>
+				<li>Two processes need access to the same resource, but must ensure they don't access
+				it at the same time</li>
+			</ul>
+			<p>&nbsp;</p>
+			<p><i>synchronizeMe</i> is built on Amazon's highly-available AWS infrastructure, and thus offers exceptional scalability and reliability. 
+			<!-- <a class="btn btn-link" type="button" data-toggle="modal" data-target="#NotAvailable" style="color: white;">Sign up today</a> to get 20 free transactions per day. -->
+			<a id='login-2' class="btn btn-link" style="color: white;">Sign up today</a> to get 20 free transactions per day.
+			</p>
+
+		</div>
+
+		<div class="col-md-4">
+		</div>
+	</div>
+
+	<!-- SECTION 3 - Footer -->
+	<div class="container-fluid">
+
+		<!-- Spacer row -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+			&nbsp;
+			</div>
+		</div>
+
+		<!-- Copyright notice -->
+		<div class="row">
+			<div class="col-md-4">
+				<small class="text-center" style="color: white;">
+					Copyright (c) 2016 <a href="mailto:Warren@synchronizeMe.com" style="color: white">Warren@synchronizeMe.com</a>
+				</small>
+			</div>
+			<div class="col-md-4">
+				<a href="#" id="Logout" class="btn btn-primary" style="color:white; background-color: #0A6FAA">
+					Log Out
+				</a>
+			</div>
+			<div class="col-md-4">
+				&nbsp;
+			</div>
+		</div>
+
+	</div> <!-- End div -->
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+
+	<!-- Login Script for Login with Amazon -->
+	<script type="text/javascript">
+	var s3 = null;
+	var clientId = 'amzn1.application-oa2-client.5957b4ae256f4691a51b03d8189fde98'; // client ID
+	var roleArn = 'arn:aws:iam::823643071233:role/Cognito_Prod_SyncMeUnauth_Role';
+
+	// Initialize the Amazon Cognito credentials provider
+	var creds = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-west-2:a6defd39-8d06-4124-985d-3aa9097f9bbd'
+//	  ,	RoleArn: roleArn
+	})
+	
+	AWS.config.update({
+	    region: "us-west-2",
+	    credentials: creds
+	});
+
+    AWS.config.credentials.get(function (err) {
+        if (err) console.log(err);
+        else console.log("AWS.config.credentials", AWS.config.credentials);
+    });
+
+	window.onAmazonLoginReady = function() {
+	   	
+	   	amazon.Login.setClientId(clientId); // set client ID
+
+	    document.getElementById('login-2').onclick = 
+	    document.getElementById('login-1').onclick = 
+	    document.getElementById('login').onclick
+	    = function() {
+
+	      	// This will pop up the 'Login With Amazon' dialog box
+	      	amazon.Login.authorize({scope: 'profile'}, function (response) {
+
+	        	if (!response.error) { // logged in
+
+					var creds = AWS.config.credentials;
+                    creds.params.Logins = { 'www.amazon.com': response.access_token };
+                    
+                    // manually expire credentials so next request will fire a refresh()
+                    creds.expired = true;
+
+					AWS.config.credentials.get (function (err) {
+
+						if (!err) {
+							var id = AWS.config.credentials.identityId;
+							console.log ("Cognito Identify Id:", id);
+						} else {
+							alert ("69231458 Error: " + err);
+						}
+					})
+                    
+                    // DEBUG - REMOVE ME
+                    alert ("Credentials: " + JSON.stringify (aws.config.credentials));
+
+					amazon.Login.retrieveProfile(response.access_token, function(response) {
+                        if ( response.success ) {
+                            alert('Hello ' + response.profile.Name);
+							
+							// Re-direct to user-portal
+							window.location = "https://d3rnz96va2z6qw.cloudfront.net/index.html";
+                        }
+                        else {
+                            alert('Oh no! An unusual error happened: ' + response.error);
+                        }
+                    });
+
+/*					var s3 = new AWS.S3({region: 'us-west-2'});
+					s3.listObjects({Bucket: 'portal-visitor'}, function(err, data) {
+					    if (err) console.log(err);
+					    else console.log(data);
+					});
+*/
+		        } else {
+		        	console.log('69191201 There was a problem logging you in. Please clear your cookies and try again');
+		        }
+	      	});
+	    };
+	 };
+
+	(function(d) {
+	    var a = d.createElement('script'); a.type = 'text/javascript';
+	    a.async = true; a.id = 'amazon-login-sdk';
+	    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+	    d.getElementById('amazon-root').appendChild(a);
+	})(document);
+	
+	</script>
+	
+	<script type "text/javascript">
+		document.getElementById('Logout').onclick = function() {
+			amazon.Login.logout();
+			alert ("Logout complete");
+		};
+	</script>
+
+</body>
+</html>
