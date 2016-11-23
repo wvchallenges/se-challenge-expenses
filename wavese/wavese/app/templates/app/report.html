@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Wave Subsidiary Data</title>
+        {% load staticfiles %}
+        <script src="/static/wavese/jquery.min.js" type="text/javascript"></script>
+        <script src="/static/wavese/highcharts.js" type="text/javascript"></script>
+        <script src="/static/wavese/jquery.highchartTable.js" type="text/javascript"></script>
+        <script src="/static/wavese/result/script.js" type="text/javascript"></script>
+        <script src="/static/wavese/sorttable.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/wavese/result/style.css"/>
+	</head>
+
+	<body>
+        <!-- Uploaded file contents -->
+		{% if data %}
+            <h2 align="center">Wave Subsidiary Expense Report</h2>
+            <table class="sortable" data-graph-container="#graphcontainer" data-graph-type="column" align="center">
+              <caption>Total Expenses Per Month for Wave Subsidiary</caption>
+                <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Expenses Subtotal</th>
+                      <th>Taxes</th>
+                      <th>Total Expenses</th>
+                    </tr>
+               </thead>
+               <tbody>
+               {% for row in data %}
+                    <tr>
+                        <td>{{ row.dateMonth|date:'M Y' }}</td>
+                        <td>{{ row.pre_tax_amount__sum }}</td>
+                        <td>{{ row.tax_amount__sum }}</td>
+                        <td>{{ row.total }}</td>
+                    </tr>
+               {% endfor %}
+               </tbody>
+            </table>
+            <br/><br/>
+            <div id="graphcontainer"></div>
+        {% else %}
+			<p>No data</p>
+		{% endif %}
+    </body>
+</html>
