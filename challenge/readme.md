@@ -1,0 +1,34 @@
+
+# se-challenge
+
+The challenge was completed using the [Laravel Web Application Framework](http://laravel.com/). To ensure the submission's functionality, and facilitate its setup, the submission was made to run on a [Laravel Homestead](http://laravel.com/docs/5.1/homestead) box. Though this abstracts installation difficulties or incompatibilities on the host machine to that of a virtual environment, there are [known issues with Windows host machines](https://github.com/mitchellh/vagrant/issues?utf8=%E2%9C%93&q=windows+shared), specifically [creating symbloc links on a windows shared folders](https://docs.vagrantup.com/v2/synced-folders/basic_usage.html), so it is not suggested to attempt to run the submission on a Windows host machine.
+
+
+## Installation
+### Homestead
+The steps for configuring a Homestead box are standardized, so the evaluator will notice a similarity with the steps in the [Homestead installation documentation](http://laravel.com/docs/5.1/homestead).
+
+1. The evaluator should download and install [Vagrant](https://www.vagrantup.com/downloads.html)
+1. The evaluator should download and install [VirtualBox (preferring version 4.3.x)](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)
+1. The evaluator should add the homestead box globally with `vagrant box add laravel/homestead`. Should this command fail, you may have to supply the full URL for adding the box with `vagrant box add laravel/homestead https://atlas.hashicorp.com/laravel/boxes/homestead`
+1. The evaluator must now clone the Homestead repository with `git clone https://github.com/laravel/homestead.git Homestead`. The location of where the repository is cloned will be the location from which commands will be executed to boot up the virtual machine
+1. Next, the evaluator will `cd` into the cloned repository and run `bash init.sh` which will create the `~/.homestead` directory on the host machine which will include a generic `Homestead.yaml` file which will be important for the submission's setup. The a copy of the generic `Homestead.yaml` file can be viewed in the [Homestead repository](https://github.com/laravel/homestead/blob/master/src/stubs/Homestead.yaml)
+1. Installation of the submission was tested with VirtualBox as the provider so the line in `~/.homestead/Homestead.yaml` reading `provider: virtualbox` should remain unchanged
+1. The evaluator will need to create an SSH key. This can generally be done on Mac and Linux machines with `ssh-keygen -t rsa -C "your_email@example.com"` and will, unless specified otherwise, place the according files in `~/.ssh`. The generic `Homestead.yaml` which would now be in `~/.homestead` on the evaluator's machine will reflect the default location for the ssh key
+1. To sync the submission from the host machine onto the box, the evaluator will look for the `folders` entry in `~/.homestead/Homestead.yaml`. The line reading `- map: ~/Code` should be changed to reflect the directory on the host machine where the submission is located. The line reading `to: /home/vagrant/Code` need not be changed and will reflect the location where the submission syncs on the box. Note that `~` on the box is a shortcut for `/home/vagrant` on the box, that **the differentiation of spaces and indents in the `Homestead.yaml` file matters**, and that unlike for the Homestead documentation, [NFS](http://docs.vagrantup.com/v2/synced-folders/nfs.html) is not enabled
+1. To configure the Nginx site for the submission, the evaluator will look for the `sites` entry in `~/.homestead/Homestead.yaml`. The line reading `to: /home/vagrant/Code/Laravel/public` should be changed to reflect the `public` folder in the submission. If the submission's root was synced to `/home/vagrant/Code` on the box, this will read `/home/vagrant/Code/se-challenge/challenge/public`
+1. The evaluator will now add an entry to their `hosts` file on their host machine to redirect requests from **the ip found at the top of their `~/.homestead/Homestead.yaml`** to the local domain listed for the Nginx site. The additional line in the `hosts` file will resemble `192.168.10.10  homestead.app`
+1. It is also important to note that the newer Homestead box already creates a `hoemstead` MySQL database upon provisioning, so keeping the `databases` entry in `~/.homestead/Homestead.yaml` will result in a collision and thus a failure during provisioning.
+1. The evaluator may now invoke `vagrant up && vagrant ssh` from the cloned `Homestead` repository, which will boot, provision, and ssh into the Homestead box.
+
+### Inside the Homestead box
+From inside the Homestead box, the evaluator will `cd` into the `challenge` directory and invoke `scripts/install.sh` which will automate the project-specific configuration.
+
+After the provided steps, the submission is considered installed and should be reachable from the host OS at either: the ip listed at the top of `~/.homestead/Homestead.yaml` (which is `192.168.10.10` by default), or the local domain it was mapped to in the `hosts` file (e.g., `http://homestead.app`)
+
+The script for automating the project-specific configuration from inside the box was tested by destroying the virtual environment (with `vagrant destroy`), rebuilding it with `vagrant up` and only running `scripts/install.sh` after using `vagrant ssh` to ssh into the box.
+
+## The Submission 
+The evaluator will notice that after refreshing the page from a successful upload of the csv file (which will be noted by a checkmark over the file icon), two tables appear. The first table contains a subset of the columns from the csv file to show the persistence of the data, and the second table shows the sum of pre-tax amounts + tax amounts for the expenses in the csv file grouped by their months. Both tables are paginated. In grouping the totals by month, it was not assumed to group them by month per year, though it was an expected modification, so the second table is paginated although it currently paginates a total of only 12 possible months. Pagination has a default `pageSize` of 10. The evaluator will also notice a simple treemap below the two tables for visualizing the expenses, which was done in the form of a custom angular directive with [d3plus](http://d3plus.org/) and [d3js](http://d3js.org/).
+
+The portion of the submission I am most proud of, which is not directly visible, is the [`gulp`](http://gulpjs.com/) build process. The build process had been configured to automatically take the already installed dependencies, order them based on their dependencies (for both the bower dependencies and angular-related files), concatenate them into a single file, and inject them into the layout template, minifying them and generating sourcemaps for production. The evaluator will notice a relatively thin `gulpfile.js` which imports all the gulp tasks from the `tasks` folder for this purpose.

@@ -1,0 +1,26 @@
+{
+  "name": "personal-page",
+  "version": "0.0.0",
+  "authors": [
+    "g2graman <fran.gramano@mail.utoronto.ca>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.4",
+    "angular-material": "~0.10.1",
+    "angular-material-data-table": "~0.8.11",
+    "d3": "~3.5.6",
+    "d3plus": "~1.8.0",
+    "dropzone": "~4.0.1",
+    "jquery": "~2.1.4",
+    "svg-morpheus": "~0.1.8"
+  }
+}
