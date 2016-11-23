@@ -1,0 +1,6 @@
+date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+12/30/2016,Meals and Entertainment,Phil Martin,"42 Millbrook Cr, Toronto, ON M4K 1H4",Dinner with potential acquisition, 200 ,ON Sales tax, 15.00 
+1/6/2016,computer - hardware,Phil Martin,"42 Millbrook Cr, Toronto, ON M4K 1H4",iPhone, 222.00 ,HST, 15.00 
+1/7/2016,travel,Barack Obama,"TBD",Airplane ticket to NY, 200.00 ,CA Sales tax, 15.00 
+2/3/2016,Meals and Entertainment,Barack Obama,"tbd",Starbucks coffee, 12.00 ,ON Sales tax, 0.90 
+2/18/2016,Severance,Eric Schmidt,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Getting out of here," 10,500.32 ",Federal Employee Tax, 123.45 
