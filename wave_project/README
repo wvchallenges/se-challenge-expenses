@@ -1,0 +1,103 @@
+This shows my strength in Django client/server full stack development.  I'm particularly happy with:
+
+* AJAX web interface
+    - The client side is full AJAX webapp, using a Javascript MVC framework with CSS Library, Bootstrap 3.x.
+  My own CSS was added as necessary.
+
+* Modular Server side development ( using dependency injection where necessary ) - ease of development and testing
+
+* Unit Testing:
+    -  I'm very much an advocate for Unit Testing ( TDD ) , so included are success path Unit Tests and View Testing.
+
+* Particularly, due to the good level of testing server unit / integration testing, development of the client side
+    was rapid - very few server side bugs to fix.
+
+Included below -
+    - Assumptions
+    - install/run instructions
+    - Notes
+
+Lastly, Thank You for your time.
+
+
+Install / running
+-----------------
+
+* Use of a Virtual Environment is recommended but optional
+    - http://docs.python-guide.org/en/latest/dev/virtualenvs/
+
+* Pip is required to install dependent Python packages
+    - see http://pip.readthedocs.org/en/latest/installing.html
+
+* Developed using Python 2.7.5
+
+* An empty SQLite database has been provided ( wave-db.sqlite3 )
+
+1. Pull from GitHub repo - my user name is 'stewarthector'
+
+2. In a command line, cd to wave_project
+
+3. Install third party libraries for python, using pip
+   pip install -r importer/requirements.txt
+
+4. Start Django app -
+   python manage.py runserver
+
+5. Open Browser ( see notes below )
+   URL - http://localhost:8000/import/
+
+6. Web App GUI is simple - Choose a test file ( i.e., the one provided - data_example.csv )
+
+7. Click "Upload File" to upload, the result summary will then be presented.
+
+NB:  only tested with latest Chrome and Safari 8
+
+Assumptions
+-----------
+* All data is valid - albeit from odd csv field separating i.e., " 1,500.00 ", vs 1500.00
+    - therefore there is no validation in the CSV Conversion process
+
+* Expense Categories and Tax names are always consistent - including casing i.e., "Computer - Software" will always be this exact string
+   - not different casing, spacing etc, ie, "computer   - software".
+
+* Date Format is always M/D/YYYY format
+
+* Each Employee has a unique name - there are no employees that share the same name.
+
+* There could be more than one CSV Data file to be uploaded ( see notes below ).  CSV file names are unique.
+
+* The per month total summary report shows grand totals for "Pre-Tax Amount", "Tax Amount", and "Pre-Tax + Tax Amount", for all expense types.
+  The individual expense types are not itemized i.e., totals for "Computer - Software", "Computer - Hardware".
+
+
+Notes
+-----
+
+* Fun Exercise! :-) Time spent was 6 hours.
+
+* SQLite is used as database - for simplicity and ease of running the Django App.
+
+* I enjoy both the server and client side, with Django, so there is a balance between the two.
+    - if I had concentrated more on client side I would have added:
+        * upload of multiple files on the Upload Page.
+        * progress bar
+        * 404.html and 500.html error pages - under Django control.
+        * Instead of rendering summary table using Django Template - return JSON and render in Javascript
+    - On server side I would have added:
+        * improved validation
+        * improved GUI Form validation
+        * exception handling
+        * Logging
+
+* For time considerations - this exercise is good to spend a lot more time on!
+    -   no authentication is provided ( and it wasn't listed as a requirement in the Exercise description anyway)
+    -   Chrome 38 and Safari 8 are the only browsers that have been tested.
+    -   No exception handling - if the app crashes, it becomes user hostile.
+        - i.e., it assumes user will select a csv file and not something else.
+
+* Web Client side -
+    - CSS Library - Bootstrap 3 ( Its a nice CSS framework and I quite like it :-) ) as well as any of my own CSS in styles.css
+    - Javascript MVC - CanJS 2.0
+
+* Formatting to PEP8 ( at what the IDE is capable of )
+

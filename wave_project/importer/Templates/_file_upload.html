@@ -1,0 +1,20 @@
+<div id='file-upload'>
+    <form>
+        <div class='panel panel-default'>
+            <div class='panel-heading'>Choose CSV Upload Files</div>
+            <div class='panel-body main-content'>
+                <div class='panel panel-default'>
+                    <div class='panel-body'>
+                        <span><input id='upload-file' type='file' name='file' class='pull-left'></span>
+
+                        <span id='missing-file-upload' class='text-danger hidden'>* Choose a file</span>
+                        {% csrf_token %}
+                    </div>
+                </div>
+            </div>
+            <div class='panel-footer'>
+                <button id='upload-button' class='btn btn-primary'>Upload File</button>
+            </div>
+        </div>
+    </form>
+</div>
