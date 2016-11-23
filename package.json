@@ -1,0 +1,21 @@
+{
+  "name": "sql_grapher",
+  "version": "1.0.0",
+  "description": "Graphs data from SQL database",
+  "main": "server.js",
+  "author": "ShiHan Wan",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-chart.js": "^1.0.3",
+    "angular-material": "^1.1.1",
+    "body-parser": "^1.15.2",
+    "chart.js": "^2.4.0",
+    "express": "^4.14.0",
+    "fast-csv": "^2.3.0",
+    "ng-file-upload": "^12.2.13",
+    "sqlite3": "^3.1.8"
+  }
+}
