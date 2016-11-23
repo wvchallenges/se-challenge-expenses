@@ -1,0 +1,51 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load bootstrap3 %}
+{% load chartit %}
+
+{% block bootstrap3_title %}{% block title %} SEChallenge - Gregov 2014 {% endblock %}{% endblock %}
+
+{% block bootstrap3_extra_head %}
+<link href="/static/style.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
+
+
+{% block bootstrap3_content %}
+{% include "manualimport/header.html" %}
+
+    {% if user and not user.is_anonymous %}
+        <div class="container">
+            <p>Hello {{ user.get_full_name|default:user.username }}!
+            <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+            </p>
+
+            <div id="chartcontainer"></div>
+            {{ chart | load_charts:"chartcontainer" }} 
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total</th>
+                    </tr>
+                    {% for month in expenses_per_month %}
+                    <tr>
+                        <td>{{ month.month }}</td>
+                        <td>{{ month.total_per_month }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="container">
+            <p>
+            <h2> Restricted access </h2>
+            <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a><br />
+            <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a><br />
+            <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a><br />
+            </p>
+        </div>
+    {% endif %}
+
+{% endblock %}
