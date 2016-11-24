@@ -1,0 +1,35 @@
+{% extends 'upload/base.html' %}
+{% block content %}
+
+    <!-- Upload form. Note enctype attribute! -->
+    <center>
+    <form class="form-horizontal" action="{% url 'list_files' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }}
+        </p>
+
+        <p><input class ="btn btn-success" type="submit" value="Upload"/></p>
+    </form>
+    </center>
+
+    <!-- List of uploaded documents -->
+    {% if documents %}
+        <ul>                        
+            {% for document in documents %}
+
+                <li><a href="/upload/details/{{ document.id }}">{{ document.name }}</a></li>
+
+            {% endfor %}
+        </ul>        
+        
+    {% else %}
+        <p>No documents.</p>            
+    {% endif %}
+
+{% endblock %}
