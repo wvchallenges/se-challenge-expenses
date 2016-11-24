@@ -1,0 +1,41 @@
+{% extends 'upload/base.html' %}
+{% load chartit %}
+    
+{% block header %}   
+    {{ expensechart|load_charts:"container" }}      
+{% endblock %}
+
+{% block content %}
+
+    <!-- Year select dropdown -->
+    <form action="{% url 'details' document_id=document_id %}" method='get'>
+        {% csrf_token %}
+        {{ year_form.as_p }}
+        <input type='submit' value='submit'>
+    </form>
+
+
+    <!-- Display pie chart -->
+    <div id='container'> 
+        Chart will be rendered here 
+    </div>      
+
+    <!-- Display monthly expenditure table -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Month and Year</th>
+                    <th>Total Monthly Expenditure</th>
+                </tr>                 
+            </thead>
+            {% for key, value in monthly_expenses.items %}
+                <tr>               
+                    <td> {{ key }} </td>
+                    <td> {{ value }} </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
