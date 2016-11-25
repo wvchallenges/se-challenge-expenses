@@ -1,3 +1,48 @@
+
+## Installation instructions
+
+I hope you know how to complete the first two steps.
+
+1. Install Ruby on Rails 5 and Ruby 2.2.2.
+2. Install Sqlite3.
+3. Clone my fork of the repo.
+4. 
+
+
+## Features/Thought process
+
+I completed the task using Ruby on Rails and the ActiveAdmin administration framework. I chose to use ActiveAdmin as it allowed me to deliver a somewhat complete application in a short period of time.
+
+Some assumptions I made:
+
+ * You will want to upload multiple files. To accomodate this I keep track of the file an expense came from so that:
+	*	You can delete all expenseses associated with a file (in case you uploaded the wrong file)
+	* You can see a monthly summary of expenses for each file. This would not be possible if expenses from files and manually entered expenses were mixed. 	
+* Employees will want to enter future expenses directly into the application. This is implemented to some extent (not thoroughly tested) and us mostly provided for free by ActiveAdmin
+
+I split the CSV file into a number of models/tables so that the database is mostly normalized. This is good practice unless there are performance reasons for de-normalizing the database. The modles are:
+
+* Categories: This will allow employees to select from a list of categories, rather than making them up every time.
+* Employees
+* Expenses
+* Taxes: This is currently just a tax name. In a more complete solution you might want to let a user select CA Sales Tax and then calculate the amount and store it in the expenses table. I'm sure taxes change frequently (if you have employees all over the world) so automatically keeping your application upto date  with the latest taxes would be useful.
+
+
+
+
+
+
+
+
+
+
+
+
+
+The original instructions
+-----
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
@@ -57,3 +102,6 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+
+

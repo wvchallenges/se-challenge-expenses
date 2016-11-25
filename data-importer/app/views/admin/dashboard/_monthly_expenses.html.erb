@@ -1,0 +1,10 @@
+<table>
+	<th>Month</th>
+	<th>Total</th>
+	<% grouped_by_month.sort_by {|month,| month }.each do |month, expenses|  %>
+		<tr>
+		  <td><%= month.strftime("%B, %Y")    %></td>
+		  <td><%= Money.us_dollar(expenses.reduce(0) {|sum, expense| sum + expense.pretax_amount + expense.tax_amount}).format %></td>
+		</tr>
+	<% end %>
+</table>
