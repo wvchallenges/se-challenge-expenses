@@ -5,8 +5,14 @@ I hope you know how to complete the first two steps.
 
 1. Install Ruby on Rails 5 and Ruby 2.2.2.
 2. Install Sqlite3.
-3. Clone my fork of the repo.
-4. 
+3. Clone my fork of the repo: 'git clone git@github.com:adriaanlabusc/se-challenge.git'.
+4. cd into the data-importer direcotry
+5. Run 'bundle install'
+6. Run 'rake db:migrate'
+7. Run 'rails server'
+8. Navigate your browser to 'http://0.0.0.0:3000/admin/login'
+9. Login using the username: admin@example.com and the password: password
+10.  You can now upload a CSV file on the Csv Files tab.
 
 
 ## Features/Thought process
