@@ -1,18 +1,6 @@
 ActiveAdmin.register CsvFile do
 	config.filters = false
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
 	permit_params :file
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
 
 	form do |f|
     f.inputs "Upload" do
@@ -31,7 +19,6 @@ ActiveAdmin.register CsvFile do
         csv_file.file_file_name
       end
     end
-
     
     panel "Monthly Summary of Expenses" do
       # in postgre you can do this with sql
@@ -41,6 +28,5 @@ ActiveAdmin.register CsvFile do
       render(partial: "admin/dashboard/monthly_expenses", locals: { grouped_by_month: grouped_by_month })
     end
     
-
   end
 end
