@@ -51,7 +51,7 @@ exports.handler = function (event, context, callback) {
 		, AWSAccessKeyId: params.AWSAccessKeyId // AKIAJAFRE63KT2JMTL6Q
 		, Expires: params.Expires // 1480086036
 		, Signature: params.Signature // AbUCQdJVm0zNZiHlqnjtfaGDBcw=
-		, Uuid: filename // ee226a23-4520-4b35-9d92-176c003bb0cb
+		, Filename: filename // ee226a23-4520-4b35-9d92-176c003bb0cb
 	}
 
 	// We're done. Call the Lambda exit  handler - it will stringify clientResponse and return it to the caller

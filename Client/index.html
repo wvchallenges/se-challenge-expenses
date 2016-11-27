@@ -11,7 +11,7 @@
 
 		API calls made by this page:
 
-			getUrl() - to retrieve an S3 Upload Url
+			getUrl() - to retrieve an S3 Upload Url and credentials
 			getResults() - to process the file and retrieve the processing results
 
  -->
@@ -32,8 +32,16 @@
 
 	<script type="text/javascript">
 
-	const GETURL = "https://v3sj5su3g3.execute-api.us-west-2.amazonaws.com/prod/getUrl";
+	// Page-wide variables
+	const APIBASEURL = "https://v3sj5su3g3.execute-api.us-west-2.amazonaws.com/prod";
+	var SELECTEDFILE = {};
 
+	// window.onload = function () {
+	// }
+
+	// Fires when the user clicks the "Submit" button
+	// This function issues an HTTP GET to our http://.../getUrl API to fetch the S3 parameters
+	// that will allow us to later upload the file selected by the user
 	function beginUpload() {
 
 		var fileList = document.getElementById('InputFile').files;
@@ -43,34 +51,32 @@
 			alert ("Please select a file first");
 		} else {
 
+			SELECTEDFILE = fileList[0]; // Ignore any other files in this array
+
+			document.getElementById ("lblPrompt").innerText = "Preparing " + SELECTEDFILE.name;
+
 			var rpc = new XMLHttpRequest ();
+
 			rpc.onreadystatechange = function () {
 
 				// We're expecting a JSon response
 				if (this.readyState == 4 && this.status == 200) {
 
-					// {"Url":"https://wavechallengedata.s3.amazonaws.com/b7fa188e-c490-4bba-9517-1c1febc3acfb",
-					// "Expires":"1480086501", "Signature":"YJIYV12eWdR7WppGSb6yAbUop8E=","Uuid":"b7fa188e-c490-4bba-9517-1c1febc3acfb"}
-
-					//console.log ("getUrl() returned", this.responseText);
-
-					var postDetails = JSON.parse (this.responseText);
-					console.log ("postDetails=", postDetails);
-					//alert (postDetails.Url);
-
-					postFile (postDetails);
+					postFile (JSON.parse (this.responseText));
 				}
 			}
 
-			rpc.open("GET", GETURL);
+			rpc.open("GET", APIBASEURL + "/getUrl");
 			rpc.send();
 		}
 	}
 
+	// Fires when our call to http:://.../getUrl successfully completes
+	// This function uses the details returned from getUrl to upload the 
+	// selected file to S3.
 	function postFile (postDetails) {
 
-		var fileList = document.getElementById('InputFile').files;
-		var selectedFile = fileList[0]; // Ignore any other files in this array
+		document.getElementById ("lblPrompt").innerText = "Uploading " + SELECTEDFILE.name;
 
 		// Build a FormData object we can transmit to save the file to S3
 
@@ -78,85 +84,169 @@
 		formData.append ("AWSAccessKeyId", postDetails.AWSAccessKeyId);
 		formData.append ("Expires", postDetails.Expires);
 		formData.append ("Signature", postDetails.Signature);
-		formData.append ('file', selectedFile)
+		formData.append ('file', SELECTEDFILE.name)
 
-		// 
 		var rpc = new XMLHttpRequest ();
+
 		rpc.onreadystatechange = function () {
 
 			// We're expecting a JSon response
 			if (this.readyState == 4 && this.status == 200) {
 
-				// {"Url":"https://wavechallengedata.s3.amazonaws.com/b7fa188e-c490-4bba-9517-1c1febc3acfb",
-				// "Expires":"1480086501", "Signature":"YJIYV12eWdR7WppGSb6yAbUop8E=","Uuid":"b7fa188e-c490-4bba-9517-1c1febc3acfb"}
-
-				//console.log ("getUrl() returned", this.responseText);
-
-				var resp = JSON.parse (this.responseText);
-				//console.log ("Parsed", resp);
-				alert (resp.Url);
+				getResults (postDetails.Filename);
 			}
 
 		}
 
-		rpc.open("PUT", postDetails.Url);
+		rpc.open("PUT", postDetails.Url); // AWS S3 requires the use of PUT rather than POST
 		rpc.send();
+	}
+
+	// Fires when the file upload to S3 successfully completes
+	// This function issues an HTTP GET request to out http://.../getResults API
+	function getResults (uuid) {
+
+		document.getElementById ("lblPrompt").innerText = "Processing " + SELECTEDFILE.name;
+
+		var rpc = new XMLHttpRequest ();
+
+		rpc.onreadystatechange = function () {
+
+			// We're expecting a JSon response
+			if (this.readyState == 4 && this.status == 200) {
+
+				showResults (JSON.parse (this.responseText));
+			}
+		}
+
+		rpc.open("GET", APIBASEURL + "/getResults");;
+		rpc.send();
+	}
+
+	// Fires when our call to /getResults successfully completes.
+	// This function display the results provided by our call to /getResults,
+	// which is a summary of the data we uploaded in the previous steps
+	function showResults (resultsXml) {
+
+		document.getElementById ("lblPrompt").innerText = "Processing " + SELECTEDFILE.name;
+	} 
+
+	// Fires when the user selects a file
+	function onFileSelected () {
+
+		document.getElementById('lblPrompt').innerText="Click 'Submit' to process the file";
+		//document.getElementById("btnSubmit").prop('disabled', false);
 	}
 
 	</script>
 
 </head>
 
-<body style="background-color: #315980">
+<body style="background-color: #0C81C8">
 
 	<!-- Amazon SDK -->
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.3.min.js"></script>
 
 	<!-- Container #1 -->
-	<div class="container-fluid" style="background-color: #0C81C8">
+	<div class="container-fluid">
 
-		<!-- Spacer row -->
-		<div class="row p-t-0">
-			<div class="col-md-12 text-center">
-				&nbsp;
-			</div>
-		</div>
+		<hr>
 
-		<!-- Top row: Logo, Log In, and Signup buttons -->
 		<div class="row">
 
 			<div class="col-md-4"></div>
 
 			<div class="col-md-4">
 
-<!-- 				<form action="https://wavechallengedata.s3.amazonaws.com/env.js" enctype="multipart/form-data" method="PUT">
-					<input type="hidden" name="AWSAccessKeyId" value="AKIAJAFRE63KT2JMTL6Q">
-					<input type="hidden" name="Expires" value="1479882535">
-					<input type="hidden" name="Signature" value="1Hm3Z8ToQRWQM801GZxQ4HOPRbo%3D">
-					<label class="btn btn-default btn-file">
-					    Browse <input type="file" style="display: none;">
-					    <input type="submit">
-					</label>
-				</form>
- -->
-
-<!-- 				<form>
-				  	<div class="form-group">
-				    	<label for="exampleInputFile">Please select your .CSV file</label>
-				    	<input type="file" class="form-control-file" id="InputFile">
-				  	</div>
-
-				  	<button type="submit" class="btn btn-primary" onclick="doStuff()">Submit</button>
-				</form>
- -->
-			    	<label>Please select your .CSV file</label>
-			    	<input type="file" id="InputFile">
-				  	<button onclick="beginUpload()">Submit</button>
+				<h2>Wave Challenge</h2>
 
 			</div>
 
 			<div class="col-md-4"></div>
 
+		</div>
+
+		<div class="row p-t-0"><div class="col-md-12">&nbsp;</div></div>
+
+		<!-- Please select file... -->
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+		    	<label id="lblPrompt">Please select your .CSV file</label>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+		    	<input type="file" id="InputFile" onchange="onFileSelected()">
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		</div><div class="row"  style="height: 15px;"><div class="col-md-12"></div></div>
+
+		<!-- "Submit" button -->
+		<div class="row">
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+			
+			  	<button id="btnSubmit" onclick="beginUpload()">Submit</button>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		<hr>
+
+		<div id="resultsTable" class="hidden">		
+			<div class="container">
+			  <h2>Basic Table</h2>
+			  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+			  <table class="table">
+			    <thead>
+			      <tr>
+			        <th>Firstname</th>
+			        <th>Lastname</th>
+			        <th>Email</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr>
+			        <td>John</td>
+			        <td>Doe</td>
+			        <td>john@example.com</td>
+			      </tr>
+			      <tr>
+			        <td>Mary</td>
+			        <td>Moe</td>
+			        <td>mary@example.com</td>
+			      </tr>
+			      <tr>
+			        <td>July</td>
+			        <td>Dooley</td>
+			        <td>july@example.com</td>
+			      </tr>
+			    </tbody>
+			  </table>
+			</div>
+			<hr>
 		</div>
 
 	</div> <!-- End div -->
