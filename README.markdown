@@ -1,3 +1,42 @@
+
+## Installation instructions
+
+1. Install Ruby on Rails 5 and Ruby 2.2.2
+2. Install Sqlite3.
+3. Clone my fork of the repo: 'git clone git@github.com:adriaanlabusc/se-challenge.git'.
+4. cd into the data-importer direcotry
+5. Run 'bundle install'
+6. Run 'rake db:migrate'
+8. Run 'rake db:seed'
+9. Run 'rails server'
+10. Navigate your browser to 'http://0.0.0.0:3000/admin/login'
+11. Login using the username: admin@example.com and the password: password
+12.  You can now upload a CSV file on the Csv Files tab and will see a monthly summary of expenses. Note that the total includes tax.
+
+
+## Features/Thought process
+
+I completed the task using Ruby on Rails and the ActiveAdmin administration framework. I chose to use ActiveAdmin as it allowed me to deliver a somewhat complete application in a short period of time.
+
+Some assumptions I made:
+
+ * You will want to upload multiple files. To accomodate this I keep track of the file an expense came from so that:
+	*	You can delete all expenseses associated with a file in case you uploaded the wrong file
+	* You can see a monthly summary of expenses for each file. 	
+* Employees will want to enter future expenses directly into the application. This is implemented to some extent (not really tested) and is mostly provided for free by ActiveAdmin
+
+I split the CSV file into a number of models/tables so that the database is mostly normalized. This is good practice unless there are performance reasons for de-normalizing the database. The models are:
+
+* Categories
+* Employees
+* Expenses
+* Taxes: This is currently just a tax name. In a more complete solution you might want to let a user select CA Sales Tax and then calculate the tax amount and store it in the expenses table. I'm sure taxes change frequently (if you have employees all over the world) so automatically keeping your application up to date with the latest taxes (percentages in the taxes table) would be useful.
+
+
+The original instructions
+-----
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
@@ -57,3 +96,6 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+
+
