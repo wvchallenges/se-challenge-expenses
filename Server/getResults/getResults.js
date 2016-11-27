@@ -37,8 +37,8 @@ exports.handler = function (event, context, callback) {
 		  StatusCode: '0'
 		, StatusMessage: "Successful"
 		, Totals: [
-			{ "2015-12" : 120.12 }
-		  ,	{ "2016-01" : 240.24 }
+			{ "2015-12" : 12.12 }
+		  ,	{ "2016-01" : 1240.24 }
 		  , { "2016-02" : 360.36 }
 		]
 	}
@@ -46,3 +46,18 @@ exports.handler = function (event, context, callback) {
 	// We're done. Call the Lambda exit  handler - it will stringify clientResponse and return it to the caller
     callback(null, clientResponse);
 }
+
+/*
+	        // Extract Column Names from row 0
+	        var colNames = [];
+	        for (var i = 0; i < myBooks.length; i++) {
+	            for (var key in myBooks[i]) {
+	                if (colNames.indexOf(key) === -1) {
+	                    colNames.push(key);
+	                }
+	            }
+	        }
+
+
+
+*/

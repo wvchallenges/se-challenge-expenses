@@ -34,7 +34,7 @@
 
 	// Page-wide variables
 	const APIBASEURL = "https://v3sj5su3g3.execute-api.us-west-2.amazonaws.com/prod";
-	var SELECTEDFILE = {};
+	var SELECTEDFILE = {}; // The file selected for processing by the user
 
 	// window.onload = function () {
 	// }
@@ -78,7 +78,7 @@
 
 		document.getElementById ("lblPrompt").innerText = "Uploading " + SELECTEDFILE.name;
 
-		// Build a FormData object we can transmit to save the file to S3
+		// Build a FormData object we can PUT to save the file to S3
 
 		var formData = new FormData();
 		formData.append ("AWSAccessKeyId", postDetails.AWSAccessKeyId);
@@ -123,19 +123,90 @@
 		rpc.send();
 	}
 
-	// Fires when our call to /getResults successfully completes.
-	// This function display the results provided by our call to /getResults,
-	// which is a summary of the data we uploaded in the previous steps
-	function showResults (resultsXml) {
-
-		document.getElementById ("lblPrompt").innerText = "Processing " + SELECTEDFILE.name;
-	} 
-
 	// Fires when the user selects a file
 	function onFileSelected () {
 
 		document.getElementById('lblPrompt').innerText="Click 'Submit' to process the file";
 		//document.getElementById("btnSubmit").prop('disabled', false);
+	}
+
+	// Fires when our call to /getResults successfully completes.
+	// This function display the results provided by our call to /getResults,
+	// which is a summary of the data we uploaded in the previous steps
+	function showResults (results) {
+
+		document.getElementById ("lblPrompt").innerText = "Showing Results for " + SELECTEDFILE.name;
+
+		console.log (results);
+
+		if (results.StatusCode != 0) {
+			alert ("Unable to process file: " + resultsXml.StatusMessage)
+		} else {
+
+			// Display the results grid
+			//document.getElementById ("resultsTable").removeClass ("hidden");
+			//console.log (document.getElementById ("resultsTable"));
+
+			document.getElementById	("divResults").style = "display: block";
+
+			var tbl = document.getElementById("resultsTable");
+
+			// Loop through our result set and add one row for each
+			// to resultsTable.  We'll accumulate a grand total as we go.
+			var grantTotal = 0.0;
+			var columnWidth = 10;
+
+			for (var i =0; i < results.Totals.length; i++) {
+
+				var tr = tbl.insertRow(-1); // New row
+
+				var td = tr.insertCell (-1); // New cell
+				var month = Object.keys (results.Totals[i]) [0]; // Col 0 - Month
+				td.innerText = month;
+				td = tr.insertCell (-1); // New cell
+				var amount = parseFloat (results.Totals[i][month]); // Col 1 - Amount
+				var amtT = amount.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}) 
+				td.innerText = LPad (amtT, columnWidth);
+
+				grantTotal += amount;
+			}
+
+			// Display the grantTotal
+			var tr = tbl.insertRow(-1); // New row
+			var td = tr.insertCell (-1); // New cell
+			td.innerText = "Grand Total";
+			td = tr.insertCell (-1); // New cell
+			var grandT = grantTotal.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}) 
+			td.innerText = LPad (grandT, columnWidth);
+		}
+	}
+
+	// Returns str padded to len characters with char
+	// Supply a negative "len" to pad on the left, positive to pad on the right
+	function RPad (str, len, char) {
+
+		if (char === undefined) char = " ";
+
+		var dif = Math.abs(len) - str.length;
+
+		if (dif <= 0) return str;
+
+		var buf = str;
+
+		// Inefficient but clear and simple
+		for (var i = 1; i <= dif; i++) {
+			if (len > 0) {
+				buf += char;
+			} else {
+				buf = char + buf;
+			}
+		}
+
+		return (buf);
+	}
+
+	function LPad (str, len, char) {
+		return (RPad (str, - len, char));
 	}
 
 	</script>
@@ -215,38 +286,21 @@
 
 		<hr>
 
-		<div id="resultsTable" class="hidden">		
-			<div class="container">
-			  <h2>Basic Table</h2>
-			  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-			  <table class="table">
-			    <thead>
-			      <tr>
-			        <th>Firstname</th>
-			        <th>Lastname</th>
-			        <th>Email</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-			      <tr>
-			        <td>John</td>
-			        <td>Doe</td>
-			        <td>john@example.com</td>
-			      </tr>
-			      <tr>
-			        <td>Mary</td>
-			        <td>Moe</td>
-			        <td>mary@example.com</td>
-			      </tr>
-			      <tr>
-			        <td>July</td>
-			        <td>Dooley</td>
-			        <td>july@example.com</td>
-			      </tr>
-			    </tbody>
-			  </table>
+<!-- 	Results Table -->
+		<div id="divResults" class="center-block" style="display: none">
+			<div class="col-md-12">
+			  	<h2>Monthly Totals </h2>
+			  	<table class="table">
+			    	<thead>
+			      		<tr>
+			        		<th>Month</th>
+			        		<th>Total Amount</th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="resultsTable">
+			    	</tbody>
+			    </table>
 			</div>
-			<hr>
 		</div>
 
 	</div> <!-- End div -->
