@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Expense Import
+
+        // register form
+        form(method='POST' action='/importcsv' enctype='multipart/form-data')
+          div.form-group
+            label(for='csv') Select file to import:
+            input#csv.form-control(type='file', accept='.csv' name='csv')
+            p
+            input#csv.form-control(type='submit' value='Import Expenses')

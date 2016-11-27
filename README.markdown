@@ -1,3 +1,86 @@
+Notes on code
+
+The skill I chose to highlight in this challenge was my flexibility in learning new
+technologies and frameworks on the fly.  I had never used Node.js, Express, SQLite3, or 
+Pug prior to this assignment.  I consider this to be a fundamental skill in technology,
+as it is a field that does not stay still.  I also added a checksum check on the files
+imported so that the same file could not be imported twice.
+
+Framework installation
+
+    Install Node.js.  Instructions at https://nodejs.org/en/download/
+
+Application execution
+
+    Obtain a terminal window and change to the following directory:
+
+        {your_path_to_code}/myapp
+
+    Then execute the following command:
+
+        DEBUG=myapp:* npm start
+
+    Go to the following URL in your local web browser to interact with the web pages:
+
+        http://localhost:3000/
+
+Shut down application server
+
+    Shut down server:  type Ctrl-C in the terminal window running application.
+
+View data in database
+
+    Obtain a terminal window and change to the following directory:
+
+        {your_path_to_code}/myapp
+
+    Then execute the following command:
+
+        sqlite3 accounting.db
+
+    In the sqlite3 browser execute the following to view the schema:
+
+        .schema
+
+    In the sqlite3 browser execute the following to view the imported data:
+
+        select * from expenses;
+
+    Use Ctrl-D to shut down the sqlite3 browser
+
+Clear all data from database
+
+    Shut down server:  type Ctrl-C in the terminal window running application.
+
+    Obtain a terminal window and change to the following directory:
+
+        {your_path_to_code}/myapp
+
+    Then execute the following command:
+
+        rm accounting.db
+
+Primary code locations
+
+    csv Parsing code
+    {your_path}/myapp/public/javascripts/csv_import.js
+
+    Database access code
+    {your_path}/myapp/public/javascripts/db_crud.js
+
+    Database setup code
+    {your_path}/myapp/public/javascripts/db_init.js
+
+    Client request routing
+    {your_path}/myapp/routes/index.js
+
+    Primary page
+    {your_path}/myapp/views/index.pug
+
+    Summary page
+    {your_path}/myapp/views/importedcsv.pug
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
