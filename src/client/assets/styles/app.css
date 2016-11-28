@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+body {
+  margin: 0 auto;
+  font-family: 'Lato', 'Verdana', sans-serif;
+  font-weight: 400;
+}
+
+h1, form {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+input[type="submit"] {
+  font-family: 'Lato', 'Times New Roman', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 10px 10px;
+  background: white;
+  color: black;
+  border: 1px solid black;
+  margin: 10px 30px;
+}
+
+input[type="submit"]:hover {
+  background: black;
+  color: white;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-button {
+  font-family: 'Lato', 'Times New Roman', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 10px 10px;
+  background: white;
+  color: black;
+  border: 1px solid black;
+  margin: 10px 30px;
+}
+
+.upload-button:hover {
+  background: black;
+  color: white;
+}
+
+p, ol {
+  font-size: 15px;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.table-margin {
+  margin: 30px auto;
+}
+
+/*table*/
+table {
+  border-collapse: collapse;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 10px 10px;
+}
+
+th {
+  height: 30px;
+  letter-spacing: 1px;
+}
+
+tbody>tr:nth-child(odd) { background: #EFF1F1; }
