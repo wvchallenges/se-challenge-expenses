@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server/server.js",
-    "watch": "webpack --colors --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"npm run watch\" \"npm run dev\"",
+    "dev": "nodemon src/server/server.js",
+    "createtable": "node src/server/models/",
+    "watch": "webpack --colors --watch"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "babel-register": "^6.18.0",
     "body-parser": "^1.15.2",
     "busboy": "^0.2.13",
+    "concurrently": "^3.1.0",
     "css-loader": "^0.26.0",
     "csv-parser": "^1.11.0",
     "express": "^4.14.0",
@@ -34,7 +36,7 @@
   },
   "devDependencies": {
     "eslint": "^3.11.0",
-    "eslint-config-airbnb": "^13.0.0",
+    "eslint-fig-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1"
