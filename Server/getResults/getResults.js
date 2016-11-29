@@ -7,11 +7,13 @@
 *	Inputs:  	UUID of the file to process
 *
 *	Returns: 	Stringify'd JSon object {
-*					StatusCode: string
+*					StatusCode: string ("0" on success.  Anything else is an error)
 *					StatusMessage: string
 *					Totals: [
-*						MonthId: string
-*						MonthTotal: number
+*						{ month_id: month_total}
+*					  ,	{ month_id: month_total}
+*					  ,	{ month_id: month_total}
+*					  ...
 *					]
 *				}
 *	
@@ -23,10 +25,7 @@
 *======================================================================================================*/
 
 const AWS = require("aws-sdk");
-/*const UUI = require ("node-uuid");
-const URL = require ("url");
-const QRY = require("querystring");
-*/
+
 var s3 = new AWS.S3();
 
 // Lambda entry point
@@ -63,13 +62,6 @@ exports.handler = function (event, context, callback) {
 	});
 }
 
-var StatusMsg = function (code, message) {
-	return {
-		StatusCode: code,
-		StatusMessage: message
-	}
-}
-
 function ProcessFileContent (filename, content, callback) {
 
 	var dbDoc = {} // We'll write this object to the database once it's populated
@@ -85,17 +77,6 @@ function ProcessFileContent (filename, content, callback) {
 	// From the sample file:
 	// date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
 	// 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
-
-	var columnNumbers = { // Map of Column Names to Column Numbers for our input data
-		"date": 0
-	  , "category": 1
-	  , "employee name": 2
-	  , "employee address": 3
-	  , "expense description": 4
-	  , "pre-tax amount": 5
-	  , "tax name": 6
-	  , "tax amount": 7
-	} ;
 
 	var columnNames = { // Map of Column Names to Column Numbers for our input data
 		0: "date"
@@ -148,9 +129,9 @@ function ProcessFileContent (filename, content, callback) {
     DB.put(params, function (err, data) {
 
     	if (err) {
-    		result.StatusCode = "6B281313";
-    		result.StatusText = "Unexpected error: " + JSON.stringify (err);
-    		return;
+    		err.StatusCode = "6B281313";
+    		err.StatusText = "Unexpected database error: " + JSON.stringify (err);
+    		callback (err, null);
 
     	} else {
 
@@ -184,7 +165,7 @@ function ProcessFileContent (filename, content, callback) {
 
 		for (var i=0; i < fields.length; i++) {
 
-			var field = fields[i];
+			var field = fields[i]; // Grab a single field
 
 			// Remove leading/trailing quotes if present
 			if (field[0] == '"' && field[field.length - 1] == '"'
@@ -193,8 +174,15 @@ function ProcessFileContent (filename, content, callback) {
 				field = field.substr (1, field.length - 2);
 			}
 
+			// Remove leading/trailing spaces
+			field = field.trim();
+
 			dbRecord [columnNames [i]] = field; // Add a key and value. e.g. date: "2/3/2011"
 		}
+
+		// Remove embedded commas from pre-tax amount and tax amount
+		dbRecord[columnNames[5]] = dbRecord[columnNames[5]].replace(/,/g , "");
+		dbRecord[columnNames[7]] = dbRecord[columnNames[7]].replace(/,/g , "");
 
 		// Accumulate summary totals by month
 		accumulateTotals ();
@@ -212,7 +200,7 @@ function ProcessFileContent (filename, content, callback) {
 			var key = dt.toJSON().substr (0, 7);
 
 			if (MonthlyTotals[key]) {
-				MonthlyTotals[key] += totalAmount;
+				MonthlyTotals[key] = parseFloat(MonthlyTotals[key]) + totalAmount;
 			} else {
 				MonthlyTotals[key] = totalAmount;
 			}
@@ -221,39 +209,10 @@ function ProcessFileContent (filename, content, callback) {
 	}
 }
 
-
-function Keys (myObj) {
-	var keys = [];
-	for(var k in myObj) keys.push(k);
-	return myObj;
+// Constructor
+var StatusMsg = function (code, message) {
+	return {
+		StatusCode: code,
+		StatusMessage: message
+	}
 }
-
-/*
-	        // Extract Column Names from row 0
-	        var colNames = [];
-	        for (var i = 0; i < myBooks.length; i++) {
-	            for (var key in myBooks[i]) {
-	                if (colNames.indexOf(key) === -1) {
-	                    colNames.push(key);
-	                }
-	            }
-	        }
-	var totals = [
- 		{ "2015-12" : 120.12 }
- 	  ,	{ "2016-01" : 240.24 }
- 	  , { "2016-02" : 360.36 }
- 	  ,	{ "2016-01" : 240.24 }
- 	  , { "2016-02" : 360.36 }
- 	];
-
-	var clientResponse = {
- +		  StatusCode: '0'
- +		, StatusMessage: "Successful"
- +		, Totals: [
- +			{ "2015-12" : 120.12 }
- +		  ,	{ "2016-01" : 240.24 }
- +		  , { "2016-02" : 360.36 }
- +		]
- +	}
-
-*/
