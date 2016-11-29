@@ -1,0 +1,17 @@
+{
+  "name": "munchmunch",
+  "version": "1.0.0",
+  "description": "fast company acquisition tool",
+  "main": "server.js",
+  "author": "steven jacob",
+  "license": "ISC",
+  "dependencies": {
+    "angular-chart.js": "^1.0.3",
+    "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
+    "chart.js": "^2.4.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.11"
+  }
+}
