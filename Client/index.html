@@ -131,7 +131,7 @@
 
 	// Fires when the file upload to S3 successfully completes
 	// This function issues an HTTP GET request to out http://.../getResults API
-	function getResults (uuid) {
+	function getResults (filename) {
 
 		document.getElementById ("lblPrompt").innerText = "Processing " + SELECTEDFILE.name;
 
@@ -146,7 +146,7 @@
 			}
 		}
 
-		rpc.open("GET", APIBASEURL + "/getResults");;
+		rpc.open("GET", APIBASEURL + "/getResults?filename=" + filename);;
 		rpc.send();
 	}
 

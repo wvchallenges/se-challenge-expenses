@@ -77,30 +77,131 @@ var StatusMsg = function (code, message) {
 
 function ProcessFileContent (content) {
 
+	var MonthlyTotals = {}; // We'll accumulate the monthly totals in this map
+
 	// Create the result object we'll later return to the caller
 	var result = new StatusMsg ("0", "Success");
 
-	console.log (content);
+	//console.log (content);
 // date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
 // 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
 
-	var columns = { // Map of Column Names to Column Numbers for our input data
+	var columnNumbers = { // Map of Column Names to Column Numbers for our input data
 		"date": 0
 	  , "category": 1
-	  , "employee": 2
-	  , "name": 3
-	  , "employee": 4
-	  , "address": 5
-	  , "expense": 6
-	  , "description": 7
-	  , "pre-tax amount" 8
-	  , "tax name": 9
-	  , "tax amount": 10
+	  , "employee name": 2
+	  , "employee address": 3
+	  , "expense description": 4
+	  , "pre-tax amount": 5
+	  , "tax name": 6
+	  , "tax amount": 7
 	} ;
 
+	var columnNames = { // Map of Column Names to Column Numbers for our input data
+		0: "date"
+	  , 1: "category"
+	  , 2: "employee name"
+	  , 3: "employee address"
+	  , 4: "expense description"
+	  , 5: "pre-tax amount"
+	  , 6: "tax name"
+	  , 7: "tax amount"
+	} ;
 
- 	result.Totals = totals;
+	// Split the file into an array of lines
+	var allLines = content.split(/\r\n|\n/);
+
+	// Loops through the lines and process each one.  Skip the first line - it's column names.
+	for (var i=1; i < allLines.length; i++){
+
+		// Split into an array of fields. Split at commas, excepting quoted commas.
+		var fields = allLines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+		processRecord (i + 1);
+	}
+
+	// Remove rounding errors from MonthlyTotals, and create the 'summary' array that we'll return to the caller.
+	var summary = [];
+
+	for (var key in MonthlyTotals) {
+		MonthlyTotals [key] = (Math.round (MonthlyTotals [key] * 100)) / 100;
+		var obj = {};
+		obj [key] = MonthlyTotals [key];
+		summary.push (obj);
+	}
+
+	summary = summary.sort (summaryCompare);
+
+	result.Totals = summary; // Make it part of our return object
+
  	return (result);
+
+ 	// Local Helper Functions below this line
+ 	//--------------------------------------------------------------------------------------------
+ 	function summaryCompare (a, b) {
+
+ 		if (Object.keys(a)[0] > Object.keys(b)[0]) {
+ 			return 1;
+ 		} 
+
+ 		if (Object.keys(a)[0] < Object.keys(b)[0]) {
+ 			return -1;
+ 		}
+
+ 		return 0;
+ 	}
+
+	function processRecord (lineNumber) {
+
+		// Create an data record for our database
+		var dbRecord = {};
+
+		for (var i=0; i < fields.length; i++) {
+
+			var field = fields[i];
+
+			// Remove leading/trailing quotes if present
+			if (field[0] == '"' && field[field.length - 1] == '"'
+			 || field[0] == "'" && field[field.length - 1] == "'") {
+
+				field = field.substr (1, field.length - 2);
+			}
+
+			dbRecord [columnNames [i]] = field;
+		}
+
+		// Write the record to DynamoDB herehere
+		//console.log (dbRecord);
+
+		// Accumulate summary totals
+		accumulateTotals ();
+
+		return; //-----------------
+
+		function accumulateTotals () {
+
+			// Total = pre tax amount (5) + tax amount (7). 
+			var totalAmount = parseFloat (dbRecord[columnNames[5]]) + parseFloat (dbRecord[columnNames[7]]);
+
+			// Convert the date field to the form YYYY-MM.  Eg 12/25/2001 -> 2001-12. We'll use this
+			// as the key in a map to accumulate monthly totals, which we eventually return to the caller.
+			var dt = new Date (dbRecord ["date"]);
+			var key = dt.toJSON().substr (0, 7);
+
+			if (MonthlyTotals[key]) {
+				MonthlyTotals[key] += totalAmount;
+			} else {
+				MonthlyTotals[key] = totalAmount;
+			}
+		}
+
+	}
+}
+
+
+function Keys (myObj) {
+	var keys = [];
+	for(var k in myObj) keys.push(k);
+	return myObj;
 }
 
 /*
