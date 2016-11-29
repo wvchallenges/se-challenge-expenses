@@ -17,13 +17,13 @@ A simple csv parsing app that returns monthly expenses.
 ### Build/Run Instructions:
 
 1. install MongoDB
-2. run mongod.exe (default port: 27012)
+2. run "mongod" service (default port: 27012)
 3. install NodeJS
-4. goto: munchmunch/ directory
-5. run: npm install
-6. goto: munchmunch/app directory
-7. run: node server.js
-8. open: localhost:3000 in browser
+4. goto munchmunch/ directory
+5. run "npm install"
+6. goto munchmunch/app directory
+7. run "node server.js"
+8. open localhost:3000 in browser
 
 
 ## Submission Thoughts
