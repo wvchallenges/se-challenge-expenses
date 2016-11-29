@@ -32,19 +32,75 @@ var s3 = new AWS.S3();
 // Lambda entry point
 exports.handler = function (event, context, callback) {
 
-	// Return this object to the caller
-	var clientResponse = {
-		  StatusCode: '0'
-		, StatusMessage: "Successful"
-		, Totals: [
-			{ "2015-12" : 12.12 }
-		  ,	{ "2016-01" : 1240.24 }
-		  , { "2016-02" : 360.36 }
-		]
+	console.log ("6B281210 getResults for event:", event);
+
+	// Read the file from S3 storage
+	var params = {
+		  Bucket: "wavechallengedata"
+		, Key: event.filename
 	}
 
-	// We're done. Call the Lambda exit  handler - it will stringify clientResponse and return it to the caller
-    callback(null, clientResponse);
+	s3.getObject (params, function (err, data) {
+
+		if (err) {
+			// File not found, or some other error
+			if (err.errorType == "NoSuchKey")
+			{
+				err.StatusCode = "6B221128";
+				err.StatusMessage = "Unexpected error from s3.getObject()";
+				callback (new StatusMsg ("6B221128", "File not found"), null);
+			} else {
+				err.StatusCode = "6B221129";
+				err.StatusMessage = "Unexpected error from s3.getObject()";
+				callback (err, null);
+			}
+
+		} else {
+
+			// We successfully read the file
+			result = ProcessFileContent (data.Body.toString("utf8"));
+
+			if (result.StatusCode == "0")
+				callback (null, result);
+			else
+				callback (result, null);
+		}
+	});
+}
+
+var StatusMsg = function (code, message) {
+	return {
+		StatusCode: code,
+		StatusMessage: message
+	}
+}
+
+function ProcessFileContent (content) {
+
+	// Create the result object we'll later return to the caller
+	var result = new StatusMsg ("0", "Success");
+
+	console.log (content);
+// date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+// 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
+
+	var columns = { // Map of Column Names to Column Numbers for our input data
+		"date": 0
+	  , "category": 1
+	  , "employee": 2
+	  , "name": 3
+	  , "employee": 4
+	  , "address": 5
+	  , "expense": 6
+	  , "description": 7
+	  , "pre-tax amount" 8
+	  , "tax name": 9
+	  , "tax amount": 10
+	} ;
+
+
+ 	result.Totals = totals;
+ 	return (result);
 }
 
 /*
@@ -57,7 +113,22 @@ exports.handler = function (event, context, callback) {
 	                }
 	            }
 	        }
+	var totals = [
+ 		{ "2015-12" : 120.12 }
+ 	  ,	{ "2016-01" : 240.24 }
+ 	  , { "2016-02" : 360.36 }
+ 	  ,	{ "2016-01" : 240.24 }
+ 	  , { "2016-02" : 360.36 }
+ 	];
 
-
+	var clientResponse = {
+ +		  StatusCode: '0'
+ +		, StatusMessage: "Successful"
+ +		, Totals: [
+ +			{ "2015-12" : 120.12 }
+ +		  ,	{ "2016-01" : 240.24 }
+ +		  , { "2016-02" : 360.36 }
+ +		]
+ +	}
 
 */

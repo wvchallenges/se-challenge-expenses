@@ -29,12 +29,13 @@
    	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
-
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
 	<script type="text/javascript">
 
 	// Page-wide variables
 	const APIBASEURL = "https://v3sj5su3g3.execute-api.us-west-2.amazonaws.com/prod";
 	var SELECTEDFILE = {}; // The file selected for processing by the user
+	var S3 = new AWS.S3;
 
 	// window.onload = function () {
 	// }
@@ -54,7 +55,7 @@
 			SELECTEDFILE = fileList[0]; // Ignore any other files in this array
 
 			document.getElementById ("lblPrompt").innerText = "Preparing " + SELECTEDFILE.name;
-
+//console.log (SELECTEDFILE);
 			var rpc = new XMLHttpRequest ();
 
 			rpc.onreadystatechange = function () {
@@ -66,8 +67,10 @@
 				}
 			}
 
+			var reader = new FileReader ();
+
 			rpc.open("GET", APIBASEURL + "/getUrl");
-			rpc.send();
+			rpc.send(reader.readAsBinaryString (SELECTEDFILE));
 		}
 	}
 
@@ -84,7 +87,7 @@
 		formData.append ("AWSAccessKeyId", postDetails.AWSAccessKeyId);
 		formData.append ("Expires", postDetails.Expires);
 		formData.append ("Signature", postDetails.Signature);
-		formData.append ('file', SELECTEDFILE.name)
+		formData.append ('file', SELECTEDFILE);
 
 		var rpc = new XMLHttpRequest ();
 
@@ -99,7 +102,31 @@
 		}
 
 		rpc.open("PUT", postDetails.Url); // AWS S3 requires the use of PUT rather than POST
-		rpc.send();
+		rpc.setRequestHeader ("x-amz-acl", "bucket-owner-full-control");
+		rpc.send(SELECTEDFILE);
+	}
+
+	// Fires when our call to http:://.../getUrl successfully completes
+	// This function uses the details returned from getUrl to upload the 
+	// selected file to S3.
+	function POSTFILE1 (postDetails) {
+
+		document.getElementById ("lblPrompt").innerText = "Uploading... " + SELECTEDFILE.name;
+
+		var params = {
+  			Bucket: 'wavechallengedata',
+  			Key: postDetails.Filename,
+  			ACL: 'bucket-owner-full-control'
+  		}
+
+		S3.putObject(params, function(err, data) {
+			if (err) {
+				alert ("6b271941 Unexpected error: " + JSON.stringify(err));
+
+			} else {
+				getResults (postDetails.Filename);
+			}
+		});
 	}
 
 	// Fires when the file upload to S3 successfully completes
@@ -137,10 +164,11 @@
 
 		document.getElementById ("lblPrompt").innerText = "Showing Results for " + SELECTEDFILE.name;
 
-		console.log (results);
+		//console.log (results);
 
-		if (results.StatusCode != 0) {
-			alert ("Unable to process file: " + resultsXml.StatusMessage)
+		if (results.StatusCode != "0") {
+			console.log (results);
+			alert ("6B271955 Unable to process file: " + results.StatusMessage);
 		} else {
 
 			// Display the results grid
@@ -177,7 +205,7 @@
 			td.innerText = "Grand Total";
 			td = tr.insertCell (-1); // New cell
 			var grandT = grantTotal.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}) 
-			td.innerText = LPad (grandT, columnWidth);
+			td.innerText = LPad (grandT, columnWidth); // Padding to align numerics doesn't work with proportionally spaced fonts
 		}
 	}
 
