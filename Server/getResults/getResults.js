@@ -58,12 +58,7 @@ exports.handler = function (event, context, callback) {
 		} else {
 
 			// We successfully read the file
-			result = ProcessFileContent (data.Body.toString("utf8"));
-
-			if (result.StatusCode == "0")
-				callback (null, result);
-			else
-				callback (result, null);
+			ProcessFileContent (event.filename, data.Body.toString("utf8"), callback);
 		}
 	});
 }
@@ -75,16 +70,21 @@ var StatusMsg = function (code, message) {
 	}
 }
 
-function ProcessFileContent (content) {
+function ProcessFileContent (filename, content, callback) {
 
+	var dbDoc = {} // We'll write this object to the database once it's populated
 	var MonthlyTotals = {}; // We'll accumulate the monthly totals in this map
+
+	// Setup DynamoDB database access
+    AWS.config.update({ region: "us-west-2" });
+	var DB = new AWS.DynamoDB.DocumentClient(); // For DynamoDB access
 
 	// Create the result object we'll later return to the caller
 	var result = new StatusMsg ("0", "Success");
 
-	//console.log (content);
-// date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
-// 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
+	// From the sample file:
+	// date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+	// 12/1/2013,Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 
 
 	var columnNumbers = { // Map of Column Names to Column Numbers for our input data
 		"date": 0
@@ -111,6 +111,12 @@ function ProcessFileContent (content) {
 	// Split the file into an array of lines
 	var allLines = content.split(/\r\n|\n/);
 
+	// We'll save this document to the database
+	dbDoc = {
+		Filename: filename,
+		Data: allLines
+	}
+
 	// Loops through the lines and process each one.  Skip the first line - it's column names.
 	for (var i=1; i < allLines.length; i++){
 
@@ -133,6 +139,28 @@ function ProcessFileContent (content) {
 
 	result.Totals = summary; // Make it part of our return object
 
+	// Write the document to DynamoDB
+    var params = {
+        "TableName": "Prod_WaveChallenge",
+        "Item": dbDoc
+    };
+
+    DB.put(params, function (err, data) {
+
+    	if (err) {
+    		result.StatusCode = "6B281313";
+    		result.StatusText = "Unexpected error: " + JSON.stringify (err);
+    		return;
+
+    	} else {
+
+			if (result.StatusCode == "0")
+				callback (null, result);
+			else
+				callback (result, null);
+    	}
+    });
+
  	return (result);
 
  	// Local Helper Functions below this line
@@ -152,8 +180,7 @@ function ProcessFileContent (content) {
 
 	function processRecord (lineNumber) {
 
-		// Create an data record for our database
-		var dbRecord = {};
+		var dbRecord = {}; // A map to represent a single row from the input file
 
 		for (var i=0; i < fields.length; i++) {
 
@@ -166,20 +193,17 @@ function ProcessFileContent (content) {
 				field = field.substr (1, field.length - 2);
 			}
 
-			dbRecord [columnNames [i]] = field;
+			dbRecord [columnNames [i]] = field; // Add a key and value. e.g. date: "2/3/2011"
 		}
 
-		// Write the record to DynamoDB herehere
-		//console.log (dbRecord);
-
-		// Accumulate summary totals
+		// Accumulate summary totals by month
 		accumulateTotals ();
 
 		return; //-----------------
 
 		function accumulateTotals () {
 
-			// Total = pre tax amount (5) + tax amount (7). 
+			// Total = pre tax amount (5) + tax amount (7). This should be wrapped in exception handling.
 			var totalAmount = parseFloat (dbRecord[columnNames[5]]) + parseFloat (dbRecord[columnNames[7]]);
 
 			// Convert the date field to the form YYYY-MM.  Eg 12/25/2001 -> 2001-12. We'll use this
