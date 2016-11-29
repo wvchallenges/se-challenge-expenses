@@ -33,3 +33,7 @@ I built an application using the MEAN stack, I've had experience with NodeJS/Exp
 I also used PapaParse which is a fast in-browser csv parser (can use workers for multi-threading), the intention behind this was that sensitive confidential information could be processed locally on the client side. 
 
 I'm also happy I got to visualise the results using an angular chart extension. I would've liked (with more time) to incorporate visual library D3js into the Angular controller with directives. I intended to visualise more interesting things like the location of the employees visualised on a Cloropeth map. I thought visualised data would be useful for a company acquisition process for perhaps considering new offices, employees with high spending patterns, most frequent types of expenses and etc.
+
+##Look
+
+![alt tag](http://i.imgur.com/U0SqDgU.jpg)
