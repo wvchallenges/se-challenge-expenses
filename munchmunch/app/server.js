@@ -38,6 +38,13 @@ app.post('/submit', function (req, res) {
           res.end('success');
         }
         else {
+          
+          //challenge interpretation concern:
+          //this part is assuming that the files being uploaded are for the same company
+          //logs are added into the same db collection
+          //if a new company is needed for each .csv file a few adjustments are needed to mongodb setup
+          
+          
           //some preliminary setup for model
           //month and year from string to numeric
           var dateObject = new Date(data[x][0]);
