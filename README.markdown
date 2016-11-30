@@ -115,11 +115,11 @@ to take on additional traffic.  This is a pretty good example of how a microserv
 of future needs.
 
 A secondary aspect of the database implementation is the use of a UUID for the primary key in the DynamoDB database.  As 
-recommended in the DynamoDB guidelines, a UUID primary key will behave appropriately for DynamoDB data-sharding mechanism.
+recommended in the DynamoDB guidelines, a UUID primary key will behave appropriately for DynamoDB's data-sharding mechanism.
 
 ## Shortcomings
 
-There are many shortcomings in these implementation, which of course gives us great fodder for conversation.  But I'll list a
+There are many shortcomings in this implementation, which of course gives us great fodder for conversation.  But I'll list a
 few here to get the ball rolling:
 
 * Security - there is currently no security in this app
@@ -127,6 +127,8 @@ few here to get the ball rolling:
 * Configuration - there are numerous hard-coded values that should be moved to environment-specific configuration
 storage, so they can take on different values for the development environment vs. the test environment, etc.
 * Exception Handling - both front and back end code needs additional exception handling and testing
+* Has been tested on Chrome only - other browsers have not been tested
+* Efficiency - Javascript packages should be bundled and minified
 
 ## Conclusion
 

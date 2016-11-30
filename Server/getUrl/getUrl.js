@@ -5,9 +5,13 @@
 *   21 Nov 2016 Warren Spencer
 *
 *	Inputs  	None
+*
 *	Returns 	Stringify'd JSon object {
-*					Url: string
-*					Uuid: string
+		  			Url: string
+				  , AWSAccessKeyId: string
+				  , Expires: number
+				  , Signature: string
+				  , Filename: string
 *				}
 *	
 *	Revision History

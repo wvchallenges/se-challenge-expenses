@@ -55,7 +55,7 @@
 			SELECTEDFILE = fileList[0]; // Ignore any other files in this array
 
 			document.getElementById ("lblPrompt").innerText = "Preparing " + SELECTEDFILE.name;
-//console.log (SELECTEDFILE);
+
 			var rpc = new XMLHttpRequest ();
 
 			rpc.onreadystatechange = function () {
@@ -164,16 +164,12 @@
 
 		document.getElementById ("lblPrompt").innerText = "Showing Results for " + SELECTEDFILE.name;
 
-		//console.log (results);
-
 		if (results.StatusCode != "0") {
 			console.log (results);
 			alert ("6B271955 Unable to process file: " + results.StatusMessage);
 		} else {
 
 			// Display the results grid
-			//document.getElementById ("resultsTable").removeClass ("hidden");
-			//console.log (document.getElementById ("resultsTable"));
 
 			document.getElementById	("divResults").style = "display: block";
 

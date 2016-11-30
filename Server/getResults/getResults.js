@@ -62,6 +62,8 @@ exports.handler = function (event, context, callback) {
 	});
 }
 
+// This function processes the contents of the submitted file and returns
+// the result payload to the caller
 function ProcessFileContent (filename, content, callback) {
 
 	var dbDoc = {} // We'll write this object to the database once it's populated
