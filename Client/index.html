@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 	index.html  Wave Challenge Application (single page)
+
+		20 Nov 2016 W. Spencer
+
+		This page allows the user to select a file, and upload for processing.
+		The file is expected to be the .CVS file provided in the Wave Challenge,
+		but any similarly-formatted file will work.
+
+		API calls made by this page:
+
+			getUrl() - to retrieve an S3 Upload Url and credentials
+			getResults() - to process the file and retrieve the processing results
+
+ -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Wave Challenge</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+   	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
+	<script type="text/javascript">
+
+	// Page-wide variables
+	const APIBASEURL = "https://v3sj5su3g3.execute-api.us-west-2.amazonaws.com/prod";
+	var SELECTEDFILE = {}; // The file selected for processing by the user
+	var S3 = new AWS.S3;
+
+	// window.onload = function () {
+	// }
+
+	// Fires when the user clicks the "Submit" button
+	// This function issues an HTTP GET to our http://.../getUrl API to fetch the S3 parameters
+	// that will allow us to later upload the file selected by the user
+	function beginUpload() {
+
+		var fileList = document.getElementById('InputFile').files;
+
+		// Has a file been selected?
+		if (fileList.length < 1) {
+			alert ("Please select a file first");
+		} else {
+
+			SELECTEDFILE = fileList[0]; // Ignore any other files in this array
+
+			document.getElementById ("lblPrompt").innerText = "Preparing " + SELECTEDFILE.name;
+
+			var rpc = new XMLHttpRequest ();
+
+			rpc.onreadystatechange = function () {
+
+				// We're expecting a JSon response
+				if (this.readyState == 4 && this.status == 200) {
+
+					postFile (JSON.parse (this.responseText));
+				}
+			}
+
+			var reader = new FileReader ();
+
+			rpc.open("GET", APIBASEURL + "/getUrl");
+			rpc.send(reader.readAsBinaryString (SELECTEDFILE));
+		}
+	}
+
+	// Fires when our call to http:://.../getUrl successfully completes
+	// This function uses the details returned from getUrl to upload the 
+	// selected file to S3.
+	function postFile (postDetails) {
+
+		document.getElementById ("lblPrompt").innerText = "Uploading " + SELECTEDFILE.name;
+
+		// Build a FormData object we can PUT to save the file to S3
+
+		var formData = new FormData();
+		formData.append ("AWSAccessKeyId", postDetails.AWSAccessKeyId);
+		formData.append ("Expires", postDetails.Expires);
+		formData.append ("Signature", postDetails.Signature);
+		formData.append ('file', SELECTEDFILE);
+
+		var rpc = new XMLHttpRequest ();
+
+		rpc.onreadystatechange = function () {
+
+			// We're expecting a JSon response
+			if (this.readyState == 4 && this.status == 200) {
+
+				getResults (postDetails.Filename);
+			}
+
+		}
+
+		rpc.open("PUT", postDetails.Url); // AWS S3 requires the use of PUT rather than POST
+		rpc.setRequestHeader ("x-amz-acl", "bucket-owner-full-control");
+		rpc.send(SELECTEDFILE);
+	}
+
+	// Fires when our call to http:://.../getUrl successfully completes
+	// This function uses the details returned from getUrl to upload the 
+	// selected file to S3.
+	function POSTFILE1 (postDetails) {
+
+		document.getElementById ("lblPrompt").innerText = "Uploading... " + SELECTEDFILE.name;
+
+		var params = {
+  			Bucket: 'wavechallengedata',
+  			Key: postDetails.Filename,
+  			ACL: 'bucket-owner-full-control'
+  		}
+
+		S3.putObject(params, function(err, data) {
+			if (err) {
+				alert ("6b271941 Unexpected error: " + JSON.stringify(err));
+
+			} else {
+				getResults (postDetails.Filename);
+			}
+		});
+	}
+
+	// Fires when the file upload to S3 successfully completes
+	// This function issues an HTTP GET request to out http://.../getResults API
+	function getResults (filename) {
+
+		document.getElementById ("lblPrompt").innerText = "Processing " + SELECTEDFILE.name;
+
+		var rpc = new XMLHttpRequest ();
+
+		rpc.onreadystatechange = function () {
+
+			// We're expecting a JSon response
+			if (this.readyState == 4 && this.status == 200) {
+
+				showResults (JSON.parse (this.responseText));
+			}
+		}
+
+		rpc.open("GET", APIBASEURL + "/getResults?filename=" + filename);;
+		rpc.send();
+	}
+
+	// Fires when the user selects a file
+	function onFileSelected () {
+
+		document.getElementById('lblPrompt').innerText="Click 'Submit' to process the file";
+		//document.getElementById("btnSubmit").prop('disabled', false);
+	}
+
+	// Fires when our call to /getResults successfully completes.
+	// This function display the results provided by our call to /getResults,
+	// which is a summary of the data we uploaded in the previous steps
+	function showResults (results) {
+
+		document.getElementById ("lblPrompt").innerText = "Showing Results for " + SELECTEDFILE.name;
+
+		if (results.StatusCode != "0") {
+			console.log (results);
+			alert ("6B271955 Unable to process file: " + results.StatusMessage);
+		} else {
+
+			// Display the results grid
+
+			document.getElementById	("divResults").style = "display: block";
+
+			var tbl = document.getElementById("resultsTable");
+
+			// Loop through our result set and add one row for each
+			// to resultsTable.  We'll accumulate a grand total as we go.
+			var grantTotal = 0.0;
+			var columnWidth = 10;
+
+			for (var i =0; i < results.Totals.length; i++) {
+
+				var tr = tbl.insertRow(-1); // New row
+
+				var td = tr.insertCell (-1); // New cell
+				var month = Object.keys (results.Totals[i]) [0]; // Col 0 - Month
+				td.innerText = month;
+				td = tr.insertCell (-1); // New cell
+				var amount = parseFloat (results.Totals[i][month]); // Col 1 - Amount
+				var amtT = amount.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}) 
+				td.innerText = LPad (amtT, columnWidth);
+
+				grantTotal += amount;
+			}
+
+			// Display the grantTotal
+			var tr = tbl.insertRow(-1); // New row
+			var td = tr.insertCell (-1); // New cell
+			td.innerText = "Grand Total";
+			td = tr.insertCell (-1); // New cell
+			var grandT = grantTotal.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}) 
+			td.innerText = LPad (grandT, columnWidth); // Padding to align numerics doesn't work with proportionally spaced fonts
+		}
+	}
+
+	// Returns str padded to len characters with char
+	// Supply a negative "len" to pad on the left, positive to pad on the right
+	function RPad (str, len, char) {
+
+		if (char === undefined) char = " ";
+
+		var dif = Math.abs(len) - str.length;
+
+		if (dif <= 0) return str;
+
+		var buf = str;
+
+		// Inefficient but clear and simple
+		for (var i = 1; i <= dif; i++) {
+			if (len > 0) {
+				buf += char;
+			} else {
+				buf = char + buf;
+			}
+		}
+
+		return (buf);
+	}
+
+	function LPad (str, len, char) {
+		return (RPad (str, - len, char));
+	}
+
+	</script>
+
+</head>
+
+<body style="background-color: #0C81C8">
+
+	<!-- Amazon SDK -->
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.3.min.js"></script>
+
+	<!-- Container #1 -->
+	<div class="container-fluid">
+
+		<hr>
+
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+				<h2>Wave Challenge</h2>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		<div class="row p-t-0"><div class="col-md-12">&nbsp;</div></div>
+
+		<!-- Please select file... -->
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+		    	<label id="lblPrompt">Please select your .CSV file</label>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+
+		    	<input type="file" id="InputFile" onchange="onFileSelected()">
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		</div><div class="row"  style="height: 15px;"><div class="col-md-12"></div></div>
+
+		<!-- "Submit" button -->
+		<div class="row">
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+			
+			  	<button id="btnSubmit" onclick="beginUpload()">Submit</button>
+
+			</div>
+
+			<div class="col-md-4"></div>
+
+		</div>
+
+		<hr>
+
+<!-- 	Results Table -->
+		<div id="divResults" class="center-block" style="display: none">
+			<div class="col-md-12">
+			  	<h2>Monthly Totals </h2>
+			  	<table class="table">
+			    	<thead>
+			      		<tr>
+			        		<th>Month</th>
+			        		<th>Total Amount</th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="resultsTable">
+			    	</tbody>
+			    </table>
+			</div>
+		</div>
+
+	</div> <!-- End div -->
+
+</body>
+</html>
