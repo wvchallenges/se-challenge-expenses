@@ -28,7 +28,7 @@ A simple csv parsing app that returns monthly expenses.
 
 ## Submission Thoughts
 
-I built an application using the MEAN stack, I've had experience with NodeJS/ExpressJS and AngularJS before, but not much with MongoDB. I'm happy I got to spend time with it. I spent some time diving into the Aggregration Pipeline MongoDB provides for querying databases and learning the difference between that choice and using MongoDB's MapReduce. 
+I built an application using the MEAN stack, I've had experience with NodeJS/ExpressJS and AngularJS before, but not much with MongoDB. I'm happy I got to spend time with it. I spent some time diving into the Aggregration Pipeline MongoDB provides for querying databases and learning the difference between that choice and using MongoDB's MapReduce. I know MongoDB isn't a relational database, but there is potential for dynamic schema design, and that flexibility helps scale what information we can analyse and learn from while acquiring a new company.
 
 I also used PapaParse which is a fast in-browser csv parser (can use workers for multi-threading), the intention behind this was that sensitive confidential information could be processed locally on the client side. 
 
