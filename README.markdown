@@ -72,7 +72,7 @@ review the source code contained in this repository.  As you would expect, the c
 in the browser, and the code in the Server directory runs in the AWS Lambda environment.  Of the 3 languages 
 available for Lambda, I've chosen node.js for this project.
 
-You can launch the application by hitting this url with you Chrome browser:  http://wavechallenge.s3-website-us-west-2.amazonaws.com/
+You can launch the application by hitting this url with your Chrome browser:  http://wavechallenge.s3-website-us-west-2.amazonaws.com/
 
 # Points of Interest in This Implementation
 
@@ -99,10 +99,10 @@ primary attributes:
 
 The application, as it sits right now, can scale to millions of concurrent users with one simple change:  I’d need a credit card that could absorb the montly cpu and I/O charges. But no other changes would be required for the API layer or data storage.  The API layer is
 implemented via AWS' API Gateway, and Lambda services.  As such, the API can scale to millions of requests per second on demand
-without modification or the additional of servers or VM's.
+without modification or the addition of servers or VM's.
 
 Similarly, the raw file submitted by the application user (data_example.csv) is stored on AWS S3, which has no defined maximum capacity
-since they add to it daily.  The database used by this implementation to store the data is DynamoDB, and document-based NOSQL
+since they add to it daily.  The database used by this implementation to store the data is DynamoDB, a document-based NOSQL
 database.  It too scales to whatever size your credit card will support, so again, no inherent limits here.
 
 ### Micro-Service Design
@@ -113,4 +113,24 @@ be noted that the upload and storage of a file is a generic type of operation th
 they may have needing this feature.  And since it scales without effort, there is little concern is allowing this microservice
 to take on additional traffic.  This is a pretty good example of how a microservice can be built to support a wide range
 of future needs.
+
+A secondary aspect of the database implementation is the use of a UUID for the primary key in the DynamoDB database.  As 
+recommended in the DynamoDB guidelines, a UUID primary key will behave appropriately for DynamoDB data-sharding mechanism.
+
+## Shortcomings
+
+There are many shortcomings in these implementation, which of course gives us great fodder for conversation.  But I'll list a
+few here to get the ball rolling:
+
+* Security - there is currently no security in this app
+* UI - as mentioned previously, not ready for prime time.  And certainly, not WCAG-compliant!
+* Configuration - there are numerous hard-coded values that should be moved to environment-specific configuration
+storage, so they can take on different values for the development environment vs. the test environment, etc.
+* Exception Handling - both front and back end code needs additional exception handling and testing
+
+## Conclusion
+
+Despite the numerous shortcomings, I hope that you find this style of solution interesting from the micro-service / scalability
+perspective.  Please contact me if you have any troubles running the solution, or any other questions.  I can be reached
+at warren_spencer_1977@yahoo.com.
 
