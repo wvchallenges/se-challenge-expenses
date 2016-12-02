@@ -1,0 +1,25 @@
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Category</th>
+    <th>Employee Name</th>
+    <th>Employee Address</th>
+    <th>Description</th>
+    <th>Pre-Tax Amount</th>
+    <th>Tax Name</th>
+    <th>Final Amount</th>
+  </tr>
+  {% for expense in expenses %}
+  <tr>
+    <td>{{ expense.date }}</td>
+    <td>{{ expense.category }}</td>
+    <td>{{ expense.employee_name }}</td>
+    <td>{{ expense.employee_address }}</td>
+    <td>{{ expense.description }}</td>
+    <td>{{ expense.pt_amount }}</td>
+    <td>{{ expense.tax_name }}</td>
+    <td>{{ expense.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>

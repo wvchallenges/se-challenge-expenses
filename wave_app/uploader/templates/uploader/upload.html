@@ -1,0 +1,14 @@
+
+
+<form action="{% url 'uploader:parse_csv' %}"
+      enctype="multipart/form-data"
+      method="post">
+  {% csrf_token %}
+  <p>
+    Please specify a file, or a set of files:<br>
+    <input type="file" name="datafile" size="100">
+  </p>
+  <div>
+    <input type="submit" value="Send">
+  </div>
+</form>
