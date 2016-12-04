@@ -40,7 +40,7 @@ Please modify `README.md` to add:
 
 1. Fork this project on github. You will need to create an account if you don't already have one.
 1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
+1. Push all of your changes to your fork on github and submit a pull request.
 1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
 
 ## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
@@ -49,11 +49,47 @@ Please modify `README.md` to add:
 1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
 
 ## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Evaluation of your submission will be based on the following criteria.
 
-1. Did you follow the instructions for submission? 
-1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
-1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
-1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+
+### Answers
+## Build/Deploy Instructions:
+1. Install virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+pip install virtualenv
+virtualenv -p /usr/bin/python2.7 venv
+source venv/bin/activate
+
+2. Install Python packages
+pip install -r requirements.txt
+
+3. Install Homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+4. Install MySQL
+brew install mysql
+
+5. Start MySQL Server
+mysql.server start
+
+6. Run Migrations
+mysql -u root -p < migrations/migration_001.sql
+
+7. Run application
+python main.py
+
+8. Visit the webpage
+http://localhost:8080/expense-upload
+
+
+## Praising the Implementation
+I am proud in this implementation because of the clean separations between the different components. The different components consist of a complete different app (expense_app) from the main app. The developer has the ability to add more functionality within the app, completely replace it or delete it with a change of a single line. The expense_app is pretty clean as well.
+
+
+## What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
+There was a consideration of data normalization the Expense Entity. We have the ability to separate the employee information into a User table and UserRoles table. The User table would have normal attributes data such as name and address and the UserRoles table will handle to see if the user is an employee and different roles. We can do the same for tax information. For the sake of just "store the information in a relational database", I decided to just store it within a single table and not overcomplicate the app.
+
+
+## Did you separate any concerns in your application? Why or why not?
+One of my biggest worries was that the reviewer would not be able to read the code easily. I have decided to divide the application as much as possible to make it as clean and readable as possible.
+
+
