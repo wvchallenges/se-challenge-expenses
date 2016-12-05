@@ -15,4 +15,4 @@ class Expenses(models.Model):
     description = models.CharField(max_length=500)
     pt_amount = models.FloatField()
     tax_name = models.CharField(max_length=100)
-    amount = models.FloatField()
+    tax_amount = models.FloatField()

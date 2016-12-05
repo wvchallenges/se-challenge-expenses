@@ -46,11 +46,11 @@ def parse_csv(request):
                 description = row[4]
                 pt_amount_str = row[5]
                 tax_name = row[6]
-                amount_str = row[7]
+                tax_amount_str = row[7]
                 
                 date = datetime.strptime(date_str, '%m/%d/%Y')
                 pt_amount = float(pt_amount_str.replace(',', ''))
-                amount = float(amount_str.replace(',', ''))
+                tax_amount = float(tax_amount_str.replace(',', ''))
                 
                 
                 e = Expenses(date=date,
@@ -60,7 +60,7 @@ def parse_csv(request):
                              description=description,
                              pt_amount=pt_amount,
                              tax_name=tax_name,
-                             amount=amount)
+                             tax_amount=tax_amount)
                 
                 e.save()
 
