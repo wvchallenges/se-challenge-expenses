@@ -1,0 +1,53 @@
+<div class="jumbotron">
+  <h1>Expenses</h1>
+  <p></p>
+  <p>
+    <%= form_tag({action: :upload}, multipart: true) do %>
+      <div class="form-group">
+        <label for="uploaded_expenses">Upload new expenses here.</label>
+        <%= file_field_tag "uploaded_expenses", class: "form-control-file" %>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    <% end %>
+  </p>
+</div>
+
+<% @expenses_by_month.each do |expense_group| %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card card-block">
+        <h4 class="card-title"><%= expense_group.grouping %></h4>
+        <table class="table table-sm">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Employee</th>
+              <th>Description</th>
+              <th>Pre Tax Amount</th>
+              <th>Tax Amount</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% expense_group.expenses.sort_by(&:expensed_on).each do |expense| %>
+              <tr>
+                <td><%= expense.expensed_on.strftime("%F") %></td>
+                <td><%= expense.expense_category.name %></td>
+                <td><%= expense.employee.name %></td>
+                <td><%= expense.description %></td>
+                <td class="number"><%= number_to_currency(expense.pre_tax_amount) %></td>
+                <td class="number"><%= number_to_currency(expense.tax_amount) %></td>
+                <td class="number"><%= number_to_currency(expense.total) %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <th scope="row" colspan="6">Total</th>
+              <td class="number"><%= number_to_currency(expense_group.total) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
