@@ -1,25 +1,39 @@
 
 <table>
   <tr>
-    <th>Date</th>
-    <th>Category</th>
-    <th>Employee Name</th>
-    <th>Employee Address</th>
-    <th>Description</th>
-    <th>Pre-Tax Amount</th>
-    <th>Tax Name</th>
-    <th>Tax Amount</th>
+    <th>Month</th>
+    <th>Total</th>
   </tr>
-  {% for expense in expenses %}
+  {% for monthly_total in monthly_totals %}
   <tr>
-    <td>{{ expense.date }}</td>
-    <td>{{ expense.category }}</td>
-    <td>{{ expense.employee_name }}</td>
-    <td>{{ expense.employee_address }}</td>
-    <td>{{ expense.description }}</td>
-    <td>{{ expense.pt_amount }}</td>
-    <td>{{ expense.tax_name }}</td>
-    <td>{{ expense.tax_amount }}</td>
+    <td>{{ monthly_total.0 }}</td>
+    <td>{{ monthly_total.1 }}</td>
   </tr>
   {% endfor %}
-</table>
+ </table>
+
+
+<!-- <table> -->
+<!--   <tr> -->
+<!--     <th>Date</th> -->
+<!--     <th>Category</th> -->
+<!--     <th>Employee Name</th> -->
+<!--     <th>Employee Address</th> -->
+<!--     <th>Description</th> -->
+<!--     <th>Pre-Tax Amount</th> -->
+<!--     <th>Tax Name</th> -->
+<!--     <th>Tax Amount</th> -->
+<!--   </tr> -->
+<!--   {% for expense in expenses %} -->
+<!--   <tr> -->
+<!--     <td>{{ expense.date }}</td> -->
+<!--     <td>{{ expense.category }}</td> -->
+<!--     <td>{{ expense.employee_name }}</td> -->
+<!--     <td>{{ expense.employee_address }}</td> -->
+<!--     <td>{{ expense.description }}</td> -->
+<!--     <td>{{ expense.pt_amount }}</td> -->
+<!--     <td>{{ expense.tax_name }}</td> -->
+<!--     <td>{{ expense.tax_amount }}</td> -->
+<!--   </tr> -->
+<!--   {% endfor %} -->
+<!-- </table> -->

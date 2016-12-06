@@ -8,7 +8,7 @@ from django.db import models
 
 class Expenses(models.Model):
 
-    date = models.DateTimeField()
+    date = models.DateField()
     category = models.CharField(max_length=100)
     employee_name = models.CharField(max_length=200)
     employee_address = models.CharField(max_length=500)

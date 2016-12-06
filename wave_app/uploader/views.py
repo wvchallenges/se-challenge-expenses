@@ -21,8 +21,26 @@ def upload(request):
 
 
 def totals(request):
+    
     expenses = Expenses.objects.all()
-    return render(request, 'uploader/totals.html', {'expenses': expenses})
+
+    # Sum the monthly totals
+    monthly_totals = {}
+    for expense in expenses:
+        date = expense.date.strftime('%b %Y')
+        total_amount = expense.pt_amount + expense.tax_amount
+        try:
+            monthly_totals[date] += total_amount
+        except KeyError:
+            monthly_totals[date] = total_amount
+
+    # Reverse sort the totals by date
+    sorted_totals = [(date, monthly_totals[date])
+                     for date in sorted(monthly_totals.iterkeys(),
+                                        key=lambda w: datetime.strptime(w, '%b %Y'),
+                                        reverse=True)]
+    
+    return render(request, 'uploader/totals.html', {'monthly_totals': sorted_totals, 'expenses': expenses})
 
 
 def parse_csv(request):
