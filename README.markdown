@@ -1,3 +1,112 @@
+# Solution to the Wave Software Development Challenge
+
+## Building and Running the App
+
+Below are the instructions for building and running my solution to the Wave Software Developement Challenge.
+
+### Dependencies
+
+This is a solution using Python, the Django web framework, and a PostgreSQL database. All of these technologies are free (as in beer and as in freedom) and open-sourced.
+
+My implementation was run using the following versions:
+    
+
+| Software                                 | Version |
+|------------------------------------------|--------:|
+| [Python](https://www.python.org)         | 2.7.11  | 
+| [Django](https://www.djangoproject.com/) | 1.10.3  |
+| [PostgrSQL](https://www.postgresql.org/) | 9.6.1   |
+
+And the application was developed and tested in:
+
+| Software | Version               |
+|----------|----------------------:|
+| Mac OS X | 10.11.6               |
+| Chrome   | 54.0.2840.98 (64-bit) |
+| Safari   | 9.1.2 (11601.7.7)     |
+| Firefox  | 50.0                  |
+
+### Building
+
+As a Python/Django app my solution does not really require building, in the sense of compilation or makefiles.
+
+After installing PostgreSQL, a database will need to be created to hold the data from the app. Run the `psql` command to start the PostrgreSQL shell.
+
+```shell
+ CREATE DATABASE <db_name>
+```
+
+Then an admin user will need to be created with the ability to create databases (in order to successfully run the app tests).
+
+```shell
+CREATE ROLE <username> WITH LOGIN PASSWORD '<password>';
+GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <username>;
+ALTER USER <username> CREATEDB;
+```
+
+Replacing `db_name`, `<username>`, and `<password>` with whichever you choose/are convenient.
+
+Finally, the Django settings must be configured to use the database and user credentials you have specified. Open the `waveapp/waveapp/settings.py` file and replace the values in angle brackets, `<>`, with the values you chose from above:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '<db_name>',
+        'USER': '<username>',
+        'PASSWORD': '<password>'
+    }
+}
+```
+### Running
+
+In order for the app to be reachable the database and server must be started.
+
+In order to start the PostgreSQL database run the following command:
+
+```shell
+postgres -D <path to postgres>
+```
+
+Where `<path to postgres>` is the path to `postgres` on your system. On my machine this is `/usr/local/var/postgres/`.
+
+For my implementation I used Django's built-in web server. This web server is not made for production, but is fine for running and testing small apps. To start the Django web server navigate to the top-level directory and run the following command:
+
+```shell
+python manage.py runserver
+```
+
+To access the app open a web browser and open the address `http://127.0.0.1:8000/uploader/upload`. 
+
+
+## What I Like About My Implementation
+
+I really like how extensible the Django framework is. It makes it very easy to create, modify, and maintain the project. Apps are self-contained and are essentially plug-and-play.
+
+The use of Python and Django also mean that the solution is cross platform and can be moved among platforms easily.
+
+Additionally, Django handles a lot of security issues for developers. Submitting form data to Django means they are processed to built-in models which handle things like properly escaping input to avoid SQL injection.
+
+## TODO
+
+There are many things I would like to do with this app.
+
+### Bugs
+* There is currently no check for duplication. The same CSV can be added multiple times to atrificially increase the monthly totals.
+* The file chooser dialog currently allows selecting non-CSV files, even though only CSVs can be processed.
+
+### Usability
+* The /uplaoder/ page is an unnecessary place-holder. The Upload functionality should be moved here instead of on a separate page.
+* There is currently no way to get back to the upload page from the totals page.
+* There is currently no way to view the totals without first submitting a CSV file.
+* A navigation pane should be added to address the above two points.
+* The app's interface is untested on mobile browsers.
+
+### Future Considerations
+* Although not specified for this app, the uploading functionality could expended to allow processing of different file types (JSON, XML, etc) by moving the parsing to a class or classes.
+
+___
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
