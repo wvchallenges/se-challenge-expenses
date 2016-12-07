@@ -1,13 +1,15 @@
 
+<link rel="stylesheet" type="text/css" href="/static/uploader/style.css?{% now "U" %}">
+
 <table>
   <tr>
-    <th>Month</th>
-    <th>Total</th>
+    <th class="month">Month</th>
+    <th class="amount">Total</th>
   </tr>
   {% for monthly_total in monthly_totals %}
   <tr>
-    <td>{{ monthly_total.0 }}</td>
-    <td>{{ monthly_total.1 }}</td>
+    <td class="month">{{ monthly_total.0 }}</td>
+    <td class="amount">${{ monthly_total.1 }}</td>
   </tr>
   {% endfor %}
  </table>

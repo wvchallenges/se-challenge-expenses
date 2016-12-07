@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" type="text/css" href="/static/uploader/style.css?{% now "U" %}">
 
 <form action="{% url 'uploader:parse_csv' %}"
       enctype="multipart/form-data"
@@ -8,7 +9,7 @@
     Please specify a file, or a set of files:<br>
     <input type="file" name="datafile" size="100">
   </p>
-  <div>
-    <input type="submit" value="Send">
-  </div>
+
+    <input type="submit" value="Send" id="submitButton">
+
 </form>
