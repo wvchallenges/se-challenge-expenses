@@ -1,0 +1,10 @@
+
+# Ignore compiled files
+*.pyc
+*.o
+
+# Ignore file system files
+.DS_Store
+
+# Ignore emacs files
+*~
