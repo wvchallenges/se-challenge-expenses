@@ -1,3 +1,21 @@
+1. Requirements:
+1.1 Python3 (https://www.python.org/download/releases/3.0/)
+1.2 Django (https://docs.djangoproject.com/en/1.10/topics/install/)
+
+2. How to run application:
+2.1 From home directory of the project (se-challenge), run server with the command: python manage.py runserver
+2.2 Run application with the address: 127.0.0.1:8000 (default)
+
+3. Design Decisions for Models:
+- Normalized database with separate entities for a flexible design (to add more features).
+- A separate model for Tax to maintain tax types but tax amounts are maintained in the Expense table so that any changes in the tax wouldn't affect previous transactions.
+
+4. Explanation:
+I used Python Django and SQLite to develop this application and it is my first app with django. I like my app's design which has: 
+- a separate model for each entity.
+- business logic separated with Form and Service Layer.
+- a single page to upload and view expenses with sub-components of templates (expense list is in a separate template).
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
