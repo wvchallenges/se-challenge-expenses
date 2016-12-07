@@ -1,0 +1,27 @@
+{% if monthly_expenses %}
+<table class="table table-striped table-bordered table-hover">
+	<caption><h3>Total Monthly Expenses</h3></caption>
+	<colgroup>
+		<col style="border-right:double #ddd;">
+    </colgroup>
+		
+	<thead>
+		<tr>
+			<th>Year</th>
+			{% for month in months %}
+				<th class="col-md-1">{{ month }}</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for year, expenses in monthly_expenses.items %}
+			<tr>
+				<td class="text-right"> {{ year }} </td>
+				{% for expense in expenses %}
+					<td class="text-right">{{ expense }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
