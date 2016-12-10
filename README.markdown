@@ -34,8 +34,8 @@ Your application should be easy to set up, and should run on either Linux or Mac
 * Though it contains DockerFile but it is not sufficient as it came pre-build with ASP .NET core template I used. 
 
 #### Screenshot of the project
-(https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject1.png)
-(https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject2.png)
+![Index](https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject1.png)
+![About](https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject2.png)
 
 
 ### Installing and Running the Project 
@@ -123,23 +123,24 @@ Once you have setup all these prerequisites download this repository.
 #### Running the application
 After downloading this repository, you should have a directory structure like this: 
 
-
-/se-challenge
-|__appsettings.json
-SourceFiles -- Other files in project
-|__/Controllers
+```
+ /se-challenge
+ |__appsettings.json
+ SourceFiles -- Other files in project
+ |__/Controllers
     |__HomeController.cs
-|__/Views
+ |__/Views
     |__/Home 
         |__About.cshtml
         |__Index.cshtml
-|__/Models
+ |__/Models
     |__Expense.cs
     |__ExpenseDataFactory.cs
-|__data_example.csv
-|__MainApp.cs
-|__project.json
-|__Startup.cs
+ |__data_example.csv
+ |__MainApp.cs
+ |__project.json
+ |__Startup.cs
+```
 
 
 Run the command 
@@ -200,7 +201,7 @@ I used DropZone JS library to provide a nice interface for uploading files. I us
 CSV library into objects I have specified in my Model. It is pretty good in performance for parsing large CSV files.
 I was able to specify max-file-size to 2MB for the CSV files. 
 
-### ORM and PostgreSQL
+##### ORM and PostgreSQL
 
 As I mentioned before I am using ServiceStack ORMLite for interacting with my PostgreSQL database. The best part about this 
 is I dont have to hard-code SQL queries, it presents a nice abstraction between my code and the database. It also
@@ -208,7 +209,7 @@ gives me the freedom to swap database. I created my Table Objects with Data Anno
 foreign key, primary key and auto-incrementing values. 
 
 
-### Visual Elements (Semantic UI)
+##### Visual Elements (Semantic UI)
 
 Everyone I know uses bootstrap UI and I like it too but I found the idea of easily readable classes for specifying UI 
 styles really appealing and easy to work with. Plus Microsoft gave me a choice of Semantic UI which made things 
