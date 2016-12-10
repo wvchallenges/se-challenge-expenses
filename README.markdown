@@ -35,8 +35,6 @@ Your application should be easy to set up, and should run on either Linux or Mac
 
 #### Screenshot of the project
 ![Index](https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject1.png)
-![About](https://raw.githubusercontent.com/sugatmahanti/se-challenge/master/WaveProject2.png)
-
 
 ### Installing and Running the Project 
 
