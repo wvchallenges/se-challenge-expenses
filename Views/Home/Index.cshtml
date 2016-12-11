@@ -1,0 +1,44 @@
+@model List<CSVisualizer.Models.MonthlyExpense> 
+@{
+    ViewData["Title"] = "CSVisualizer";
+}
+
+<div class="ui header"> Visualize your expenses!</div>
+<div class="ui raised segment">
+   <a class="ui teal left ribbon label">Note:</a>
+    Please drag <a class="ui blue label">CSV files</a> containg expense data here to get monthly expense data in an easily readable format.
+    Click on the columns for sorted view.  
+</div>
+<div class= "ui three column grid">
+
+<div class="one column dropzoneDiv">
+      <form 
+     action="/Home/SaveFileUpload"
+     class="dropzone"
+      id="csvDropzone"></form>
+ </div>     
+
+
+<div class="two column">
+  <table class="ui green sortable table">
+  <thead>
+    <tr
+    ><th>Month - Year</th>
+    <th>Total Expense</th>
+  </tr></thead>
+ 
+  @foreach(var itemVal in Model )
+  {
+
+  <tr>
+  <td lass="sorted ascending">@itemVal.Month</td>
+  <td class="sorted ascending">$@itemVal.Expense.ToString("N2")</td>
+  </tr>
+  }
+
+
+</div>
+</div>
+
+
+
