@@ -28,19 +28,20 @@ sub handle_request {
 				tax_amount
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 
+		# Hash to store and then compute the summarized expenses
 		my %expenses;
 
-		my $file = $cgi->param('file');
-		<$file>;	# Skip the header
+		my $expenses_file = $cgi->param('file');
+		<$expenses_file>;	# Skip the header
 
-		while (my $row = <$file>) {
+		while (my $row = <$expenses_file>) {
 
 			$csv->parse($row);
 			my ($date, $category, $employee_name, $employee_address, $expense_description, $pre_tax_amount, $tax_name, $tax_amount) = $csv->fields();
 
 			my ($month, undef, $year) = split('/', $date);
 
-			# Strip commas from numeric fields and convert to cents
+			# Strip commas from numeric fields and convert to cents for DB only
 			for my $amount (\$pre_tax_amount, \$tax_amount) {
 				$$amount =~ s/,//g;
 				$expenses{$year}{$month} += $$amount;
@@ -79,6 +80,6 @@ sub handle_request {
 	}
 }
 
-DataParser->new(8080)->run();
+DataParser->new()->run();
 
 1;
