@@ -17,6 +17,51 @@ Using a terminal window (shell), pease navigate to the directory the repository 
 $ cd PROJECT
 ```
 
+We will now need to create a new virtualenv for development as well as install dependencies. Run the following
+commands,
+
+```
+$ virtualenv --python=python3 VENV
+$ source VENV/bin/activate
+(VENV)$ pip install django==1.8.17
+```
+
+We have selected Django 1.8 because it is the most recent LTS release. 
+
+Please move into the ``mysite`` project folder and run migrations to create a sqlite database with the following
+instructions,
+
+```
+(VENV)$ cd mysite/
+(VENV)$ python manage.py migrate
+```
+
+It will be useful to create an admin account right now, to be able to see the uploaded data. Please run the following,
+
+```
+(VENV)$ echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'myemail@example.com', 'admin')" | python manage.py shell
+```
+(ref: http://stackoverflow.com/a/24068570/198660 )
+
+You can now run the website locally by executing the following,
+
+```
+(VENV) $ python manage.py runserver
+```
+
+To see the main page, please visit http://127.0.0.1:8000/ with your web-browser.
+
+To access the admin page, please visit http://127.0.0.1:8000/admin on your browser. Use credentials ``admin/admin`` which we created earlier to login.
+
+## Screenshots
+
+After a CSV file has been successfully uploaded, your browser should look similar to the following image,
+
+![After upload](upload_example.png?raw=true "After upload")
+
+If you login to the admin page, you should be able to see the stored data as follows,
+
+![Stored data](admin_view.png?raw=true "Stored data")
 
 
 # Wave Software Development Challenge
