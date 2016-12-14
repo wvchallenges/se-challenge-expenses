@@ -64,6 +64,47 @@ If you login to the admin page, you should be able to see the stored data as fol
 ![Stored data](admin_view.png?raw=true "Stored data")
 
 
+## Assumptions made
+
+* User will ONLY upload valid CSV files; error checking is minimal in current implementation
+
+
+## Solution highlights
+
+* Good Documentation
+
+This author likes to think that he writes good technical documentation about the projects he works on. :) 
+
+* Uploaded Expense Report
+
+After a file has been uploaded, an objective was to show total expenses by month. The totals shown in this solution include tax, as this reflects the actual cost incurred by a firm and is more useful to make financial decisions against. 
+
+The expense report is rendered using Bootstrap Data tables (ref: https://datatables.net/ ). This was used to make it easier for an end-user to sort the information in either chronological order or to quickly determine what months were most expensive. 
+
+* Report Pie chart
+
+It is felt that a pie chart representation would be effective for a user to understand what months are more expensive than others. Many books on User Experience write that a visual cue is easier to understand than text data in a table (refer screenshot above).
+
+* Created/Modified information for uploaded data
+
+It IS possible that data in the CSV files might be out-dated or in need of minor corrections. For now, the only way to make these kind of corrections, is via the admin interface. To keep track of when a record might be changed, the created (basically the uploaded date) and modified time-stamps are stored in the database (refer screenshot above). Also ref: https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/models.py
+
+* Use of Decimal data-type
+
+In the django solution, Decimal data-type has been used to store financial information as opposed to float. This is to avoid any rounding errors that might occour when using float. (ref: https://docs.python.org/3.5/library/decimal.html )
+
+* Business logic in views.py
+
+The calculation of month total expenses is done in the views.py source file during file processing. This is felt to be a better location to perform this calculation, instead of say, the template file. (ref : https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/views.py#L49-L54 )
+
+* Storing uploaded CSV files on server
+
+If an end-user uploads a file larger than 2.5MB, Django will not be able to process it in-memory (at least, during the upload). Thus, we first store the uploaded file to disk on server and only after that, attempt to parse it. (ref: https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/views.py#L21-L27 )
+
+
+
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
