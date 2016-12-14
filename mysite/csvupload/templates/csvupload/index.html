@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Employee Expenses</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static "csvupload/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "csvupload/css/starter-template.css" %}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "csvupload/css/dataTables.bootstrap.min.css" %}">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Employee Expense Tracker</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+        <div class="starter-template">
+            <form enctype="multipart/form-data" action="{% url "index" %}" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="id_csv_file">CSV file:</label>
+                <input id="id_csv_file" name="csv_file" type="file" >
+                <p class="help-block">Please select CSV file to import into database</p>
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            {% if not total_expenses %}
+                {% comment %}  {% endcomment %}
+{#                We do not have anything to show....#}
+            {% else %}
+                <h2>Uploaded Expense Report</h2>
+                <br />
+                <table id="expense_table" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Year-Month</th>
+                            <th>Total Expenses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in total_expenses.items %}
+                            <tr>
+                                <td>{{key}}</td>
+                                <td>{{value}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <!--Div that will hold the pie chart-->
+                <div id="chart_div"></div>
+                <script>
+                    var pie_chart_data = [
+                        {% for key, value in total_expenses.items %}
+                            ['{{ key }}', {{ value }}],
+                        {% endfor %}
+                    ];
+                </script>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static "csvupload/js/jquery.min.js" %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static "csvupload/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "csvupload/js/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "csvupload/js/dataTables.bootstrap.min.js" %}"></script>
+    <script src="{% static "csvupload/js/loader.js" %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#expense_table').DataTable();
+        } );
+
+        // for chart
+        // Load the Visualization API and the corechart package.
+          google.charts.load('current', {'packages':['corechart']});
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.charts.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Year-Month');
+            data.addColumn('number', 'Total Expenses');
+            data.addRows(pie_chart_data);
+
+            // Set chart options
+            var options = {'title':'Expense Pie Chart'};
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+          }
+
+    </script>
+  </body>
+</html>

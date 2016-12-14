@@ -1,3 +1,114 @@
+# Setup
+
+NOTE: The following instructions have been tested against an Ubuntu 16.04 LTS system, but should work on any *nix
+system that satisfies the following,
+
+### Requirements
+
+* Python 3.5  (instructions were tested against Python 3.5.2)
+* Virtualenv  (should come along with Python 3)
+* An internet connection
+
+Before proceeding, please clone this repository on your local system.
+
+Using a terminal window (shell), pease navigate to the directory the repository has been cloned into. We will assume that this is called ``PROJECT``
+
+```
+$ cd PROJECT
+```
+
+We will now need to create a new virtualenv for development as well as install dependencies. Run the following
+commands,
+
+```
+$ virtualenv --python=python3 VENV
+$ source VENV/bin/activate
+(VENV)$ pip install django==1.8.17
+```
+
+We have selected Django 1.8 because it is the most recent LTS release. 
+
+Please move into the ``mysite`` project folder and run migrations to create a sqlite database with the following
+instructions,
+
+```
+(VENV)$ cd mysite/
+(VENV)$ python manage.py migrate
+```
+
+It will be useful to create an admin account right now, to be able to see the uploaded data. Please run the following,
+
+```
+(VENV)$ echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'myemail@example.com', 'admin')" | python manage.py shell
+```
+(ref: http://stackoverflow.com/a/24068570/198660 )
+
+You can now run the website locally by executing the following,
+
+```
+(VENV) $ python manage.py runserver
+```
+
+To see the main page, please visit http://127.0.0.1:8000/ with your web-browser.
+
+To access the admin page, please visit http://127.0.0.1:8000/admin on your browser. Use credentials ``admin/admin`` which we created earlier to login.
+
+## Screenshots
+
+After a CSV file has been successfully uploaded, your browser should look similar to the following image,
+
+![After upload](upload_example.png?raw=true "After upload")
+
+If you login to the admin page, you should be able to see the stored data as follows,
+
+![Stored data](admin_view.png?raw=true "Stored data")
+
+
+## Assumptions made
+
+* User will ONLY upload valid CSV files; error checking is minimal in current implementation
+
+
+## Solution highlights
+
+* Good Documentation
+
+This author likes to think that he writes good technical documentation about the projects he works on. :) 
+
+* Uploaded Expense Report
+
+After a file has been uploaded, an objective was to show total expenses by month. The totals shown in this solution include tax, as this reflects the actual cost incurred by a firm and is more useful to make financial decisions against. 
+
+The expense report is rendered using Bootstrap Data tables (ref: https://datatables.net/ ). This was used to make it easier for an end-user to sort the information in either chronological order or to quickly determine what months were most expensive. 
+
+* Report Pie chart
+
+It is felt that a pie chart representation would be effective for a user to understand what months are more expensive than others. Many books on User Experience write that a visual cue is easier to understand than text data in a table (refer screenshot above).
+
+* Created/Modified information for uploaded data
+
+It IS possible that data in the CSV files might be out-dated or in need of minor corrections. For now, the only way to make these kind of corrections, is via the admin interface. To keep track of when a record might be changed, the created (basically the uploaded date) and modified time-stamps are stored in the database (refer screenshot above). Also ref: https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/models.py
+
+* Use of Decimal data-type
+
+In the django solution, Decimal data-type has been used to store financial information as opposed to float. This is to avoid any rounding errors that might occour when using float. (ref: https://docs.python.org/3.5/library/decimal.html )
+
+* Business logic in views.py
+
+The calculation of month total expenses is done in the views.py source file during file processing. This is felt to be a better location to perform this calculation, instead of say, the template file. (ref : https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/views.py#L49-L54 )
+
+* Storing uploaded CSV files on server
+
+If an end-user uploads a file larger than 2.5MB, Django will not be able to process it in-memory (at least, during the upload). Thus, we first store the uploaded file to disk on server and only after that, attempt to parse it. (ref: https://github.com/abrahamvarricatt/se-challenge-expenses/blob/master/mysite/csvupload/views.py#L21-L27 )
+
+
+
+---
+---
+---
+
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
