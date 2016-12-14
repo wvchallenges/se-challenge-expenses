@@ -1,3 +1,24 @@
+# Setup
+
+NOTE: The following instructions have been tested against an Ubuntu 16.04 LTS system, but should work on any *nix
+system that satisfies the following,
+
+### Requirements
+
+* Python 3.5  (instructions were tested against Python 3.5.2)
+* Virtualenv  (should come along with Python 3)
+* An internet connection
+
+Before proceeding, please clone this repository on your local system.
+
+Using a terminal window (shell), pease navigate to the directory the repository has been cloned into. We will assume that this is called ``PROJECT``
+
+```
+$ cd PROJECT
+```
+
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
