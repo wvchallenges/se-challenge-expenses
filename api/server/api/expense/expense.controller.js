@@ -94,9 +94,12 @@ exports.import = function(req, res) {
 
       var result = [];
       _.forOwn(sums, function(value, key) {
-        sums[key] = value / 10000;
+        result.push({
+          'month': key,
+          'total': accounting.formatMoney(value / 10000)
+        });
       });
-      res.status(200).json(sums);
+      res.status(200).json(_.sortByOrder(result, ['month']));
     });
   });
 

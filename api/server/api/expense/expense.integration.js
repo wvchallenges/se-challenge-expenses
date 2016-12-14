@@ -27,14 +27,14 @@ describe('Expense API:', function() {
           expect(res.status).equal(200);
           expect(res.body).ok;
 
-          expect(res.body).eql({
-            '2013-12': 3012.68,
-            '2013-11': 784.75,
-            '2013-10': 2391.41,
-            '2013-09': 430,
-            '2014-01': 430,
-            '2014-02': 1625.4
-          });
+          expect(res.body).eql([
+            { month: '2013-09', total: '$430.00' },
+            { month: '2013-10', total: '$2,391.41' },
+            { month: '2013-11', total: '$784.75' },
+            { month: '2013-12', total: '$3,012.68' },
+            { month: '2014-01', total: '$430.00' },
+            { month: '2014-02', total: '$1,625.40' }
+          ]);
           done();
         });
     });

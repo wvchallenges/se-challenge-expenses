@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+table {
+  margin: 10px 0;
+  border: 1px solid black;
+}
+
+th, td {
+  border: 1px dotted black;
+  padding: 10px;
+}
+
+div.upload-result {
+  margin: 10px;
+}

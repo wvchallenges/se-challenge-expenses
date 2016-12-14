@@ -17,6 +17,7 @@ import lusca from 'lusca';
 import config from './environment';
 import session from 'express-session';
 import sqldb from '../sqldb';
+import cors from 'cors';
 import expressSequelizeSession from 'express-sequelize-session';
 var Store = expressSequelizeSession(session.Store);
 
@@ -30,6 +31,9 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
+  // NOTE: this allows cross origin requests from all sources
+  // TODO: allow only requests from allowed cliens, based on configuration
+  app.use(cors());
 
   // Persist sessions with mongoStore / sequelizeStore
   // We need to enable sessions for passport-twitter because it's an
