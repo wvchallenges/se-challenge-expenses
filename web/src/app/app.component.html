@@ -1,0 +1,20 @@
+<h1>
+  {{title}}
+</h1>
+
+<input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+<button type="button" (click)="upload()">Upload</button>
+
+<div class="upload-result" *ngIf="expenseSummary.length > 0">
+  <div>Upload Successful! Below is the expense summary by month:</div>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Total Expense</th>
+    </tr>
+    <tr *ngFor="let row of expenseSummary">
+      <td>{{ row.month }}</td>
+      <td>{{ row.total }}</td>
+    </tr>
+  </table>
+</div>
