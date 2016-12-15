@@ -39,3 +39,24 @@ There are a few gotchas in here:
 
 ### Web Client
 Not much to say here, a very basic Angular 2 implementation.
+
+In projects with more complicated front-end, it will make sense to put this on a different repo, or at least a different branch, so CI and deployment tools can be configured correctly for API and client.
+
+## deployment
+Deployment of Node applications is still in flux and best practices are being invented. One basic way to do deployment, assuming you have the prerequisites installed on the server already, is the following:
+
+1. git checkout https://github.com/analyst74/se-challenge-expenses.git
+* cd se-challenge-expenses/web
+* npm install
+* ng build --prod
+* cd ../api
+* npm install
+* grunt build:dist
+* cd dist
+* mv ../../web/dist client
+* NODE_ENV=production node server
+
+This should serve the client and api at port 8080 in production settings. For real project, a few more things should be improved:
+
+- web client should be hosted on a separate web server than api, it can be an nginx server on the same machine
+- deployment should be tied into CI and be automatically triggered

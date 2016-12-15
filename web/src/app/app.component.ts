@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ExpenseSummary } from './expense-summary';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +18,12 @@ export class AppComponent {
   }
 
   upload() {
-    this.makeFileRequest("http://localhost:9000/api/expenses/import", [], this.fileToUpload).then((result) => {
-      this.expenseSummary = <Array<ExpenseSummary>> result;
-    }, (error) => {
-      console.error(error);
-    });
+    this.makeFileRequest(environment.api + "/expenses/import", [],
+      this.fileToUpload).then((result) => {
+        this.expenseSummary = <Array<ExpenseSummary>> result;
+      }, (error) => {
+        console.error(error);
+      });
   }
 
   fileChangeEvent(fileInput: any){

@@ -34,6 +34,11 @@ module.exports = function(app) {
   // NOTE: this allows cross origin requests from all sources
   // TODO: allow only requests from allowed cliens, based on configuration
   app.use(cors());
+  // this line should be removed once we have a proper static http server
+  // serving the angular client, like nginx
+  if (process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, '../../client')));
+  }
 
   // Persist sessions with mongoStore / sequelizeStore
   // We need to enable sessions for passport-twitter because it's an
