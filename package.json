@@ -1,0 +1,41 @@
+{
+  "name": "fileManager",
+  "version": "0.0.1",
+  "author": "Michael Gord",
+  "description": "A web interface to manage csv file uploads and store them in a mongo database",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bower": "~1.3.3",
+    "csvtojson": "^1.0.3",
+    "del": "^1.1.1",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "gulp": "^3.8.10",
+    "gulp-concat": "^2.4.2",
+    "gulp-connect": "^2.2.0",
+    "gulp-livereload": "^3.0.2",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-uglify": "^1.0.2",
+    "mongoose": "^4.7.2",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-changed": "^1.1.0",
+    "gulp-jshint": "^1.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC"
+}
