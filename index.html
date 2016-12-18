@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" ng-app="waveApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Wave Challenge</title>
+    <link rel="stylesheet" href="lib/css/angular-material.min.css" />
+    <link rel="stylesheet" href="lib/css/md-data-table.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    
+    <script type='text/javascript' src="lib/js/angular.min.js" charset="UTF-8"></script>
+    <script type='text/javascript' src="lib/js/angular-animate.min.js" charset="UTF-8"></script>
+    <script type='text/javascript' src="lib/js/angular-aria.min.js" charset="UTF-8"></script>
+    <script type='text/javascript' src="lib/js/angular-material.min.js" charset="UTF-8"></script>
+    <script type='text/javascript' src="lib/js/md-data-table.min.js" charset="UTF-8"></script>
+    <script src="wave.app.js"></script>
+    <script src="wave.controller.js"></script>
+    <script src="wave.directive.js"></script>
+  </head>
+  <body>
+    <div ng-controller="WaveCtrl" layout="column" ng-cloak style="width:40%;margin:0 auto">
+        <md-toolbar class="md-primary">
+            <div class="md-toolbar-tools">
+            <h2 class="md-flex">Wave Challenge</h2>
+            </div>
+        </md-toolbar>
+
+        <md-content flex layout-padding>
+            <div>
+                <form name="myForm">
+                    <fieldset>
+                        <input type="file" file-model="myFile"/><br><br>
+                        <md-button ng-click="uploadFile()">submit</md-button>
+                    </fieldset>
+                    <br>
+                </form>
+            </div>
+            <md-progress-linear ng-hide="loadingBar" md-mode="indeterminate"></md-progress-linear>
+            <div ng-hide="showTable">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column md-numeric>Month</th>
+                            <th md-column md-numeric>Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="(key, value) in items">
+                            <td md-cell>{{key}}</td>
+                            <td md-cell>{{value}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </div>
+        </md-content>
+    </div>
+  </body>
+</html>
