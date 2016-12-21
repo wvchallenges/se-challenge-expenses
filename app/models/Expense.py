@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from app import db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Expense(db.Model):
@@ -41,4 +42,6 @@ class Expense(db.Model):
     def __repr__(self):
         return '<Expense %r>' % self.description
 
-    def post_tax_amount
+    @hybrid_property
+    def post_tax_amount(self):
+        return self.pre_tax_amount * (1.0 + self.tax.amount)
