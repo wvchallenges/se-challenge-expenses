@@ -4,7 +4,7 @@ from app import db
 
 class Tax(db.Model):
     # id
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # name of tax
     name = db.Column(db.String(255))

@@ -4,7 +4,7 @@ from app import db
 
 class Category(db.Model):
     # id
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # name of category
     name = db.Column(db.String(255))

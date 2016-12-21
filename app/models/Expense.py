@@ -4,7 +4,7 @@ from app import db
 
 class Expense(db.Model):
     # id
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # date
     date = db.Column(db.Date)
@@ -40,3 +40,5 @@ class Expense(db.Model):
 
     def __repr__(self):
         return '<Expense %r>' % self.description
+
+    def post_tax_amount

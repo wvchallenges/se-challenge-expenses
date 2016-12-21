@@ -4,7 +4,7 @@ from app import db
 
 class Employee(db.Model):
     # id
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # full name of employee
     name = db.Column(db.String(255))
