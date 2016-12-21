@@ -22,7 +22,6 @@ class Expense(db.Model):
     )
 
     # tax
-    tax_id = db.Column(db.Integer, db.ForeignKey('tax.id'))
     tax = db.relationship('Tax')
 
     # expense description
