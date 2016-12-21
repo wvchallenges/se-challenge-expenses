@@ -1,1 +1,3 @@
 expenses
+*.pyc
+*.db
