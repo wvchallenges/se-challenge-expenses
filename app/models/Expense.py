@@ -11,18 +11,21 @@ class Expense(db.Model):
     date = db.Column(db.Date)
 
     # category
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship(
         'Category',
         backref=db.backref('expenses', lazy='dynamic')
     )
 
     # employee
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'))
     employee = db.relationship(
         'Employee',
         backref=db.backref('expenses', lazy='dynamic')
     )
 
     # tax
+    tax_id = db.Column(db.Integer, db.ForeignKey('tax.id'))
     tax = db.relationship('Tax')
 
     # expense description
@@ -31,7 +34,8 @@ class Expense(db.Model):
     # pre-tax amount
     pre_tax_amount = db.Column(db.Float)
 
-    def __init__(self, date, category, employee, tax, description, pre_tax_amount):
+    def __init__(self, date, category, employee, tax, description,
+                 pre_tax_amount):
         self.date = date
         self.category = category
         self.employee = employee
