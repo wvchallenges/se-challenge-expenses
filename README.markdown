@@ -26,13 +26,13 @@ What I'm particularily proud of in my implementation: when I started working on 
 
 ### Implementation notes
 
-    1. **Models**: under the `models` folder you will find some Alchemy models representing the data in the csv in such a way to be easily extended in the future. In particular note that `categories`, `employees` and `taxes` have their own table.
+  1. **Models**: under the `models` folder you will find some Alchemy models representing the data in the csv in such a way to be easily extended in the future. In particular note that `categories`, `employees` and `taxes` have their own table.
 
-    2. **Seeding / Uploading**: the .csv is lacking unique ids, thus when creating records for categories, employees and taxes, I had to assume the uniqueness of some of its data, which isn't necessarily true.
+  2. **Seeding / Uploading**: the .csv is lacking unique ids, thus when creating records for categories, employees and taxes, I had to assume the uniqueness of some of its data, which isn't necessarily true.
 
-    3. **Testing**: Initially I wanted to use `pytest` to do some basic testing on the csv parsing and model generation results, and the server response, but I did not have enough time available.
+  3. **Testing**: Initially I wanted to use `pytest` to do some basic testing on the csv parsing and model generation results, and the server response, but I did not have enough time available.
 
-    4. **Templates**: I started building a web interface, but ultimately resorted to a vintage terminal-based solution due to the little time available, but I hear that's all the rage anyway.
+  4. **Templates**: I started building a web interface, but ultimately resorted to a vintage terminal-based solution due to the little time available, but I hear that's all the rage anyway.
 
 
 # Wave Software Development Challenge
