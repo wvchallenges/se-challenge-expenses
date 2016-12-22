@@ -1,0 +1,4 @@
+expenses
+*.pyc
+*.db
+.DS_Store
