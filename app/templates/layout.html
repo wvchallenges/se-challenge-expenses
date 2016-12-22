@@ -3,6 +3,8 @@
     <head>
         {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
         <title>{% block title %}{% endblock %}</title>
         {% endblock %}
     </head>

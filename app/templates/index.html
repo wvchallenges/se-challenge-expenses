@@ -3,9 +3,6 @@
 {% block title %}Expenses{% endblock %}
 
 {% block body %}
-<h1>Index</h1>
-<form action="expenses" method="post" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
+<form action="/expenses" method="post" class="dropzone" enctype="multipart/form-data">
 </form>
 {% endblock %}

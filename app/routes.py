@@ -1,21 +1,13 @@
 # -*- encoding: utf-8 -*-
 from app import app
 from app.repositories.expense import ExpenseRepository
-from flask import render_template, request
-
-
-@app.route('/')
-def index():
-    expense = ExpenseRepository()
-    expense.by_month()
-    return render_template('index.html')
+from flask import render_template, request, make_response
 
 
 @app.route('/expenses', methods=['POST'])
 def upload():
     # check if the post request has the file part
     if 'file' not in request.files:
-        flash('No file part')
         return redirect(request.url)
 
     expense = ExpenseRepository()
@@ -23,8 +15,13 @@ def upload():
     # if user does not select file, browser also
     # submit a empty part without filename
     if file.filename == '':
-        flash('No selected file')
         return redirect(request.url)
 
     expense.from_csv(file)
-    return render_template('index.html')
+    by_month = expense.by_month()
+    by_month = reduce(
+        lambda res, (year, month, total, taxes): res + ("Period %d/%d Total Expenses: %.2f, Total Taxes: %.2f" % (month, year, total, taxes)) + "\n",
+        by_month,
+        ""
+    )
+    return make_response(by_month)
