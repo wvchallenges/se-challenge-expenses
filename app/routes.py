@@ -18,10 +18,12 @@ def upload():
         return redirect(request.url)
 
     expense.from_csv(file)
+    table_row = "Period %d/%d Total Expenses: %.2f, Total Taxes: %.2f\n"
     by_month = expense.by_month()
     by_month = reduce(
-        lambda res, (year, month, total, taxes): res + ("Period %d/%d Total Expenses: %.2f, Total Taxes: %.2f" % (month, year, total, taxes)) + "\n",
+        lambda res, (y, m, e, t): res + (table_row % (m, y, e, t)),
         by_month,
         ""
     )
+
     return make_response(by_month)
