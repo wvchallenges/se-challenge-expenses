@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
+import json
 from app import app
 from app.repositories.expense import ExpenseRepository
-from flask import render_template, request, make_response
+from flask import render_template, request, jsonify
 
 
 def render_report(expenses):
@@ -13,21 +14,23 @@ def render_report(expenses):
     )
 
 
-@app.route('/expenses', methods=['POST'])
+@app.route('/expenses', methods=['GET', 'POST'])
 def upload():
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        return redirect(request.url)
-
     expense = ExpenseRepository()
-    file = request.files['file']
-    # if user does not select file, browser also
-    # submit a empty part without filename
-    if file.filename == '':
-        return redirect(request.url)
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return redirect(request.url)
 
-    expense.from_csv(file)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            return redirect(request.url)
 
-    render_report(expense.by_month())
+        expense.from_csv(file)
+        return jsonify({'success': True})
+    else:
+        return jsonify(expense.by_month())
 
     return make_response(by_month)
