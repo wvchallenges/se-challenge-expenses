@@ -1,6 +1,7 @@
 import os.path
 import click
 import requests
+from terminaltables import AsciiTable
 
 
 ENDPOINT = "http://localhost:5000"
@@ -21,7 +22,11 @@ def expenses(upload):
             raise "The file %s does not exist, check the given path" % upload
 
     result = requests.get("%s/expenses" % ENDPOINT)
-    print result.text
+    header = ['Year', 'Month', 'Total Expenses', 'Total Tax']
+    expenses = result.json()
+    expenses.insert(0, header)
+    table = AsciiTable(expenses)
+    print table.table
 
 if __name__ == '__main__':
     expenses()
