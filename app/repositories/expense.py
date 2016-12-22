@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 import csv
 from datetime import datetime
+from sqlalchemy import extract
+from sqlalchemy.sql import func
 
 from app import db
 from app.models.category import Category
@@ -11,6 +13,22 @@ from app.models.tax import Tax
 
 class ExpenseRepository():
     """Repository to create and retrieve Expenses"""
+    def by_month(self):
+        year = extract('year', Expense.date)
+        month = extract('month', Expense.date)
+
+        expenses = db.session.query(
+                year,
+                month,
+                func.sum(Expense.pre_tax_amount),
+                func.sum(Expense.post_tax_amount)
+            ).group_by(
+                year,
+                month
+            ).all()
+
+        return expenses
+
     def from_csv(self, csvfile):
         categories = {}
         employees = {}
@@ -46,7 +64,8 @@ class ExpenseRepository():
                 employees[row['employee name']],
                 taxes[row['tax name']],
                 row['expense description'],
-                pre_tax_amount
+                pre_tax_amount,
+                tax_amount
             )
             db.session.add(new_expense)
 

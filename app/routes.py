@@ -6,6 +6,8 @@ from flask import render_template, request
 
 @app.route('/')
 def index():
+    expense = ExpenseRepository()
+    expense.by_month()
     return render_template('index.html')
 
 
@@ -23,10 +25,6 @@ def upload():
     if file.filename == '':
         flash('No selected file')
         return redirect(request.url)
+
     expense.from_csv(file)
     return render_template('index.html')
-
-
-@app.route('/expenses/<company_id>')
-def show(company_id=None):
-    return render_template('index.html', company_id=None)
