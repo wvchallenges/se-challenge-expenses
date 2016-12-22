@@ -1,3 +1,38 @@
+# Setup
+
+### Prerequisites
+
+  1. Python 2.7
+  2. Virtualenv
+
+### Run the demo
+
+  0. clone the repository and cd into it
+  1. `virtualenv expenses`
+  2. `source expenses/bin/activate`
+  3. `pip install -r requirements.txt`
+  4. `python setup.py`
+  5. `python run.py`
+  6. from another terminal window run
+    * `curl -i -X POST -H "Content-Type: multipart/form-data" -F "file=@data_example.csv" localhost:5000/expenses`
+
+### Comments
+
+The project **lacks a web interface**, and needs to be interacted with through the terminal. I apologize for the incompleteness and lack of tests, but please do note that this solution was build 1/3 on a plane, 1/3 in a car and 1/3 in a room full of christmas guests.
+
+What I'm particularily proud of in my implementation: when I started working on this, I had grand ideas, which sadly didn't materialize. Now, although my pride is being overshadowed by a sense of forfeit, I can say that I'm satisfied with the derived database schema, which allows, in combination with a nice ORM, to generate complex queries while maintaining a decent level of extensibility. This might sound silly but I'm also satisfied with the folder structure for the project and the concerns separation into files, as it's intuitive and clean.
+
+### Implementation notes
+
+    1. **Models**: under the `models` folder you will find some Alchemy models representing the data in the csv in such a way to be easily extended in the future. In particular note that `categories`, `employees` and `taxes` have their own table.
+
+    2. **Seeding / Uploading**: the .csv is lacking unique ids, thus when creating records for categories, employees and taxes, I had to assume the uniqueness of some of its data, which isn't necessarily true.
+
+    3. **Testing**: Initially I wanted to use `pytest` to do some basic testing on the csv parsing and model generation results, and the server response, but I did not have enough time available.
+
+    4. **Templates**: I started building a web interface, but ultimately resorted to a vintage curl-powered, terminal-based solution due to the little time available, but I hear that's all the rage.
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
