@@ -14,7 +14,9 @@
   4. `python setup.py`
   5. `python run.py`
   6. from another terminal window run
-    * `curl -i -X POST -H "Content-Type: multipart/form-data" -F "file=@data_example.csv" localhost:5000/expenses`
+    * `source expenses/bin/activate`
+    * `python client/expenses.py --upload ./data_examples.csv` to upload and view a summary of the expenses
+    * `python client/expenses.py` to only view the summary
 
 ### Comments
 
@@ -30,7 +32,7 @@ What I'm particularily proud of in my implementation: when I started working on 
 
     3. **Testing**: Initially I wanted to use `pytest` to do some basic testing on the csv parsing and model generation results, and the server response, but I did not have enough time available.
 
-    4. **Templates**: I started building a web interface, but ultimately resorted to a vintage curl-powered, terminal-based solution due to the little time available, but I hear that's all the rage.
+    4. **Templates**: I started building a web interface, but ultimately resorted to a vintage terminal-based solution due to the little time available, but I hear that's all the rage anyway.
 
 
 # Wave Software Development Challenge
