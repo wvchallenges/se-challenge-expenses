@@ -19,6 +19,8 @@ function fileToString(file) {
   return deferred.promise;
 };
 
+// given an array of expenses, create a Request
+// and then create and save Expense objects
 function addExpenses(expenses) {
   return Request.create().then(function(request) {
     _.each(expenses, function(expense) {
@@ -35,21 +37,28 @@ function addExpenses(expenses) {
 };
 
 module.exports = {
+
+
   addExpenses: function(req, res) {
     if (req.file) {
+      // convert the submitted file to a string
       fileToString(req.file)
         .then(function(str) {
+          // parse the string to array of expense objects
           return parser.parse(str);
         })
         .then(function(expenses) {
+          // save the expense objects
           return addExpenses(expenses);
         })
         .then(function(expenses) {
+          // return expenses on success
           res.json({
             expenses: expenses
           });
         })
         .catch(function(error) {
+          // if there are any errors provide an error message
           res.status(400).json({
             error: error.toString()
           });
