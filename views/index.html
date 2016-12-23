@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Wave Expenses Challenge</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/public/lib/semantic/dist/semantic.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
+  </head>
+  <body ng-app="app" ng-cloak>
+    <div class="ui container">
+      <h1 class="ui header medium">se-challenge-expenses</h1>
+      <form action="/api/expenses" method="post" enctype="multipart/form-data" class="ui form" ng-controller="ExpensesFormController as controller">
+        <p ng-hide="submitted">Hello! Please provide your CSV file in the form below.</p>
+        <div class="field">
+          <label>CSV File</label>
+          <input file-model="data.file" type="file" name="csv_file">
+        </div>
+        <p ng-show="submitted">Thanks! The data you submitted is in the table below.</p>
+        <table ng-show="submitted" class="ui table">
+          <thead>
+            <tr>
+              <th>
+                Month
+              </th>
+              <th>
+                Total Expenses (incl. tax)
+              </th>
+            </tr>
+          </thead>
+          <tr ng-repeat="month in months">
+            <td ng-bind="month.date | date : 'MMMM yyyy'"></td>
+            <td ng-bind="month.total.toFixed(2)"></td>
+          </tr>
+        </table>
+        <div ng-show="error" ng-class="{visible: error}" class="ui message error">
+          <p>An error occurred.</p>
+          <p ng-bind="error"></p>
+        </div>
+        <button type="button" class="ui button" ng-click="controller.submit()">Submit</button>
+      </form>
+    </div>
+    {% for path in js %}
+    <script type="text/javascript" src="{{ path }}"></script>
+    {% endfor %}
+  </body>
+</html>

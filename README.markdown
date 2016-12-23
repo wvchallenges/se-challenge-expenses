@@ -57,3 +57,16 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+# Instructions on how to build/run this application
+
+1. Install Node.js
+2. Install sqlite3
+3. Run `npm install` in the root of this project
+4. Run `npm start` and visit `locahost:3000`
+
+# What I'm proud of
+
+I like the structure of the project because it is relatively organized and is broken down into individual working pieces, which could be unit tested.
+
+I also liked that I used client-side JavaScript to submit the CSV file, as opposed to a vanilla HTML5 form, because it keeps the API decoupled from the frontend.
