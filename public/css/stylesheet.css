@@ -1,0 +1,9 @@
+body {
+  background: white;
+  overflow-y: scroll;
+  padding-top: 5rem;
+}
+
+.ui.container {
+  // max-width: 35rem !important;
+}
