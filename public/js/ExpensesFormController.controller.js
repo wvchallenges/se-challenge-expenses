@@ -19,8 +19,9 @@ angular.module('app').controller('ExpensesFormController', function($http, $scop
       }
     }).then(function(res) {
       $scope.expenses = res.data.expenses;
-      angular.forEach($scope.expenses, function(expense) {
-        expense.date = new Date(expense.date);
+      $scope.months = res.data.months;
+      angular.forEach($scope.months, function(month) {
+        month.date = new Date(month.date);
       });
       return $scope.expenses;
     }).then(function(expenses) {

@@ -7,9 +7,9 @@ module.exports = function(sequelize, DataTypes) {
     employee_name: DataTypes.STRING,
     employee_address: DataTypes.STRING,
     expense_description: DataTypes.STRING,
-    pretax_amount: DataTypes.DECIMAL,
+    pretax_amount: DataTypes.DOUBLE,
     tax_name: DataTypes.STRING,
-    tax_amount: DataTypes.DECIMAL
+    tax_amount: DataTypes.DOUBLE
   }, {
     classMethods: {
       associate: function(models) {

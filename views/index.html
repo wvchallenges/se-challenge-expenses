@@ -22,40 +22,16 @@
           <thead>
             <tr>
               <th>
-                Date
+                Month
               </th>
               <th>
-                Category
-              </th>
-              <th>
-                Employee Name
-              </th>
-              <th>
-                Employee Address
-              </th>
-              <th>
-                Expense Description
-              </th>
-              <th>
-                Pre-tax Amount
-              </th>
-              <th>
-                Tax Name
-              </th>
-              <th>
-                Tax Amount
+                Total Expenses (incl. tax)
               </th>
             </tr>
           </thead>
-          <tr ng-repeat="expense in expenses">
-            <td ng-bind="expense.date.toDateString()"></td>
-            <td ng-bind="expense.category"></td>
-            <td ng-bind="expense.employee_name"></td>
-            <td ng-bind="expense.employee_addresses"></td>
-            <td ng-bind="expense.expense_description"></td>
-            <td ng-bind="expense.pretax_amount"></td>
-            <td ng-bind="expense.tax_name"></td>
-            <td ng-bind="expense.tax_amount"></td>
+          <tr ng-repeat="month in months">
+            <td ng-bind="month.date | date : 'MMMM yyyy'"></td>
+            <td ng-bind="month.total.toFixed(2)"></td>
           </tr>
         </table>
         <div ng-show="error" ng-class="{visible: error}" class="ui message error">

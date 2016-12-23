@@ -29,13 +29,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       pretax_amount: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DOUBLE
       },
       tax_name: {
         type: Sequelize.STRING
       },
       tax_amount: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DOUBLE
       },
       createdAt: {
         allowNull: false,

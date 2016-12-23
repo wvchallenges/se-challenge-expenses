@@ -3,6 +3,7 @@ var Expense = models.Expense;
 var Request = models.Request;
 
 var parser = require('../middleware/parser.js');
+var monthify = require('../middleware/monthifier.js').monthify;
 
 var Q = require('q');
 var fs = require('fs');
@@ -52,10 +53,16 @@ module.exports = {
           return addExpenses(expenses);
         })
         .then(function(expenses) {
-          // return expenses on success
-          res.json({
-            expenses: expenses
+          return monthify(expenses).then(function(months) {
+            return {
+              expenses: expenses,
+              months: months
+            };
           });
+        })
+        .then(function(data) {
+          // return expenses on success
+          res.json(data);
         })
         .catch(function(error) {
           // if there are any errors provide an error message
