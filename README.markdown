@@ -15,7 +15,7 @@ php -S 0.0.0.0:4444
 
 2) In the main folder create 2 new folders called logs and uploads. Give these 2 folders read and write permissions.
 
-3) run composer (https://getcomposer.org/) to set up dependency vendor folder as well as autoload file.
+3) run composer (https://getcomposer.org/) by using command `php composer install` to set up dependency vendor folder as well as autoload file.
 
 4) set up SQL database by running the included sql/schema.sql file in local copy of mysql.
 
