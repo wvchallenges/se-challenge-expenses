@@ -31,7 +31,7 @@ php -S 0.0.0.0:4444
 
 1) This system needs to be running locally, as I did not deal with CORS. If you run the back on on a public system and the app locally you will hit cors errors. The system can handle them, but setting them up and testing was not in the scope of this code challenge.
 
-I am much more of a back end person that a front end person, although I am competant in both. I like this design because in a total separation of functionality, scalability is much easier. I went out of my way to follow the instructions, and so this specific app will only show the latest file that was uploaded, and not all of the aggregated data. Should that become a requirement in the future (as usually is the case with clients) this is easily created by adding a new service and a new query.
+I am much more of a back end person that a front end person, although I am competant in both. I like this design because in a total separation of functionality, scalability is much easier. I went out of my way to follow the instructions, and so this specific app will only show the latest file that was uploaded, and not all of the aggregated data. Should that become a requirement in the future (as usually is the case with clients) this is easily created by adding a new service and a new query. I have also made sure that the system will allow a Version2 of the code for future updates.
 
 This system does hande its own logging, and each new file uploaded is saved for future use. A timestamp has been added to the file to keep multiple copies of the same named file. Each employee is only ever added once, and the system is checking to make sure if the same accounting entry per day is unique. Uploading the sane file over and over will not add new items to the database.
 
