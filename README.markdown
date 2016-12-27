@@ -12,15 +12,23 @@ It is tested without Apache using php command line server running the command
 php -S 0.0.0.0:4444
 
 1) Clone the repo into any desired test space.
+
 2) In the main folder create 2 new folders called logs and uploads. Give these 2 folders read and write permissions.
+
 3) run composer (https://getcomposer.org/) to set up dependency vendor folder as well as autoload file.
+
 4) set up SQL database by running the included sql/schema.sql file in local copy of mysql.
+
 5) open class/Settings.class.php file, and modify to accomodate environment variables.
+
 6) run command `php -S 0.0.0.0:4444` in terminal to start the server
  
  #optional set up instructions
+
  7) included in folder postman is 2 export filesthat can be imported into postman to access the services without the use of the app. import this JSON files into postman. 
+
  8) go to manage environment (Gear icon in the top right corner), select the correct environment (TracyMAC wave) and change the siteUrl variable to be compatible with your exiting environment. Close Management tool.
+
  9) make sure you are using the correct environment in dropdown. you should see 3 services. The status service should tell you if the environment is set up correctly.
 
  Setting up the App:
@@ -29,7 +37,7 @@ php -S 0.0.0.0:4444
 
 #Notes on permissions
 
-1) This system needs to be running locally, as I did not deal with CORS. If you run the back on on a public system and the app locally you will hit cors errors. The system can handle them, but setting them up and testing was not in the scope of this code challenge.
+This system needs to be running locally, as I did not deal with CORS. If you run the back on on a public system and the app locally you will hit cors errors. The system can handle them, but setting them up and testing was not in the scope of this code challenge. Also, permissions on uploads and logs folders should be set to that the user running php has read and write permissions.
 
 I am much more of a back end person that a front end person, although I am competant in both. I like this design because in a total separation of functionality, scalability is much easier. I went out of my way to follow the instructions, and so this specific app will only show the latest file that was uploaded, and not all of the aggregated data. Should that become a requirement in the future (as usually is the case with clients) this is easily created by adding a new service and a new query. I have also made sure that the system will allow a Version2 of the code for future updates.
 
