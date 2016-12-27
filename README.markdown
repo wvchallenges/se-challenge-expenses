@@ -2,7 +2,38 @@
 
 #Build Instructions for this submission
 
-The system is seperated into 2 projects, a scalable backend REST service and a front end Angular 1 application.
+The system is The system is seperated into 2 projects, a scalable backend REST service and a front end Angular 1 application.
+
+Setting up the REST services:
+
+System is currently tested for: PHP 5.6.27, and mysql  Ver 14.14 Distrib 5.6.27.
+It is tested without Apache using php command line server running the command 
+
+php -S 0.0.0.0:4444
+
+1) Clone the repo into any desired test space.
+
+2) In the main folder create 2 new folders called logs and uploads. Give these 2 folders read and write permissions.
+
+3) run composer (https://getcomposer.org/) by using command `php composer install` to set up dependency vendor folder as well as autoload file.
+
+4) set up SQL database by running the included sql/schema.sql file in local copy of mysql.
+
+5) open class/Settings.class.php file, and modify to accomodate environment variables.
+
+6) run command `php -S 0.0.0.0:4444` in terminal to start the server
+ 
+ #optional set up instructions
+
+ 7) included in folder postman is 2 export files that can be imported into postman to access the services without the use of the app. import these JSON files into postman. 
+
+ 8) go to manage environment (Gear icon in the top right corner), select the correct environment (TracyMAC wave) and change the siteUrl variable to be compatible with your exiting environment. Close Management tool.
+
+ 9) make sure you are using the correct environment in dropdown. you should see 3 services. The status service should tell you if the environment is set up correctly.
+
+ Setting up the App:
+
+ 1) Use file open, and navigate to app/index.html file in any browser (tested in Chrome). into 2 projects, a scalable backend REST service and a front end Angular 1 application.
 
 Setting up the REST services:
 
