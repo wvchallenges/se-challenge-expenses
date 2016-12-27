@@ -25,7 +25,7 @@ php -S 0.0.0.0:4444
  
  #optional set up instructions
 
- 7) included in folder postman is 2 export filesthat can be imported into postman to access the services without the use of the app. import this JSON files into postman. 
+ 7) included in folder postman is 2 export files that can be imported into postman to access the services without the use of the app. import these JSON files into postman. 
 
  8) go to manage environment (Gear icon in the top right corner), select the correct environment (TracyMAC wave) and change the siteUrl variable to be compatible with your exiting environment. Close Management tool.
 
@@ -45,6 +45,7 @@ This system does hande its own logging, and each new file uploaded is saved for 
 
 I would like recomend some alterations to the functionality (for future consideration). The first is that you should be able to add an alteration or deletion to an entry. this can easily be added by not ignoring the duplicate entries.  The second is to add an aggregation screen to see entire years worth of accounting based on all uploaded files.
 
+#Original README content
 
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
