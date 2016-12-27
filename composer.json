@@ -1,0 +1,17 @@
+{
+    "name": "WAVE Tech test ",
+    "description": "Back end structure for Wave Tech Test",
+    "license": "unlicenced",
+
+    "require-dev": {
+        "phpunit/phpunit": "5.4.*"
+    },
+    "require": {
+        "slim/slim": "2.6.2",
+        "palanik/corsslim": "*"
+
+    },
+    "autoload": {
+        "classmap": ["class"]
+    }
+}

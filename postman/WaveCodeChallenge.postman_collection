@@ -1,0 +1,88 @@
+{
+	"id": "0cf63a6b-b7a9-0369-896f-e3bcded0242e",
+	"name": "WaveCodeChallenge",
+	"description": "",
+	"order": [
+		"cb7262ab-66cb-d0ed-33e1-96f0966b3d60",
+		"3c32078f-af8d-b551-4797-7878978dc5a0",
+		"74a2d208-7644-1812-79bb-dc4ab6489116"
+	],
+	"folders": [],
+	"timestamp": 1482512642983,
+	"owner": "442670",
+	"public": false,
+	"requests": [
+		{
+			"id": "3c32078f-af8d-b551-4797-7878978dc5a0",
+			"headers": "",
+			"url": "{{siteUrl}}/v1/feedhopper/employeeSpending",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "feedHopperFile",
+					"value": "data_example.csv",
+					"type": "file",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1482524001474,
+			"name": "upload File",
+			"description": "",
+			"collectionId": "0cf63a6b-b7a9-0369-896f-e3bcded0242e"
+		},
+		{
+			"id": "74a2d208-7644-1812-79bb-dc4ab6489116",
+			"headers": "",
+			"url": "{{siteUrl}}/v1/latestEmployeeSpendingData",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "feedHopperFile",
+					"value": "data_example.csv",
+					"type": "file",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1482538111499,
+			"name": "get Latest Data",
+			"description": "",
+			"collectionId": "0cf63a6b-b7a9-0369-896f-e3bcded0242e"
+		},
+		{
+			"id": "cb7262ab-66cb-d0ed-33e1-96f0966b3d60",
+			"headers": "",
+			"url": "{{siteUrl}}/v1/status",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "feedHopperFile",
+					"value": "data_example.csv",
+					"type": "file",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1482538063987,
+			"name": "status",
+			"description": "",
+			"collectionId": "0cf63a6b-b7a9-0369-896f-e3bcded0242e"
+		}
+	]
+}
