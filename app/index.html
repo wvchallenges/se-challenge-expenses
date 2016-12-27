@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Wave Test</title>
+    <script src="scripts/angular.min.js"></script>
+
+    <script type="text/javascript" src="app.module.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+    <script type="text/javascript" src="directives.js"></script>
+    <script type="text/javascript" src="services.js"></script>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+
+</head>
+<body ng-controller="FileUploadController">
+
+        <h2>Upload CSV</h2>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="myFileField">Select a file: </label>
+                        <input type="file" file-model="myFile"  class="form-control" id ="myFileField"/>
+                    </div>
+                    <button ng-click="uploadFile()" class = "btn btn-primary">Upload File</button>
+                </form>
+            </div>
+        </div>
+
+    <h3 ng-if="showUpload === false">Current Data</h3>
+        <div ng-repeat="(key, items)  in latestData">
+            <h3>{{key}}</h3>
+            <table class="table">
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Total</th>
+                </tr>
+                <tr ng-repeat="item in items" title="Pre-tax: {{item.pretax}}, Tax: {{item.taxAmount}}, type: {{taxType}}">
+                    <td>{{item.expenditureDate}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.category}}</td>
+                    <td>{{item.description}}</td>
+                    <td >${{item.total}}</td>
+                </tr>
+                <tr >
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL</td>
+                    <td >${{getTotal(key)}}</td>
+                </tr>
+            </table>
+        </div>
+
+</body>
+</html>
