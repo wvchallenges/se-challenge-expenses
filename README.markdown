@@ -20,7 +20,7 @@ run `./app.py` to start the server
 visit the app at [http://localhost:8080/]()
 
 
-# comments
+# Comments
 - I feel like the models are setup nicely, and can be extended easily for additional functionality. 
 - Might have put an index on Employee.name, but there is no use for that presently.
 - Some questionable decisions are the rest of the functions in the file;
