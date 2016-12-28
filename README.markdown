@@ -3,10 +3,10 @@ Python Dependencies:
 - bottle
 - sqlalchemy
 
-If python 2.7 has not been installed:
+If pip or python 2.7 has not been installed:
 ```
-sudo brew install pip
-sudo brew install python
+sudo brew install pip || sudo apt-get install python-pip
+sudo brew install python 
 ```
 Install dependencies:
 ```
@@ -15,7 +15,7 @@ sudo pip install sqlalchemy
 ```
 
 # Running locally:
-run `./app.py` to start the server
+run `./app.py` to start the server (may need to `chmod +x app.py`)
 
 visit the app at [http://localhost:8080/]()
 
