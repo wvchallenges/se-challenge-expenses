@@ -1,4 +1,4 @@
-CVSConverter 0.1.0
+CSVConverter 0.1.0
 ==============
 
 Description
