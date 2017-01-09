@@ -1,0 +1,34 @@
+<!doctype html>
+<html ng-app="appRootModule" ng-strict-di>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Wave Expense Manager</title>
+    <link rel="stylesheet" href="app.css">
+  </head>
+  
+  <body>
+    <approot></approot>
+    
+    <!-- Vendor libraries -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    
+    <!-- Application code -->
+    <script src="./app.module.js"></script>
+    <script src="./app.component.js"></script>
+    <script src="./common/common.module.js"></script>
+    <script src="./common/nav.component.js"></script>
+    <script src="./common/nav.controller.js"></script>
+    <script src="./components/components.module.js"></script>
+    <script src="components/upload/upload.component.js"></script>
+    <script src="components/upload/upload.controller.js"></script>
+    <script src="components/result/result.component.js"></script>
+    <script src="components/result/result.controller.js"></script>
+    <script src="components/expense.service.js"></script>
+  </body>
+  
+</html>

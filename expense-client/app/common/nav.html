@@ -1,0 +1,10 @@
+<div class="w-nav-bar">
+  <ul>
+    <li ng-repeat="operation in $ctrl.operations">
+      <button ng-click="$ctrl.navigateTo(operation.state)">{{ operation.label }}</button>
+    </li>
+  </ul>
+</div>
+<div class="w-content-area">
+  <div ui-view></div>
+</div>
