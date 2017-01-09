@@ -1,3 +1,7 @@
+# Note to Reviewer
+
+Implementation details and instructions are appended at the very end of this readme file.
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
@@ -57,3 +61,63 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+## Project Solution
+
+### Application Design
+
+The application is built as 2 parts separating the front-end and back-end portions.
+
+1. A REST API backend service
+2. A Client UI app built as a Single Page App
+
+The backend service is implemented in Java using Spring Boot. H2 database that is bundled within Spring Boot is used for storage.
+
+The front-end UI app is built with Angular and communicates over REST with the backend service.
+
+### Pre-requisites
+
+The implementation requires Java, Maven, Node, NPM, and Bower. If needed, refer to the following websites to install them.
+
+http://www.oracle.com/technetwork/java/javase/overview/index.html
+http://maven.apache.org
+https://nodejs.org
+https://bower.io/
+
+The H2 database does not require separate installation.
+
+
+### Installation, Build, and Execution
+
+The git repo has 2 modules
+
+A. /expense-service/
+B. /expense-client/
+
+#### First, build and run the /expense-service/ using:
+
+1. cd into /expense-service/ folder that contains the pom.xml file.
+2. Run 'mvn install'.
+3. Run 'java -jar target/expense-service-1.0.jar'
+
+
+This will run the backend service application. Note: When step 2 successfully runs, it would have created the /target/ folder and the executable .jar file inside it.
+
+#### Second, build and run the /expense-client/ using:
+
+1. Run 'npm start'.
+2. Go to 'http://localhost:8000/' in the browser to view the application.
+
+Note: The first time 'npm start' is run, it may take some time to download and install the dependencies. The 'npm start' command is configured to automatically invoke 'npm install' and 'bower install'.
+
+#### Terminating the application
+
+On the console, type 'Ctrl+C' and press enter to terminate each of the above.
+
+#### Additional notes
+
+The first time the application is run, a 'projectdatabase' folder will be creaed inside the /expense-service/ directory to store the data. Each time the application is restarted, the database will be reinitialized and all previous data will be erased.
+
+This can be changed to persist the data between restarts. But I've not included additional instructions considering the present implementation sufficient for the purposes for this exercise.
+
+Only minimal error handling is provided. Further details are left to be discussed at a later point.

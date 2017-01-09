@@ -1,0 +1,7 @@
+<h2>File Upload</h2>
+
+<p ng-if="$ctrl.isSuccess != true">{{ $ctrl.statusMessage }}</p>
+
+<p>Choose the data file from your computer and then click the upload button:
+  <input type="file" name="expenseFile" id="expenseFile" enctype="multipart/form-data" class="w-upload"></p>
+<button ng-click="$ctrl.uploadFile();" name="Upload File" class="w-button">Upload the file</button>

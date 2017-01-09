@@ -1,0 +1,60 @@
+.w-nav-bar ul, li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.w-nav-bar ul > li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.w-nav-bar ul > li > button {
+  font-size: 18px;
+  background-color: chocolate;
+  color: white;
+  padding: 10px 40px;
+}
+
+.w-nav-bar ul > li > button:hover {
+  cursor: pointer;
+  background-color: darkorange;
+}
+
+input.w-upload {
+  color: blue;
+  font-size: 16px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+button.w-button {
+  font-size: 14px;
+  padding: 8px 10px;
+  background-color: darkseagreen;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+}
+button.w-button: hover {
+  background-color: yellow;
+}
+
+body {
+  font-family: Arial;
+  font-size: 16px;
+}
+
+th, td {
+  font-size: 14px;
+  min-width: 150px;
+  padding: 8px;
+  background: aliceblue;
+}
+
+th {
+  background-color: cornflowerblue;
+  font-weight: normal;
+  text-align: left;
+  color: white;
+}

@@ -1,0 +1,19 @@
+<h2>Expense Report</h2>
+
+<p>{{ $ctrl.statusMessage }}</p>
+<p ng-if="$ctrl.isSuccess">Here is the monthly expenses report. Note that the generated report will be empty if no data is loaded in the database yet.</p>
+
+<table ng-if="$ctrl.isSuccess">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Total Expenses</th>
+    </tr>
+  </thead>
+  <tr ng-repeat="record in $ctrl.records">
+    <td>{{ record[0] }}</td>
+    <td>{{ record[1] }}</td>
+    <td>{{ record[2] | number: 2 }}</td><!-- Angular filter formats number as text with 2 decimal places -->
+  </tr>
+</table>
