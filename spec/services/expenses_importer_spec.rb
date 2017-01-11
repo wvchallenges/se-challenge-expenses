@@ -23,4 +23,14 @@ describe ExpensesImporter do
       expect{ importer.import }.to_not change{ Expense.count }
     end
   end
+
+  describe '#allowed_format?' do
+    it 'accepts csv files' do
+      expect(ExpensesImporter.allowed_format?('file.csv')).to be(true)
+    end
+
+    it 'rejects csv files' do
+      expect(ExpensesImporter.allowed_format?('file.exe')).to be(false)
+    end
+  end
 end
