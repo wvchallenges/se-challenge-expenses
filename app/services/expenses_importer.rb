@@ -1,6 +1,9 @@
 require 'csv'
 
 class ExpensesImporter
+
+  ACCEPTED_FORMATS = %w(.csv)
+
   def initialize(file_content: nil)
     @expenses = CSV.parse(file_content, headers: true)
   end
@@ -16,6 +19,10 @@ class ExpensesImporter
     uploaded_expenses.map(&:id)
   rescue ActiveRecord::RecordInvalid => e
     []
+  end
+
+  def self.allowed_format?(file_name)
+    ACCEPTED_FORMATS.include? File.extname(file_name)
   end
 
   private

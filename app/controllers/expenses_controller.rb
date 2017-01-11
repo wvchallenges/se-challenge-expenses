@@ -1,4 +1,5 @@
 class ExpensesController < ApplicationController
+  before_filter :check_file_format, only: :create
   before_filter :clear_session, only: :create
 
   def index
@@ -23,6 +24,13 @@ class ExpensesController < ApplicationController
   end
 
   private
+
+  def check_file_format
+    unless params['expenses_file'].present? && ExpensesImporter.allowed_format?(params['expenses_file'].original_filename)
+      flash[:error] = "The formats accepted are: #{ExpensesImporter::ACCEPTED_FORMATS.join(',')}"
+      redirect_to action: :new
+    end
+  end
 
   def clear_session
     session['uploaded_expenses'] = nil
