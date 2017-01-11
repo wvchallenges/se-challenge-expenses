@@ -1,0 +1,4 @@
+<%= form_tag(expenses_path, multipart: true) do %>
+  <%= file_field_tag 'expenses_file' %>
+  <%= button_tag 'Upload' %>
+<% end %>
