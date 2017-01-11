@@ -1,2 +1,13 @@
 <h3>Expenses Summary</h3>
-
+<table>
+  <tr>
+    <th>Month</th>
+    <th>Total Expenses</th>
+  </tr>
+  <% @expenses.each do |month, month_total| %>
+    <tr class='expense-row'>
+      <td><%= month %></td>
+      <td><%= month_total.to_s %></td>
+    </tr>
+  <% end %>
+</table>

@@ -35,7 +35,7 @@ class ExpenseData
   def parse_value(value, type)
     case type
     when :decimal
-      value.to_d
+      value.gsub(',','').to_d
     when :date
       DateTime.strptime(value, '%m/%d/%Y')
     else

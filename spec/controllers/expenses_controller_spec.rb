@@ -21,4 +21,11 @@ RSpec.describe ExpensesController do
       expect(response).to redirect_to(root_path)
     end
   end
+
+  describe 'GET index' do
+    it 'should get index' do
+      get :index
+      expect(response).to be_success
+    end
+  end
 end

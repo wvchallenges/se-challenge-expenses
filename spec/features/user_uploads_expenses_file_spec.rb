@@ -8,6 +8,7 @@ feature 'User uploads expenses file' do
     click_button 'Upload'
 
     expect(page).to have_content('Expenses Summary')
+    expect(page).to have_css('.expense-row', count: 6)
   end
 
   scenario 'Invalid and is redirected back to upload page with error message' do
