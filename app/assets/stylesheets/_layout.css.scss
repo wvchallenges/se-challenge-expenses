@@ -1,0 +1,23 @@
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-size: 17px;
+  padding: 20px;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.content {
+  width: 100%;
+  text-align: center;
+}

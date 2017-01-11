@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SeChallengeExpenses</title>
+    <title>Expenses Importer</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,9 +9,14 @@
   </head>
 
   <body class="body <%= controller_name %>-control <%= action_name %>-action">
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
-    <% end %>
-    <%= yield %>
+    <header>
+      <%= link_to 'EXPENSES IMPORTER', root_path %>
+    </header>
+    <div class="content">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

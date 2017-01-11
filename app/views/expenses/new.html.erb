@@ -1,4 +1,7 @@
+<h2>Import Expenses</h2>
+
 <%= form_tag(expenses_path, multipart: true) do %>
   <%= file_field_tag 'expenses_file' %>
+  <br><br>
   <%= button_tag 'Upload' %>
 <% end %>
