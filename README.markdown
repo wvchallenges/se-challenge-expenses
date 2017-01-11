@@ -1,59 +1,25 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+# README
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+This is my submission to the Wave Software Development Challenge.
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+During the development process I made a few decisions based on assumptions. Also, there are many things that I wish I could have added to my solution, but because of the short amount of time that I had to implement it I couldn’t. I’d love to talk about this all in person :-)
 
-Please use whatever programming language and framework you feel the most comfortable with.
+I’m proud of a few things in my implementation (and obviously not proud of others - please ignore the ugly UI and bad UX). I like how I organized the classes and split responsibilities: besides the main models (Category, Tax, Employee and Expense) I also created the ExpenseData model to represent an expense row from the uploaded file, and the ExpensesImporter service that is responsible for reading the file and creating the records. One thing that I really like about my solution is that the records parsed from the uploaded file are all created inside a transaction, which means that if the processing fails it will rollback and not add anything to the database (thus there is no confusion about what got processed and what didn’t - the user can simply start from scratch). I also like how I kept the methods short and the controller clean - managing the application flow and not business logic, and the fact that I added a (relatively) good test coverage.
 
-Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+I’m also proud of my keen eye because I think I found a small mistake on your spreadsheet (data_example.csv). Every row that has a CA Sales Tax has a tax percentage of 7.5%. The NY Salex Tax rows have 8.8% except for one of them (the “Client dinner” one) that has 7.5% - this one was probably calculated wrong, as if it was CA. Maybe this was intentional or isn’t really a mistake but I wanted to take the opportunity to show that I’m good with details!
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+### Setup
 
-### What your web-based application must do:
+This project was developed using `Ruby 2.3.1` and `Rails 5.0.1`. It uses the default `SQLite3` database for simplicity.
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
+Run `bundle install` to install the required gems.
+Run `bundle exec rails db:setup` to set up the database.
 
- An example input file named `data_example.csv` is included in this repo.
+### Run the app
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+`bundle exec rails server`
+Then go to `http://localhost:3000` to access it.
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+### Run the test suite
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
-
-### Documentation:
-
-Please modify `README.md` to add:
-
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
-
-## Submission Instructions
-
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
-
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
-
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
-
-1. Did you follow the instructions for submission? 
-1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
-1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
-1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+`bundle exec rspec`
