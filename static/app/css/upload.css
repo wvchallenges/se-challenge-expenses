@@ -1,0 +1,7 @@
+table .expense-per-month td {
+	text-align:center;
+}
+
+label .file-upload {
+	background-color:red;
+}
