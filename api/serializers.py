@@ -63,7 +63,6 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         print ("inside the crete ")
         print(self.__dict__)
         print(validated_data)
-        print(validated_data.__dict__)
         return ExpenseCatagory(**validated_data)
 
 
