@@ -64,7 +64,7 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         print (expense_catagory)
         if len(expense_catagory):
             return expense_catagory[0]
-        ret = ExpenseCatagory(catagory=validated_data["catagory"])
+        ret = ExpenseCatagory(catagory=validated_data["catagory"]).save()
         print (ret)
         return ret
 
