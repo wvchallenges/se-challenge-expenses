@@ -18,4 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include('api.urls')),
+    url(r'^app/', include('app.urls')),
+    url(r'^upload/$', FileUploadView.as_view()),
 ]
