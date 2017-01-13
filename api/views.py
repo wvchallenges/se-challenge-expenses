@@ -1,8 +1,6 @@
 from .serializers import AddressSerializer, AddressTypeSerializer, EmployeeSerializer, EmployeeAddressSerializer, ExpenseSerializer, ExpenseCatagorySerializer, TaxCodeSerializer, UserSerializer
 from .models import Address, AddressType, Employee, EmployeeAddress, Expense, ExpenseCatagory, TaxCode
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.decorators import detail_route, list_route
-from django.db.models.functions import TruncMonth
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -23,7 +21,6 @@ class FileUploadView(APIView):
             for chunk in my_file.chunks():
                 temp_file.write(chunk)
 
-        my_saved_file = open(filename) #there you go
         return Response({},status=status.HTTP_201_CREATED)
 
     def generic_create(self, serializer_type, data):
@@ -40,13 +37,12 @@ class FileUploadView(APIView):
             generic_serializer = EmployeeSerializer(data=data,many=True)
         elif serializer_type == "employee_address":
             generic_serializer = EmployeeAddressSerializer(data=data,many=True)
-        print (generic_serializer)
         try:
-            print(generic_serializer.is_valid(raise_exception=True))
+            generic_serializer.is_valid(raise_exception=True)
             generic_serializer.save()
-        except Exception as ex:
-            print ("WE HAVE AN EXCEPTION")
+        except Exception as ex:            
             print (str(ex))
+
         return generic_serializer
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -62,7 +58,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
    
 class EmployeeViewSet(viewsets.ModelViewSet):
-    queryset = Employee.objects.all().select_related('local_user')
+    queryset = Employee.objects.all().select_related()
     model = Employee
     serializer_class = EmployeeSerializer
     permission_classes = ()
