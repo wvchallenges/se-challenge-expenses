@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
-from .views import Index, FileUploadView, AddressViewSet, AddressTypeViewSet, EmployeeViewSet, EmployeeAddressViewSet, ExpenseViewSet, ExpenseCatagoryViewSet, TaxCodeViewSet, UserViewSet
+from .views import FileUploadView, AddressViewSet, AddressTypeViewSet, EmployeeViewSet, EmployeeAddressViewSet, ExpenseViewSet, ExpenseCatagoryViewSet, TaxCodeViewSet, UserViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet, base_name='User')
