@@ -20,12 +20,12 @@ function upload_viewModel(upload_view_obj)
     }, self);
     
     self.enable_upload = ko.computed(function() {
-        return self.uploaded && self.expenses_per_month().length == 0;
+        return self.uploaded() && self.expenses_per_month().length == 0;
     }, self);
 
     console.log(self.enable_upload())
     console.log(self.uploaded())
-    console.log((self.uploaded && self.expenses_per_month().length == 0));
+    console.log((self.uploaded() && self.expenses_per_month().length == 0));
     self.file_select = function(vm, evt){
         console.log(vm, evt);
         console.log(evt.target.value);
