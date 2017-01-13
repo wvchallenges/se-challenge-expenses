@@ -1,0 +1,36 @@
+---
+- name: Install postgres and psycopg2
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - python-psycopg2 # Required for Ansible to interact with postgres
+    - postgresql
+
+- name: Install libpg-dev
+  apt: pkg=libpq-dev state=installed update_cache=true
+
+- name: Deply pg_hba.conf
+  template: src=pg_hba.conf dest=/etc/postgresql/9.5/main/pg_hba.conf
+
+- name: Deply postgresql.conf
+  template: src=postgresql.conf dest=/etc/postgresql/9.5/main/postgresql.conf
+  notify: Restart postgresql
+
+- name: Create Database user
+  postgresql_user: name={{appUser}} password={{appDBPass}} role_attr_flags=NOCREATEDB,NOSUPERUSER,NOCREATEROLE
+  become: yes
+  become_user: postgres
+
+- name: kill Database
+  postgresql_db: name={{appDBName}} owner={{appUser}} state=absent
+  become: yes
+  become_user: postgres
+  tags:
+    - dropdb
+    - redeploy
+
+- name: Create Database
+  postgresql_db: name={{appDBName}} owner={{appUser}}
+  become: yes
+  become_user: postgres
+  tags:
+    - redeploy

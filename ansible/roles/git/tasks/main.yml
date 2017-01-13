@@ -1,0 +1,17 @@
+---
+- name: Install git
+  apt: pkg=git state=installed update_cache=true
+
+- name: Create Git User
+  user: name={{gitUser}} comment=applicationUser groups={{appGroup}} createhome=yes
+
+- name: Create application user password
+  user: name={{gitUser}} password={{gitPass}}
+
+- name: Create .ssh dir for git user
+  file: path={{gitSSHPath}} state=directory owner={{gitUser}} group={{gitUser}}
+  become: yes
+  become_user: "{{gitUser}}"
+
+- name: Copy SSH key
+  copy: src={{privateGitSSHPath}} dest={{gitSSHPath}}/id_rsa owner={{gitUser}} group={{gitUser}} mode=600

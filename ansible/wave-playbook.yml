@@ -1,0 +1,13 @@
+---
+- name: wave-playbook
+  hosts: "{{ target }}"
+  user: wave-admin
+  become: yes
+  become_method: sudo
+
+  roles:
+    - server_setup
+    - git
+    - nginx
+    - postgres
+    - application

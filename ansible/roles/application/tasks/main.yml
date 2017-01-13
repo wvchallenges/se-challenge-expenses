@@ -1,0 +1,85 @@
+---
+- name: ensure known_hosts is up to date
+  lineinfile:
+    dest: /home/{{gitUser}}/.ssh/known_hosts
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -p {{gitRemotePort}} {{gitRemote}}') }}"
+    regexp: "^{{gitRemote}}"
+  become: yes
+  become_user: "{{gitUser}}"
+
+- name: Clean local repo changes
+  command: git reset --hard HEAD
+  args:
+    chdir: "{{appRootPath}}"
+  become: yes
+  become_user: "{{gitUser}}"
+  ignore_errors: yes
+  tags:
+    - sync
+
+- name: Sync down software
+  git: repo={{appGitUrl}} dest={{appSyncPath}} version={{appBranch}} accept_hostkey=yes
+  notify: Restart uwsgi
+  become: yes
+  become_user: "{{gitUser}}"
+  tags:
+    - sync
+
+- name: Deploy database settings
+  template: src=local_settings.py dest={{appRootPath}}/wave_test/
+  tags:
+    - sync
+
+- name: Own app dir
+  file: path={{webappsPath}} state=directory owner={{appUser}} group={{appGroup}} recurse=yes
+
+- name: Chmod dirs in /webapps/
+  command: find {{webappsPath}} -type d -exec chmod 775 {} \;
+
+- name: Chmod files in /webapps/
+  command: find {{webappsPath}} -type f -exec chmod 664 {} \;
+
+- name: Chmod manage.py
+  file: path={{appRootPath}}/manage.py mode=775
+  become: yes
+  become_user: "{{appUser}}"
+
+- name: Create virtualenv
+  command: virtualenv {{pipVirtualenvPath}} --no-site-packages
+  become: yes
+  become_user: "{{appUser}}"
+
+- name: Install python packages
+  pip: requirements={{pipRequirmentsPath}} virtualenv={{pipVirtualenvPath}}
+  become: yes
+  become_user: "{{appUser}}"
+
+- name: Run the Django makemigrations command
+  django_manage:
+    command="makemigrations"
+    app_path={{appRootPath}}
+    virtualenv={{ pipVirtualenvPath }}
+  become: yes
+  become_user: "{{appUser}}"
+  tags:
+    - migrate
+
+- name: Run Django database migrations
+  django_manage:
+    command=migrate
+    app_path={{appRootPath}}
+    virtualenv={{ pipVirtualenvPath }}
+  notify: Restart uwsgi
+  become: yes
+  become_user: "{{appUser}}"
+  tags:
+    - migrate
+
+- name: Deploy initial database data
+  shell: "cat {{appRootPath}}/initial_data.py | {{pipVirtualenvPath}}/bin/python {{appRootPath}}/manage.py shell"
+  become: yes
+  become_user: "{{appUser}}"
+  tags:
+    - redeploy
