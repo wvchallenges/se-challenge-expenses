@@ -8,10 +8,10 @@
 - name: Create application user password
   user: name={{gitUser}} password={{gitPass}}
 
-- name: Create .ssh dir for git user
-  file: path={{gitSSHPath}} state=directory owner={{gitUser}} group={{gitUser}}
-  become: yes
-  become_user: "{{gitUser}}"
+# - name: Create .ssh dir for git user
+#   file: path={{gitSSHPath}} state=directory owner={{gitUser}} group={{gitUser}}
+#   become: yes
+#   become_user: "{{gitUser}}"
 
-- name: Copy SSH key
-  copy: src={{privateGitSSHPath}} dest={{gitSSHPath}}/id_rsa owner={{gitUser}} group={{gitUser}} mode=600
+# - name: Copy SSH key
+#   copy: src={{privateGitSSHPath}} dest={{gitSSHPath}}/id_rsa owner={{gitUser}} group={{gitUser}} mode=600
