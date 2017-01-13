@@ -8,7 +8,7 @@ appRootPath: "{{ webappsPath }}/wave-test1"
 appAppPath: "{{ appRootPath }}/app"
 appSyncPath: "{{ appRootPath }}/."
 appGitUrl: https://github.com/teh-syntax/se-challenge-expenses.git
-appBranch: f_001_initial_setup
+appBranch: f_003_backend_app
 gitUser: wave-sync
 gitPass: $6$yVVtz8jHe0zL0K7c$CrgckNLtQYoy.xM0zdEi95AXWhRlX8DCE1ep6b/2nU3HyYdeHtYhwGBjUmV0vdBUXWSoE0VVkMpyoDyS1.k9n/
 gitSSHPath: "/home/{{ gitUser }}/.ssh"
