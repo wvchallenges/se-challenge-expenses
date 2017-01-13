@@ -66,7 +66,7 @@
                 <tbody data-bind="foreach:expenses_per_month()">
                     <tr>
                         <td data-bind="text:month"></td>
-                        <td data-bind="text:expenses_total.formatMoney()"></td>
+                        <td data-bind="text:'$'+expenses_total.formatMoney()"></td>
                     </tr>
                 </tbody>
             </table>
