@@ -30,7 +30,7 @@ function get_json_async_from_server(url, data, success, fail)
         data: data,
         async: true,
         success: success,
-        fail: fail
+        error: fail
     });
 }
 
