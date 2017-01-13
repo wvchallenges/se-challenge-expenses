@@ -44,7 +44,7 @@
                 Browse <input data-bind="event:{ change: file_select }" id="testing" name="datafile" type="file" class="hidden">
             </label>
             <label class="well well-sml file-upload" data-bind="text:file_name"></label>
-            <button type="button" class="btn btn-success pull-right" data-bind="click:file_upload, enable:uploaded && expenses_per_month.length == 0" > Load Expenses </button>
+            <button type="button" class="btn btn-success pull-right" data-bind="click:file_upload, enable:enable_upload" > Load Expenses </button>
             </div>
         </form>
     </div>
