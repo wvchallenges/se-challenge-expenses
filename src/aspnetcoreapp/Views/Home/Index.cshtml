@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewData["Description"] = "The home page of my website";
+}
+
+@if(ViewData["error"]!=null)
+    { 
+    @if(!string.IsNullOrEmpty(ViewData["error"].ToString())) 
+      {
+          <p>There was an error:</p>
+        <p>@ViewData["error"]</p>
+       }
+    }
+ 
+
+<form action="Home/Upload" method="post" enctype="multipart/form-data">
+
+    <label for="file">Filename:</label>
+    <input type="file" name="file" id="file" />
+
+    <input type="submit" value="Upload" />
+</form>
+
+@section Scripts {
+    @*Insert any script tags for this page here*@
+}
