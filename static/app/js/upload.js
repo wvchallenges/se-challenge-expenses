@@ -58,7 +58,7 @@ function upload_viewModel(upload_view_obj)
     }
 
     self.process_file_fail = function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
+        self.error_message("Failed to process expense file")    
     }
 
     self.get_expenses = function(){
