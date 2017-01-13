@@ -34,7 +34,7 @@ class ProcessExpenseFile(View):
 
     def get(self, request):
         TWOPLACES = Decimal(10) ** -2 #use to format
-        print("Holy fuck balls")
+        error_str = ""
         file_lines = None
         with open('/webapps/wave-test1/upload/expenses.csv') as f:
             file_lines = f.readlines()
@@ -42,7 +42,6 @@ class ProcessExpenseFile(View):
         output = dict(addresses=[], employees=[], tax_codes=[], expenses=[], expense_catagories=[], employee_addresses=[])
         helper_obj = HelperFunctions()
         address_type_obj = AddressType.objects.get(pk=1)
-        print (file_lines)
         for w, line in enumerate(file_lines):
             if w == 0:
                 continue
@@ -72,12 +71,15 @@ class ProcessExpenseFile(View):
                 if i == 3:
                     #\s(.+):\s(.+):\s(.+)\s(\d{5})
                     match = re.search(r'''^"(\d+)\s(.+):\s(.+):\s(.+)\s(\d{5})''', cell)
-                    try:
-                        address = output["addresses"].index(dict(line1=str(match.group(1) + ' ' + match.group(2)), line2="test", city=match.group(3), state=match.group(4), country='US', postal_code=match.group(5), address_type=address_type_obj.pk))
-                        line_state["address"] = address
-                    except Exception as ex:
-                        output["addresses"].append(dict(line1=str(match.group(1) + ' ' + match.group(2)), line2="test", city=match.group(3), state=match.group(4), country='US', postal_code=match.group(5), address_type=address_type_obj.pk))
-                        line_state["address"] = len(output["addresses"]) -1
+                    if match is None:
+                        error_str += "Problem processing address - " + cell
+                    else:
+                        try:
+                            address = output["addresses"].index(dict(line1=str(match.group(1) + ' ' + match.group(2)), line2="test", city=match.group(3), state=match.group(4), country='US', postal_code=match.group(5), address_type=address_type_obj.pk))
+                            line_state["address"] = address
+                        except Exception as ex:
+                            output["addresses"].append(dict(line1=str(match.group(1) + ' ' + match.group(2)), line2="test", city=match.group(3), state=match.group(4), country='US', postal_code=match.group(5), address_type=address_type_obj.pk))
+                            line_state["address"] = len(output["addresses"]) -1
                 if i == 6:
                     try:
                         tax_code = output["tax_codes"].index(dict(code=cell, percentage=0))
@@ -120,7 +122,7 @@ class ProcessExpenseFile(View):
         print(output)
         #print(json.dumps(output))
         self.bulk_expense_create(output)
-        return  HttpResponse(json.dumps({"status": "success"}), content_type = "application/json")
+        return  HttpResponse(json.dumps({"status": "success", "errors": error_str}), content_type = "application/json")
 
     def bulk_expense_create(self, payload):
         print('Is anything happening')
