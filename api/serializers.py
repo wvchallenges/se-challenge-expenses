@@ -28,12 +28,28 @@ class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
         model = Employee
         fields = ('pk', 'username', 'created', 'updated', 'is_active')
 
+    def create(self, validated_data):
+        employee = Employee.objects.filter(**validated_data)
+        if len(employee):
+            return employee[0]
+        employee_obj = Employee.objects.create(**validated_data)
+        employee_obj.save()
+        return employee_obj
+
 
 class AddressTypeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = AddressType
         fields = ('pk', 'address_type')
+
+    def create(self, validated_data):
+        address_type = AddressType.objects.filter(**validated_data)
+        if len(address_type):
+            return address_type[0]
+        address_type_obj = AddressType.objects.create(**validated_data)
+        address_type_obj.save()
+        return address_type_obj
 
 
 class AddressSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,6 +59,14 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
         model = Address
         fields = ('pk', 'line1', 'line2', 'country', 'state', 'city', 'postal_code', 'address_type')
 
+    def create(self, validated_data):
+        address = Address.objects.filter(**validated_data)
+        if len(address):
+            return address[0]
+        address_obj = Address.objects.create(**validated_data)
+        address_obj.save()
+        return address_obj
+
 
 class EmployeeAddressSerializer(serializers.HyperlinkedModelSerializer):
     address = serializers.SlugRelatedField(slug_field='pk',required=True,queryset=Address.objects.all().select_related('address_type'))
@@ -51,6 +75,15 @@ class EmployeeAddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = EmployeeAddress
         fields = ('pk', 'address', 'employee')
+
+    def create(self, validated_data):
+        employee_address = EmployeeAddress.objects.filter(**validated_data)
+        if len(employee_address):
+            return employee_address[0]
+        employee_address_obj = EmployeeAddress.objects.create(**validated_data)
+        employee_address_obj.save()
+        return employee_address_obj
+
 
 
 class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
@@ -74,6 +107,14 @@ class TaxCodeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TaxCode
         fields = ('pk', 'code', 'percentage')
+
+    def create(self, validated_data):
+        tax_code = TaxCode.objects.filter(**validated_data)
+        if len(tax_code):
+            return tax_code[0]
+        tax_code_obj = TaxCode.objects.create(**validated_data)
+        tax_code_obj.save()
+        return tax_code_obj
 
 
 class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
