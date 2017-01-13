@@ -33,8 +33,35 @@ There are many ways that this application could be built; we ask that you build 
 
 Please modify `README.md` to add:
 
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+### Instructions to Build/Run application
+
+I developed this on Ubuntu 16.04 using dotnet core (using Visual Studio Code if you're interested)
+
+See the following for instructions on how to install dotnet core on Ubuntu. There are also Mac instructions as well as other Linux distro instructions. 
+
+https://www.microsoft.com/net/core#linuxubuntu
+
+Complete step 1 to set up the dotnet core apt-get feed
+
+Complete step 2 to install dotnet core
+
+Clone the repository and then navigate inside the se-challenge-expenses folder.
+
+Run the command 'dotnet restore'
+
+Navigate to the se-challenge-expenses/src/aspnetcoreapp
+
+Run the command 'dotnet run'
+
+The 'dotnet run' command should give a url to navigate to. Usually it is http://localhost:5000
+
+This project uses SQLite, .NET Core Platform, ASP.NET Core MVC framework, and Dapper.NET micro ORM 
+
+### Implementation thoughts
+
+This was an interesting project for me. I'm a .NET developer but I haven't used the .NET core platform or the ASP.NET Core web framework before. Most of my time was spent setting things up on linux and getting to know the new platform. Once I had things working it was a case of searching around for where all my familiar libraries had been moved to. So the part of this project I enjoyed the most was getting the new stack up and running on linux.
+
+The ASP.NET core (web framework) has a well defined template for starting a project and separating the concerns of the application. I chose to use a simple model, Expense, to represent the data going into the database. I used a simple viewmodel, ExpenseReportViewModel, to represent the data that is queried from the database and displayed in the expense report. If the project expanded I might think about breaking up the Expense model. I would break up the model to represent an Employee, Tax, and Expense but if all we're doing is calculating the expense report there's no point in adding unnecessary joins to the query.
 
 ## Submission Instructions
 

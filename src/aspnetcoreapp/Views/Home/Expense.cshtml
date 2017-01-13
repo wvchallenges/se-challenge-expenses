@@ -1,0 +1,37 @@
+﻿@model IList<ExpenseReportViewModel>
+@{
+    ViewData["Title"] = "Expense";
+    ViewData["Description"] = "The about page of my website";
+}
+
+<p>This is the Expense Report</p>
+
+<h2>Expenses</h2>
+@if (Model.Count() == 0)
+{
+    <p>No expense data</p>
+}
+else
+{
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Pre Tax Amount($)</th>
+        <th>Tax Amount($)</th>
+        <th>Total Expense($)</th>
+    </tr>
+    @foreach (var report in Model)
+    {
+        <tr>
+        <td>@report.Month</td>
+        <td>@report.PreTaxSum</td>
+        <td>@report.TaxSum</td>
+        <td>@report.ExpenseSum</td>
+        </tr>
+    }
+</table>
+}
+
+@section Scripts {
+    @*Insert any script tags for this page here*@
+}
