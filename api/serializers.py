@@ -60,11 +60,11 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('pk', 'catagory')
 
     def create(self, validated_data):
-        expense_catagory = ExpenseCatagory.objects.filter(catagory=validated_data["catagory"])
+        expense_catagory = ExpenseCatagory.objects.filter(catagory=validated_data['catagory'])
         print (expense_catagory)
         if len(expense_catagory):
             return expense_catagory[0]
-        ret = ExpenseCatagory(catagory=validated_data["catagory"]).save()
+        ret = ExpenseCatagory(catagory=validated_data['catagory']).save()
         print (ret)
         return ret
 
