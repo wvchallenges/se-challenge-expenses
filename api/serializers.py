@@ -59,6 +59,12 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         model = ExpenseCatagory
         fields = ('pk', 'catagory')
 
+    def create(self, validated_data):
+        print(self.__dict__)
+        print(validated_data)
+        print(validated_data__dict__)
+
+
 
 class TaxCodeSerializer(serializers.HyperlinkedModelSerializer):
 
