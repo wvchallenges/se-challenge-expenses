@@ -1,5 +1,4 @@
 $( document ).ready( function(){
-    console.log(upload_view_json);
     var upload_view_obj = JSON.parse(upload_view_json);
     var viewModel = new upload_viewModel(upload_view_obj);
     ko.applyBindings(viewModel);
@@ -26,12 +25,8 @@ function upload_viewModel(upload_view_obj)
     }, self);
 
    self.file_select = function(vm, evt){
-        console.log(vm, evt);
-        console.log(evt.target.value);
-        console.log(evt.target.value.split('\\'));
         var file_name = evt.target.value.split('\\');
         self.file_name(file_name[file_name.length-1]);
-        console.log(self.file_name());
     }
 
     self.file_upload = function(){
@@ -47,8 +42,6 @@ function upload_viewModel(upload_view_obj)
     }
 
     self.file_upload_callback = function(data){
-        console.log('success file uploaded');
-        console.log(data);
         self.uploading(false);
         get_json_async_from_server('/process_expense_file/', {}, self.process_file_callback, self.process_file_fail);
     }

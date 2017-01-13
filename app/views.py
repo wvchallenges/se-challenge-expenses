@@ -59,7 +59,6 @@ class ProcessExpenseFile(View):
                         output["employees"].append(dict(username=cell))
                         line_state["employee"] = len(output["employees"]) -1
                 if i == 3:
-                    #\s(.+):\s(.+):\s(.+)\s(\d{5})
                     match = re.search(r'''^"(\d+)\s(.+):\s(.+):\s(.+)\s(\d{5})''', cell)
                     if match is None:
                         error_str += "Problem processing address - " + cell
