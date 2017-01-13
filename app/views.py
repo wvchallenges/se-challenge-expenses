@@ -81,13 +81,11 @@ class ProcessExpenseFile(View):
                 if i == 4:
                     output["expenses"][w-1]["description"] = cell
                 if i == 5:
-                    print (cell)
                     if cell.startswith("\""):
                         cell = cell.replace("\"", "")
                         cell = cell.replace(":", "")
                         cell = cell.replace(",", ".")
                         cell = cell.strip()
-                        print (cell)
                         output["expenses"][w-1]["subtotal"] = Decimal(float(cell)).quantize(Decimal('.01'))
                     else:
                         output["expenses"][w-1]["subtotal"] = Decimal(float(cell)).quantize(Decimal('.01'))
@@ -103,10 +101,7 @@ class ProcessExpenseFile(View):
                     output["expenses"][w-1]["tax_code"] = line_state["tax_code"]
                     output["expenses"][w-1]["employee"] = line_state["employee"]
                     output["expenses"][w-1]["expense_catagory"] = line_state["expense_catagory"]
-                    if output["tax_codes"][line_state["tax_code"]]["percentage"] == 0:
-                        output["tax_codes"][line_state["tax_code"]]["percentage"] = (100 *(output["expenses"][w-1]["subtotal"] / output["expenses"][w-1]["total"]));
-                        print (output["tax_codes"][line_state["tax_code"]]["percentage"])
-
+                   
             #check employee address
             try:
                 employee_address = index(dict(employee=line_state["employee"], address=line_state["address"]))
