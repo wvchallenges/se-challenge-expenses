@@ -18,17 +18,6 @@ class Index(View):
             'load_css': ['upload']}
         return render(request,"upload.html", context)
 
-
-class ExpensePerMonth(View):
-
-    def get(self, request):
-        js_viewmodel = {"app_name" : "wave_test"}
-        js_viewmodel = json.dumps(js_viewmodel)
-        context = {'js_viewmodel': js_viewmodel,
-            'load_js': ['expense_per_month', 'utils'],
-            'load_css': ['expense_per_month']}
-        return render(request,"expense_per_month.html", context)
-
 # Create your views here.
 class ProcessExpenseFile(View):
 
@@ -119,26 +108,17 @@ class ProcessExpenseFile(View):
                 employee_address = index(dict(employee=line_state["employee"], address=line_state["address"]))
             except Exception as ex:
                 output["employee_addresses"].append(dict(employee=line_state["employee"], address=line_state["address"]))
-        print(output)
-        #print(json.dumps(output))
         self.bulk_expense_create(output)
         return  HttpResponse(json.dumps({"status": "success", "errors": error_str}), content_type = "application/json")
 
     def bulk_expense_create(self, payload):
-        print('Is anything happening')
         api_view_obj = FileUploadView()
         tax_codes = api_view_obj.generic_create('tax_code', payload["tax_codes"])
-        print('Is anything happening at all')
         expense_catagories = api_view_obj.generic_create('expense_catagory', payload["expense_catagories"])
         #addresses
         addresses = api_view_obj.generic_create('address', payload["addresses"])
         employees = api_view_obj.generic_create('employee', payload["employees"])
         match_count = 0
-        #the fuck am i doing
-        #trying to verify my employees and addresses
-        #loop employees addresses
-        #get local address
-        #loop and Verify
         print (tax_codes)
         employee_addresses = []
         for local_employee_address in payload["employee_addresses"]:
@@ -207,36 +187,15 @@ class ProcessExpenseFile(View):
                     for w_key, w_value in tax_code.items():
                         if w_key == key and w_key != "pk" and w_key != "percentage":
                             if w_value != value:
-                                print("no match")
                                 match = False
                                 break
                         if not match:
                             break
                 if match:
-                    print("match")
                     expenses[-1]["tax_code"] = tax_code["pk"]
         print (tax_codes)
         expenses_ret = api_view_obj.generic_create('expense', expenses)
         print (expenses_ret)
-
-        # for employee in payload["employees"]:
-        #     local_address = payload["addresses"][employee["address"]]
-        #     for address in addresses.data:
-        #         match = True
-        #         for key, value in local_address.items():
-        #             for w_key, w_value in address.items():
-        #                 if w_key == key and w_key != "pk" and w_key != "address_type":
-        #                     if w_value != value:
-        #                          match = False
-        #                          break
-        #                 if not match:
-        #                     break
-        #         if match:
-        #             employee["address"] = address
-        #             match_count += 1
-        #             print ("We got a good address")
-        # print("match count" + str(match_count))
-
 
 class HelperFunctions():
     def get_index_by_key(self, data, key, value):
