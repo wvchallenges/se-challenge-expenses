@@ -25,7 +25,6 @@ class Index(View):
 class ProcessExpenseFile(View):
 
     def get(self, request):
-        TWOPLACES = Decimal(10) ** -2 #use to format
         error_str = ""
         file_lines = None
         with open('/webapps/wave-test1/upload/expenses.csv') as f:
@@ -85,14 +84,13 @@ class ProcessExpenseFile(View):
                 if i == 5:
                     print (cell)
                     if cell.startswith("\""):
-                        print ("Found one of those fuckers")
                         cell = cell.replace("\"", "")
                         cell = cell.replace(":", "")
+                        cell = cell.replace(",", ".")
                         cell = cell.strip()
-                        print (cell)
-                        output["expenses"][w-1]["sub_total"] = cell.replace(',','.')
+                        output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
                     else:
-                        output["expenses"][w-1]["sub_total"] = cell.replace(',','.')
+                        output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
                 if i == 6:
                     try:
                         tax_code = output["tax_codes"].index(dict(code=cell, percentage=0))
@@ -123,7 +121,6 @@ class ProcessExpenseFile(View):
             addresses = api_view_obj.generic_create('address', payload["addresses"])
             employees = api_view_obj.generic_create('employee', payload["employees"])
             match_count = 0
-            print (tax_codes)
             employee_addresses = []
             for local_employee_address in payload["employee_addresses"]:
                 local_employee = payload["employees"][local_employee_address["employee"]]
@@ -197,11 +194,10 @@ class ProcessExpenseFile(View):
                                 break
                     if match:
                         expenses[-1]["tax_code"] = tax_code["pk"]
-            print (tax_codes)
             expenses_ret = api_view_obj.generic_create('expense', expenses)
             sid = transaction.savepoint()
             transaction.savepoint_commit(sid)
-            
+
 class HelperFunctions():
     def get_index_by_key(self, data, key, value):
         return next(index for (index, d) in enumerate(data) if d[key] == value)
