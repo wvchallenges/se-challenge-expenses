@@ -43,7 +43,6 @@ class ProcessExpenseFile(View):
                 if i == 0:
                     split_date = cell.split('/')
                     formatted_date = ''+split_date[2] + '-' + split_date[0] + '-' + split_date[1]
-                    print (formatted_date)
                     output["expenses"].append(dict(date=formatted_date))
                 if i == 1:
                     try:
@@ -89,9 +88,9 @@ class ProcessExpenseFile(View):
                         cell = cell.replace(",", ".")
                         cell = cell.strip()
                         print (cell)
-                        output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
+                        output["expenses"][w-1]["subtotal"] = Decimal(float(cell)).quantize(Decimal('.01'))
                     else:
-                        output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
+                        output["expenses"][w-1]["subtotal"] = Decimal(float(cell)).quantize(Decimal('.01'))
                 if i == 6:
                     try:
                         tax_code = output["tax_codes"].index(dict(code=cell, percentage=0))
@@ -100,7 +99,7 @@ class ProcessExpenseFile(View):
                         output["tax_codes"].append(dict(code=cell, percentage=0))
                         line_state["tax_code"] = len(output["tax_codes"]) -1
                 if i == 7:
-                    output["expenses"][w-1]["total"] = Decimal(float(output["expenses"][w-1]["sub_total"]) + float(cell)).quantize(Decimal('.01'))
+                    output["expenses"][w-1]["total"] = Decimal(float(output["expenses"][w-1]["subtotal"]) + float(cell)).quantize(Decimal('.01'))
                     output["expenses"][w-1]["tax_code"] = line_state["tax_code"]
                     output["expenses"][w-1]["employee"] = line_state["employee"]
                     output["expenses"][w-1]["expense_catagory"] = line_state["expense_catagory"]
