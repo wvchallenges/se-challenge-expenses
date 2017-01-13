@@ -11,13 +11,13 @@ function upload_viewModel(upload_view_obj)
     var self = this;
     ko.mapping.fromJS(upload_view_obj, {}, self);
     self.uploading = ko.observable(false);
+    self.file_name = ko.observable("<-- Press Browse");
     self.uploaded = ko.computed(function() {
         return self.file_name() != "<-- Press Browse";
     }, self);
     self.getting_expenses = ko.observable(false);
     self.expenses_per_month = ko.observableArray([])
-    self.file_name = ko.observable("<-- Press Browse");
-
+    
     self.file_select = function(vm, evt){
         console.log(vm, evt);
         console.log(evt.target.value);
