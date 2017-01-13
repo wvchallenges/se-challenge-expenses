@@ -50,7 +50,7 @@ function upload_viewModel(upload_view_obj)
         console.log('success file uploaded');
         console.log(data);
         self.uploading(false);
-        get_json_async_from_server('/app/process_expense_file/', {}, self.process_file_callback, self.process_file_fail);
+        get_json_async_from_server('/process_expense_file/', {}, self.process_file_callback, self.process_file_fail);
     }
 
     self.process_file_callback = function(){
