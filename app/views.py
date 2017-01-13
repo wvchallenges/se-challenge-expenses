@@ -105,6 +105,7 @@ class ProcessExpenseFile(View):
                     output["expenses"][w-1]["expense_catagory"] = line_state["expense_catagory"]
                     if output["tax_codes"][line_state["tax_code"]]["percentage"] == 0:
                         output["tax_codes"][line_state["tax_code"]]["percentage"] = (100 *(output["expenses"][w-1]["subtotal"] / output["expenses"][w-1]["total"]));
+                        print (output["tax_codes"][line_state["tax_code"]]["percentage"])
 
             #check employee address
             try:
