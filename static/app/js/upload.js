@@ -14,7 +14,8 @@ function upload_viewModel(upload_view_obj)
     self.uploading = ko.observable(false);
     self.file_name = ko.observable("<-- Press Browse");
     self.getting_expenses = ko.observable(false);
-    self.expenses_per_month = ko.observableArray([])
+    self.expenses_per_month = ko.observableArray([]);
+    self.error_message = ko.observable("");
     
     self.uploaded = ko.computed(function() {
         return self.file_name() != "<-- Press Browse";
@@ -49,11 +50,15 @@ function upload_viewModel(upload_view_obj)
         console.log('success file uploaded');
         console.log(data);
         self.uploading(false);
-        get_json_async_from_server('/app/process_expense_file/', {}, self.process_file_callback);
+        get_json_async_from_server('/app/process_expense_file/', {}, self.process_file_callback, self.process_file_fail);
     }
 
     self.process_file_callback = function(){
         self.get_expenses();
+    }
+
+    self.process_file_fail = function(jqXHR, textStatus, errorThrown){
+        console.log(jqXHR, textStatus, errorThrown);
     }
 
     self.get_expenses = function(){
