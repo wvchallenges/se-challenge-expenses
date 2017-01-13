@@ -6,6 +6,9 @@ import re
 from api.views import FileUploadView
 from api.models import AddressType
 from decimal import Decimal
+from django.db import transaction
+from django.db import connection
+
 
 # Create your views here.
 class Index(View):
@@ -113,90 +116,92 @@ class ProcessExpenseFile(View):
 
     def bulk_expense_create(self, payload):
         api_view_obj = FileUploadView()
-        tax_codes = api_view_obj.generic_create('tax_code', payload["tax_codes"])
-        expense_catagories = api_view_obj.generic_create('expense_catagory', payload["expense_catagories"])
-        #addresses
-        addresses = api_view_obj.generic_create('address', payload["addresses"])
-        employees = api_view_obj.generic_create('employee', payload["employees"])
-        match_count = 0
-        print (tax_codes)
-        employee_addresses = []
-        for local_employee_address in payload["employee_addresses"]:
-            local_employee = payload["employees"][local_employee_address["employee"]]
-            for i, employee in enumerate(employees.data):
-                match = True
-                for key, value in local_employee.items():
-                    for w_key, w_value in employee.items():
-                        if w_key == key and w_key != "pk":
-                            if w_value != value:
-                                 match = False
-                                 break
-                        if not match:
-                            break
-                    if match:
-                        employee_addresses.append(dict(employee=employee["pk"], address=None))
-            local_address = payload["addresses"][local_employee_address["address"]]
-            for w, address in enumerate(addresses.data):
-                match = True
-                for key, value in local_address.items():
-                    for w_key, w_value in address.items():
-                        if w_key == key and w_key != "pk" and w_key != "address_type":
-                            if w_value != value:
-                                 match = False
-                                 break
-                        if not match:
-                            break
-                if match:
-                    employee_addresses[-1]["address"] = address["pk"]
-
-        employee_addresses_ret = api_view_obj.generic_create('employee_address', employee_addresses)
-        #now do expenses i guess
-        expenses = []
-        for local_expense in payload["expenses"]:
-            local_employee = payload["employees"][local_expense["employee"]]
-            for i, employee in enumerate(employees.data):
-                match = True
-                for key, value in local_employee.items():
-                    for w_key, w_value in employee.items():
-                        if w_key == key and w_key != "pk":
-                            if w_value != value:
-                                 match = False
-                                 break
-                        if not match:
-                            break
-                    if match:
-                        expenses.append(local_expense)
-                        expenses[-1]["employee"] = employee["pk"]
-            local_expense_catagory = payload["expense_catagories"][local_expense["expense_catagory"]]
-            for i, expense_catagory in enumerate(expense_catagories.data):
-                match = True
-                for key, value in local_expense_catagory.items():
-                    for w_key, w_value in expense_catagory.items():
-                        if w_key == key and w_key != "pk":
-                            if w_value != value:
-                                 match = False
-                                 break
-                        if not match:
-                            break
-                if match:
-                    expenses[-1]["expense_catagory"] = expense_catagory["pk"]
-            local_tax_code = payload["tax_codes"][local_expense["tax_code"]]
-            for i, tax_code in enumerate(tax_codes.data):
-                match = True
-                for key, value in local_tax_code.items():
-                    for w_key, w_value in tax_code.items():
-                        if w_key == key and w_key != "pk" and w_key != "percentage":
-                            if w_value != value:
-                                match = False
+        with transaction.atomic():
+            tax_codes = api_view_obj.generic_create('tax_code', payload["tax_codes"])
+            expense_catagories = api_view_obj.generic_create('expense_catagory', payload["expense_catagories"])
+            #addresses
+            addresses = api_view_obj.generic_create('address', payload["addresses"])
+            employees = api_view_obj.generic_create('employee', payload["employees"])
+            match_count = 0
+            print (tax_codes)
+            employee_addresses = []
+            for local_employee_address in payload["employee_addresses"]:
+                local_employee = payload["employees"][local_employee_address["employee"]]
+                for i, employee in enumerate(employees.data):
+                    match = True
+                    for key, value in local_employee.items():
+                        for w_key, w_value in employee.items():
+                            if w_key == key and w_key != "pk":
+                                if w_value != value:
+                                     match = False
+                                     break
+                            if not match:
                                 break
-                        if not match:
-                            break
-                if match:
-                    expenses[-1]["tax_code"] = tax_code["pk"]
-        print (tax_codes)
-        expenses_ret = api_view_obj.generic_create('expense', expenses)
-        print (expenses_ret)
+                        if match:
+                            employee_addresses.append(dict(employee=employee["pk"], address=None))
+                local_address = payload["addresses"][local_employee_address["address"]]
+                for w, address in enumerate(addresses.data):
+                    match = True
+                    for key, value in local_address.items():
+                        for w_key, w_value in address.items():
+                            if w_key == key and w_key != "pk" and w_key != "address_type":
+                                if w_value != value:
+                                     match = False
+                                     break
+                            if not match:
+                                break
+                    if match:
+                        employee_addresses[-1]["address"] = address["pk"]
 
+            employee_addresses_ret = api_view_obj.generic_create('employee_address', employee_addresses)
+            #now do expenses i guess
+            expenses = []
+            for local_expense in payload["expenses"]:
+                local_employee = payload["employees"][local_expense["employee"]]
+                for i, employee in enumerate(employees.data):
+                    match = True
+                    for key, value in local_employee.items():
+                        for w_key, w_value in employee.items():
+                            if w_key == key and w_key != "pk":
+                                if w_value != value:
+                                     match = False
+                                     break
+                            if not match:
+                                break
+                        if match:
+                            expenses.append(local_expense)
+                            expenses[-1]["employee"] = employee["pk"]
+                local_expense_catagory = payload["expense_catagories"][local_expense["expense_catagory"]]
+                for i, expense_catagory in enumerate(expense_catagories.data):
+                    match = True
+                    for key, value in local_expense_catagory.items():
+                        for w_key, w_value in expense_catagory.items():
+                            if w_key == key and w_key != "pk":
+                                if w_value != value:
+                                     match = False
+                                     break
+                            if not match:
+                                break
+                    if match:
+                        expenses[-1]["expense_catagory"] = expense_catagory["pk"]
+                local_tax_code = payload["tax_codes"][local_expense["tax_code"]]
+                for i, tax_code in enumerate(tax_codes.data):
+                    match = True
+                    for key, value in local_tax_code.items():
+                        for w_key, w_value in tax_code.items():
+                            if w_key == key and w_key != "pk" and w_key != "percentage":
+                                if w_value != value:
+                                    match = False
+                                    break
+                            if not match:
+                                break
+                    if match:
+                        expenses[-1]["tax_code"] = tax_code["pk"]
+            print (tax_codes)
+            expenses_ret = api_view_obj.generic_create('expense', expenses)
+            sid = transaction.savepoint()
+            transaction.savepoint_commit(sid)
+            
 class HelperFunctions():
     def get_index_by_key(self, data, key, value):
         return next(index for (index, d) in enumerate(data) if d[key] == value)
