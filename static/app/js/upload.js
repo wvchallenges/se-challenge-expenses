@@ -15,7 +15,7 @@ function upload_viewModel(upload_view_obj)
     self.file_name = ko.observable("<-- Press Browse");
     self.getting_expenses = ko.observable(false);
     self.expenses_per_month = ko.observableArray([]);
-    self.error_message = ko.observable("");
+    self.error_message = ko.observable('');
     
     self.uploaded = ko.computed(function() {
         return self.file_name() != "<-- Press Browse";
@@ -63,7 +63,7 @@ function upload_viewModel(upload_view_obj)
 
     self.get_expenses = function(){
         self.getting_expenses(true);
-        get_json_async_from_server('/api/expense.json', {}, self.get_expenses_callback, function(){self.error_message("failed to get expenses")});
+        get_json_async_from_server('/api/expense.json', {}, self.get_expenses_callback, function(){self.error_message('failed to get expenses')});
     }
 
     self.get_expenses_callback = function(data){
