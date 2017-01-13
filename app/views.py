@@ -88,6 +88,7 @@ class ProcessExpenseFile(View):
                         cell = cell.replace(":", "")
                         cell = cell.replace(",", ".")
                         cell = cell.strip()
+                        print (cell)
                         output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
                     else:
                         output["expenses"][w-1]["sub_total"] = Decimal(float(cell)).quantize(Decimal('.01'))
