@@ -40,7 +40,7 @@ function upload_viewModel(upload_view_obj)
         var _data = new FormData();
         var file = $('#testing')[0].files[0];
         _data.append('datafile', file);
-        console.log('iv been called');
+        self.error_message('');
         if (typeof file !== 'undefined')
             post_file_to_server_with_callback('/upload/', _data, self.file_upload_callback);
         
