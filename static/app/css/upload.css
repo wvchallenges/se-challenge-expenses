@@ -1,7 +1,7 @@
-table .expense-per-month td {
+table.expense-per-month td {
 	text-align:center;
 }
 
 label.file-upload {
-	padding:15px !important;
+	padding:10px !important;
 }

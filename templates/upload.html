@@ -40,13 +40,12 @@
 <div class="row upload-form">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1 ">
         <form action="/upload/" enctype="multipart/form-data" method="post">            
-            <label class="well well-sml file-upload" data-bind="text:file_name"></label>
-            <label class="btn btn-default btn-file">
+            <label class="well well-sml file-upload pull-right" data-bind="text:file_name"></label>
+            <label class="btn btn-default btn-file pull-right">
                 Browse <input data-bind="event:{ change: file_select }" id="testing" name="datafile" type="file" class="hidden">
             </label>
-            <button type="button" class="btn btn-success" data-bind="click:file_upload" > async </button>
+            <button type="button" class="btn btn-success pull-right" data-bind="click:file_upload" > async </button>
             </div>
-
         </form>
     </div>
 </div>
