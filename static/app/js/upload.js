@@ -63,7 +63,7 @@ function upload_viewModel(upload_view_obj)
 
     self.get_expenses = function(){
         self.getting_expenses(true);
-        get_json_async_from_server('/api/expense.json', {}, self.get_expenses_callback);
+        get_json_async_from_server('/api/expense.json', {}, self.get_expenses_callback, function(){self.error_message("failed to get expenses")});
     }
 
     self.get_expenses_callback = function(data){

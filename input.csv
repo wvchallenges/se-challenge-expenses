@@ -17,4 +17,4 @@ date,category,employee name,employee address,expense description,pre-tax amount,
 1/6/2014,Computer - Hardware,Eric Schmidt,"1600 Amphitheatre Parkway, Mountain View, CA 94043",iPhone, 200.00 ,CA Sales tax, 15.00
 1/7/2014,Travel,Steve Jobs,"1 Infinite Loop, Cupertino, CA 95014",Airplane ticket to NY, 200.00 ,CA Sales tax, 15.00
 2/3/2014,Meals and Entertainment,Jonathan Ive,"1 Infinite Loop, Cupertino, CA 95014",Starbucks coffee, 12.00 ,CA Sales tax, 0.90
-2/18/2014,Travel,Eric Schmidt,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Airplane ticket to NY," 1,500.00 ",CA Sales tax, 112.50 
+2/18/2014,Travel,Eric Schmidt,"1600 Amphitheatre Parkway, Mountain View, CA 94043",Airplane ticket to NY," 1,5s00.00 ",CA Sales tax, 112.50 

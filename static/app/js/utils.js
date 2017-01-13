@@ -22,14 +22,15 @@ $.ajaxSetup({
      } 
 });
 
-function get_json_async_from_server(url, data, success)
+function get_json_async_from_server(url, data, success, fail)
 {
     $.ajax({
         type: "GET",
         url: url,
         data: data,
         async: true,
-        success: success
+        success: success,
+        fail: fail
     });
 }
 
