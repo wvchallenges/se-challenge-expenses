@@ -1,0 +1,83 @@
+{% extends "index.html" %}
+
+{% block nav %}    
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Wave Test</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/upload">Upload Expenses</a></li>                    
+                    <li><a href="/monthly">View Monthly</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Wave test - <small>Expense sheet upload and display</small></h1>
+        <hr />
+    </div>
+</div>
+<hr />
+<div class="row upload-form">
+    <div class="col-xs-12">
+        <form action="/upload/" enctype="multipart/form-data" method="post">            
+            <label data-bind="text:file_name"></label>
+            <label class="btn btn-default btn-file">
+                Browse <input data-bind="event:{ change: file_select }" id="testing" name="datafile" type="file" class="hidden">
+            </label>
+            <button type="button" class="btn btn-success" data-bind="click:file_upload" > async </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h2> Expenses per month </h2>
+        <!-- ko if: expenses_per_month().length == 0-->
+            <h3>There are no expenses</h3>
+        <!-- /ko -->
+        <!-- ko if: expenses_per_month().length -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Expense Total</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:expenses_per_month()">
+                    <tr>
+                        <td data-bind="text:month"></td>
+                        <td data-bind="text:expenses_total.formatMoney()"></td>
+                    </tr>
+                </tbody>
+            </table>
+        <!-- /ko -->        
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js_loader %}
+    <script>
+        var upload_view_json = '{{ js_viewmodel|safe }}';
+    </script>    
+    {% if load_js %}
+        {% for js in load_js %}
+            <script src="{{ STATIC_URL }}app/js/{{ js }}.js"></script>
+        {% endfor %}
+    {% endif %}    
+{% endblock %}
