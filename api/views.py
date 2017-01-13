@@ -18,7 +18,7 @@ class FileUploadView(APIView):
 
     def post(self, request, format=None):
         my_file = request.data['datafile']
-        filename = '/webapps/se-challenge-expenses/upload/expenses.csv'
+        filename = '/webapps/wave-test1/upload/expenses.csv'
         with open(filename, 'wb+') as temp_file:
             for chunk in my_file.chunks():
                 temp_file.write(chunk)
