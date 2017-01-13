@@ -187,7 +187,7 @@ class ProcessExpenseFile(View):
                 local_tax_code = payload["tax_codes"][local_expense["tax_code"]]
                 for i, tax_code in enumerate(tax_codes.data):
                     match = True
-                    if **local_tax_code.items() == **tax_code.items():
+                    if **local_tax_code == **tax_code:
                         print ("this was much faster lol")
                     for key, value in local_tax_code.items():
                         for w_key, w_value in tax_code.items():
