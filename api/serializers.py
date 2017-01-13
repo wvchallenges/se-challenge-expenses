@@ -65,6 +65,7 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         if len(expense_catagory):
             return expense_catagory[0]
         ret = ExpenseCatagory(catagory=validated_data["catagory"])
+        print (ret)
         return ret
 
 
