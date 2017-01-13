@@ -60,9 +60,11 @@ class ExpenseCatagorySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('pk', 'catagory')
 
     def create(self, validated_data):
+        print ("inside the crete ")
         print(self.__dict__)
         print(validated_data)
         print(validated_data__dict__)
+        return ExpenseCatagory(**validated_data)
 
 
 
