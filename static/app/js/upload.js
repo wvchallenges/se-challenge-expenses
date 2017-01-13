@@ -24,7 +24,8 @@ function upload_viewModel(upload_view_obj)
     }, self);
 
     console.log(self.enable_upload())
-    console.log(self.uploaded && self.expenses_per_month().length == 0);
+    console.log(self.uploaded())
+    console.log((self.uploaded && self.expenses_per_month().length == 0);
     self.file_select = function(vm, evt){
         console.log(vm, evt);
         console.log(evt.target.value);
