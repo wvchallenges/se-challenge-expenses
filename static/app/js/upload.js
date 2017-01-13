@@ -12,11 +12,17 @@ function upload_viewModel(upload_view_obj)
     ko.mapping.fromJS(upload_view_obj, {}, self);
     self.uploading = ko.observable(false);
     self.file_name = ko.observable("<-- Press Browse");
+    self.getting_expenses = ko.observable(false);
+    self.expenses_per_month = ko.observableArray([])
+    
     self.uploaded = ko.computed(function() {
         return self.file_name() != "<-- Press Browse";
     }, self);
-    self.getting_expenses = ko.observable(false);
-    self.expenses_per_month = ko.observableArray([])
+    
+    self.enable_upload = ko.computed(function() {
+        return self.uploaded && self.expenses_per_month().length == 0;
+    }, self);
+
     
     self.file_select = function(vm, evt){
         console.log(vm, evt);
