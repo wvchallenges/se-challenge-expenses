@@ -187,6 +187,8 @@ class ProcessExpenseFile(View):
                 local_tax_code = payload["tax_codes"][local_expense["tax_code"]]
                 for i, tax_code in enumerate(tax_codes.data):
                     match = True
+                    if **local_tax_code.items() == **tax_code.items():
+                        print ("this was much faster lol")
                     for key, value in local_tax_code.items():
                         for w_key, w_value in tax_code.items():
                             if w_key == key and w_key != "pk" and w_key != "percentage":
@@ -201,7 +203,7 @@ class ProcessExpenseFile(View):
             expenses_ret = api_view_obj.generic_create('expense', expenses)
             sid = transaction.savepoint()
             transaction.savepoint_commit(sid)
-            
+
 class HelperFunctions():
     def get_index_by_key(self, data, key, value):
         return next(index for (index, d) in enumerate(data) if d[key] == value)
