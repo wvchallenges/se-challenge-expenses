@@ -3,6 +3,7 @@ $( document ).ready( function(){
     var upload_view_obj = JSON.parse(upload_view_json);
     var viewModel = new upload_viewModel(upload_view_obj);
     ko.applyBindings(viewModel);
+    viewModel.get_expenses();
 });
 
 
@@ -23,10 +24,7 @@ function upload_viewModel(upload_view_obj)
         return self.uploaded() && self.expenses_per_month().length == 0;
     }, self);
 
-    console.log(self.enable_upload())
-    console.log(self.uploaded())
-    console.log((self.uploaded() && self.expenses_per_month().length == 0));
-    self.file_select = function(vm, evt){
+   self.file_select = function(vm, evt){
         console.log(vm, evt);
         console.log(evt.target.value);
         console.log(evt.target.value.split('\\'));
@@ -64,26 +62,26 @@ function upload_viewModel(upload_view_obj)
     }
 
     self.get_expenses_callback = function(data){
-        var expenses_per_month = [
-        {"month": "Jan", "expenses_total": 0.00},
-        {"month": "Feb", "expenses_total": 0.00},
-        {"month": "Mar", "expenses_total": 0.00},
-        {"month": "Apr", "expenses_total": 0.00},
-        {"month": "May", "expenses_total": 0.00},
-        {"month": "Jun", "expenses_total": 0.00},
-        {"month": "Jul", "expenses_total": 0.00},
-        {"month": "Aug", "expenses_total": 0.00},
-        {"month": "Sep", "expenses_total": 0.00},
-        {"month": "Oct", "expenses_total": 0.00},
-        {"month": "Nov", "expenses_total": 0.00},
-        {"month": "Dec", "expenses_total": 0.00}];
-        for(i=0, i_len = data.length; i < i_len; ++i){
-            reg_match = data[i].date.match(/(\d+)-(\d+)-(\d+)/);
-            expenses_per_month[reg_match[2]-1]["expenses_total"] += parseFloat(data[i].total);
+        if (data.length){
+            var expenses_per_month = [
+            {"month": "Jan", "expenses_total": 0.00},
+            {"month": "Feb", "expenses_total": 0.00},
+            {"month": "Mar", "expenses_total": 0.00},
+            {"month": "Apr", "expenses_total": 0.00},
+            {"month": "May", "expenses_total": 0.00},
+            {"month": "Jun", "expenses_total": 0.00},
+            {"month": "Jul", "expenses_total": 0.00},
+            {"month": "Aug", "expenses_total": 0.00},
+            {"month": "Sep", "expenses_total": 0.00},
+            {"month": "Oct", "expenses_total": 0.00},
+            {"month": "Nov", "expenses_total": 0.00},
+            {"month": "Dec", "expenses_total": 0.00}];
+            for(i=0, i_len = data.length; i < i_len; ++i){
+                reg_match = data[i].date.match(/(\d+)-(\d+)-(\d+)/);
+                expenses_per_month[reg_match[2]-1]["expenses_total"] += parseFloat(data[i].total);
+            }
+            self.expenses_per_month(expenses_per_month);
         }
-        self.expenses_per_month(expenses_per_month);
-        console.log(self.expenses_per_month);
-        console.log(self.expenses_per_month());
     }
 
 }
