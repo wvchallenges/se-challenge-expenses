@@ -3,5 +3,5 @@ table .expense-per-month td {
 }
 
 label .file-upload {
-	background-color:red;
+	padding:15px !important;
 }
