@@ -17,10 +17,12 @@ This project was build to run on Ubuntu 16.04 LTS and setup will be very minimal
 
 ## Points of persional pride
 
-This application presented a lot of interesting problems to solve. I started by looking at the data presented in the CSV and designed a scalable structure to hold not only the expense data but the normalized employee and address data as well. I am rather proud of the efficiency and functionality of my API backend. I used a custom view to pre process the data into a format more acceptable the django rest framework list serializes. I aimed for generic maintainable code wherever possible and focused on efficient database interaction. I also overrode the serializer create functions to return an instance in certain conditions. this prevents employees or address being duplicated and does not require some custom long winded validation. 
+This application presented a lot of interesting problems to solve. I started by looking at the data presented in the CSV and designed a scalable structure to hold not only the expense data but the normalized employee and address data as well. I am rather proud of the efficiency and functionality of my API backend. I used a custom view to pre process the data into a format more acceptable the django rest framework list serializes. I aimed for generic maintainable code wherever possible and focused on efficient database interaction. I also overrode the serializer create functions to return an instance in certain conditions. This prevents employees or address being duplicated and does not require some custom long winded validation. 
 
 
-The project 
+
+
+#The project 
 
 
 # Wave Software Development Challenge
