@@ -2,7 +2,7 @@
 
 ##Introduction
 
-Hello my name is Rob McMahon and this is my implementation for the Wave test. I very much enjoyed this test the data presented interesting challenges during parsing that were fun to solve. I developed my solution inside a stripped down version of my home development environment. It uses Django Rest Framework as an API backend and Django as an application backend. The front end is very minimal and uses bootstrap for UI and knockout.js for some interactivity. The development environment runs on aa Ubuntu 16.04 LTS vm and is provisioned using ansible. The ansible playbook has many tags to allow syncing without backend service restart or even complete database redeployment in a single call. I hope you enjoy reading my solution as much as i have enjoyed building it.
+Hello my name is Rob McMahon and this is my implementation for the Wave test. I very much enjoyed this test the data presented interesting challenges during parsing that were fun to solve. I developed my solution inside a stripped down version of my home development environment. It uses Django Rest Framework as an API backend and Django as an application backend. The front end is very minimal and uses bootstrap for UI and knockout.js for some interactivity. The development environment runs on an Ubuntu 16.04 LTS vm and is provisioned using ansible. The ansible playbook has many tags to allow syncing without backend service restart or even complete database redeployment in a single call. I hope you enjoy reading my solution as much as I have enjoyed building it.
 
 ## Deployment instructions
 
