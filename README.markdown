@@ -1,3 +1,28 @@
+#Roberts Wave test
+
+##Introduction
+
+Hello my name is Rob McMahon and this is my implementation for the Wave test. I very much enjoyed this test the data presented interesting challenges during parsing that were fun to solve. I developed my solution inside a stripped down version of my home development environment. It uses Django Rest Framework as an API backend and Django as an application backend. The front end is very minimal and uses bootstrap for UI and knockout.js for some interactivity. The development environment run on a Ubuntu 16.04 LTS vm and is provisioned using ansible. The ansible playbook has many tags to allow syncing without backout service restart or even complete database redeployment in a single call. I hope you enjoy reading my solution as much as i have enjoyed building it.
+
+## Deployment instructions
+
+This project was build to run on Ubuntu 16.04 LTS and setup will be very minimal. Using the vm provider of your choice create an Ubuntu 16.04 LTS VM. Once the vm is created follow these steps
+
+1. Forward port 80 to this VM if using NAT networking
+2. On this vm create a sudo privileged user called wave-admin. 
+3. apt-get update and upgrade your new server
+4. git clone this project into wave-admins home directory 
+5. cd into the cloned repo
+6. run sudo sh setup.sh
+
+## Points of persional pride
+
+This application presented a lot of interesting problems to solve. I started by looking at the data presented in the CSV and designed a scalable structure to hold not only the expense data but the normalized employee and address data as well. I am rather proud of the efficiency and functionality of my API backend. I used a custom view to pre process the data into a format more acceptable the django rest framework list serializes. I aimed for generic maintainable code wherever possible and focused on efficient database interaction. I also overrode the serializer create functions to return an instance in certain conditions. this prevents employees or address being duplicated and does not require some custom long winded validation. 
+
+
+The project 
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
