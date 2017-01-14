@@ -1,0 +1,48 @@
+---
+- name: Create system group
+  group: name={{appGroup}} state=present system=yes
+
+- name: Create application user
+  user: name={{appUser}} comment=applicationUser group={{appGroup}}
+
+- name: Create application user password
+  user: name={{appUser}} password={{appPass}}
+
+- name: Create webapps dir
+  file: path={{webappsPath}} state=directory owner={{appUser}} group={{appGroup}} mode=775
+
+- name: Create Uwsgi dir
+  file: path={{uwsgiDir}} state=directory
+
+- name: Create Uwsgi deamon dir
+  file: path={{uwsgiVassalsDir}} state=directory
+
+- name: Create Uwsgi log dir
+  file: path={{uwsgiLogDir}} state=directory owner={{appUser}} group={{appGroup}}
+
+- name: Deploy app uwsgi ini file
+  template: src=uwsgi.ini dest={{uwsgiVassalsDir}}
+
+- name: Own uwsgi vassals dir
+  file: path={{uwsgiVassalsDir}} state=directory owner={{appUser}} group={{appGroup}} mode=775 recurse=yes
+
+- name: Install libpg-dev
+  apt: pkg=libpq-dev state=installed update_cache=true
+
+- name: Install Python pip  psycopg2
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - python-psycopg2 # Required for Ansible to interact with postgres
+    - python3-pip
+
+- name: Install virtualenv package
+  command: pip3 install virtualenv
+
+- name: Install uwsgi package
+  command: pip3 install uwsgi
+
+- name: Setup Uwsgi service
+  template: src=uwsgi.service dest=/etc/systemd/system/ mode=755
+
+- name: Reload systemd config
+  command: sudo systemctl daemon-reload

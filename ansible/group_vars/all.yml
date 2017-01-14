@@ -1,0 +1,26 @@
+appName: wave
+appUser: wave-user
+appPass: $6$SvAPu/esWV8$iiIX.zVGJtMVs4nqxQeWEIvu/w9lEZXxUOEpT3WMwNpW5OqaylXw7RF.CGi2J84qQWFbHotypQbFhrblYXdby.
+appGroup: webapps
+appDBHost: localhost
+webappsPath: /webapps
+appRootPath: "{{ webappsPath }}/wave-test1"
+appAppPath: "{{ appRootPath }}/app"
+appSyncPath: "{{ appRootPath }}/."
+appGitUrl: https://github.com/teh-syntax/se-challenge-expenses.git
+appBranch: master
+gitUser: wave-sync
+gitPass: $6$yVVtz8jHe0zL0K7c$CrgckNLtQYoy.xM0zdEi95AXWhRlX8DCE1ep6b/2nU3HyYdeHtYhwGBjUmV0vdBUXWSoE0VVkMpyoDyS1.k9n/
+gitSSHPath: "/home/{{ gitUser }}/.ssh"
+gitRemote: "github.com"
+gitRemotePort: "22"
+privateGitSSHPath: /home/robert/.wave-sync/private
+authorizedKeysSSHPath: /home/wave-admin/.ssh
+pipRequirmentsPath: "{{ appRootPath }}/requirments.txt"
+pipVirtualenvPath: "{{ appRootPath }}/env"
+nginxConfPath: /etc/nginx/sites-enabled
+nginxUserGroup: www-data
+uwsgiDir: /etc/uwsgi
+uwsgiVassalsDir: "{{ uwsgiDir }}/vassals"
+uwsgiLogDir: /var/log/uwsgi
+appDBName: wave

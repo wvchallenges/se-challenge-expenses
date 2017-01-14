@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>
+            {% block page_title %} 
+        
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <!-- Framework css -->
+        <link href="{{ STATIC_URL }}framework/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+
+        {% block css_loader %} 
+        
+        {% endblock %} 
+        
+        {% block nav %} 
+        
+        {% endblock %} 
+        <div class="container">
+            {% block content %} 
+           
+            {% endblock %}
+        </div>
+        <!-- Framework scripts -->
+        <script src="{{ STATIC_URL }}framework/jquery/jquery-3.1.1.min.js"></script>
+        <script src="{{ STATIC_URL }}framework/knockout/knockout.min.js"></script>
+        <script src="{{ STATIC_URL }}framework/knockout/knockout.mapping.min.js"></script>
+        <script src="{{ STATIC_URL }}framework/bootstrap/js/bootstrap.min.js"></script>
+        {% block js_loader %} 
+        
+        {% endblock %} 
+    </body>
+</html>

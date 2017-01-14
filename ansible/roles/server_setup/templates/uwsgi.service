@@ -1,0 +1,12 @@
+[Unit]
+Description=uWSGI Emperor service
+
+[Service]
+ExecStart=/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals --uid {{appUser}} --gid {{appGroup}} --logto {{uwsgiLogDir}}/{{appName}}.log
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

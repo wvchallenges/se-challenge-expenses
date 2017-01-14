@@ -1,0 +1,13 @@
+---
+- name: Install nginx
+  apt: pkg=nginx state=installed update_cache=true
+
+- name: Add nginx user to system group for app
+  user: name={{nginxUserGroup}} groups={{appGroup}}
+
+- name: Remove default site
+  file: path={{nginxConfPath}}/default state=absent
+
+- name: Copy nginx configuration for app
+  template: src=nginx.conf dest={{nginxConfPath}}/nginx.conf owner={{nginxUserGroup}} group={{appGroup}}
+  notify: Restart nginx
