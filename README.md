@@ -32,7 +32,20 @@ interesting and easy to change/update/modify.
 
 ### Technical stack
 
-TODO
+- Data
+  - [PostgreSQL](https://www.postgresql.org/) - _Stable for a long time, fast when used correctly, wide userbase, versatile_
+- Backend
+  - [Node.js](https://nodejs.org/en/) - _Fast to develop in, fast at runtime for our use case, now adopted by many big company, in active development, wide community, packages for many things web related_
+  - [Merry](https://github.com/yoshuawuyts/merry/) **New** - _Fast, fun, opiniated but most importantly: simple_
+  - [Knex](http://knexjs.org/) - _Versatile, simple, promise based, and fun SQL query builder_
+- Frontend
+  - [Choo](https://github.com/yoshuawuyts/choo/) **New** - _Minimal size, small API, light on tooling, thoughfully designed, fun_
+  - [Tachyons](http://tachyons.io/) - _Allows for "designing" in the brower, easier changes to code, and very simple to learn and use_
+- Operations
+  - [Ubuntu](https://www.ubuntu.com/server) - _Easy to work with, wide adoption, package availability, most engineers have experience with it_
+  - [Runit](http://smarden.org/runit/) - _Simple in design, works well as process manager, include nice guarantees for our use case_
+  - [Bash Scripts](https://www.gnu.org/software/bash/) - _Known by most developers, simple, easy to read and update_
+  - (If this service was to be ran in production some more heavyweight configuration management tool would most likely be used to make sure deployment scales to multiple servers and happens in a "rolling" fashion. It would also be used to provision new machines. For this challenge we'll do those steps by hand (running bash scripts that is))
 
 ### Building
 
