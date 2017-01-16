@@ -9,7 +9,8 @@
     "bankai": "^5.2.1",
     "choo": "^4.0.3",
     "knex": "^0.12.6",
-    "merry": "^4.1.0"
+    "merry": "^4.1.0",
+    "pg": "^6.1.2"
   },
   "devDependencies": {
     "standard": "^8.6.0"

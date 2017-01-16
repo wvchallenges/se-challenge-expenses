@@ -5,6 +5,7 @@ var merry = require('merry')
 var bankai = require('bankai')
 
 var env = merry.env({PORT: 8000})
+var production = env.NODE_ENV === 'production'
 var app = merry()
 
 app.router([
@@ -15,7 +16,7 @@ app.router([
   ['/tachyons.min.css', serveStaticFile('tachyons.min.css', 'text/css')],
 
   // API
-  ['/upload', {get: handleUpload}],
+  ['/upload', {post: handleUpload}],
 
   // Error and Not found handlers
   ['/404', serveStaticFile('not-found.html', 'text/html')]
@@ -31,7 +32,8 @@ function handleUpload (req, res, ctx, done) {
 
 function serveClientJs (req, res, ctx, done) {
   var clientPath = path.join(__dirname, 'client', 'app.js')
-  done(null, bankai(clientPath).js(req, res))
+  var assets = bankai(clientPath, {optimize: production, cssDisabled: true})
+  done(null, assets.js(req, res))
 }
 
 function serveStaticFile (filename, contentType) {

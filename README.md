@@ -59,7 +59,7 @@ actually run these.
 ## Production
 
 TODO Overview of what's discussed in this section and how some subject where simplified for the
-exercise but could be expanded upon.
+exercise but could be expanded upon. Note lack of Nginx but obvious need for it.
 
 ### Deploying changes
 
@@ -92,3 +92,8 @@ case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
 ## Footnotes
 
 ### What I am proud of
+
+### Questions
+
+- Is the only line in the example data, taxed in NY, using 7.5% not 8.875% an error?
+- It's not clear as to whether we where supposed to assume the expenses and expense categories from a single file where linked to a specific client of just global.
