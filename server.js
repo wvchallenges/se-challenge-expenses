@@ -12,7 +12,6 @@ app.router([
   // Static assets
   ['/', serveStaticFile('index.html', 'text/html')],
   ['/app.js', serveClientJs],
-  ['/app.css', serveStaticFile('app.css', 'text/css')],
   ['/tachyons.min.css', serveStaticFile('tachyons.min.css', 'text/css')],
 
   // API
