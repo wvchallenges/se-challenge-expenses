@@ -14,14 +14,25 @@ app.model({
 function mainView (state, prev, send) {
   return html`
     <div>
-      <header class="center w-100 mw8 bg-blue pv5 ph3 ph5-l pt4 br0 br2-l br--bottom-l">
-        <small class="f3 fw3 white mb2 dib">Wave</small>
-        <h1 class="f1 mv0">
-          <span class="bg-black-90 white ph3 pt2 dib br2">Data Import</span>
-        </h1>
+      <nav class="bg-blue white">
+        <div class="center mw7 pv2 cf bg-dark-blue ph3 br2 br--bottom">
+          <div class="fl f4 fw6">
+            Wave
+          </div>
+          <div class="fr f5 lh-copy">
+            <a href="/" class="white">Upload new file</a>
+          </div>
+        </div>
+      </nav>
+      <header class="bg-blue">
+        <div class="center w-90 mw7 pt4 pb5">
+          <h1 class="f1 mv0">
+            <span class="bg-navy white ph3 pv2 dib br2">Data Import</span>
+          </h1>
+        </div>
       </header>
-      <main class="center w-100 mw8 mt relative top--2">
-        <div class="bg-white pa4 mh3 mh5-l br2 ba b--light-gray">
+      <main class="center w-90 mw7 mt relative top--2">
+        <div class="bg-white pa4 br2 ba b--light-gray">
 
           <h2 class="f3 fw3 ma0 mb4 pb2 w3 bb bw2 b--black-90 nowrap">
             <strong>Step 1:</strong> Select data file
