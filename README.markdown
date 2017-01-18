@@ -1,59 +1,69 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+# Projects
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+I've done 2 projects, the Backend using NodeJs(Restify) and PostgreSql and the Frontend using ReactJs :
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+- [Backend](https://github.com/marcogbarcellos/csv-uploader)
+- [Frontend](https://github.com/marcogbarcellos/csv-uploader-react)
 
-Please use whatever programming language and framework you feel the most comfortable with.
+# [Backend](https://github.com/marcogbarcellos/csv-uploader)
 
-Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+This is a simple api Built with the Nodejs Framework `Restify`, Relational ORM `Sequelize`. 
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+Upload csv files considering the format of the template `expenses.csv` inside the folder `uploads`.
 
-### What your web-based application must do:
+It has an endpoint `http://localhost:3000/upload` (You can change the port and host if you prefer, setting the variables process.env.HOST process.env.PORT) to the this expense csv and persist on 2 entities: `Employee` and `Expense`.
+The frontend for this project can be found is [This small Reactjs Project] (https://github.com/marcogbarcellos/csv-uploader-react)
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
 
- An example input file named `data_example.csv` is included in this repo.
+## Database
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+You'll need to have PostgreSql(version 9.5) installed and create a database called `expenses`.
+It uses by default the settings: `port 5432, host:localhost, user: postgres, pass:postgres`. It can also be customized setting `process.env` variables which you can take a look on `config/config.js`
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+## Installation
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+```
+npm install -g yarn
+```
 
-### Documentation:
+## Usage
 
-Please modify `README.md` to add:
+```
+yarn && yarn start
+```
 
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+You can either use the [Frontend Project](https://github.com/marcogbarcellos/csv-uploader-react) or a curl command through the terminal to test the uploading :
 
-## Submission Instructions
+```
+curl -i -X POST -H "Content-Type: multipart/form-data" -F "blob=@/PATH-TO-YOUR_CSV-FILE/YOUR_FILE.csv" -v http://localhost:3000/upload
+```
 
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
+## Things to do(no time for now)
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+- Unit tests using lab,
+- Validations(Csv File),
+- Improve bunyan logging,
+- Authentication using JWT(access tokens),
+- There is no identifier for the entity Expense(Of course there is an Id on the database but there is no right way to assure that an expense is unique inside the csv) as there is no timestamp(Date AND Exact Time) and an employee can have the same expenses on the same day
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+# [Frontend](https://github.com/marcogbarcellos/csv-uploader-react)
 
-1. Did you follow the instructions for submission? 
-1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
-1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
-1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+This is a simple Reactjs projects that integrates with the [Restify Api] (https://github.com/marcogbarcellos/csv-uploader) you'll need to run it properly.
+
+It`s a file uploader that updates a table in real time regarding the records inserted on the database. 
+
+## Installation and Usage
+
+Run the [Backend Project](https://github.com/marcogbarcellos/csv-uploader) first, then:
+
+```
+npm install -g yarn
+```
+Then 
+
+```
+yarn && yarn start
+```
+
+Then go to the link `http://localhost:8000`
+
