@@ -15,6 +15,11 @@ class ExpensesRepository {
     )
   }
 
+  findAll () {
+    // Side note: fetching all entities in a database feels wrong ^^,
+    return this.db.find(TABLE, Expense, {})
+  }
+
   async create (expense) {
     const e = await this.db.create(TABLE, Expense, expense)
     await this.cache.set(`db:entities:${TABLE}:${e.id}`, e)

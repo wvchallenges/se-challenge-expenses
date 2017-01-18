@@ -98,6 +98,7 @@ case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
 - Employees addresses could have been further normalized
 - Taxes matching is a bit brittle, having only the state 2 letter code means we can match US tax names but would have trouble with other countries / different formats
 - On the subject of taxes, assuming they change only yearly and that it's effective on Jan 1 is quite brittle, we migth come to mid-year tax changes, or simply later than exactly Jan 1.
+- We are using a memory based cache implementation even in prod, it would be easy to set a Redis backed implementation in the container for the production use case but was overlooked for the sake of time
 - Front-end production build is far from being optimal. Should really be static assets served from disk by Nginx, not by Node.js.
 
 ### Questions
