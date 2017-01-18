@@ -26,7 +26,7 @@ class ExpenseCategoriesRepository {
     }
 
     const c = await this.db.create(TABLE, ExpenseCategory, category)
-    this.cache.set(`db:entities:${TABLE}:${c.id}`, c)
+    await this.cache.set(`db:entities:${TABLE}:${c.id}`, c)
     return c
   }
 }

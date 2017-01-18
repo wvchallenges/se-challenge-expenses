@@ -17,7 +17,7 @@ class ExpensesRepository {
 
   async create (expense) {
     const e = await this.db.create(TABLE, Expense, expense)
-    this.cache.set(`db:entities:${TABLE}:${e.id}`, e)
+    await this.cache.set(`db:entities:${TABLE}:${e.id}`, e)
     return e
   }
 }

@@ -5,8 +5,10 @@ const knex = require('knex')
 const merry = require('merry')
 const bankai = require('bankai')
 
-const Database = require('./server/library/database')
 const Container = require('./server/library/container')
+const Database = require('./server/library/database')
+const Cache = require('./server/library/cache')
+const MemoryCache = require('./server/library/memory-cache')
 
 // Server setup
 
@@ -17,6 +19,7 @@ const app = merry()
 const container = new Container(app.log.debug.bind(app.log))
 container.set('config', env)
 container.set('db', new Database(knex(require('./knexfile'))))
+container.set('cache', new Cache(new MemoryCache()))
 container.load(require('./server/helpers/csv'))
 container.load(require('./server/repositories/tax'))
 container.load(require('./server/repositories/employee'))

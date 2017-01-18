@@ -9,7 +9,10 @@ class EmployeesRepository {
   }
 
   findById (id) {
-    return this.db.findWhere(TABLE, Employee, {id})
+    return this.cache.try(
+      `db:entities:${TABLE}:${id}`,
+      () => this.db.findWhere(TABLE, Employee, {id})
+    )
   }
 
   findByName (name) {
@@ -23,7 +26,7 @@ class EmployeesRepository {
     }
 
     const e = await this.db.create(TABLE, Employee, employee)
-    this.cache.set(`db:entities:${TABLE}:${e.id}`, e)
+    await this.cache.set(`db:entities:${TABLE}:${e.id}`, e)
     return e
   }
 }
