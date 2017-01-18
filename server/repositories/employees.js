@@ -1,22 +1,34 @@
-const Employee = require('../models/employee');
+const Employee = require('../models/employee')
 
-const TABLE = 'employees';
+const TABLE = 'employees'
 
 class EmployeesRepository {
-  constructor(db) {
-    this.db = db;
+  constructor (db, cache) {
+    this.db = db
+    this.cache = cache
   }
 
-  find(id) {
-    return this.db.findById(TABLE, Employee, id)
+  findById (id) {
+    return this.db.findWhere(TABLE, Employee, {id})
   }
 
-  create(employee) {
-    return this.db.create(TABLE, Employee, employee)
+  findByName (name) {
+    return this.db.findWhere(TABLE, Employee, {name})
+  }
+
+  async findOrCreate (employee) {
+    const dbEmployee = await this.findByName(employee.name)
+    if (dbEmployee) {
+      return dbEmployee
+    }
+
+    const e = await this.db.create(TABLE, Employee, employee)
+    this.cache.set(`db:entities:${TABLE}:${e.id}`, e)
+    return e
   }
 }
 
 EmployeesRepository.dependencyName = 'repo:employees'
-EmployeesRepository.dependencies = ['db']
+EmployeesRepository.dependencies = ['db', 'cache']
 
 module.exports = EmployeesRepository

@@ -2,30 +2,30 @@ const test = require('tape')
 
 const Database = require('../../server/library/database')
 
-test('Database: findById: calls knex and creates entity right', (t) => {
+test('Database: findWhere: calls knex and creates entity right', (t) => {
   const dbResult = [{id: 1, tax_id: 'abc123'}]
   const fakeKnex = new FakeKnex(dbResult)
   const db = new Database(fakeKnex)
 
   t.plan(2)
-  db.findById('table', Entity, 1).then((result) => {
+  db.findWhere('table', Entity, {someId: 1}).then((result) => {
     t.deepEqual(fakeKnex.callLog, [
       ['select'],
       ['from', 'table'],
-      ['where', 'id', 1],
+      ['where', {some_id: 1}],
       ['limit', 1]
     ])
     t.deepEqual(result, {id: 1, taxId: 'abc123'})
   }).catch(err => t.fail(err))
 })
 
-test('Database: findById: return null when no result', (t) => {
+test('Database: findWhere: return null when no result', (t) => {
   const dbResult = []
   const fakeKnex = new FakeKnex(dbResult)
   const db = new Database(fakeKnex)
 
   t.plan(1)
-  db.findById('table', Entity, 1).then((result) => {
+  db.findWhere('table', Entity, {id: 1}).then((result) => {
     t.equal(result, null)
   }).catch(err => t.fail(err))
 })
@@ -51,17 +51,17 @@ test('Database: create: calls knex right', (t) => {
 })
 
 class Entity {
-  constructor(params) {
+  constructor (params) {
     Object.assign(this, params)
   }
 
-  toObject() {
+  toObject () {
     return this
   }
 }
 
 class FakeKnex {
-  constructor(result) {
+  constructor (result) {
     this.callLog = []
     this.result = result
     this.then = this.then.bind(this)
@@ -75,7 +75,7 @@ class FakeKnex {
     }
   }
 
-  then(successHandler, errorHandler) {
+  then (successHandler, errorHandler) {
     if (this.result instanceof Error) {
       errorHandler(this.result)
     } else {
@@ -83,7 +83,7 @@ class FakeKnex {
     }
   }
 
-  buildStub(name) {
+  buildStub (name) {
     return (...args) => {
       this.callLog.push([name].concat(args))
       return this // Make method chaining work

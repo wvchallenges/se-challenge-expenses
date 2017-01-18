@@ -36,8 +36,8 @@ test: ## Run all tests including style checks
 test: lint test-unit test-integration test-system
 
 db-create: ## Creates a new database for the application to use (run once)
-	psql -c "CREATE ROLE wave_challenge WITH SUPERUSER LOGIN PASSWORD 'wave_challenge'"
-	psql -c "CREATE DATABASE wave_challenge WITH OWNER wave_challenge"
+	psql -c "CREATE IF NOT EXIST ROLE wave_challenge WITH SUPERUSER LOGIN PASSWORD 'wave_challenge'"
+	psql -c "CREATE IF NOT EXIST DATABASE wave_challenge WITH OWNER wave_challenge"
 
 db-migrate: ## Runs all pending migrations againt the database
 	./node_modules/.bin/knex migrate:latest

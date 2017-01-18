@@ -1,6 +1,6 @@
 const R = require('ramda')
 
-const FIELDS = ['id', 'name', 'year', 'percentage']
+const FIELDS = ['id', 'country', 'state', 'type', 'effectiveSince', 'percent']
 
 class Tax {
   constructor (values = {}) {
