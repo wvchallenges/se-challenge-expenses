@@ -68,6 +68,6 @@ function mainView (state, prev, send) {
 app.router(['/', mainView])
 
 var tree = app.start()
-var appEl = document.getElementById('app');
-appEl.innerHTML = '';
+var appEl = document.getElementById('app')
+appEl.innerHTML = ''
 appEl.appendChild(tree)

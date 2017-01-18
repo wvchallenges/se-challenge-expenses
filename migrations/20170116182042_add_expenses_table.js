@@ -7,9 +7,9 @@ exports.up = function (knex, Promise) {
     t.string('tax_id', 26).notNullable().references('id').inTable('taxes')
     t.text('description').notNullable()
     t.integer('amount').notNullable()
-  });
-};
+  })
+}
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTable('expenses');
-};
+  return knex.schema.dropTable('expenses')
+}

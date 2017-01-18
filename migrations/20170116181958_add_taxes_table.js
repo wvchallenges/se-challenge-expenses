@@ -7,9 +7,9 @@ exports.up = function (knex, Promise) {
 
     t.index(['name', 'year'])
     t.unique(['name', 'year'])
-  });
-};
+  })
+}
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTable('taxes');
-};
+  return knex.schema.dropTable('taxes')
+}

@@ -13,6 +13,8 @@
     "pg": "^6.1.2"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "standard": "^8.6.0",
+    "tap": "^9.0.3",
+    "tap-spec": "^4.1.1"
   }
 }
