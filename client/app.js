@@ -1,6 +1,6 @@
-var html = require('choo/html')
-var choo = require('choo')
-var app = choo()
+const html = require('choo/html')
+const choo = require('choo')
+const app = choo()
 
 app.model({
   state: {title: 'Not quite set yet'},
@@ -67,7 +67,7 @@ function mainView (state, prev, send) {
 
 app.router(['/', mainView])
 
-var tree = app.start()
-var appEl = document.getElementById('app')
+const tree = app.start()
+const appEl = document.getElementById('app')
 appEl.innerHTML = ''
 appEl.appendChild(tree)

@@ -4,7 +4,6 @@ PATH := ./node_modules/.bin:$(PATH)
 # node or yarn are not on $PATH
 NODE := node
 YARN := yarn
-TAP := tap
 TAPE := tape
 TAPSPEC := tap-spec
 STANDARD := standard
@@ -25,10 +24,10 @@ lint: ## Ensures your code follows the "standard"
 	$(STANDARD) --fix
 
 test-unit: ## Run unit tests
-	$(TAP) tests/unit/*.js | $(TAPSPEC)
+	$(TAPE) tests/unit/*.js | $(TAPSPEC)
 
 test-integration: ## Run integration tests
-	$(TAP) tests/integration/*.js | $(TAPSPEC)
+	$(TAPE) tests/integration/*.js | $(TAPSPEC)
 
 test-system: ## Run system tests
 	$(TAPE) tests/system/*.js | $(TAPSPEC)

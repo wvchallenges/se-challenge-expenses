@@ -1,12 +1,14 @@
-var fs = require('fs')
-var path = require('path')
-var http = require('http')
-var merry = require('merry')
-var bankai = require('bankai')
+const fs = require('fs')
+const path = require('path')
+const http = require('http')
+const merry = require('merry')
+const bankai = require('bankai')
 
-var env = merry.env({PORT: 8000})
-var production = env.NODE_ENV === 'production'
-var app = merry()
+// Server setup
+
+const env = merry.env({PORT: 8000})
+const production = env.NODE_ENV === 'production'
+const app = merry()
 
 app.router([
   // Static assets
@@ -15,7 +17,7 @@ app.router([
   ['/tachyons.min.css', serveStaticFile('tachyons.min.css', 'text/css')],
 
   // API
-  ['/upload', {post: handleUpload}],
+  ['/import', {post: handleImport}],
 
   // Error and Not found handlers
   ['/404', serveStaticFile('not-found.html', 'text/html')]
@@ -24,20 +26,22 @@ app.router([
 http.createServer(app.start()).listen(env.PORT)
 app.log.info('started listening on port ' + env.PORT)
 
-function handleUpload (req, res, ctx, done) {
+// Route handlers
+
+function handleImport (req, res, ctx, done) {
   done(merry.error({statusCode: 400}))
   done(null, 'hello world')
 }
 
 function serveClientJs (req, res, ctx, done) {
-  var clientPath = path.join(__dirname, 'client', 'app.js')
-  var assets = bankai(clientPath, {optimize: production, cssDisabled: true})
+  const clientPath = path.join(__dirname, 'client', 'app.js')
+  const assets = bankai(clientPath, {optimize: production, cssDisabled: true})
   done(null, assets.js(req, res))
 }
 
 function serveStaticFile (filename, contentType) {
   return function (req, res, ctx, done) {
-    var absolutePath = path.join(__dirname, 'client', filename)
+    const absolutePath = path.join(__dirname, 'client', filename)
     res.writeHead(200, {'Content-Type': contentType})
     done(null, fs.createReadStream(absolutePath).pipe(res))
   }
