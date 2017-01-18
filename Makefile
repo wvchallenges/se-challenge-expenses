@@ -4,7 +4,7 @@ PATH := ./node_modules/.bin:$(PATH)
 # node or yarn are not on $PATH
 NODE := node
 YARN := yarn
-TAPE := tape
+TAPE := $(NODE) --harmony ./node_modules/.bin/tape
 TAPSPEC := tap-spec
 STANDARD := standard
 
