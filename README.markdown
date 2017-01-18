@@ -7,12 +7,12 @@ I've done 2 projects, the Backend using NodeJs(Restify) and PostgreSql and the F
 
 # [Backend](https://github.com/marcogbarcellos/csv-uploader)
 
-This is a simple api Built with the Nodejs Framework `Restify`, Postgresql with ORM `Sequelize`. 
+This is a simple api Built with the Nodejs Framework `Restify`, Relational ORM `Sequelize`. 
 
 Upload csv files considering the format of the template `expenses.csv` inside the folder `uploads`.
 
 It has an endpoint `http://localhost:3000/upload` (You can change the port and host if you prefer, setting the variables process.env.HOST process.env.PORT) to the this expense csv and persist on 2 entities: `Employee` and `Expense`.
-The frontend for this project can be found in [This small Reactjs Project] (https://github.com/marcogbarcellos/csv-uploader-react)
+The frontend for this project can be found is [This small Reactjs Project] (https://github.com/marcogbarcellos/csv-uploader-react)
 
 
 ## Database
@@ -43,7 +43,8 @@ curl -i -X POST -H "Content-Type: multipart/form-data" -F "blob=@/PATH-TO-YOUR_C
 - Unit tests using lab,
 - Validations(Csv File),
 - Improve bunyan logging,
-- Authentication using JWT(access tokens)
+- Authentication using JWT(access tokens),
+- There is no identifier for the entity Expense(Of course there is an Id on the database but there is no right way to assure that an expense is unique inside the csv) as there is no timestamp(Date AND Exact Time) and an employee can have the same expenses on the same day
 
 # [Frontend](https://github.com/marcogbarcellos/csv-uploader-react)
 
