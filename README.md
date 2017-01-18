@@ -93,6 +93,11 @@ case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
 
 ### What I am proud of
 
+### Other considerations
+
+- Employees addresses could have been further normalized
+- Front-end production build is far from being optimal. Should really be static assets served from disk by Nginx, not by Node.js.
+
 ### Questions
 
 - Is the only line in the example data, taxed in NY, using 7.5% not 8.875% an error?

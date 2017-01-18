@@ -7,7 +7,7 @@ class Tax {
     Object.assign(this, values)
   }
 
-  toJSON () {
+  toObject () {
     return R.pick(this, FIELDS)
   }
 }

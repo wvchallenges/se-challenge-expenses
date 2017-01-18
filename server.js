@@ -1,8 +1,12 @@
 const fs = require('fs')
 const path = require('path')
 const http = require('http')
+const knex = require('knex')
 const merry = require('merry')
 const bankai = require('bankai')
+
+const Database = require('./server/library/database')
+const Container = require('./server/library/container')
 
 // Server setup
 
@@ -10,9 +14,21 @@ const env = merry.env({PORT: 8000})
 const production = env.NODE_ENV === 'production'
 const app = merry()
 
+const container = new Container(app.log.debug.bind(app.log))
+container.set('config', env)
+container.set('db', new Database(knex(require('./knexfile'))))
+container.load(require('./server/helpers/csv'))
+container.load(require('./server/repositories/tax'))
+container.load(require('./server/repositories/employee'))
+container.load(require('./server/repositories/expense_category'))
+container.load(require('./server/repositories/expense'))
+container.load(require('./server/services/import'))
+container.load(require('./server/services/report'))
+
 app.router([
   // Static assets
   ['/', serveStaticFile('index.html', 'text/html')],
+  ['/import', serveStaticFile('index.html', 'text/html')],
   ['/app.js', serveClientJs],
   ['/tachyons.min.css', serveStaticFile('tachyons.min.css', 'text/css')],
 

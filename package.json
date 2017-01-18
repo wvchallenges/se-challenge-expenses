@@ -8,10 +8,12 @@
   "dependencies": {
     "bankai": "^5.2.1",
     "choo": "^4.0.3",
+    "humps": "^2.0.0",
     "knex": "^0.12.6",
     "merry": "^4.1.0",
     "pg": "^6.1.2",
-    "ramda": "^0.23.0"
+    "ramda": "^0.23.0",
+    "ulid": "^0.1.0"
   },
   "devDependencies": {
     "standard": "^8.6.0",

@@ -1,7 +1,7 @@
 const R = require('ramda')
 
 const FIELDS = [
-  'id', 'date', 'category_id', 'employee_id', 'tax_id',
+  'id', 'date', 'categoryId', 'employeeId', 'taxId',
   'description', 'amount'
 ]
 
@@ -10,7 +10,7 @@ class Expense {
     Object.assign(this, values)
   }
 
-  toJSON () {
+  toObject () {
     return R.pick(this, FIELDS)
   }
 }
