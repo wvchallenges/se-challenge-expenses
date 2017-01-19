@@ -7,6 +7,8 @@ YARN := yarn
 TAPE := $(NODE) --harmony ./node_modules/.bin/tape
 TAPSPEC := tap-spec
 STANDARD := standard
+ANSIBLE := ansible
+ANSIBLEPLAYBOOK := ansible-playbook
 
 run: ## Start the application server
 	node --harmony server.js | ./node_modules/.bin/pino
@@ -53,3 +55,14 @@ db-rollback: ## Reverts the last migration
 #	make db-create-migration NAME=add-users-table
 db-create-migration: ## Create a new migration file
 	./node_modules/.bin/knex migrate:make $(NAME)
+
+ops-ping: ## Runs the "ping" module against all host to test connectivity
+	$(ANSIBLE) all -u op -i support/inventory.ini -m ping
+
+# Ex:
+#	make ops-run CMD=uptime
+ops-run: ## Run command against all hosts, provide a $CMD var to make
+	$(ANSIBLE) all -u op -i support/inventory.ini -a "$(CMD)"
+
+ops-provision: ## Runs provision command against a server
+	$(ANSIBLEPLAYBOOK) support/provision.yml -u op -i "$(IP),"

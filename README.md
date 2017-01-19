@@ -112,6 +112,25 @@ software or Ansible/Chef/Puppet/SaltStack. Touch on database migrations.
 TODO Talk about host choice, server distro, `scripts/provision.sh`, touch on run manually in this
 case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
 
+
+```
+#cloud-config
+users:
+  - name: op
+    ssh-authorized-keys:
+      - ssh-rsa ...
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+packages:
+  - python
+runcmd:
+  - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+  - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
+  - sed -i -e '$aAllowUsers op' /etc/ssh/sshd_config
+  - service ssh restart
+```
+
 ### Understanding day-to-day operations
 
 **Server**

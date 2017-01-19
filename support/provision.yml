@@ -1,0 +1,60 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    root_password: "$6$rounds=656000$EqagmknlH0zM475c$OXgDbuJaa4XvojHjZO8ZoZC9emeWYSalOieF7d5ttCk/plnXUqPfU1KYDivsoUutODCayZM5vExxfcbUoK/jW1"
+  tasks:
+    - name: set root password for recovery
+      user: name=root password={{root_password}}
+
+    - name: update apt
+      apt: update_cache=yes
+    - name: upgrade server
+      apt: upgrade=dist
+
+    - name: install essential packages
+      apt: name={{item}} state=present
+      with_items:
+        - ufw
+        - fail2ban
+        - git
+        - vim
+        - mosh
+        - tmux
+        - curl
+        - htop
+        - gzip
+        - build-essential
+
+    - name: firewall - enable
+      ufw: state=enabled policy=deny
+    - name: firewall - allow all outgoing traffic
+      ufw: policy=allow direction=outgoing
+    - name: firewall - allow incomming in port 22
+      ufw: rule=allow direction=in port=22
+    - name: firewall - allow incomming in port 80
+      ufw: rule=allow direction=in port=80
+    - name: firewall - allow incomming in port 443
+      ufw: rule=allow direction=in port=443
+    - name: firewall - allow mosh traffic
+      ufw: rule=allow proto=udp port=60000:60100
+
+    - name: nodejs - check existance
+      command: which node
+      register: node_present
+      ignore_errors: True
+    - name: nodejs - setup PPA 1
+      get_url: url=https://deb.nodesource.com/setup_7.x dest=/tmp/setup7
+      when: node_present|failed
+    - name: nodejs - setup PPA 2
+      command: bash /tmp/setup7
+      when: node_present|failed
+    - name: nodejs - setup PPA 3
+      file: path=/tmp/setup7 state=absent
+      when: node_present|failed
+    - name: nodejs - install
+      apt: name=nodejs state=present
+      when: node_present|failed
+    - name: nodejs - install yarn
+      command: npm i -g yarn
