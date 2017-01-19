@@ -10,6 +10,7 @@ const Database = require('./server/library/database')
 const Cache = require('./server/library/cache')
 const MemoryCache = require('./server/library/memory-cache')
 
+
 // Setup Container
 const container = new Container(log.debug.bind(log))
 container.set('container', container)
@@ -24,6 +25,7 @@ container.load(require('./server/repositories/expenses'))
 container.load(require('./server/services/import'))
 container.load(require('./server/services/report'))
 
+
 // Setup Routes
 const router = require('koa-router')()
 
@@ -33,6 +35,7 @@ router.get('/', reportController.report)
 const importController = container.create(require('./server/controllers/import'))
 router.get('/import', importController.import)
 router.post('/import', koaBody, importController.import)
+
 
 // Setup Server
 const staticPath = path.join(__dirname, 'static')
@@ -44,7 +47,7 @@ app.use(require('koa2-handlebars')({
   viewPath: path.join(__dirname, 'views'),
   layoutPath: path.join(__dirname, 'views'),
   partialPath: path.join(__dirname, 'views', 'partials')
-})) // Setup handlebars for views
+}))
 app.use(require('koa-static')('static', staticPath)) // Serve static files
 app.use(require('./server/middlewares/force-https')) // Force HTTPS in prod
 app.use(require('./server/middlewares/request-logger')(log)) // Log requests
@@ -52,6 +55,8 @@ app.use(router.routes()) // Router
 app.use(router.allowedMethods()) // Unhandled method router middleware
 app.use((ctx) => ctx.render('not-found', {layout: 'layout-error'})) // Handle 404s
 
+
+// Start Server
 if (!module.parent) {
   const port = process.env.PORT || 8000
   app.listen(port)
