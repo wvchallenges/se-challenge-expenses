@@ -1,12 +1,10 @@
 # Wave Software Development Challenge
 
-## Intro
-
-**Goals**
+## Goals
 
 The problem at hand is very simplistic but, can be interpreted in a myriad of
 ways. Hence the issue at hand here is not merely filling in the requirements, but
-showing mastery of a specific aspect of web development you are comfortable with.
+showing skill in specific aspects of web development you are comfortable with.
 
 A second goal should be showing that you have knowledge of more than just you core
 competency, there are a lot of skills coming into successful web development and
@@ -44,12 +42,12 @@ don't need to be an exact match, it's just to give an idea)_:
 - **PostgreSQL** (v9.5.5) (install it using your package manager `brew`/`apt`)
 - **Ansible** (v2.2.1.0) (install it using `pip install ansible`)
 
-If you have all these you are all setup! _(Make sure you can run the `psql` command before
-continuing)_
+If you have all these you are all setup! _(Make sure you can run the `psql` command without errors
+before continuing)_
 
 Before we run the server, let's create a new database and run schema migrations against it:
 
-```
+```sh
 $ make db-create
 psql -c "CREATE ROLE wave_challenge WITH SUPERUSER LOGIN PASSWORD 'wave_challenge'"
 CREATE ROLE
@@ -62,18 +60,17 @@ Batch 1 run: 3 migrations
 /home/[...]/migrations/20170116182027_add_expense_categories_table.js
 /home/[...]/migrations/20170116182035_add_employees_table.js
 /home/[...]/migrations/20170116182042_add_expenses_table.js
-
 ```
 
-Hokay! Let start that server and get cookin'
+Hokay! Let's start that server and get cookin'
 
-```
+```sh
 $ make
 node --harmony server.js | ./node_modules/.bin/pino
 [2020-12-25T08:00:25.252Z] INFO (17815 on kiasaki-w-vm): started listening on port 8000
 ```
 
-Let's visit [`http://localhost:8000`](http://localhost:8000/) and it out!
+We can now visit [`http://localhost:8000`](http://localhost:8000/) and try it out!
 
 ### Testing
 
@@ -87,7 +84,7 @@ This application has tests for parts of the actual codebase, that is, because:
 1. Some things are worth testing all edge cases (like `server/helpers/csv.js`) others, not so much
   (like `server/models/*`, at least as long as the are value objects and have no business logic)
 
-```
+```sh
 $ make test # runs the linter + all test suites
 $ make test-unit # runs unit tests
 ```
@@ -99,19 +96,57 @@ we follow. To run the code linter use **`make lint`**.
 
 ## Production
 
-TODO Overview of what's discussed in this section and how some subject where simplified for the
-exercise but could be expanded upon. Note lack of Nginx but obvious need for it.
+Like hinted in the tech stack section, this app is deployed on **Ubuntu**, using **Ansible**. For the time being
+some aspects of a production deployment where ommited for the sake of time but most decisions where
+made keeping in mind scaling this project to more servers, sitting behind a load balancer, or using an
+in house database setup instead of a third party.
 
 ### Deploying changes
 
-TODO Talk about `scripts/deploy.sh` and it could be scaled/automated in production using some custom
-software or Ansible/Chef/Puppet/SaltStack. Touch on database migrations.
+Deploying changes is such a critical part the process of developing a product that it deserves a quality,
+non-flaky and simple to use solution. Ideally you have deploys happening automatically as tests pass in
+CI on the master branch.
+
+For this application deploys are made using an ansible playbook.
+
+There is 2 requirements to be able to run it:
+
+- Have a `~/wave-vault-pass.txt` file containing the Ansible Vault password
+- Have the SSH private key used for deployment in you key agent (`ssh-add ~/.ssh/wave`)
+
+To deploy the latest commit from master use the following:
+
+```
+$ make ops-deploy
+ansible-playbook support/deploy.yml -u op -i support/inventory.ini
+
+PLAY [web] *********************************************************************
+
+TASK [setup] *******************************************************************
+ok: [wave-challenge-web1]
+
+TASK [app - fetch lastest commits] *********************************************
+ok: [wave-challenge-web1]
+
+TASK [app - update dependencies] ***********************************************
+changed: [wave-challenge-web1]
+
+TASK [app - run migrations] ****************************************************
+changed: [wave-challenge-web1]
+
+TASK [app - restart] ***********************************************************
+changed: [wave-challenge-web1]
+
+PLAY RECAP *********************************************************************
+wave-challenge-web1        : ok=5    changed=3    unreachable=0    failed=0
+```
+
+That's it!
 
 ### Provisioning new servers
 
 TODO Talk about host choice, server distro, `scripts/provision.sh`, touch on run manually in this
 case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
-
 
 ```
 #cloud-config
