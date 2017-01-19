@@ -1,0 +1,41 @@
+{{#months}}
+  <h1 class="f3 fw3">{{monthName}}, {{year}}</h1>
+  <table class="dt--fixed f6 mb4" cellspacing="0">
+    <thead>
+      <tr>
+        <th class="pa2 bb b--black-20 tl w-25">Description</th>
+        <th class="pa2 bb b--black-20 tl w-15">Category</th>
+        <th class="pa2 bb b--black-20 tl w-15">Employee</th>
+        <th class="pa2 bb b--black-20 tr w-15">Amount</th>
+        <th class="pa2 bb b--black-20 tr w-15">Taxes</th>
+        <th class="pa2 bb b--black-20 tr w-15">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#expenses}}
+        <tr>
+          <td class="pa2 bb b--black-20">{{description}}</td>
+          <td class="pa2 bb b--black-20 truncate">{{categoryName}}</td>
+          <td class="pa2 bb b--black-20">{{employeeName}}</td>
+          <td class="pa2 bb b--black-20 tr">$ {{num amount}}</td>
+          <td class="pa2 bb b--black-20 tr">$ {{num amountTax}}</td>
+          <td class="pa2 bb b--black-20 tr">$ {{num amountTotal}}</td>
+        </tr>
+      {{/expenses}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="pa2 bb b--black-20 tr" colspan="5">Total Pre-Tax</td>
+        <th class="pa2 bb b--black-20 tr">$ {{num totalPreTax}}</th>
+      </tr>
+      <tr>
+        <td class="pa2 bb b--black-20 tr" colspan="5">Total Tax</td>
+        <th class="pa2 bb b--black-20 tr">$ {{num totalTax}}</th>
+      </tr>
+      <tr>
+        <td class="pa2 tr" colspan="5">Total</td>
+        <th class="pa2 tr">$ {{num total}}</th>
+      </tr>
+    </tfoot>
+  </table>
+{{/months}}

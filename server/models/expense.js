@@ -11,7 +11,7 @@ class Expense {
   }
 
   toObject () {
-    return R.pick(this, FIELDS)
+    return R.pick(FIELDS, this)
   }
 }
 

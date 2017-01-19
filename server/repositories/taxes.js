@@ -29,7 +29,12 @@ class TaxesRepository {
   // (Returns a promise to be homogenous with how other repo work and
   // for future proofing)
   findByName (name) {
-    return new Promise((resolve) => resolve(this.findByNameSync(name)))
+    return Promise.resolve(this.findByNameSync(name))
+  }
+
+  // Finds a specific tax by id
+  findById (id) {
+    return Promise.resolve(TAXES[id] || null)
   }
 }
 

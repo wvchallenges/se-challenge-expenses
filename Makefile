@@ -39,6 +39,9 @@ db-create: ## Creates a new database for the application to use (run once)
 	psql -c "CREATE IF NOT EXIST ROLE wave_challenge WITH SUPERUSER LOGIN PASSWORD 'wave_challenge'"
 	psql -c "CREATE IF NOT EXIST DATABASE wave_challenge WITH OWNER wave_challenge"
 
+db-wipe: ## Creates a new database for the application to use (run once)
+	psql -d wave_challenge -c "DELETE FROM expenses; DELETE FROM expense_categories; DELETE FROM employees;"
+
 db-migrate: ## Runs all pending migrations againt the database
 	./node_modules/.bin/knex migrate:latest
 

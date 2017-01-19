@@ -1,3 +1,4 @@
+const Expense = require('../models/expense')
 const Employee = require('../models/employee')
 const ExpenseCategory = require('../models/expense_category')
 
@@ -18,7 +19,7 @@ class ImportService {
       'date', 'category', 'employeeName', 'employeeAddress',
       'description', 'amount', 'taxName'
     ]
-    const rawExpenses = this.csvHelper(columns, csvData)
+    const rawExpenses = this.csvHelper.parse(columns, csvData)
 
     // Now, all data is still strings, let cast those to the right type
     return rawExpenses.map((e) => {
@@ -27,7 +28,7 @@ class ImportService {
       e.date = new Date(dateY, dateM, dateD)
 
       // Parse amount as float
-      e.amount = parseFloat(e.amount)
+      e.amount = parseFloat(e.amount) * 100
 
       return e
     })
@@ -48,12 +49,12 @@ class ImportService {
     return expenses
   }
 
-  async importExpenseCategory (expenses) {
-    const findOrCreate = this.expenseCategoriesRepo.findOrCreate
+  async importExpenseCategories (expenses) {
+    const ecr = this.expenseCategoriesRepo
 
     for (let expense of expenses) {
       // Create employee
-      const category = await findOrCreate(new ExpenseCategory({
+      const category = await ecr.findOrCreate(new ExpenseCategory({
         name: expense.category
       }))
 
@@ -65,21 +66,24 @@ class ImportService {
   async importFindTaxIds (expenses) {
     for (let expense of expenses) {
       // Create employee
-      const tax = await this.taxesRepo.findByName(new Employee())
+      const tax = await this.taxesRepo.findByName(expense.taxName)
 
       expense.taxId = tax.id
     }
   }
 
   importCreateExpenses (expenses) {
+    const entitify = values => new Expense(values)
     const create = this.expensesRepo.create.bind(this.expensesRepo)
-    return Promise.all(expenses.map(create))
+    return Promise.all(expenses.map(entitify).map(create))
   }
 
   // Parses expense CSV and saves it's content to the database
   async import (csvData) {
     // Step 1: Parse CSV Data
-    const expenses = this.importCSV(csvData)
+    const expenses = this.importParseCSV(csvData)
+
+    console.log(expenses)
 
     // Step 2: Extract employees and save those missing from the database
     await this.importEmployees(expenses)

@@ -1,3 +1,5 @@
+/* eslint-disable no-fallthrough */
+const R = require('ramda')
 const assert = require('assert')
 
 class CSVHelper {
@@ -14,9 +16,13 @@ class CSVHelper {
     assert(typeof data === 'string', 'CSVHelper: parse: data needs to be a string')
     const result = [{}]
     let columnIndex = 0
+    let inString = false
 
     for (let i = 0; i < data.length; i++) {
       const currentRow = result[result.length - 1]
+      const columnName = columnIndex < columns.length
+        ? columns[columnIndex]
+        : String(columnIndex + 1)
 
       switch (data[i]) {
         case '\r':
@@ -29,15 +35,23 @@ class CSVHelper {
             result.push({})
           }
           break
-        case ',':
-          // Matching on ',' without a way to include a comma in strings
-          // or escape it is simplistic but ok for our current needs
-          columnIndex++
+        case '"':
+          // Skip appending "string" closing double quote
+          inString = false
           break
+        case ',':
+          // Ignore commas while within a string
+          if (!inString) {
+            // Look ahead for "string" start
+            if (data[i + 1] === '"') {
+              inString = true
+              i++
+            }
+
+            columnIndex++
+            break
+          }
         default:
-          const columnName = columnIndex < columns.length
-            ? columns[columnIndex]
-            : String(columnIndex + 1)
           currentRow[columnName] = (currentRow[columnName] || '') + data[i]
           break
       }
@@ -51,7 +65,9 @@ class CSVHelper {
     const lastItemSize = Object.keys(result[result.length - 1]).length
     const sliceEnd = lastItemSize > 0 ? result.length : result.length - 1
 
-    return result.slice(sliceStart, sliceEnd)
+    const trimWhitespace = R.mapObjIndexed(R.invoker(0, 'trim'))
+
+    return result.slice(sliceStart, sliceEnd).map(trimWhitespace)
   }
 }
 

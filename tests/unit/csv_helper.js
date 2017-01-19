@@ -51,8 +51,20 @@ test('CSVHelper: parse: trailing line feed', function (t) {
   t.end()
 })
 
+test('CSVHelper: parse: white space trimming', function (t) {
+  const result = csvHelper.parse(['a'], 'h\n   1 ')
+  t.deepEqual(result, [{a: '1'}])
+  t.end()
+})
+
+test('CSVHelper: parse: string support for commas', function (t) {
+  const result = csvHelper.parse(['a', 'b', 'c', 'd'], 'h\na,"abc, def",b,"g,h,i"')
+  t.deepEqual(result, [{a: 'a', b: 'abc, def', c: 'b', d: 'g,h,i'}])
+  t.end()
+})
+
 test('CSVHelper: parse: all together', function (t) {
-  const result = csvHelper.parse(['a', 'b'], 'h1,h2,h3\n1,2,3\r\n4,5,6\n')
+  const result = csvHelper.parse(['a', 'b'], 'h1,h2,h3\n1,2,3\r\n 4  ,5, 6\n')
   t.deepEqual(result, [
     {a: '1', b: '2', '3': '3'},
     {a: '4', b: '5', '3': '6'}

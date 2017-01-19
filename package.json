@@ -10,8 +10,6 @@
     "knex": "0.12",
     "koa": "2",
     "koa-body": "2",
-    "koa-convert": "1.2",
-    "koa-hbs": "0.9",
     "koa-router": "7",
     "koa-static": "https://github.com/kiasaki/koa-static.git",
     "koa2-handlebars": "https://github.com/kiasaki/koa-handlebars.git",

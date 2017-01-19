@@ -3,7 +3,7 @@ const humps = require('humps')
 
 class Database {
   constructor (knex, idGenerator = ulid) {
-    this.knex = knex
+    this.knex = knex // debug: .on('query', q => console.log(q))
     this.idGenerator = idGenerator
   }
 
