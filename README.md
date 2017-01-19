@@ -2,31 +2,19 @@
 
 ## Intro
 
-**Technology**
-
-While choosing a set of technologies for this challenge I had two goals in mind:
-
-1. Using languages, software, and operating systems I have used in the past so
-  that I can get to a working solution fast and best showcase my skills.
-1. Still picking some new tools/libraries for 1-2 thing as this challenge is a
-  perfect opportunity to better myself and explore new things in a safe environment.
-
 **Goals**
 
 The problem at hand is very simplistic but, can be interpreted in a myriad of
-ways. Hence the problem here is now ticking the requirement but showing some
-depth in the mastery of an aspect of web development you are comfortable with.
+ways. Hence the issue at hand here is not merely filling in the requirements, but
+showing mastery of a specific aspect of web development you are comfortable with.
 
-A second goal should be thinking about the user, this is what Wave, and many
-other great organizations do: start from the user. What is the user trying to
-accomplish? How can we make it as easy as possible? How can we delight the
-user? Often the answer is by doing your very best in each aspect Design /
-Experience / User Interface / Performance / Stability / Iteration Speed /
-Innovation.
+A second goal should be showing that you have knowledge of more than just you core
+competency, there are a lot of skills coming into successful web development and
+a full-stack developer owes it to itself to know enough about frontend, UX, documentation,
+testing, devops, systems, etc. to help out with those when needed.
 
-Third, thinking of the onsite interview, how can we make sure this project
-includes grounds for interesting discussions. How can we make it technically
-interesting and easy to change/update/modify.
+Third, thinking of the on-site interview, we could keep make sure some parts of the
+codebase can act as good grounds for interesting discussions.
 
 ## Development
 
@@ -44,17 +32,70 @@ interesting and easy to change/update/modify.
 - Operations
   - [Ubuntu](https://www.ubuntu.com/server) - _Easy to work with, wide adoption, package availability, most engineers have experience with it_
   - [Runit](http://smarden.org/runit/) - _Simple in design, works well as process manager, include nice guarantees for our use case_
-  - [Bash Scripts](https://www.gnu.org/software/bash/) - _Known by most developers, simple, easy to read and update_
-  - (If this service was to be ran in production some more heavyweight configuration management tool would most likely be used to make sure deployment scales to multiple servers and happens in a "rolling" fashion. It would also be used to provision new machines. For this challenge we'll do those steps by hand (running bash scripts that is))
+  - [Ansible](https://www.ansible.com/) - _Simpler than alternatives, Powerful syntax and plugin system, Agentless_
 
-### Building
+### Developing
 
-TODO Talk about dependencies and follow with building instructions.
+To start with, you will need to have the following installed on your machine _(the version numbers
+don't need to be an exact match, it's just to give an idea)_:
+
+- **node.js** (v7.4.0) (install it using [n](https://github.com/tj/n))
+- **yarn** (v0.19.1) (install it using `npm i -g yarn`)
+- **PostgreSQL** (v9.5.5) (install it using your package manager `brew`/`apt`)
+- **Ansible** (v2.2.1.0) (install it using `pip install ansible`)
+
+If you have all these you are all setup! _(Make sure you can run the `psql` command before
+continuing)_
+
+Before we run the server, let's create a new database and run schema migrations against it:
+
+```
+$ make db-create
+psql -c "CREATE ROLE wave_challenge WITH SUPERUSER LOGIN PASSWORD 'wave_challenge'"
+CREATE ROLE
+psql -c "CREATE DATABASE wave_challenge WITH OWNER wave_challenge"
+CREATE DATABASE
+
+$ make db-migrate
+./node_modules/.bin/knex migrate:latest
+Batch 1 run: 3 migrations
+/home/[...]/migrations/20170116182027_add_expense_categories_table.js
+/home/[...]/migrations/20170116182035_add_employees_table.js
+/home/[...]/migrations/20170116182042_add_expenses_table.js
+
+```
+
+Hokay! Let start that server and get cookin'
+
+```
+$ make
+node --harmony server.js | ./node_modules/.bin/pino
+[2020-12-25T08:00:25.252Z] INFO (17815 on kiasaki-w-vm): started listening on port 8000
+```
+
+Let's visit [`http://localhost:8000`](http://localhost:8000/) and it out!
 
 ### Testing
 
-TODO Discuss kinds of testing involved (unit, integration, system) and libraries used, touch on how
-actually run these.
+This application uses the [`tape`](https://github.com/substack/tape) test runner for Node.js and
+has a few `make` targets that can run the test suite.
+
+This application has tests for parts of the actual codebase, that is, because:
+
+1. This was a coding challenge so I ended up not wanting to spend too much time setting up full
+  system level testing as it can be time consuming ^^,
+1. Some things are worth testing all edge cases (like `server/helpers/csv.js`) others, not so much
+  (like `server/models/*`, at least as long as the are value objects and have no business logic)
+
+```
+$ make test # runs the linter + all test suites
+$ make test-unit # runs unit tests
+```
+
+**Coding Style**
+
+This codebase adopts the JavaScript [standard](http://standardjs.com/), so, whatever that dictates
+we follow. To run the code linter use **`make lint`**.
 
 ## Production
 
@@ -93,15 +134,21 @@ case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
 
 ### What I am proud of
 
+### Screenshots
+
+| Page | Screenshot |
+|:---:|:---:|
+| Import | <img src="https://raw.githubusercontent.com/kiasaki/wave-challenge/master/support/screenshot1.png" height="300px" /> |
+| Report | <img src="https://raw.githubusercontent.com/kiasaki/wave-challenge/master/support/screenshot2.png" height="300px" /> |
+
 ### Other considerations
 
 - Employees addresses could have been further normalized
 - Taxes matching is a bit brittle, having only the state 2 letter code means we can match US tax names but would have trouble with other countries / different formats
-- On the subject of taxes, assuming they change only yearly and that it's effective on Jan 1 is quite brittle, we migth come to mid-year tax changes, or simply later than exactly Jan 1.
+- On the subject of taxes, assuming they change only yearly and that it's effective on Jan 1 is quite brittle, we might come to mid-year tax changes, or simply later than exactly Jan 1.
 - We are using a memory based cache implementation even in prod, it would be easy to set a Redis backed implementation in the container for the production use case but was overlooked for the sake of time
-- Front-end production build is far from being optimal. Should really be static assets served from disk by Nginx, not by Node.js.
 
 ### Questions
 
-- Is the only line in the example data, taxed in NY, using 7.5% not 8.875% an error?
-- It's not clear as to whether we where supposed to assume the expenses and expense categories from a single file where linked to a specific client of just global.
+- There is an expense in the example data, taxed in NY but using 7.5% not 8.875%. Is it an error?
+- Where we supposed to think about segregating expenses per client or just leave them be global?

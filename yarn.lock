@@ -228,7 +228,7 @@ bl@~1.1.2:
   dependencies:
     readable-stream "~2.0.5"
 
-bluebird@^3.3.1, bluebird@^3.4.0, bluebird@^3.4.6:
+bluebird@^3.3.1, bluebird@^3.4.6:
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
 
@@ -1552,19 +1552,12 @@ koa-compose@^3.0.0:
   dependencies:
     any-promise "^1.1.0"
 
-koa-convert@1.2, koa-convert@^1.2.0:
+koa-convert@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/koa-convert/-/koa-convert-1.2.0.tgz#da40875df49de0539098d1700b50820cebcd21d0"
   dependencies:
     co "^4.6.0"
     koa-compose "^3.0.0"
-
-koa-hbs@0.9:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/koa-hbs/-/koa-hbs-0.9.0.tgz#c8a2af2933a49acaa47a197e2c279f8b2ecdb76e"
-  dependencies:
-    glob "^7.0.5"
-    handlebars "^4.0.5"
 
 koa-is-json@^1.0.0:
   version "1.0.0"
@@ -1597,9 +1590,8 @@ koa-send@^3.3.0:
 
 "koa2-handlebars@https://github.com/kiasaki/koa-handlebars.git":
   version "1.0.8"
-  resolved "https://github.com/kiasaki/koa-handlebars.git#b68827ea16296484a578965d783968204ed86a25"
+  resolved "https://github.com/kiasaki/koa-handlebars.git#bd31d992b251f51da0b3d2bd1c17e21b01c61a12"
   dependencies:
-    bluebird "^3.4.0"
     debug "^2.2.0"
     handlebars "^4.0.5"
     lru-cache "^4.0.1"
@@ -1867,9 +1859,13 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.0, object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
+
+object-assign@^4.0.1, object-assign@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
 object-inspect@~1.2.1:
   version "1.2.1"
