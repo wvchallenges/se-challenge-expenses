@@ -52,7 +52,7 @@ class ReportService {
 ReportService.dependencyName = 'services:report'
 ReportService.dependencies = [
   'repo:taxes', 'repo:employees',
-  'repo:expenses', 'repo:expense_categories'
+  'repo:expenses', 'repo:expenseCategories'
 ]
 
 module.exports = ReportService

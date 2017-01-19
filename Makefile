@@ -9,7 +9,7 @@ TAPSPEC := tap-spec
 STANDARD := standard
 
 run: ## Start the application server
-	node --harmony server.js | ./node_modules/.bin/merry
+	node --harmony server.js | ./node_modules/.bin/pino
 
 help: ## Show available targets
 	@printf "$(shell tput -Txterm setaf 2)"

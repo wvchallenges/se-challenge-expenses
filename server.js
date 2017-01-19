@@ -1,67 +1,59 @@
-const fs = require('fs')
 const path = require('path')
-const http = require('http')
 const knex = require('knex')
-const merry = require('merry')
-const bankai = require('bankai')
+const log = require('pino')()
+const convert = require('koa-convert')
+const Koa = require('koa')
+const koaBody = require('koa-body')()
 
 const Container = require('./server/library/container')
 const Database = require('./server/library/database')
 const Cache = require('./server/library/cache')
 const MemoryCache = require('./server/library/memory-cache')
 
-// Server setup
-
-const env = merry.env({PORT: 8000})
-const production = env.NODE_ENV === 'production'
-const app = merry()
-
-const container = new Container(app.log.debug.bind(app.log))
-container.set('config', env)
+// Setup Container
+const container = new Container(log.debug.bind(log))
+container.set('container', container)
+container.set('log', log)
 container.set('db', new Database(knex(require('./knexfile'))))
 container.set('cache', new Cache(new MemoryCache()))
 container.load(require('./server/helpers/csv'))
-container.load(require('./server/repositories/tax'))
-container.load(require('./server/repositories/employee'))
-container.load(require('./server/repositories/expense_category'))
-container.load(require('./server/repositories/expense'))
+container.load(require('./server/repositories/taxes'))
+container.load(require('./server/repositories/employees'))
+container.load(require('./server/repositories/expense_categories'))
+container.load(require('./server/repositories/expenses'))
 container.load(require('./server/services/import'))
 container.load(require('./server/services/report'))
 
-app.router([
-  // Static assets
-  ['/', serveStaticFile('index.html', 'text/html')],
-  ['/import', serveStaticFile('index.html', 'text/html')],
-  ['/app.js', serveClientJs],
-  ['/tachyons.min.css', serveStaticFile('tachyons.min.css', 'text/css')],
+// Setup Routes
+const router = require('koa-router')()
 
-  // API
-  ['/import', {post: handleImport}],
+const reportController = container.create(require('./server/controllers/report'))
+router.get('/', reportController.report)
 
-  // Error and Not found handlers
-  ['/404', serveStaticFile('not-found.html', 'text/html')]
-])
+const importController = container.create(require('./server/controllers/import'))
+router.get('/import', importController.import)
+router.post('/import', koaBody, importController.import)
 
-http.createServer(app.start()).listen(env.PORT)
-app.log.info('started listening on port ' + env.PORT)
+// Setup Server
+const staticPath = path.join(__dirname, 'static')
+const app = new Koa()
+app.proxy = true // Allow reverse proxing
+app.use(require('koa2-handlebars')({
+  extension: '.hbs',
+  defaultLayout: 'layout',
+  viewPath: path.join(__dirname, 'views'),
+  layoutPath: path.join(__dirname, 'views'),
+  partialPath: path.join(__dirname, 'views', 'partials')
+})) // Setup handlebars for views
+app.use(require('koa-static')('static', staticPath)) // Serve static files
+app.use(require('./server/middlewares/force-https')) // Force HTTPS in prod
+app.use(require('./server/middlewares/request-logger')(log)) // Log requests
+app.use(router.routes()) // Router
+app.use(router.allowedMethods()) // Unhandled method router middleware
+app.use((ctx) => ctx.render('not-found', {layout: 'layout-error'})) // Handle 404s
 
-// Route handlers
-
-function handleImport (req, res, ctx, done) {
-  done(merry.error({statusCode: 400}))
-  done(null, 'hello world')
-}
-
-function serveClientJs (req, res, ctx, done) {
-  const clientPath = path.join(__dirname, 'client', 'app.js')
-  const assets = bankai(clientPath, {optimize: production, cssDisabled: true})
-  done(null, assets.js(req, res))
-}
-
-function serveStaticFile (filename, contentType) {
-  return function (req, res, ctx, done) {
-    const absolutePath = path.join(__dirname, 'client', filename)
-    res.writeHead(200, {'Content-Type': contentType})
-    done(null, fs.createReadStream(absolutePath).pipe(res))
-  }
+if (!module.parent) {
+  const port = process.env.PORT || 8000
+  app.listen(port)
+  log.info('started listening on port ' + port)
 }

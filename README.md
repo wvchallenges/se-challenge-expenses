@@ -36,10 +36,10 @@ interesting and easy to change/update/modify.
   - [PostgreSQL](https://www.postgresql.org/) - _Stable for a long time, fast when used correctly, wide userbase, versatile_
 - Backend
   - [Node.js](https://nodejs.org/en/) - _Fast to develop in, fast at runtime for our use case, now adopted by many big company, in active development, wide community, packages for many things web related_
-  - [Merry](https://github.com/yoshuawuyts/merry/) **New** - _Fast, fun, opiniated but most importantly: simple_
+  - [Koa](http://koajs.com/) - _Futuristic, widely known, thoughfully designed, modular_
   - [Knex](http://knexjs.org/) - _Versatile, simple, promise based, and fun SQL query builder_
 - Frontend
-  - [Choo](https://github.com/yoshuawuyts/choo/) **New** - _Minimal size, small API, light on tooling, thoughfully designed, fun_
+  - [Mustache](http://mustache.github.io/) - _Dead simple, logic less template engine. Avoid scope creep in views_
   - [Tachyons](http://tachyons.io/) - _Allows for "designing" in the brower, easier changes to code, and very simple to learn and use_
 - Operations
   - [Ubuntu](https://www.ubuntu.com/server) - _Easy to work with, wide adoption, package availability, most engineers have experience with it_

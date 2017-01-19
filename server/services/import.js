@@ -1,5 +1,5 @@
-const Employee = require('../models/Employee')
-const ExpenseCategory = require('../models/ExpenseCategory')
+const Employee = require('../models/employee')
+const ExpenseCategory = require('../models/expense_category')
 
 class ImportService {
   constructor (
@@ -99,7 +99,7 @@ ImportService.dependencyName = 'services:import'
 ImportService.dependencies = [
   'helpers:csv',
   'repo:taxes', 'repo:employees',
-  'repo:expenses', 'repo:expense_categories'
+  'repo:expenses', 'repo:expenseCategories'
 ]
 
 module.exports = ImportService
