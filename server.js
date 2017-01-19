@@ -46,7 +46,6 @@ app.use(require('koa2-handlebars')({
   helpers: {num: (n) => (n / 100).toFixed(2)}
 }))
 app.use(require('koa-static')('static', staticPath)) // Serve static files
-app.use(require('./server/middlewares/force-https')) // Force HTTPS in prod
 app.use(require('./server/middlewares/request-logger')(log)) // Log requests
 app.use(router.routes()) // Router
 app.use(router.allowedMethods()) // Unhandled method router middleware
