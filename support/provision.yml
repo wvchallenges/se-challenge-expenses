@@ -2,17 +2,43 @@
 - hosts: all
   become: yes
   become_method: sudo
+  vars_files:
+    - vault.yml
   vars:
-    root_password: "$6$rounds=656000$EqagmknlH0zM475c$OXgDbuJaa4XvojHjZO8ZoZC9emeWYSalOieF7d5ttCk/plnXUqPfU1KYDivsoUutODCayZM5vExxfcbUoK/jW1"
+    app_root: /var/wave/challenge
+    app_host: wave-challenge.kiasaki.com
+    service_run: |
+      #!/bin/bash
+      exec 2>&1
+      set -o allexport
+      source /var/wave/challenge/config
+      set +o allexport
+      cd /var/wave/challenge/repo
+      exec chpst -u app node --harmony server.js
+    service_log: |
+      #!/bin/sh
+      exec chpst -u app svlogd -tt /var/log/wave-challenge
   tasks:
+    # Set a password for `root` user
+    # This password can't be used over SSH the way SSHD is configured, it's purely so we can
+    # still access the box using DigitalOcen's web console (in the event we lock ourselves out
+    # by misconfiguring the firewall)
     - name: set root password for recovery
       user: name=root password={{root_password}}
 
+    # Make sure the host is up to date
     - name: update apt
       apt: update_cache=yes
     - name: upgrade server
       apt: upgrade=dist
 
+    # Install some basic packages
+    #  - ufw needs to be there, we configure it just under
+    #  - fail2ban comes well configured out of the box
+    #  - git is needed to clone the codebase's repo
+    #  - vim, tmux, curl, htop, gzip are all useful when managing the host
+    #  - mosh can come useful if administering the host over a flaky network
+    #  - build-essential is needed to build native nodejs modules
     - name: install essential packages
       apt: name={{item}} state=present
       with_items:
@@ -27,6 +53,7 @@
         - gzip
         - build-essential
 
+    # Configure UFW letting only SSH, HTTP, HTTPS, and mosh over udp come in
     - name: firewall - enable
       ufw: state=enabled policy=deny
     - name: firewall - allow all outgoing traffic
@@ -40,10 +67,13 @@
     - name: firewall - allow mosh traffic
       ufw: rule=allow proto=udp port=60000:60100
 
+    # Check if node is installed so we can skip the lengthy process of installing it
     - name: nodejs - check existance
       command: which node
       register: node_present
       ignore_errors: True
+    # Fetch and run the official node PPA setup script
+    # (not using shell and a pipe to apease ansible)
     - name: nodejs - setup PPA 1
       get_url: url=https://deb.nodesource.com/setup_7.x dest=/tmp/setup7
       when: node_present|failed
@@ -53,8 +83,76 @@
     - name: nodejs - setup PPA 3
       file: path=/tmp/setup7 state=absent
       when: node_present|failed
+    # Install nodejs 7.x using apt
     - name: nodejs - install
       apt: name=nodejs state=present
       when: node_present|failed
+
+    # Check if yarn exists so we can skip the length npm i call
+    - name: nodejs - check yarn existance
+      command: which yarn
+      register: yarn_present
+      ignore_errors: True
+    # Install yarn when missing
     - name: nodejs - install yarn
       command: npm i -g yarn
+      when: yarn_present|failed
+
+    # Create a non-admin group and user than will own and run the app
+    - name: app - group
+      group: name=app state=present
+    - name: app - user
+      user: name=app group=app
+    - name: app - add operator to app group
+      user: name=op append=yes groups=app
+    - name: app - folder
+      file: name={{app_root}} state=directory mode=0775 owner=app group=app
+
+    # Create a file containing all the env variable the application needs
+    - name: app - environment variables - file exists
+      file: name={{app_root}}/config state=touch mode=0775 owner=app group=app
+    - name: app - environment variables - PORT
+      lineinfile: name={{app_root}}/config line='PORT="8000"'
+    - name: app - environment variables - NODE_ENV
+      lineinfile: name={{app_root}}/config line='NODE_ENV="production"'
+    - name: app - environment variables - DATABASE_URL
+      lineinfile: name={{app_root}}/config line='DATABASE_URL="{{database_url}}"'
+
+    - name: app - repo - clone
+      become_user: app
+      git:
+        repo: https://github.com/kiasaki/wave-challenge.git
+        dest: "{{app_root}}/repo"
+    - name: app - repo - permissions and owner
+      file: name={{app_root}}/repo state=directory owner=app group=app recurse=yes
+    - name: app - repo - dependencies
+      become_user: app
+      command: chdir={{app_root}}/repo yarn
+
+    # Install nginx
+    - name: nginx - install
+      apt: name=nginx state=present
+    - name: nginx - copy ssl key
+      copy: content="{{ssl_key}}" dest={{app_root}}/ssl.key
+    - name: nginx - copy ssl crt
+      copy: content="{{ssl_crt}}" dest={{app_root}}/ssl.crt
+    - name: nginx - remove default site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    - name: nginx - copy site config
+      template: src=nginx-site.conf dest=/etc/nginx/sites-enabled/default owner=www-data group=www-data
+    - name: nginx - restart
+      service: name=nginx state=restarted
+
+    # Install runit and copy our app's config
+    - name: runit - install
+      apt: name=runit state=present
+    - name: runit - log folder
+      file: path=/var/log/wave-challenge state=directory owner=app
+    - name: runit - app folder
+      file: path=/etc/service/wave-challenge/log state=directory
+    - name: runit - app config - run
+      copy: content="{{service_run}}" dest=/etc/service/wave-challenge/run mode=755
+    - name: runit - app config - log
+      copy: content="{{service_log}}" dest=/etc/service/wave-challenge/log/run mode=755
+    - name: runit - restart
+      service: name=runit state=restarted

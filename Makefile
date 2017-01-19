@@ -56,6 +56,10 @@ db-rollback: ## Reverts the last migration
 db-create-migration: ## Create a new migration file
 	./node_modules/.bin/knex migrate:make $(NAME)
 
+
+ANSIBLE_VAULT_PASSWORD_FILE=${HOME}/wave-vault-pass.txt
+export ANSIBLE_VAULT_PASSWORD_FILE
+
 ops-ping: ## Runs the "ping" module against all host to test connectivity
 	$(ANSIBLE) all -u op -i support/inventory.ini -m ping
 
@@ -66,3 +70,6 @@ ops-run: ## Run command against all hosts, provide a $CMD var to make
 
 ops-provision: ## Runs provision command against a server
 	$(ANSIBLEPLAYBOOK) support/provision.yml -u op -i "$(IP),"
+
+ops-vault-edit:
+	ansible-vault edit support/vault.yml

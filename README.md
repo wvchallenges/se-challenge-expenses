@@ -149,9 +149,22 @@ runcmd:
 
 **Disaster recovery**
 
+**SSL**
+
+The SSL certificate currently in use is stored in ansible's `vault.yml` file.
+
+If ever you need to generate a new self-signed certificate those two commands should come in handy:
+
+```
+$ openssl genrsa -out ssl.key 4096
+$ openssl req -new -x509 -key ssl.key -out ssl.crt -days 1095 -subj '/CN=<the-hostname>'
+```
+
 ## Footnotes
 
 ### What I am proud of
+
+
 
 ### Screenshots
 
