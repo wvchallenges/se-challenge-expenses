@@ -34,5 +34,6 @@ date:
 employee_id: <foriegn key>
 expense_category_id: <foriegn key>
 description:
+tax_id: <foriegn key>
 pre_tax_amount: 
 tax_amount:
