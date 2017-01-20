@@ -10,10 +10,9 @@
 2. `npm install` (Building the project)
 
 ## Running the project
-1. Have a seperate shell / Terminal window and use `npm start` to start the project (make sure that the port 3000 is free)
+1. Open a seperate shell / Terminal and use `npm start` to start the server (make sure that the port 3000 is free)
 2. Open a browser to access the GUI - [http://localhost:3000](http://localhost:3000)
-3. The window will be a rudimentary one where in you can paste the csv data
-4. On Submit, the data is exported to the DB tables and a new page shows the expense summary (month wise)
+3. Use the form in the browser to submit the csv data
 
 # Implementation
 This project is built using NodeJS / ExpresssJS with sqlite as the database. sqlite was chosen to keep the prerequisites and build instructions short
