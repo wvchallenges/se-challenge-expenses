@@ -1,5 +1,4 @@
 db/*.db
 node_modules/*
-uploads/*
 *.log
 .idea

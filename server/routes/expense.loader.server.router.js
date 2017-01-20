@@ -3,10 +3,9 @@
  */
 
 'use strict';
-var expenseLoader = require('../controllers/expense.loader.server.controller'),
-    multer  = require('multer'),
-    upload = multer({ dest: '../../uploads/' });
+var expenseLoader = require('../controllers/expense.loader.server.controller');
+
 module.exports = function(router) {
     /* GET home page. */
-    router.post('/load-expenses', upload.single('expenseFile'), expenseLoader.loadExpenses);
+    router.post('/load-expenses', expenseLoader.loadExpenses);
 };

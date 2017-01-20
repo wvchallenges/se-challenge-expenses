@@ -9,8 +9,10 @@ var dbInit = require('./db.init');
 var app = express();
 
 // view engine setup
+
 app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'hjs');
+app.engine('html', require('hogan-express'));
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

@@ -21,7 +21,7 @@ module.exports.createTaxTable = function(name, address) {
     });
 };
 
-module.exports.populate = function(expensesData, callback) {
+module.exports.populate = function(expensesData, res, callback) {
     db.get('SELECT MAX(TAX_ID) AS TAX_ID FROM TAX',function(err,row) {
         if(err) {
             console.log('Error in retrieving max tax id from TAX table');
@@ -90,10 +90,10 @@ module.exports.populate = function(expensesData, callback) {
                 console.log('Error in inserting / updating data in TAX TABLE', exception);
             }
 
-            //printTable();
+            printTable();
 
             if(callback) {
-                callback(expensesData);
+                callback(expensesData,res);
             }
         });
     });

@@ -27,7 +27,7 @@ module.exports.createExpense = function(name, address) {
     });
 };
 
-module.exports.populate = function(expensesData, callback) {
+module.exports.populate = function(expensesData, res, callback) {
     db.get('SELECT MAX(EXPENSE_ID) AS EXPENSE_ID FROM EXPENSE',function(err,row){
         if(err) {
             console.log('Error occurred in retrieving values from EXPENSE table');
@@ -57,7 +57,7 @@ module.exports.populate = function(expensesData, callback) {
             printTable();
 
             if (callback) {
-                callback(expensesData);
+                callback(expensesData,res);
             }
         });
     });

@@ -20,7 +20,7 @@ module.exports.createEmployeeTable = function() {
     });
 };
 
-module.exports.populate = function(expensesData, callback) {
+module.exports.populate = function(expensesData, res, callback) {
     db.get('SELECT MAX(EMPLOYEE_ID) AS EMPLOYEE_ID FROM EMPLOYEE',function(err,row){
         if(err) {
             console.log('Error occurred in retrieving values from EMPLOYEE table');
@@ -28,13 +28,13 @@ module.exports.populate = function(expensesData, callback) {
         }
         db.serialize( function() {
             var startEmployeeId = 0;
-            console.log('Row: ', row);
+            //console.log('Row: ', row);
             if (row) {
                 //console.log('Rows retrieved from Employee table');
                 startEmployeeId = row.EMPLOYEE_ID;
             }
             startEmployeeId++;
-            console.log('Start Employee Id: ' + startEmployeeId);
+            //console.log('Start Employee Id: ' + startEmployeeId);
             var stmt = db.prepare('INSERT INTO EMPLOYEE (EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_ADDRESS) VALUES(?,?,?)');
             var employeeMap = {};
             for (var i = 0; i < expensesData.length; i++) {
@@ -54,10 +54,10 @@ module.exports.populate = function(expensesData, callback) {
             }
             stmt.finalize();
 
-            //printTable();
+            printTable();
 
             if (callback) {
-                callback(expensesData);
+                callback(expensesData,res);
             }
         });
     });

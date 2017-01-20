@@ -18,7 +18,7 @@ module.exports.createExpenseCategory = function(name, address) {
     });
 };
 
-module.exports.populate = function(expensesData, callback) {
+module.exports.populate = function(expensesData, res, callback) {
 
     db.get('SELECT MAX(EXPENSE_CATEGORY_ID) AS EXPENSE_CATEGORY_ID FROM EXPENSE_CATEGORY',function(err,row) {
         if (err) {
@@ -45,10 +45,10 @@ module.exports.populate = function(expensesData, callback) {
             }
             stmt.finalize();
 
-            //printTable();
+            printTable();
 
             if (callback) {
-                callback(expensesData);
+                callback(expensesData,res);
             }
         });
     });
