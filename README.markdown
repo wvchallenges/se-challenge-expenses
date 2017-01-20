@@ -1,12 +1,14 @@
 # Build / Run Instructions
 ## PreRequisites
-1. node 6 or above ;;Make sure that the nodejs binary is named node and not nodejs
+1. node 6 or above (Make sure that the nodejs binary is named node and not nodejs)
 2. npm 3
+
 ## Building the project
 1. clone / checkout the project
 2. `npm install` (Building the project)
+
 ## Running the project
-1. Have a seperate shell / Terminal window and use `npm start` to start the project ;;make sure that the port 3000 is free
+1. Have a seperate shell / Terminal window and use `npm start` to start the project (make sure that the port 3000 is free)
 2. open a browswer window to access the GUI - [http://localhost:3000]
 3. The window will be a rudimentary one where in you can paste the csv data
 4. On Submit, the data is exported to the DB tables and a new page shows the expense summary (month wise)
