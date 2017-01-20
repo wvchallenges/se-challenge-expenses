@@ -5,6 +5,7 @@
   vars_files:
     - vault.yml
   vars:
+    git_url: https://github.com/kiasaki/wave-challenge.git
     app_root: /var/wave/challenge
     app_host: wave-challenge.kiasaki.com
     service_run: |
@@ -121,8 +122,9 @@
     - name: app - repo - clone
       become_user: app
       git:
-        repo: https://github.com/kiasaki/wave-challenge.git
+        repo: "{{git_url}}"
         dest: "{{app_root}}/repo"
+        accept_hostkey: yes
     - name: app - repo - permissions and owner
       file: name={{app_root}}/repo state=directory owner=app group=app recurse=yes
     - name: app - repo - dependencies

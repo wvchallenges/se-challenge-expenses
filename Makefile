@@ -8,6 +8,7 @@ TAPE := $(NODE) --harmony ./node_modules/.bin/tape
 TAPSPEC := tap-spec
 STANDARD := standard
 ANSIBLE := ansible
+ANSIBLEVAULT := ansible-vault
 ANSIBLEPLAYBOOK := ansible-playbook
 
 run: ## Start the application server
@@ -71,5 +72,8 @@ ops-run: ## Run command against all hosts, provide a $CMD var to make
 ops-provision: ## Runs provision command against a server
 	$(ANSIBLEPLAYBOOK) support/provision.yml -u op -i "$(IP),"
 
-ops-vault-edit:
-	ansible-vault edit support/vault.yml
+ops-deploy: ## Deploys the application from the repo's master branch
+	$(ANSIBLEPLAYBOOK) support/deploy.yml -u op -i support/inventory.ini
+
+ops-vault-edit: ## Opens ansible's vault for editing
+	$(ANSIBLEVAULT) edit support/vault.yml
