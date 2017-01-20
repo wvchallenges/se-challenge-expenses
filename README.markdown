@@ -1,10 +1,12 @@
 # Build / Run Instructions
 ## PreRequisites
-1. node 6 or above (Make sure that the nodejs binary is named node and not nodejs)
-2. npm 3 (compatible to node version)
+1. node 4.2.* or above (Make sure that the nodejs binary is named node and not nodejs)
+2. npm 2.4.* (compatible to node version)
+
+;;works in node 6 and npm 3 too.
 
 ## Building the project
-1. Clone / Checkout the project
+1. Clone the project
 2. `npm install` (Building the project)
 
 ## Running the project
