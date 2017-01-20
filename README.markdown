@@ -5,7 +5,8 @@
 
 ## Building the project
 1. Clone the project
-2. `npm install` (Building the project)
+3. Change to the cloned directory
+2. Use `npm install` to build the project
 
 ## Running the project
 1. Open a seperate shell / Terminal and use `npm start` to start the server (make sure that the port 3000 is free)
