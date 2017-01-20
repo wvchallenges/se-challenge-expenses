@@ -145,44 +145,129 @@ That's it!
 
 ### Provisioning new servers
 
-TODO Talk about host choice, server distro, `scripts/provision.sh`, touch on run manually in this
-case but can be automated with Ansible/Tower | Chef/Server | Puppet/Server.
+Right now servers are hosted on **Digital Ocean**, to provision a new server you can navigate
+to the web page for creating a new one and fill in the following:
+
+- **Distribution**: Ubuntu 16.04.1 x64
+- **Size**: 1GB/1CPU
+- **Region**: Toronto 1
+- **User data**:
+    ```
+    #cloud-config
+    users:
+      - name: op
+        ssh-authorized-keys:
+          - ssh-rsa ...
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        groups: sudo
+        shell: /bin/bash
+    packages:
+      - python
+    runcmd:
+      - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+      - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
+      - sed -i -e '$aAllowUsers op' /etc/ssh/sshd_config
+      - service ssh restart
+    ```
+- **SSH Key**: Wave
+- **Hostname**: wave-challenge-web0 (where 0 is the number that follows the last host created)
+
+Now that we have a fresh host with an operator user configured, let's run an ansible playbook against it
+to install all the required software and dependencies for our app to run.
 
 ```
-#cloud-config
-users:
-  - name: op
-    ssh-authorized-keys:
-      - ssh-rsa ...
-    sudo: ['ALL=(ALL) NOPASSWD:ALL']
-    groups: sudo
-    shell: /bin/bash
-packages:
-  - python
-runcmd:
-  - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
-  - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
-  - sed -i -e '$aAllowUsers op' /etc/ssh/sshd_config
-  - service ssh restart
+$ make ops-provision IP="<new-host-public-ip>"
 ```
+
+If that completes sucessfully the server is ready to be deployed against and put in rotation under the load balancer
+(there is no load balancer yet, but you would have one in a production scenario)
 
 ### Understanding day-to-day operations
 
 **Server**
 
+The servers are currently hosted on DigitalOcean and have Ubuntu 16.04 installed on them.
+
+Access is possible over SSH as the user `op` (for operator), only public key authentication
+is enabled. sshd listens on the default port, 22.
+
+If ever you have a problem accessing a host, it's possible to troubleshoot the issue using
+the web console and logging in as root using a password, ask a collegue for it ;)
+
 **Application process**
+
+The two processes we really want to keep running at all times are nginx and our node.js app.
+
+Nginx is started by systemd at boot time and runs as a daemon so it's very rare it's parent proccess exits.
+
+On the other hand our Node.js app is a bit more brittle, that's why **runit** is installed and started at boot
+time to watch on our app. It's default behavious is to restart the app anytime it stop, forever. Which is nice
+is it doesn't make you worried the process would stop restarting after few failures due to external factor
+(and then requrire manual intervention). The scripts that configure this runit service are located in the
+default directory: `/etc/service`.
 
 **Database**
 
+The production PostgreSQL database is currently hosted on Compose.io, so it's that less to worry about.
+If any incidents happen of we need to scale it, the compose.io website has ways of restoring backups or
+agmenting ressources/capacity.
+
 **Logging**
+
+Centralized logging would be a needed addition for production but for the moment the interesting logs are:
+
+- Node.js App - `/var/log/wave-challenge/current`
+- Nginx - `/var/log/nginx/{access,error}.log`
+- Fail2Ban - `/var/log/fail2ban.log`
 
 **Performance monitoring**
 
+Nothing is istalled yet but I've seen DataDog and collectd fill in that role pretty well.
+
 **User monitoring**
+
+On the backend something like StatHat, DataDog or StatD (and a backing store for it, e.g. InfluxDB)
+seem like clear winners.
+
+On the frontend: Mixpanel is what I have experience with. Paired with Google Analytics or Gaug.es for
+visitor statistics.
+
+**Error Reporting**
+
+Setting up one of the following great options would save a lot of debugging time: Sentry, Raygun, Bugsnag, or Opbeat
 
 **Security**
 
+Here's what has been done, there is space for improvment but it's the basics:
+
+- Upgrade servers periodically
+- Fail2ban installed
+- Firewall configured to only let needed traffic in (22, 80, 443)
+- Password based SSH authentication disabled
+- Root login over SSH disabled
+- Application running as non-priviledged user
+- No secrets as plain-text in source code
+- Deploys only possible to developers that have the server's ssh key
+- HTTPS forced on all request
+- SQL injection more than unlikely the way database access works
+
+A few more items related to authentication are not on the list as there is no authentication implemented
+for the app at the moment.
+
+CSRF is also missing :/
+
 **Disaster recovery**
+
+If ever something really bad happen, the servers are stateless and disposable. The one really important
+piece of state is the database, and it being handled by a third party with automated backups is reassuring.
+
+If you where to rebuild a server fleet the process would be similar to provisionning a new server, expect,
+it would be possible to provision all servers at once by passing in a list of IPs to `make ops-provision`.
+
+Once the `support/inventory.ini` updated with new IPs we should be good to attempt a **deploy**.
+
+The CDN records point to a floating IP address in Digital Ocean, so, updating the droplet that IP point to
+would be required (but it would have saved us from needing to update DNS and wait for propagation).
 
 **SSL**
 
@@ -199,7 +284,16 @@ $ openssl req -new -x509 -key ssl.key -out ssl.crt -days 1095 -subj '/CN=<the-ho
 
 ### What I am proud of
 
+- I think the stuff that was done has enough depth that we'll be able to have interesting discussions while interviewing
+- I was able to cover a lot of ground and touch interesting subjects like security, configuration managment, DDD, DI, design, developer tools, scalability (no really performance wise but project size wise), and documentation
+- The developper experiece of setting up, provisioning and deploying the application is pretty smooth with the help of that makefile
 
+### What I am less proud of
+
+- I spent a lot of time on this app even if advised against it so I kinda feel bad for not delivering what I was asked for, it probably shows in contrast with other submissions and makes it harder to evaluate
+- The app is still missing CSRF which I didn't take time to configure
+- Node.js being a "cobble libraries you like together" kind of ecosystem, I am conscious it's a bit harder for reviwers to follow whats going on. If I where to use an large MVC framework like Django, some commonly known and documented structure would be aparent.
+- I didn't do a dynamic frontend using something like React as it would have led to half-done / half-interesting backend and operations but I am also skilled in that part of web development and didn't get to demontrate that
 
 ### Screenshots
 
