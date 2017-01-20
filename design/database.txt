@@ -19,14 +19,6 @@ expense_category_id: <primary key>
 category:
 descripton:
 
-<-- Expense Category Tax map -->
-expense_category_tax_map
-expense_categroy_tax_map_id: <primary key>
-expense_category_id: <foreign key> <-- Refers to expense categories -->
-tax_id: <foreign key> <-- Refers to tax details table -->
-effective_from:
-ended_on:
-
 <-- Table to hold day to day expenses -->
 expense
 id: <primary key>
