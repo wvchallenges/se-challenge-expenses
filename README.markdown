@@ -4,25 +4,25 @@
 2. npm 3 (compatible to node version)
 
 ## Building the project
-1. clone / checkout the project
+1. Clone / Checkout the project
 2. `npm install` (Building the project)
 
 ## Running the project
 1. Have a seperate shell / Terminal window and use `npm start` to start the project (make sure that the port 3000 is free)
-2. open a browser to access the GUI - [http://localhost:3000](http://localhost:3000)
+2. Open a browser to access the GUI - [http://localhost:3000](http://localhost:3000)
 3. The window will be a rudimentary one where in you can paste the csv data
 4. On Submit, the data is exported to the DB tables and a new page shows the expense summary (month wise)
 
 # Implementation
-This project is built using NodeJS / ExpresssJS with sqlite as the database. sqlite was chosen to keep the prerequisites and build instructions short.
+This project is built using NodeJS / ExpresssJS with sqlite as the database. sqlite was chosen to keep the prerequisites and build instructions short
 
 ## Database design
-The focus was on relational data modelling. The expenses details are split among the three master / primary tables `employee`, `tax` and `expense_category` and a derived / secondary table `expense` which has references to the three master tables.
+The focus was on relational data modelling. The expenses details are split among the three master / primary tables `employee`, `tax` and `expense_category` and a derived / secondary table `expense` which has references to the three master tables
 
-`employee` table holds the `name` and `address` of the employee. `tax` table contains the `tax_name`, `tax_rate`, `effective_from` and `ended_on` fields. Since the tax rate changes over the period, there can be mulitple rates for a tax between `effective_from` and `ended_on` dates. Moreover it is assumed that the date on which the taxRate is different, the old tax rate ends. `expense_category` contains the unique categories. For each of the expense line an entry is made in the `expense` table which refers to the `employee`, `tax`, `expense_category` table entries apart from storing the `pre_tax_amount` and `tax_amount`.
+`employee` table holds the `name` and `address` of the employee. `tax` table contains the `tax_name`, `tax_rate`, `effective_from` and `ended_on` fields. Since the tax rate changes over the period, there can be mulitple rates for a tax between `effective_from` and `ended_on` dates. Moreover it is assumed that the date on which the taxRate is different, the old tax rate ends. `expense_category` contains the unique categories. For each of the expense line an entry is made in the `expense` table which refers to the `employee`, `tax`, `expense_category` table entries apart from storing the `pre_tax_amount` and `tax_amount`
 
 ##Backend
-The source files are under the server/ directory. controllers/ holds the files that deals predominantly with the business logic of parsing the expense file and calling the appropriate tables to populate the data. However parsing the expensesData and extracting unique values spills over to the individual model files too (employee, expense_category, tax & expenses).   
+The source files are under the server/ directory. controllers/ holds the files that deals predominantly with the business logic of parsing the expense file and calling the appropriate tables to populate the data. However parsing the expensesData and extracting unique values spills over to the individual model files too (employee, expense_category, tax & expenses)
 
 ##Frontend
 Frontend is a rudimentary piece which just does the bare minimum that is needed. index.html is the home page and on processing the request the result.html is loaded. error.html is for error handling. There is no frontend javascript logic. The html files can be found under view/ directory while the css can be found under public/stylesheets
