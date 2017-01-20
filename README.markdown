@@ -1,7 +1,7 @@
 # Build / Run Instructions
 ## PreRequisites
 1. node 6 or above (Make sure that the nodejs binary is named node and not nodejs)
-2. npm 3
+2. npm 3 (compatible to node version)
 
 ## Building the project
 1. clone / checkout the project
@@ -40,3 +40,6 @@ As stated under the problem statement (about the input data)
 5. Seperation of front end from back end
 6. `Tax_Amount` is stored in expense table even though it has a reference to tax table. This can be considered bending the relational design. However retrospective tax amendments are rare and hence for easy retrieval and calculation, the tax_amount is also included in the expense table
 7. Add configuration files
+8. CI / CD
+9. Negative test cases
+10. Duplicate submission. At present if the data is submitted again the tables are populated again with the same data
