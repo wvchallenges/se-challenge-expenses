@@ -102,12 +102,13 @@ module.exports.populate = function(expensesData, res, callback) {
 module.exports.printTable = printTable;
 
 function printTable() {
+    console.log('-------- TAX Table data ------');
     db.each('SELECT * FROM TAX', function(err,row) {
         if(err) {
             console.log('Error in selecting Data from TAX TABLE');
             return;
         }
-        console.log('row: ' , row);
+        console.log(row);
     }, function(err,cntx) {
         if (err) {
             console.log('Error while completing select statement');

@@ -67,12 +67,13 @@ module.exports.populate = function(expensesData, res, callback) {
 module.exports.printTable = printTable;
 
 function printTable() {
+    console.log('-------EMPLOYEE TABLE ENTRIES------');
     db.each('SELECT * FROM EMPLOYEE', function(err,row) {
         if(err) {
             console.log('Error in selecting Data from EMPLOYEE TABLE');
             return;
         }
-        console.log('row: ' , row);
+        console.log(row);
     }, function(err,cntx) {
         if (err) {
             console.log('Error while completing select statement');

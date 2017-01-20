@@ -1,8 +1,7 @@
 'use strict';
 var dbLib = require('../lib/sqlite.db.connection.js'),
     db = dbLib.getConnection(),
-    utils = require('../lib/utils.server'),
-    async = require('async');
+    utils = require('../lib/utils.server');
 
 var expense = {
     expenseId: null,
@@ -66,12 +65,13 @@ module.exports.populate = function(expensesData, res, callback) {
 module.exports.printTable = printTable;
 
 function printTable() {
+    console.log('----------------EXPENSE Table Data----------------');
     db.each('SELECT * FROM EXPENSE', function(err,row) {
         if(err) {
             console.log('Error in selecting Data from EXPENSE TABLE');
             return;
         }
-        console.log('row: ' , row);
+        console.log(row);
     }, function(err,cntx) {
         if (err) {
             console.log('Error while completing select statement');
