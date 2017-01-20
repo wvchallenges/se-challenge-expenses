@@ -29,7 +29,9 @@ Frontend is a rudimentary piece which just does the bare minimum that is needed.
 #Limitations / Assumptions
 
 ##Assumption
-As stated under the problem statement (about the input data)
+1.As stated under the problem statement (about the input data)
+2.Header is the first line of the input
+3.No empty lines above or below or inbetween the csv data
 
 ##Limitations / Improvements
 1. The whole data is loaded on to the memory and it is not optimized for memory
