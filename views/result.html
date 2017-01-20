@@ -1,0 +1,37 @@
+<head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<h1>Expenses Summary</h1>
+<table>
+    <tr>
+        <th>
+            Month
+        </th>
+        <!--th>
+            Pre TAX Amount
+        </th>
+        <th>
+            Tax Amount
+        </th-->
+        <th>
+            Total Expenses
+        </th>
+    </tr>
+    {{#expensesDataSummary}}
+    <tr>
+        <td>
+            {{month}}
+        </td>
+        <!--td>
+            {{preTaxAmount}}
+        </td>
+        <td>
+            {{taxAmount}}
+        </td-->
+        <td>
+            {{totalAmount}}
+        </td>
+    </tr>
+    {{/expensesDataSummary}}
+</table>

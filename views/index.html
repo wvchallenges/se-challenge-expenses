@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>{{ project }}</h1>
+    <div class="formArea">
+      <form name="expenseForm" method='post' action='/load-expenses'>
+        <textarea name="expensesData" rows="20" cols="150" placeholder="Paste the csv data"></textarea>
+        <br/><br/>
+        <input type='submit' name='submit'>
+      </form>
+    </div>
+  </body>
+</html>

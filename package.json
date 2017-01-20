@@ -1,0 +1,36 @@
+{
+  "name": "se-challenge-expenses",
+  "version": "1.0.0",
+  "description": "Wave Software Engineering Challenge",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bunbutter/se-challenge-expenses.git"
+  },
+  "keywords": [
+    "Wave",
+    "Engineering",
+    "Challenge",
+    "Expenses",
+    "Project"
+  ],
+  "author": "Bharath Sekar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bunbutter/se-challenge-expenses/issues"
+  },
+  "homepage": "https://github.com/bunbutter/se-challenge-expenses#readme",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "hogan-express": "^0.5.2",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0",
+    "sqlite3": "^3.1.8"
+  }
+}

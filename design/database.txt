@@ -1,0 +1,31 @@
+<-- Employee Details -->
+employee
+employee_id: <primary key>
+name:
+address:
+
+<-- Taxes table -->
+tax
+tax_id: <primary key>
+tax:
+type:
+rate:
+effective_from:  
+ended_on:
+
+<-- Expense categories -->
+expense_category
+expense_category_id: <primary key>
+category:
+descripton:
+
+<-- Table to hold day to day expenses -->
+expense
+id: <primary key>
+date:
+employee_id: <foriegn key>
+expense_category_id: <foriegn key>
+description:
+tax_id: <foriegn key>
+pre_tax_amount: 
+tax_amount:
