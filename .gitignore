@@ -1,0 +1,3 @@
+node_modules/
+support/provision.retry
+support/deploy.retry

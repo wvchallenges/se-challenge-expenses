@@ -1,0 +1,37 @@
+---
+- hosts: web
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vault.yml
+  vars:
+    git_url: https://github.com/kiasaki/wave-challenge.git
+    git_branch: master
+    app_root: /var/wave/challenge
+  tasks:
+    # Fetch the latest commits
+    - name: app - fetch lastest commits
+      become_user: app
+      git:
+        repo: "{{git_url}}"
+        dest: "{{app_root}}/repo"
+        accept_hostkey: yes
+        update: yes
+        version: "{{git_branch}}"
+
+    # Update node modules
+    - name: app - update dependencies
+      become_user: app
+      command: chdir={{app_root}}/repo yarn
+
+    # Run migrations
+    - name: app - run migrations
+      become_user: app
+      shell: |
+        cd {{app_root}}/repo &&
+        eval $(cat ../config | awk '{print "export " $0}') &&
+        make db-migrate
+
+    # Restart app
+    - name: app - restart
+      command: sv restart wave-challenge

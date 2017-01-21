@@ -1,0 +1,27 @@
+{
+  "name": "se-challenge-expenses",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "git@github.com:kiasaki/se-challenge-expenses.git",
+  "author": "Frederic Gingras <frederic@gingras.cc>",
+  "license": "MIT",
+  "dependencies": {
+    "humps": "2",
+    "knex": "0.12",
+    "koa": "2",
+    "koa-body": "2",
+    "koa-router": "7",
+    "koa-static": "https://github.com/kiasaki/koa-static.git",
+    "koa2-handlebars": "https://github.com/kiasaki/koa-handlebars.git",
+    "pg": "6",
+    "pino": "3",
+    "ramda": "0.23",
+    "ulid": "0.1"
+  },
+  "devDependencies": {
+    "standard": "8",
+    "tap": "9",
+    "tap-spec": "4",
+    "tape": "4.6"
+  }
+}

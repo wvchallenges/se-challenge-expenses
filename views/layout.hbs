@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Expenses | Wave</title>
+
+    <link rel="stylesheet" href="/static/tachyons.min.css">
+    <style>body, html {height: 100%;}</style>
+  </head>
+  <body>
+    <nav class="bg-blue white">
+      <div class="center mw7 pv2 cf bg-dark-blue ph3 br2 br--bottom">
+        <div class="fl f4 fw6">
+          Wave
+        </div>
+        <div class="fr f5 lh-copy">
+          <a href="/import" class="white">Import Data</a>
+          <a href="/" class="white dib ml2">Report</a>
+        </div>
+      </div>
+    </nav>
+    <header class="bg-blue">
+      <div class="center w-90 mw7 pt4 pb5">
+        <h1 class="f1 mv0">
+          <span class="bg-navy white ph3 pv2 dib br2">Expenses</span>
+        </h1>
+      </div>
+    </header>
+    <main class="center w-90 mw7 mt relative top--2">
+      <div class="bg-white pa4 br2 ba b--light-gray mb4">
+
+        {{body}}
+
+      </div>
+    </main>
+  </body>
+</html>

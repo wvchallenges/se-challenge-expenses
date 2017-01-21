@@ -1,0 +1,22 @@
+<h2 class="f3 fw3 ma0 mb4 pb2 w3 bb bw2 b--black-90 nowrap">
+  <strong>Step 1:</strong> Select data file
+</h2>
+
+<p class="f5 lh-copy measure">
+  The first step in the import process is selecting a CSV file containing expense data.
+  Once it's uploaded and saved in the database you'll be able to visualize your per-month
+  expense report.
+</p>
+
+<p class="f5 lh-copy measure">
+  The file needs to include header line and include the following fields:
+  <code class="bg-near-white">date, category, employee name, employee address, expense description, pre-tax amount, tax name, tax amount</code>
+</p>
+
+<form method="post" action="/import" enctype="multipart/form-data">
+  <input type="file" name="expenses" class="ph2 pv3 db bg-near-white ba b--light-silver br2 mb3">
+
+  <button type="submit" class="bg-blue white bw0 br2 pa3 f4">
+    Upload file
+  </button>
+</form>
