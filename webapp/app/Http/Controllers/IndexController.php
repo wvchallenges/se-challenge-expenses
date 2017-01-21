@@ -37,8 +37,8 @@ class IndexController extends Controller
             return redirect('/');
         }
 
-        $columns = fgetcsv($fp, 20480, ",");
-        while($details = fgetcsv($fp, 20480, ",")) {
+        $columns = fgetcsv($fp, 2048, ",");
+        while($details = fgetcsv($fp, 2048, ",")) {
             $values = [];
             foreach ($columns as $key => $column) {
                 $values[$column] = $details[$key];
@@ -78,7 +78,6 @@ class IndexController extends Controller
         }
 
         fclose($fp);
-
         Storage::delete($path);
 
         $request->session()->flash('success', 'File uploaded');

@@ -1,11 +1,30 @@
 # Installation
 
-##1. Install Composer
-
+###1. Install Composer
 You'll need composer to get started, you can download and install by following the instructions on this page
 https://getcomposer.org/
 
-##2. 
+###2. Clone the repo
+You'll need to clone the repo.
+
+`git clone https://github.com/synackSA/se-challenge-expenses.git`
+
+###3. Run composer install
+In the `webapp` directory, run the following:
+
+`composer install`
+
+###4. Configure the application
+You'll need to edit the `.env` file and add in your DB details and app URL.
+
+###5. Setup the DB tables
+Once the DB is configured, you can run the DB migrations which will create all the tables you will need. In the `webapp` directory
+run the following command:
+
+`php artisan mirgrate`
+
+###6. Setup your webserver
+Set up your webserver and point it to the `webapp/public` directory.
 
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
