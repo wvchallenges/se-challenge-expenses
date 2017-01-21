@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * ExpenseCategory Model
+ *
+ * @package App
+ */
 class ExpenseCategory extends Model
 {
     /**

@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Employee Model
+ *
+ * @package App
+ */
 class Employee extends Model
 {
     /**

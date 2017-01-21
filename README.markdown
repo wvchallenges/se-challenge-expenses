@@ -26,6 +26,11 @@ run the following command:
 ###6. Setup your webserver
 Set up your webserver and point it to the `webapp/public` directory.
 
+# Notes
+Here are some notes about things I'm particularly proud of.
+  * To be honest I haven't done anything too special here, the app is rather basic and there wasn't much to do on my side as the framework
+  does a lot of the legwork for me.
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
