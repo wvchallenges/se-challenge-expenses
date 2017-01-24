@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="se-challenge-expenses">
+    <property environment="env"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+	
+    <path id="se-challenge-expenses.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="libs/sqlite-jdbc-3.16.1.jar"/>
+        <pathelement location="libs/junit-4.12.jar"/>
+        <pathelement location="libs/hamcrest-core-1.3.jar"/>
+        <pathelement location="libs/loremipsum-1.0.jar"/>
+    </path>
+	
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+	
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project,makejar" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="se-challenge-expenses.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="New_configuration">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="sechallengeexpenses.database.test.CSVReaderTest" todir="${junit.output.dir}"/>
+            <test name="sechallengeexpenses.database.test.SQLiteDatabaseTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="se-challenge-expenses.classpath"/>
+        </junit>
+    </target>
+    <target name="MainUI">
+        <java classname="sechallengeexpenses.ui.MainUI" failonerror="true" fork="yes">
+            <classpath refid="se-challenge-expenses.classpath"/>
+        </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+            
+	<property name="dist.dir" value="dist"/>
+	<property name="dist.lib.dir" value="dist/libs"/>
+		
+	    	
+    <target name ="makejar" description="Create a jar for the sechallengeexpense project" depends="init">
+    	<delete dir="${dist.dir}"/> 
+    	<mkdir dir="${dist.dir}"/>
+    	
+    	<path id="libs.classpath">
+    	    <pathelement location="libs/sqlite-jdbc-3.16.1.jar"/>
+    	    <pathelement location="libs/junit-4.12.jar"/>
+    	    <pathelement location="libs/hamcrest-core-1.3.jar"/>
+    		<pathelement location="libs/loremipsum-1.0.jar"/>
+    	</path>
+    	
+    	<copydir src="bin"
+    		dest="${dist.dir}"
+    	    includes="**/*class"
+    	/>
+    	
+    	<copy todir="${dist.lib.dir}" flatten="true">
+    		<path refid="libs.classpath"/>
+    	</copy>
+    	    		
+    	<jar jarfile="sechallengeexpenses.jar" includes="**/*" basedir="${dist.dir}">
+    		<manifest>
+    			<attribute name = "Main-Class" value = "sechallengeexpenses.ui.MainUI"/>
+    		    <attribute name = "Class-Path" value = "libs/sqlite-jdbc-3.16.1.jar libs/junit-4.12.jar libs/hamcrest-core-1.3.jar libs/loremipsum-1.0.jar"/>
+    		</manifest>
+    	</jar>
+    </target>
+</project>
