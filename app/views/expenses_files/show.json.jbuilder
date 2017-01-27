@@ -1,0 +1,1 @@
+json.partial! "expenses_files/expenses_file", expenses_file: @expenses_file

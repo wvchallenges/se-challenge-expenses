@@ -1,0 +1,32 @@
+<%= form_for(expenses_file, html: {multipart: true}) do |f| %>
+  <% if expenses_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(expenses_file.errors.count, "error") %> prohibited this expenses_file from being saved:</h2>
+
+      <ul>
+      <% expenses_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

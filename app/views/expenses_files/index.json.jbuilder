@@ -1,0 +1,1 @@
+json.array! @expenses_files, partial: 'expenses_files/expenses_file', as: :expenses_file
