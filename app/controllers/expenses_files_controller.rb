@@ -10,6 +10,8 @@ class ExpensesFilesController < ApplicationController
   # GET /expenses_files/1
   # GET /expenses_files/1.json
   def show
+    @expenses = @expenses_file.expenses.select("strftime('%m', date) as month, strftime('%Y', date) as year, SUM(tax_amount) + SUM(pre_tax_amount) AS total").
+      group('month, year').order('year, month').as_json
   end
 
   # GET /expenses_files/new
@@ -25,10 +27,11 @@ class ExpensesFilesController < ApplicationController
   # POST /expenses_files.json
   def create
     @expenses_file = ExpensesFile.new(expenses_file_params)
-    LoadExpensesFromCSV.call(expenses_file: @expenses_file)
 
     respond_to do |format|
       if @expenses_file.save
+        LoadExpensesFromCSV.call(expenses_file: @expenses_file)
+
         format.html { redirect_to @expenses_file, notice: 'Expenses file was successfully created.' }
         format.json { render :show, status: :created, location: @expenses_file }
       else
