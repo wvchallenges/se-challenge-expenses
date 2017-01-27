@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127174154) do
+ActiveRecord::Schema.define(version: 20170127225540) do
 
   create_table "expenses", force: :cascade do |t|
     t.date     "date"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20170127174154) do
     t.float    "tax_amount"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "expenses_file_id"
+    t.index ["expenses_file_id"], name: "index_expenses_on_expenses_file_id"
   end
 
   create_table "expenses_files", force: :cascade do |t|

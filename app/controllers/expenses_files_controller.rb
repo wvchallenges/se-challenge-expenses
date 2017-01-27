@@ -25,7 +25,7 @@ class ExpensesFilesController < ApplicationController
   # POST /expenses_files.json
   def create
     @expenses_file = ExpensesFile.new(expenses_file_params)
-    LoadExpensesFromCSV.call(csv_file: @expenses_file.file)
+    LoadExpensesFromCSV.call(expenses_file: @expenses_file)
 
     respond_to do |format|
       if @expenses_file.save
