@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @expenses_file.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @expenses_file.description %>
+</p>
+
+<p>
+  <table>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Total Expenses</th>
+    </tr>
+
+    <% for expense in @expenses %>
+      <tr>
+        <td><%= expense["year"] %></td>
+        <td><%= expense["month"] %></td>
+        <td><%= expense["total"] %></td>
+      </tr>
+    <% end %>
+  </table>
+</p>
+
+<%= link_to 'Edit', edit_expenses_file_path(@expenses_file) %> |
+<%= link_to 'Back', expenses_files_path %>

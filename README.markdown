@@ -1,3 +1,15 @@
+### Instructions:
+
+1. In order to run the app please run the following commands:
+  1. `bundle install`
+  2. `rails db:migrate`
+  3. `rails server
+  4. Open your browser and input the address: http://localhost:3000
+
+1. This challenge is my first interaction with Rails 5.0; it's a very simple application so didn't make use of any of the new features. 
+
+  The part of the code I'm particularly proud is how the responsibilities between Controller, Model, and Service are distributed. It's not perfect but, in my opinion, it's really important to keep objects that are responsible for only one thing. That make easier future extensions of the codebase, as well as testing critical parts.
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
