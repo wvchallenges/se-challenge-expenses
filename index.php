@@ -9,8 +9,11 @@ $result = mysql_query("SELECT * FROM EXPENSE");
 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     ?>
 <tr>
-    <td><?=$row['id']; ?></td>
-    <td><?=$row['name']; ?></td>
+    <td><?=$row['SALE_DATE']; ?></td>
+    <td><?=$row['CATEGORY']; ?></td>
+    <td><?=$row['EMPLOYEE_NAME']; ?></td>
+    <td><?=$row['PRE_TAX_AMOUNT']; ?></td>
+    <td><?=$row['TAX_AMOUNT']; ?></td>
 </tr>    
 <?
 }
