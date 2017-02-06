@@ -4,4 +4,3 @@ RUN rm -fr /app && git clone https://github.com/ernan/se-challenge-expenses.git 
 EXPOSE 80 3306
 CMD ["/run.sh"]
 
-
