@@ -1,1 +1,0 @@
-mysql -uroot -e "CREATE USER expence_user IDENTIFIED BY expence_pass"

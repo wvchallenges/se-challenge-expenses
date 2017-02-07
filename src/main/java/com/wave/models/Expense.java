@@ -1,6 +1,10 @@
 package com.wave.models;
 
+import org.apache.commons.csv.CSVRecord;
+
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -14,6 +18,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "expense")
 public class Expense {
+    static SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +47,17 @@ public class Expense {
 
     @NotNull
     BigDecimal taxAmount;
+
+    public Expense(CSVRecord record) throws ParseException, NumberFormatException {
+        date = format.parse(record.get(0));
+        category = record.get(1);
+        employeeName = record.get(2);
+        employeeAddress = record.get(3);
+        expenseDescription = record.get(4);
+        preTaxAmount = new BigDecimal(record.get(5).trim());
+        taxName = record.get(6);
+        taxAmount = new BigDecimal(record.get(7).trim());
+    }
 
     public Date getDate() {
         return date;
@@ -106,4 +122,5 @@ public class Expense {
     public void setTaxAmount(BigDecimal taxAmount) {
         this.taxAmount = taxAmount;
     }
+
 }
