@@ -2,54 +2,38 @@ package com.wave.models;
 
 import org.apache.commons.csv.CSVRecord;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 @Entity
 @Table(name = "expense")
 public class Expense {
     static SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-
+    @NotNull
+    long insertId;
+    @NotNull
+    Date expenseDate;
+    @NotNull
+    String category;
+    @NotNull
+    String employeeName;
+    @NotNull
+    String employeeAddress;
+    @NotNull
+    String expenseDescription;
+    @NotNull
+    BigDecimal preTaxAmount;
+    @NotNull
+    String taxName;
+    @NotNull
+    BigDecimal taxAmount;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @NotNull
-    long insertId;
-
-    @NotNull
-    Date expenseDate;
-
-    @NotNull
-    String category;
-
-    @NotNull
-    String employeeName;
-
-    @NotNull
-    String employeeAddress;
-
-    @NotNull
-    String expenseDescription;
-
-    @NotNull
-    BigDecimal preTaxAmount;
-
-    @NotNull
-    String taxName;
-
-    @NotNull
-    BigDecimal taxAmount;
 
     public Expense(long id, CSVRecord record) throws ParseException, NumberFormatException {
         insertId = id;
