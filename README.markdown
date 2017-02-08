@@ -14,7 +14,7 @@ Imagine that Wave has just acquired a new company. Unfortunately, the company ha
 
 ### What your web-based application must do:
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
+1. Your app must accept (via a form) a comma separated file with the following columns: expenseDate, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
 1. You can make the following assumptions:
  1. Columns will always be in that order.
  2. There will always be data in each column.

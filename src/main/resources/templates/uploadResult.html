@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
 <body>
 
 <h1>Monthly Expenses</h1>
 
-<div th:if="${message}">
-    <h2 th:text="${message}"/>
+<span th:if="${error != null}">
+    <div class="alert alert-danger">
+        <strong th:text="${error}">Danger Message!</strong>
+    </div>
+   <div class="alert alert-danger">
+        <strong th:text="${message}">Danger!</strong>
+   </div>
+</span>
+<span th:unless="${error != null}">
+    <div class="alert alert-success">
+        <strong th:text="${message}">Success message!</strong>
+    </div>
+</span>
+
+<div class="span12">
+    <table class="table table-bordered table-striped" id="myTableId" dt:table="true" dt:ext="myExtension">
+        <thead>
+        <tr>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Pre Tax Amount</th>
+            <th>Tax</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="expense : ${expenses}">
+            <td th:text="${expense.year}">${expense.year}</td>
+            <td th:text="${expense.month}">02</td>
+            <td th:text="${expense.preTaxAmount}">600</td>
+            <td th:text="${expense.taxAmount}">100</td>
+            <td th:text="${expense.total}">700</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-
-
 </body>
 </html>

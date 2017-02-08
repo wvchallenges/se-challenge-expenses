@@ -25,7 +25,10 @@ public class Expense {
     private long id;
 
     @NotNull
-    Date date;
+    long insertId;
+
+    @NotNull
+    Date expenseDate;
 
     @NotNull
     String category;
@@ -48,23 +51,41 @@ public class Expense {
     @NotNull
     BigDecimal taxAmount;
 
-    public Expense(CSVRecord record) throws ParseException, NumberFormatException {
-        date = format.parse(record.get(0));
+    public Expense(long id, CSVRecord record) throws ParseException, NumberFormatException {
+        insertId = id;
+        expenseDate = format.parse(record.get(0));
         category = record.get(1);
         employeeName = record.get(2);
+
         employeeAddress = record.get(3);
         expenseDescription = record.get(4);
-        preTaxAmount = new BigDecimal(record.get(5).trim());
+        preTaxAmount = new BigDecimal(record.get(5).trim().replace(",", ""));
         taxName = record.get(6);
-        taxAmount = new BigDecimal(record.get(7).trim());
+        taxAmount = new BigDecimal(record.get(7).trim().replace(",", ""));
     }
 
-    public Date getDate() {
-        return date;
+    public long getId() {
+        return id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getInsertId() {
+        return insertId;
+    }
+
+    public void setInsertId(long insertId) {
+        this.insertId = insertId;
+    }
+
+    public Date getExpenseDate() {
+        return expenseDate;
+    }
+
+    public void setExpenseDate(Date expenseDate) {
+        this.expenseDate = expenseDate;
     }
 
     public String getCategory() {
