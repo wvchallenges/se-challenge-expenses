@@ -1,3 +1,35 @@
+1. Instructions on how to build/run your application
+
+The is a spring boot application.
+To built it run [mvn package] in the base directory.
+
+This will then built a jar in target/expenses-1.0.0.jar
+
+You will need to create a mysql database server
+These are the connection properties it is expecting
+
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/expenses
+#spring.datasource.url=jdbc:mysql://mysql:3306/expenses
+spring.datasource.username=expenses_user
+spring.datasource.password=expenses_pass
+
+to set up the database run the following sql
+
+CREATE database expenses;
+CREATE USER 'expenses_user'@'localhost' IDENTIFIED BY 'expenses_pass';
+GRANT ALL PRIVILEGES ON expenses.* TO 'expenses_user'@'localhost';
+
+If you then navigate to localhost:8096 you should see the upload page.
+
+1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+
+Lots of different spring stuff in this application.
+I got to show a lot of the stuff I know in spring etc.
+I stopped because it was taking too long and I needed to get it submitted.
+I tried to do a Docker solution but it did not work out sorry.
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
@@ -14,7 +46,7 @@ Imagine that Wave has just acquired a new company. Unfortunately, the company ha
 
 ### What your web-based application must do:
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
+1. Your app must accept (via a form) a comma separated file with the following columns: expenseDate, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
 1. You can make the following assumptions:
  1. Columns will always be in that order.
  2. There will always be data in each column.
