@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component
  */
 @Component
 class Config {
-    @Value('${test.conf}') String test
-
     // Amazon Configs
     @Value('${aws.accessKey}') String awsAccessKey
     @Value('${aws.secretKey}') String awsSecretKey
