@@ -53,7 +53,7 @@ angular.module('myApp')
         employeeService.getJobs().success(function(data) {
             $scope.jobs = data;
         }).error(function(data, status, headers, config) {
-            if (status === 0) {
+            if (status === 0 || status === -1) {
                 $scope.errorMessage = "No server response";
             } else {
                 $scope.errorMessage = data.message;
@@ -67,9 +67,10 @@ angular.module('myApp')
             $scope.details = data;
             $('#job-details-modal').modal('show');
         }).error(function(data, status, headers, config) {
-            if (status === 0) {
+            if (status === 0 || status === -1) {
                 $scope.errorMessage = "No server response";
             } else {
+                $scope.errorMessage = null;
                 $scope.errorMessage = data.message;
             }
         });
