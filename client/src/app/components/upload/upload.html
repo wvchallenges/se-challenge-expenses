@@ -1,0 +1,79 @@
+<div class="container">
+    <div id="uploader">
+        <p>{{pageTitle}}</p>
+        <form name="fileForm" ng-submit="selectFile(FileSelect.File)">
+            <div class="modal-body">
+                <div class="form-group form-horizontal clearfix">
+                    <label for="File" class="col-sm-2 control-label">File (csv)</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control" readonly="" ng-model="FileSelect.File.name">
+                            <span class="input-group-btn">
+                                <!-- <span class="btn btn-default btn-file"> -->
+                                    <input class="btn btn-default btn-file" type="file" name="File"
+                                        ngf-select ng-model="FileSelect.File"
+                                        ngf-pattern="'.csv'" accept=".csv" >
+                                <!-- </span> -->
+                            </span>
+                        </div>
+                        <div ng-show="fileForm.File.$error.pattern">
+                            <span class="help-block">Select csv file</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancelFile()">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-sm" value="submit" ng-disabled="!FileSelect.File">Upload</button>
+            </div>
+        </form>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%">
+                <span class="sr-only">{{progress}}</span>
+            </div>
+        </div>
+        <div class="error" gn-show="errorMessage">{{errorMessage}}</div>
+        <div class="success" gn-show="successMessage">{{successMessage}}</div>
+        <br/>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <button type="submit" class="btn btn-primary btn-md" value="show" ng-click="getData()">Show data</button>
+            </div>
+        </div>
+        <div class="row title" ng-show="jobs">
+            <div class="col-xs-3">JobId</div>
+            <div class="col-xs-3">Date</div>
+            <div class="col-xs-3">File Path</div>
+            <div class="col-xs-3">File Name</div>
+        </div>
+        <div class="row hover-row" ng-repeat="job in jobs">
+            <div class="hover-click" ng-click="openJobDetailsModal(job)">
+                <div class="col-xs-3">{{job.jobId | limitTo : 8 : 0}}</div>
+                <div class="col-xs-3">{{job.timestamp | date: 'mediumTime'}}</div>
+                <div class="col-xs-3">{{job.filePath}}</div>
+                <div class="col-xs-3">{{job.fileName}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- job details modal -->
+<div id="job-details-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="jobDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="jobDetailsModalLabel">Job: {{currentjob.jobId}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row title" ng-show="details">
+                    <div class="col-xs-3">Month</div>
+                    <div class="col-xs-3">Expenses</div>
+                </div>
+                <div class="row hover-row" ng-repeat="detail in details">
+                    <div class="col-xs-3">{{detail.month}}</div>
+                    <div class="col-xs-3">{{detail.total}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
