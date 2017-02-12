@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  contextPath: /uploader
+
+logging:
+  path: logs/ #set it to whatever location for logs you want (usual /var/log/{appname}/
+  file: uploader
+  config: classpath:logback-console.xml
+
+aws:
+  accessKey:
+  secretKey:
+  bucket: wave-challenge
+  used: false
+
+database:
+  host: localhost
+  port: 5432
+  name: alexander
+  schema: wave
+  user: wave
+  pass: password
+  poolSize: 10
+  poolMinIdle: 5
