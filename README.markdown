@@ -5,8 +5,9 @@ Wave Challenge
 
 1) Required software:
 - Python 2.7.12 (`apt-get install python2.7`)
-- Pip 9.0.1 ('apt-get install python-pip`)
+- Pip 9.0.1 (`apt-get install python-pip`)
 - MySQL 5.7.17 (`apt-get install mysql-server`)
+- Python-MySQL 1.3.7 (`apt-get install python-mysqldb`)
 - CherryPy 10.0.0 (`pip install cherrypy`)
 - SQLObject 3.1.0 (`pip install sqlobject`)
 
@@ -18,7 +19,7 @@ If not, then start MySQL by `sudo service mysql start`
 
 3) Setup the database:
 mysql> `create database wave_challenge_db;`
-mysql> `grant all privileges on wave_challenge_db to 'wave_challenge_user'@'localhost' identified by 'wave_challenge_passwordA1!';`
+mysql> `grant all privileges on wave_challenge_db.* to 'wave_challenge_user'@'localhost' identified by 'wave_challenge_passwordA1!';`
 
 4) Create the tables:
 `python db/create.py`
