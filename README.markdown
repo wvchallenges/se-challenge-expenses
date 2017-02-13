@@ -1,3 +1,41 @@
+Wave Challenge
+===
+
+**Setting up the Project**
+
+1) Required software:
+- Python 2.7.12 (`apt-get install python2.7`)
+- Pip 9.0.1 (`apt-get install python-pip`)
+- MySQL 5.7.17 (`apt-get install mysql-server`)
+- Python-MySQL 1.3.7 (`apt-get install python-mysqldb`)
+- CherryPy 10.0.0 (`pip install cherrypy`)
+- SQLObject 3.1.0 (`pip install sqlobject`)
+
+2) Confirm MySQL is running by:
+`service mysql status`
+which should return something like:
+`mysql start/running, process 2689`
+If not, then start MySQL by `sudo service mysql start`
+
+3) Setup the database:
+mysql> `create database wave_challenge_db;`
+mysql> `grant all privileges on wave_challenge_db.* to 'wave_challenge_user'@'localhost' identified by 'wave_challenge_passwordA1!';`
+
+4) Create the tables:
+`python db/create.py`
+
+5) Start the service:
+`python app.py`
+
+6) Open the browser and go to:
+`127.0.0.1:8080`
+
+** I tested everything on Ubuntu 16.04 **
+
+**What am I most proud of?**
+I'm simply proud of the fact that I completed the challenge. It has been a few years since I have wored with web apps and I have never setup a webapp from scratch before. It definitely has a lot of room for improvement but I think it's a decent starting point. I wanted to get some unit tests done but I ran out of time. 
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
