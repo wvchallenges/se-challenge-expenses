@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="static/css/main.css">
+
+		<!-- Angular -->
+		<script type="text/javascript" src="static/js/libs/angular.min.js"></script>
+		<script type="text/javascript" src="static/js/libs/ng-file-upload.min.js"></script>
+		<!-- Modules -->
+		<script type="text/javascript" src="static/js/app.js"></script>
+		<!-- Controllers -->
+		<script type="text/javascript" src="static/js/controllers/AppController.js"></script>
+		<!-- Serices -->
+	</head>
+	<body ng-app="waveApp">
+
+		<div id="banner">
+			<div id="appName">Wave</div>
+		</div>
+
+		<div id="container" ng-controller="AppController">
+			<form id="csvForm" name="form">
+				<label for="csvFile">Select the .CSV file: </label>
+				<input ngf-select id="csvFile" type="file" name="csvfile" accept="*.csv" ng-model="csvfile" ng-change="reset()">
+				<button ng-disabled="!csvfile" ng-click="uploadCSV()">Submit</button>
+				<div class="progress" ng-show="progress > 0" style="width:{{progress}}%"><p class="text">{{ progress }}%</p></div>
+				<div class="error" ng-show="error">{{ error }}</div>
+			</form>	
+
+			<table id="summaryTable" ng-show="expenseSummary">
+				<tr>
+					<th>Month</th>
+					<th>Total Expenses</th>
+				<tr>
+				<tr ng-repeat="row in expenseSummary | orderBy: '-period'" ng-class-even="'evenRow'" ng-class-odd="'oddRow'">
+					<td>{{ row.period | date:'MMMM, yyyy' }}</td>
+					<td>{{ row.expense | currency }}</td>
+				</tr>
+			</table>
+
+		</div>
+
+	</body>
+</html>
