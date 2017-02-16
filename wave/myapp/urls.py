@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
-from wave.myapp.views import list
+from wave.myapp.views import upload
 
 urlpatterns = [
-    url(r'^list/$', list, name='list')
+    url(r'^upload/$', upload, name='upload')
 ]

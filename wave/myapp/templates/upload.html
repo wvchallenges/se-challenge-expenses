@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Wave SE Challenge</title>
+        <title>Wave Challenge</title>
     </head>
 
     <body>
-    <h1>Wave SE Challenge</h1>
+    <h1>Wave Challenge</h1>
         <!-- List of uploaded documents -->
         {% if documents %}
             <ul>
@@ -37,7 +37,7 @@
         {% endif %}
 
         <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "list" %}" method="post" enctype="multipart/form-data">
+        <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
 
