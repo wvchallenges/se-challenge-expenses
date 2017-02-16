@@ -10,4 +10,4 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', upload, name='upload'),
     url(r'^document/([0-9]+)/$', exp_summary, name='expense summary')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
