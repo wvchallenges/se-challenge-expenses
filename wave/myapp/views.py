@@ -4,9 +4,9 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from myproject.myapp.models import Document
-from myproject.myapp.models import Expense
-from myproject.myapp.forms import DocumentForm
+from wave.myapp.models import Document
+from wave.myapp.models import Expense
+from wave.myapp.forms import DocumentForm
 from datetime import datetime
 import csv
 
