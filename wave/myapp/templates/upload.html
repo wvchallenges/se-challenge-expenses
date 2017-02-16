@@ -1,117 +1,126 @@
 <!doctype html>
 <html lang="en">
+{% load static %}
     {% include "components/head.html" %}
-
     <body>
         <div class="wrapper">
             
-            <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="../../assets/img/sidebar-1.jpg">
-                <!--
-                Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
-                Tip 2: you can also add an image using data-image tag
-                Tip 3: you can change the color of the sidebar with data-background-color="white | black"
-                -->
-                <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        Basil Khan
-                    </a>
-                </div>
-                <div class="logo logo-mini">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        BK
-                    </a>
-                </div>
-                <div class="sidebar-wrapper">
-                    <div class="user">
-                        <div class="photo">
-                            <img src="https://avatars0.githubusercontent.com/u/13711901?v=3&s=460" />
-                        </div>
-                        <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                                Basil Khan
-                                <b class="caret"></b>
-                            </a>
-                            <div class="collapse" id="collapseExample">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#">My Portfolio</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">My Github</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="nav">
-                        <li>
-                            <a href="../dashboard.html">
-                                <i class="material-icons">dashboard</i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            {% include "components/sidebar.html" %}
+
             <div class="main-panel">
 
                 {% include "components/navbar.html" %}
 
-                <div class="content">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
 
+                        <div class="col-md-12 col-sm-6">
+                            <legend>CSV File Upload</legend>
+                            
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail">
+                                   
+                                </div>
+                                <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                <div>
+                                <span class="btn btn-rose btn-round btn-file">
+                                        <span class="fileinput-new">{{ form.docfile }}
+                                        {{ form.docfile.errors }}</span>
+                                        <span class="fileinput-exists">{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</span>
+
+                                
+                                <div class="ripple-container"></div>
+                                </span>
+                                <span class="fileinput-exists">
+
+                                        <a href="#" class="btn btn-success btn-round"><i class="fa fa-upload"></i><input type="submit" value="Upload"/> UPLOAD </a>
+                                
+                                </span>
+                                    
+                                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+
+                                </div>
+                                
+                                </form>
+                            </div>
+                            
+
+                        </div>
+                                    
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="purple">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">Wave CSV Merger</h4>
+                                    <div class="toolbar">
+                                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                    </div>
+                                    <div class="material-datatables">
+                                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Download Link</th>
+                                                    <th>File ID</th>
+                                                    <th>Parsing Status</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th class="disabled-sorting text-right">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Download Link</th>
+                                                    <th>File ID</th>
+                                                    <th>Parsing Status</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th class="text-right">Actions</th>
+                                                </tr>
+                                            </tfoot>
+
+                                            {% if documents %}
+                                            <tbody>
+                                             {% for document in documents %}
+                                                <tr>
+                                                    <td>{{ document.docfile.name }}</td>
+                                                    <td><a href="{{ document.docfile.url }}">Download Here</a></td>
+                                                    <td>{{ document.id }}</td>
+                                                    <td>Completed</td>
+                                                    <td>{{ document.created_time }}</td>
+                                                    <td class="text-right">
+                                                        <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
+                                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">delete</i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            {% else %}
+                                                <p>No documents have been uploaded</p>
+                                            {% endif %}
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- end content-->
+                            </div>
+                            <!--  end card  -->
+                        </div>
+                        <!-- end col-md-12 -->
+                    </div>
+                    <!-- end row -->
                 </div>
+            </div>
 
                 {% include "components/footer.html" %}
             </div>
         </div>
-        <div class="main-panel">
 
-
-    <h1>Wave Challenge</h1>
-        <!-- List of uploaded documents -->
-        {% if documents %}
-            <ul>
-                {% for document in documents %}
-                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
-                    <p>{{ document.id }} - {{ document.created_time }}</p>
-                    <a href="{% url 'expense summary' document.id %}">View Summary</a>
-                    <table>
-                    <tr>
-                        <th>Month</th>
-                        <th>Year</th>
-                        <th>Total Expenses</th>
-                        </tr>
-                    {% for expense in expenses %}
-
-
-                    <tr>
-                        <th>{{ expense.month_date }} </th>
-                        <th>{{ expense.year_date }} </th>
-                        <th>{{ expense.total_amount }} </th>
-                        </tr>
-
-                    {% endfor %}
-                    </table>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No documents.</p>
-        {% endif %}
-
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.non_field_errors }}</p>
-
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
-
-            <p>
-                {{ form.docfile.errors }}
-                {{ form.docfile }}
-            </p>
-
-            <p><input type="submit" value="Upload"/></p>
-        </form>
+        
     </body>
 
     {% include "components/scripts.html" %}
