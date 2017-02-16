@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Wave SE Challenge</title>
+    </head>
+
+    <body>
+    <h1>Wave SE Challenge</h1>
+        <!-- List of uploaded documents -->
+        {% if documents %}
+            <ul>
+                {% for document in documents %}
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                    <p>{{ document.id }} - {{ document.created_time }}</p>
+                    <table>
+                    <tr>
+                        <th>Month</th>
+                        <th>Year</th>
+                        <th>Total Expenses</th>
+                        </tr>
+                    {% for expense in expenses %}
+
+
+                    <tr>
+                        <th>{{ expense.month_date }} </th>
+                        <th>{{ expense.year_date }} </th>
+                        <th>{{ expense.total_amount }} </th>
+                        </tr>
+
+                    {% endfor %}
+                    </table>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents.</p>
+        {% endif %}
+
+        <!-- Upload form. Note enctype attribute! -->
+        <form action="{% url "list" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+
+            <p><input type="submit" value="Upload"/></p>
+        </form>
+    </body>
+
+</html>
