@@ -24,8 +24,7 @@ def upload(request):
         form = DocumentForm()  # A empty, unbound form
 
     # Load documents for the list page
-    documents = Document.objects.all()
-
+    documents = Document.objects.all().order_by('-created_time')
     # Render list page with the documents and the form
 
     expenses = Expense.objects.raw('''SELECT id, date, 

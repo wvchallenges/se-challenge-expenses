@@ -1,12 +1,11 @@
 {% load static %}
 <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{% static "assets/img/sidebar-1.jpg" %}">
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text">
-            Basil Khan
+        <a href="{% url 'upload' %}">           
         </a>
     </div>
     <div class="logo logo-mini">
-        <a href="http://www.creative-tim.com" class="simple-text">
+        <a href="{% url 'upload' %}">
             BK
         </a>
     </div>
@@ -34,9 +33,16 @@
         </div>
         <ul class="nav">
             <li>
-                <a href="../dashboard.html">
+                <a href="{% url 'upload' %}">
                     <i class="material-icons">dashboard</i>
                     <p>Home</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.waveapps.com/">
+                    <i class="material-icons">dashboard</i>
+                    <p>Wave</p>
+
                 </a>
             </li>
         </ul>

@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Wave Challenge</title>
-    </head>
-
+<!doctype html>
+<html lang="en">
+{% load static %}
+    {% include "components/head.html" %}
     <body>
-    <h1>Wave Challenge</h1>
+        <div class="wrapper">
+            
+            {% include "components/sidebar.html" %}
+
+            <div class="main-panel">
+
+                {% include "components/navbar.html" %}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-12 col-sm-6">   
+                        <h1>Wave Challenge</h1>
         <!-- List of uploaded documents -->
-        <a href="{% url 'upload' %}">Go Back</a>
         {% if expenses %}
-            <ul>
-                
+            
+                <div id="chart_div"></div>
+
                     <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
                     <p>{{ document.id }} - {{ document.created_time }}</p>
                     <table>
@@ -32,10 +42,69 @@
 
                     </table>
 
-            </ul>
+            
         {% else %}
-            <p>No Summary sheets available.</p>
+            <p>No Summary sheets available</p>
         {% endif %}
+
+        </div>
+                        <!-- end col-md-12 -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+
+                {% include "components/footer.html" %}
+            </div>
+        </div>
+
+        
+    </body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          hAxis: {format: 'decimal'},
+          height: 400,
+          colors: ['#1b9e77', '#d95f02', '#7570b3']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+
+        var btns = document.getElementById('btn-group');
+
+        btns.onclick = function (e) {
+
+          if (e.target.tagName === 'BUTTON') {
+            options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+          }
+        }
+      }
+
+    </script>
+
+    {% include "components/scripts.html" %}
+
+</html>
+
 
     </body>
 

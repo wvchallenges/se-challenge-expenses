@@ -64,9 +64,9 @@
                                         <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th>File ID</th>
                                                     <th>File Name</th>
                                                     <th>Download Link</th>
-                                                    <th>File ID</th>
                                                     <th>Parsing Status</th>
                                                     <th>Date Uploaded</th>
                                                     <th class="disabled-sorting text-right">Actions</th>
@@ -74,9 +74,9 @@
                                             </thead>
                                             <tfoot>
                                                 <tr>
+                                                    <th>File ID</th>
                                                     <th>File Name</th>
                                                     <th>Download Link</th>
-                                                    <th>File ID</th>
                                                     <th>Parsing Status</th>
                                                     <th>Date Uploaded</th>
                                                     <th class="text-right">Actions</th>
@@ -87,13 +87,13 @@
                                             <tbody>
                                              {% for document in documents %}
                                                 <tr>
+                                                    <td>{{ document.id }}</td>
                                                     <td>{{ document.docfile.name }}</td>
                                                     <td><a href="{{ document.docfile.url }}">Download Here</a></td>
-                                                    <td>{{ document.id }}</td>
-                                                    <td>Completed</td>
+                                                    <td>Completed: <a href="{% url 'expense summary' document.id %}">View Summary</a></td>
                                                     <td>{{ document.created_time }}</td>
                                                     <td class="text-right">
-                                                        <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
+                                                        <a href="{% url 'expense summary' document.id %}" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
                                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">delete</i></a>
                                                     </td>
                                                 </tr>
