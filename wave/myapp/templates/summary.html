@@ -14,13 +14,15 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-
+                    <div class="col-md-6 col-sm-6"> 
+                    <div id="chart_div"></div>
+                    </div>
                         <div class="col-md-12 col-sm-6">   
                         <h1>Wave Challenge</h1>
         <!-- List of uploaded documents -->
         {% if expenses %}
             
-                <div id="chart_div"></div>
+                
 
                     <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
                     <p>{{ document.id }} - {{ document.created_time }}</p>
