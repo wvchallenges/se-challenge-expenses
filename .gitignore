@@ -1,0 +1,9 @@
+# media and databases #
+######################
+*.sqlite3
+/media/
+/wave/myapp/migrations/*
+!/wave/myapp/migrations/__init__.py
+
+
+*.pyc

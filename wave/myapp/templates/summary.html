@@ -8,49 +8,35 @@
     <body>
     <h1>Wave Challenge</h1>
         <!-- List of uploaded documents -->
-        {% if documents %}
+        <a href="{% url 'upload' %}">Go Back</a>
+        {% if expenses %}
             <ul>
-                {% for document in documents %}
+                
                     <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
                     <p>{{ document.id }} - {{ document.created_time }}</p>
-                    <a href="{% url 'expense summary' document.id %}">View Summary</a>
                     <table>
                     <tr>
                         <th>Month</th>
                         <th>Year</th>
                         <th>Total Expenses</th>
                         </tr>
-                    {% for expense in expenses %}
 
+                    {% for expense in expenses %}
 
                     <tr>
                         <th>{{ expense.month_date }} </th>
                         <th>{{ expense.year_date }} </th>
                         <th>{{ expense.total_amount }} </th>
                         </tr>
-
                     {% endfor %}
+
                     </table>
-                {% endfor %}
+
             </ul>
         {% else %}
-            <p>No documents.</p>
+            <p>No Summary sheets available.</p>
         {% endif %}
 
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.non_field_errors }}</p>
-
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
-
-            <p>
-                {{ form.docfile.errors }}
-                {{ form.docfile }}
-            </p>
-
-            <p><input type="submit" value="Upload"/></p>
-        </form>
     </body>
 
 </html>
