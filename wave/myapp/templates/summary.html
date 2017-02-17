@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+{% load static %} {% include "components/head.html" %}
+
+<body>
+    <div class="wrapper">
+        {% include "components/sidebar.html" %}
+        <div class="main-panel">
+            {% include "components/navbar.html" %}
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <h1 class="center">Expense Summary</h1>
+                        </div>
+                        
+                        <div class="col-md-6 col-sm-6">
+                        <div class="card card-pricing card-raised">
+                                    <div class="content">
+                                        <h6 class="category">File Details</h6>
+                                        <div class="icon icon-rose">
+                                            <i class="material-icons">attachment</i>
+                                        </div>
+                                        <h3 class="card-title">File: {{ document.docfile.name }} </h3>
+                                        <p class="card-description">
+                                            This file was last uploaded on {{ document.created_time }}
+                                        </p>
+                                        <a href="{{ document.docfile.url }}" class="btn btn-rose btn-round">Download Data File</a>
+                                    </div>
+                                </div>
+                                </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="card">
+                                <div class="card-header card-header-text" data-background-color="orange">
+                                    <h4 class="card-title">Monthly Expenses Summary</h4>
+                                    <p class="category">Data uploaded on {{ document.created_time }}</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Total Expenses</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if expenses %}
+                                        
+                                        {% for expense in expenses %}
+                                        <tr>
+                                            <td>{{ expense.date|date:'F' }} {{ expense.year_date }} </td>
+                                            <td>$ {{ expense.total_amount|floatformat:2 }} </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% else %}
+                            <p>No Summary sheets available</p>
+                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card card-chart">
+                            <div id="chart_div"></div>
+                            </div>
+                        </div>
+                    <!-- end row -->
+                </div>
+            </div>
+            {% include "components/footer.html" %}
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+google.charts.load('current', {
+    'packages': ['bar']
+});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Month', 'Total Expenses    '],
+        {% if expenses %}
+                                        
+            {% for expense in expenses %}
+              [ "{{ expense.date|date:'F' }} {{ expense.year_date }}" , {{ expense.total_amount }} ],
+            {% endfor %}
+
+        {% endif %}
+    ]);
+
+    var options = {
+        chart: {
+            title: 'Monthly Expenses',
+        },
+        bars: 'vertical', // Required for Material Bar Charts.
+        hAxis: {
+            format: 'short'
+        },
+        height: 500,
+        colors: ['#1b9e77']
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+
+    var btns = document.getElementById('btn-group');
+
+    btns.onclick = function(e) {
+
+        if (e.target.tagName === 'BUTTON') {
+            options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    }
+}
+</script>
+{% include "components/scripts.html" %}
+
+</html>
+</body>
+
+</html>

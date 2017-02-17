@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+{% load static %} {% include "components/head.html" %}
+
+<body>
+    <div class="wrapper">
+        {% include "components/sidebar.html" %}
+        <div class="main-panel">
+            {% include "components/navbar.html" %}
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <h1 class="center">CSV File Upload</h1>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                    <div>
+                                        <span class="btn btn-rose btn-round btn-file">
+                                        <span class="fileinput-new"><i class="fa fa-file-excel-o"></i> Upload CSV File <span class="hide-file-bar">{{ form.docfile }}</span></span>
+
+                                        <span class="fileinput-exists"> <i class="fa fa-pencil-square-o"></i>Change File</span>
+                                        <input type="hidden">
+                                        <input type="file" name="...">
+                                        </span>
+                                        <span class="fileinput-exists">
+                                        <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-success btn-round"><i class="fa fa-upload"></i> UPLOAD </a>
+                                        </span>
+                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="purple">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">Wave CSV Merger</h4>
+                                    <div class="toolbar">
+                                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                    </div>
+                                    <div class="material-datatables">
+                                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>File ID</th>
+                                                    <th>File Name</th>
+                                                    <th>Download Link</th>
+                                                    <th>Parsing Status</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th class="disabled-sorting text-right">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>File ID</th>
+                                                    <th>File Name</th>
+                                                    <th>Download Link</th>
+                                                    <th>Parsing Status</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th class="text-right">Actions</th>
+                                                </tr>
+                                            </tfoot>
+                                            {% if documents %}
+                                            <tbody>
+                                                {% for document in documents %}
+                                                <tr>
+                                                    <td>{{ document.id }}</td>
+                                                    <td>{{ document.docfile.name }}</td>
+                                                    <td><a href="{{ document.docfile.url }}">Download Here</a></td>
+                                                    <td>Completed: <a href="{% url 'expense summary' document.id %}">View Summary</a></td>
+                                                    <td>{{ document.created_time }}</td>
+                                                    <td class="text-right">
+                                                        <a href="{% url 'expense summary' document.id %}" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
+                                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">delete</i></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                            {% else %}
+                                            <p>No documents have been uploaded</p>
+                                            {% endif %}
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- end content-->
+                            </div>
+                            <!--  end card  -->
+                        </div>
+                        <!-- end col-md-12 -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+            {% include "components/footer.html" %}
+        </div>
+    </div>
+</body>
+{% include "components/scripts.html" %}
+<script type="text/javascript">
+$(document).ready(function() {
+        $('#datatables').DataTable({
+            "order": [[ 0, "desc" ]],
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+
+        });
+
+
+        var table = $('#datatables').DataTable();
+
+        // Delete a record
+        table.on('click', '.remove', function(e) {
+            $tr = $(this).closest('tr');
+            table.row($tr).remove().draw();
+            e.preventDefault();
+        });
+
+    });
+</script>
+
+</html>

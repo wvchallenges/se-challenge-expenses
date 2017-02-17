@@ -1,0 +1,48 @@
+{% load static %}
+<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{% static "assets/img/sidebar-1.jpg" %}">
+    <div class="logo">
+        <a href="{% url 'upload' %}">
+        </a>
+    </div>
+    <div class="logo logo-mini">
+        <a href="{% url 'upload' %}">
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <div class="user">
+            <div class="photo">
+                <img src="https://avatars0.githubusercontent.com/u/13711901?v=3&s=460" />
+            </div>
+            <div class="info">
+                <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                    Basil Khan
+                    <b class="caret"></b>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <ul class="nav">
+                        <li>
+                            <a href="http://basilkhan.ca/" target="_blank">My Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/basilkhan05" target="_blank">My Github</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="nav">
+            <li>
+                <a href="{% url 'upload' %}">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.waveapps.com/" target="_blank">
+                    <i class="material-icons">home</i>
+                    <p>Wave</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
