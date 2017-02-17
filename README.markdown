@@ -50,6 +50,12 @@ The choice of a light weight relational database (sqlite3) was made to help in q
 - Upload feature implemented as an API to get response from the server on upload and parsing status
 - Implementation of UI elements for the above
 
+### Credits:
+- [Google Charts](https://developers.google.com/chart/)
+- [Material Kit: Free Bootstrap Material Design UI Kit](https://www.creative-tim.com/product/material-kit)
+- [Django Project](https://www.djangoproject.com/)
+- [minimal-django-file-upload-example](https://github.com/axelpale/minimal-django-file-upload-example)
+
 -----------------------------------
 # original README FILE:
 
