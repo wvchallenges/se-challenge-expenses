@@ -2,12 +2,13 @@ from wave.myapp.models import Document
 from wave.myapp.models import Expense
 from datetime import datetime
 import csv
+import pytz
 
 
 def handle_uploaded_file(request):
     newdoc = Document(
         docfile=request.FILES['docfile'],
-        created_time = datetime.now()
+        created_time = datetime.now(pytz.utc)
         )
     newdoc.save()
 

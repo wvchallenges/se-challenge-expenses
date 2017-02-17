@@ -23,18 +23,9 @@ def upload(request):
     else:
         form = DocumentForm()  # A empty, unbound form
 
-    # Load documents for the list page
+    # Load documents for the summary page sorted by created time
     documents = Document.objects.all().order_by('-created_time')
     # Render list page with the documents and the form
-
-    expenses = Expense.objects.raw('''SELECT id, date, 
-                                strftime('%m',date) AS month_date, 
-                                strftime('%Y',date) AS year_date, 
-                                SUM(tax_amount+pretax_amt) AS total_amount
-                                FROM myapp_expense 
-                                WHERE document_id=3
-                                GROUP BY year_date, month_date
-                                ORDER BY date''')
 
     return render(
         request,
