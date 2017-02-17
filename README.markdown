@@ -1,3 +1,39 @@
+# Basil's Wave Software Development Challenge
+
+## Project Development Environment Setup
+
+### Instructions for setting up on Mac OSX:
+optional: it's a good idea to set up a virtual env for the development setup
+
+1. Install Python, pip and Django
+```
+brew install python
+
+sudo easy_install pip
+
+sudo pip install Django
+
+```
+2. Clone Repository
+```
+git clone git@github.com:basilkhan05/se-challenge-expenses.git
+```
+3. Run Database Migrations
+```
+cd se-challenge-expenses
+
+python manage.py migrate
+```
+4. Run Development Sever
+```
+python manage.py runserver
+```
+5. Checkout the application in action at http://localhost:8000/
+
+
+-----------------------------------
+# original README FILE:
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
