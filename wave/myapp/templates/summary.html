@@ -48,8 +48,8 @@
                                         
                                         {% for expense in expenses %}
                                         <tr>
-                                            <td>{{ expense.month_date }} / {{ expense.year_date }} </td>
-                                            <td>$ {{ expense.total_amount }} </td>
+                                            <td>{{ expense.date|date:'F' }} {{ expense.year_date }} </td>
+                                            <td>$ {{ expense.total_amount|floatformat:2 }} </td>
                                         </tr>
                                         {% endfor %}
 
@@ -86,7 +86,7 @@ function drawChart() {
         {% if expenses %}
                                         
             {% for expense in expenses %}
-              [ "{{ expense.month_date }} / {{ expense.year_date }}" , {{ expense.total_amount }} ],
+              [ "{{ expense.date|date:'F' }} {{ expense.year_date }}" , {{ expense.total_amount }} ],
             {% endfor %}
 
         {% endif %}
