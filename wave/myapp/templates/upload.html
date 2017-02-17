@@ -1,59 +1,38 @@
 <!doctype html>
 <html lang="en">
-{% load static %}
-    {% include "components/head.html" %}
-    <body>
-        <div class="wrapper">
-            
-            {% include "components/sidebar.html" %}
+{% load static %} {% include "components/head.html" %}
 
-            <div class="main-panel">
-
-                {% include "components/navbar.html" %}
-
+<body>
+    <div class="wrapper">
+        {% include "components/sidebar.html" %}
+        <div class="main-panel">
+            {% include "components/navbar.html" %}
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-
-                    <div class="col-md-12 col-sm-12">
-                        <h1 class="center">CSV File Upload</h1>
-                    </div>
-
+                        <div class="col-md-12 col-sm-12">
+                            <h1 class="center">CSV File Upload</h1>
+                        </div>
                         <div class="col-md-12 col-sm-6">
-                            
-                            
                             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail">
-                                   
-                                </div>
                                 <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                <div>
-                                <span class="btn btn-rose btn-round btn-file">
-                                        <span class="fileinput-new">{{ form.docfile }}
-                                        {{ form.docfile.errors }}</span>
-                                        <span class="fileinput-exists">{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</span>
-
-                                
-                                <div class="ripple-container"></div>
+                                    {% csrf_token %}
+                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                    <div>
+                                        <span class="btn btn-rose btn-round btn-file">
+                                        <span class="fileinput-new">{{ form.docfile }}</span>
+                                        <span class="fileinput-exists">Change File</span>
+                                        <input type="hidden">
+                                        <input type="file" name="...">
+                                        </span>
+                                        <span class="fileinput-exists">
+                                        <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-success btn-round"><i class="fa fa-upload"></i> UPLOAD </a>
                                 </span>
-                                <span class="fileinput-exists">
-
-                                        <a href="#" class="btn btn-success btn-round"><i class="fa fa-upload"></i><input type="submit" value="Upload"/> UPLOAD </a>
-                                
-                                </span>
-                                    
-                                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-
-                                </div>
-                                
+                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                    </div>
                                 </form>
                             </div>
-                            
-
                         </div>
-                                    
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-icon" data-background-color="purple">
@@ -86,10 +65,9 @@
                                                     <th class="text-right">Actions</th>
                                                 </tr>
                                             </tfoot>
-
                                             {% if documents %}
                                             <tbody>
-                                             {% for document in documents %}
+                                                {% for document in documents %}
                                                 <tr>
                                                     <td>{{ document.id }}</td>
                                                     <td>{{ document.docfile.name }}</td>
@@ -101,12 +79,11 @@
                                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">delete</i></a>
                                                     </td>
                                                 </tr>
-                                            {% endfor %}
+                                                {% endfor %}
                                             </tbody>
                                             {% else %}
-                                                <p>No documents have been uploaded</p>
+                                            <p>No documents have been uploaded</p>
                                             {% endif %}
-
                                         </table>
                                     </div>
                                 </div>
@@ -119,17 +96,15 @@
                     <!-- end row -->
                 </div>
             </div>
-
-                {% include "components/footer.html" %}
-            </div>
+            {% include "components/footer.html" %}
         </div>
-
-        
-    </body>
-    {% include "components/scripts.html" %}
-    <script type="text/javascript">
-    $(document).ready(function() {
+    </div>
+</body>
+{% include "components/scripts.html" %}
+<script type="text/javascript">
+$(document).ready(function() {
         $('#datatables').DataTable({
+            "order": [[ 4, "desc" ]],
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -155,6 +130,5 @@
 
     });
 </script>
-    
 
 </html>
