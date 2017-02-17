@@ -1,113 +1,127 @@
 <!doctype html>
 <html lang="en">
-{% load static %}
-    {% include "components/head.html" %}
-    <body>
-        <div class="wrapper">
-            
-            {% include "components/sidebar.html" %}
+{% load static %} {% include "components/head.html" %}
 
-            <div class="main-panel">
-
-                {% include "components/navbar.html" %}
-
+<body>
+    <div class="wrapper">
+        {% include "components/sidebar.html" %}
+        <div class="main-panel">
+            {% include "components/navbar.html" %}
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                    <div class="col-md-6 col-sm-6"> 
-                    <div id="chart_div"></div>
-                    </div>
-                        <div class="col-md-12 col-sm-6">   
-                        <h1>Wave Challenge</h1>
-        <!-- List of uploaded documents -->
-        {% if expenses %}
-            
-                
+                        <div class="col-md-12 col-sm-12">
+                            <h1 class="center">Expense Summary</h1>
+                        </div>
+                        
+                        <div class="col-md-6 col-sm-6">
+                        <div class="card card-pricing card-raised">
+                                    <div class="content">
+                                        <h6 class="category">File Details</h6>
+                                        <div class="icon icon-rose">
+                                            <i class="material-icons">attachment</i>
+                                        </div>
+                                        <h3 class="card-title">File: {{ document.docfile.name }} </h3>
+                                        <p class="card-description">
+                                            This file was last uploaded on {{ document.created_time }}
+                                        </p>
+                                        <a href="{{ document.docfile.url }}" class="btn btn-rose btn-round">Download Data File</a>
+                                    </div>
+                                </div>
+                                </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="card">
+                                <div class="card-header card-header-text" data-background-color="orange">
+                                    <h4 class="card-title">Expense Summary</h4>
+                                    <p class="category">Data uploaded on {{ document.created_time }}</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Total Expenses</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if expenses %}
+                                        
+                                        {% for expense in expenses %}
+                                        <tr>
+                                            <td>{{ expense.month_date }} / {{ expense.year_date }} </td>
+                                            <td>$ {{ expense.total_amount }} </td>
+                                        </tr>
+                                        {% endfor %}
 
-                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
-                    <p>{{ document.id }} - {{ document.created_time }}</p>
-                    <table>
-                    <tr>
-                        <th>Month</th>
-                        <th>Year</th>
-                        <th>Total Expenses</th>
-                        </tr>
-
-                    {% for expense in expenses %}
-
-                    <tr>
-                        <th>{{ expense.month_date }} </th>
-                        <th>{{ expense.year_date }} </th>
-                        <th>{{ expense.total_amount }} </th>
-                        </tr>
-                    {% endfor %}
-
-                    </table>
-
-            
-        {% else %}
-            <p>No Summary sheets available</p>
-        {% endif %}
-
-        </div>
-                        <!-- end col-md-12 -->
-                    </div>
+                                        {% else %}
+                            <p>No Summary sheets available</p>
+                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card card-chart">
+                            <div id="chart_div"></div>
+                            </div>
+                        </div>
                     <!-- end row -->
                 </div>
             </div>
-
-                {% include "components/footer.html" %}
-            </div>
+            {% include "components/footer.html" %}
         </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+google.charts.load('current', {
+    'packages': ['bar']
+});
+google.charts.setOnLoadCallback(drawChart);
 
-        
-    </body>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses', 'Profit'],
-          ['2014', 1000, 400, 200],
-          ['2015', 1170, 460, 250],
-          ['2016', 660, 1120, 300],
-          ['2017', 1030, 540, 350]
-        ]);
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Month', 'Total Expenses    '],
+        {% if expenses %}
+                                        
+            {% for expense in expenses %}
+              [ "{{ expense.month_date }} / {{ expense.year_date }}" , {{ expense.total_amount }} ],
+            {% endfor %}
 
-        var options = {
-          chart: {
-            title: 'Company Performance',
-            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-          },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          hAxis: {format: 'decimal'},
-          height: 400,
-          colors: ['#1b9e77', '#d95f02', '#7570b3']
-        };
+        {% endif %}
+    ]);
 
-        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+    var options = {
+        chart: {
+            title: 'Monthly Expenses',
+        },
+        bars: 'vertical', // Required for Material Bar Charts.
+        hAxis: {
+            format: 'short'
+        },
+        height: 500,
+        colors: ['#1b9e77']
+    };
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+    var chart = new google.charts.Bar(document.getElementById('chart_div'));
 
-        var btns = document.getElementById('btn-group');
+    chart.draw(data, google.charts.Bar.convertOptions(options));
 
-        btns.onclick = function (e) {
+    var btns = document.getElementById('btn-group');
 
-          if (e.target.tagName === 'BUTTON') {
+    btns.onclick = function(e) {
+
+        if (e.target.tagName === 'BUTTON') {
             options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
             chart.draw(data, google.charts.Bar.convertOptions(options));
-          }
         }
-      }
-
-    </script>
-
-    {% include "components/scripts.html" %}
+    }
+}
+</script>
+{% include "components/scripts.html" %}
 
 </html>
-
-
-    </body>
+</body>
 
 </html>
