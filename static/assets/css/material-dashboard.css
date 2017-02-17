@@ -11574,3 +11574,6 @@ footer .btn {
   }
 }
 
+.hide-file-bar{
+  display: none;
+}
