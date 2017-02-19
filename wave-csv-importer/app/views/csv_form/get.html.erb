@@ -1,0 +1,8 @@
+<h1>CSV Parser</h1>
+<p>
+  Put your CSV data into a database today!
+  <%= form_tag csv_form_path, :method => "post", :multipart => true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload" %>
+  <% end %>
+</p>
