@@ -2,14 +2,16 @@
 <p>
   <table>
     <tr>
-      <th>Month</th>
-      <th>Total Monthly Cost</th>
+      <th>Date</th>
+      <th>Total Cost</th>
     </tr>
   <% Expense.monthly_expenses.each do |data| %>
     <tr>
       <td><%= data.first %></td>
-      <td><%= data.second.round(2) %></td>
+      <td> | $<%= data.second.round(2) %></td>
     </tr>
   <% end %>
   </table>
 </p>
+
+<%= link_to 'Import another', csv_form_path %>
