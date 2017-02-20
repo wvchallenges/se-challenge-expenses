@@ -1,0 +1,17 @@
+<h1>CSV Summary</h1>
+<p>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Total Cost</th>
+    </tr>
+  <% Expense.monthly_expenses.each do |data| %>
+    <tr>
+      <td><%= data.first %></td>
+      <td> | $<%= data.second.round(2) %></td>
+    </tr>
+  <% end %>
+  </table>
+</p>
+
+<%= link_to 'Import another', csv_form_path %>
