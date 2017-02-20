@@ -10,7 +10,6 @@ class Expense < ApplicationRecord
         tax_amount = expense.third
 
         subtotal_expense_value = (pre_tax_amount - tax_amount)
-
         if calculated_monthly_expenses[month].nil?
           calculated_monthly_expenses[month] = subtotal_expense_value
         else

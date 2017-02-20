@@ -22,16 +22,23 @@ class CsvFormController < ApplicationController
   end
 
   def process_row(row)
+    # TODO: Wrap in transaction
     employee = Employee.find_or_create_by!(name: row["employee name"], address: row["employee address"])
     category = Category.find_or_create_by!(name: row["category"])
-    expense = Expense.find_or_create_by!(
+    expense = Expense.create!(
+      # This date parsing is fragile
       occurance_date: Date.strptime(row["date"],"%m/%d/%Y").to_time,
       description: row["expense description"],
-      pre_tax_amount: row["pre-tax amount"].to_f,
-      tax_amount: row["tax amount"].to_f,
+      pre_tax_amount: convert_currency_to_number(row["pre-tax amount"]),
+      tax_amount: convert_currency_to_number(row["tax amount"]),
       tax_type: row["tax name"],
       employee_id: employee.id,
       category_id: category.id
     )
+  end
+
+  # http://stackoverflow.com/questions/24173237/currency-to-number-conversion-rails
+  def convert_currency_to_number(currency)
+    currency.to_s.gsub(/[$,]/,'').to_f
   end
 end

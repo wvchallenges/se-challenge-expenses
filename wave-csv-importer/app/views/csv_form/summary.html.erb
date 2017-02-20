@@ -1,15 +1,14 @@
 <h1>CSV Summary</h1>
 <p>
-  <% @data = Expense.monthly_expenses %>
   <table>
     <tr>
       <th>Month</th>
       <th>Total Monthly Cost</th>
     </tr>
-  <% @data.each do |data| %>
+  <% Expense.monthly_expenses.each do |data| %>
     <tr>
       <td><%= data.first %></td>
-      <td><%= data.second %></td>
+      <td><%= data.second.round(2) %></td>
     </tr>
   <% end %>
   </table>
