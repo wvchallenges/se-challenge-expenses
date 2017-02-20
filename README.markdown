@@ -1,59 +1,77 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+# README
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+This project was completed in Ruby on Rails.
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+Install instructions (Ubuntu):
 
-Please use whatever programming language and framework you feel the most comfortable with.
+0) Install git if you do not have it:
+  - sudo apt-get install git
 
-Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+1) Install Ruby (using rbenv):
+  - sudo apt-get update
+  - sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev nodejs
+  - cd
+  - git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+  - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+  - exec $SHELL
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+  - git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  - echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+  - exec $SHELL
 
-### What your web-based application must do:
+  - rbenv install 2.4.0
+  - rbenv global 2.4.0
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
+Verify Ruby install:
+  - ruby -v
 
- An example input file named `data_example.csv` is included in this repo.
+2) Install Bundler
+  - gem install bundler
+  - rbenv rehash
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+3) Install Rails
+  - curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+  - gem install rails -v 5.0.1
+  - rbenv rehash
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+4) Verify Rails Installation
+ - rails -v
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+5) Run the project
+ - move into the project directory `wave-csv-importer`
+ - bundle install
 
-### Documentation:
+Create the database
+ - rake db:create
+ - rake db:setup
 
-Please modify `README.md` to add:
+Run the local webserver
+ - rails s
+ - go to localhost:3000 in your web browser
 
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+GENERAL NOTES AND WHAT I AM PROUD OF AND HAPPY ABOUT
 
-## Submission Instructions
+  Working with front end views was an interesting learning experience as I have
+  not really done that. I am happy with how quickly I learned them though.
+  I focused more on the data modelling part of this project as I believe I am
+  stronger there. I created three tables, which can be viewed in /db/migrate/.
+  Basically, a User table, and Category table, and an Expense table. The expense
+  table has foreign keys to both the User and Category table (to facilate doing
+  something like user.expenses in code in the future). I debated on created another
+  table for tax types but I decided against it because I couldn't forsee a use
+  case for it.
 
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
+  The bulk of my work are in these files:
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+   - wave-csv-importer/app/controllers/csv_form_controller.rb
+   - wave-csv-importer/app/models/expense.rb
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+WHAT I AM NOT HAPPY ABOUT
 
-1. Did you follow the instructions for submission? 
-1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
-1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
-1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+  - I have no testing, which is not something I would ever otherwise do
+  - There is a general catch-all for errors (not exceptions) which routes to a
+    generic error page. I think more specific errors are better.
+  - There is a db connection opened for every row in the csv- this in my opinion
+    should be done with a bulk_insert
