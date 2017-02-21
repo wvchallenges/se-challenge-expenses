@@ -1,0 +1,20 @@
+{
+  "name": "wave-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^4.2.0",
+    "csv": "^1.1.1",
+    "hapi": "^16.1.0",
+    "pg-promise": "^5.5.8"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
