@@ -60,6 +60,7 @@ Evaluation of your submission will be based on the following criteria.
 
 ## Build Instructions
 This is a Django project, so to get it up and running, you just need to do the usual:
+
 1. Navigate to the codechallenge folder
 1. If you haven't already, install Django ```pip install django```
 1. Sync the database in the project ```python manage.py syncdb```
