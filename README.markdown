@@ -57,3 +57,17 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+## Build Instructions
+This is a Django project, so to get it up and running, you just need to do the usual:
+1. Navigate to the codechallenge folder
+1. If you haven't already, install Django
+ ```pip install django```
+1. Sync the database in the project
+ ```python manage.py syncdb```
+1. Run the server that we'll be connecting to
+ ```python manage.py runserver```
+1. Navigate to http://127.0.0.1:8000/waveapp/
+
+## What I'm Proud Of
+You guys asked us to create this web app in a way that showcases our strengths: well, I'm pretty proud of my ability to learn things on the fly, so I present to you the first project I've ever created using Django.  It took me about 4 hours in total over 2 days to get a crash course on Django and actually code the app.  Based on the first interview, it sounds like you use a lot of Python and Django at Wave, so I figured I may as well get a head start on learning it: and hey, if it turns out I'm not the dude you guys are looking for, I still learned something from the experience!  Seems pretty win-win to me, eh?
