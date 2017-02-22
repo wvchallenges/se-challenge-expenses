@@ -14,7 +14,7 @@ var csv = require('csv');
 
 module.exports = {
   
-  createExpense: function(request, reply) {
+  createExpenses: function(request, reply) {
     // validation
     if (!request.payload.file) {
       reply("Error: file contains no data"); 
@@ -69,7 +69,7 @@ module.exports = {
         })
         .catch(function(err) {
           // rollback
-          console.log(err);
+          console.log("ERROR", err);
           reply(Boom.badImplementation(err));
         });
       }
@@ -78,7 +78,92 @@ module.exports = {
       }   
     });
    
+  },
+  
+  readExpenses:function(request, reply) {
+    var expenses = [];
+    var output = [];
+    var monthString, thisMonth, expenseTally, numExpenses;
+    var itr = 0;
+    var lastMonth = false;
     
+    db.query('SELECT * FROM expenses ORDER by date')
+    .then(function(response) {
+      // output summary by month
+      
+      response.forEach(function(expense) {
+        thisMonth = expense.date.getMonth() + 1;
+        monthString = expense.date.getFullYear() + " - " + thisMonth;
+        
+        // assure input is being treated as a float
+        expense.pre_tax_amount = parseFloat(expense.pre_tax_amount);
+        expense.tax_amount = parseFloat(expense.tax_amount);
+        
+        itr = thisMonth !== lastMonth ? itr + 1 : itr;
+        expenseTally = thisMonth !== lastMonth ? expense.pre_tax_amount + expense.tax_amount : parseFloat(expenses[itr].expense + (expense.pre_tax_amount + expense.tax_amount));
+        numExpenses = thisMonth !== lastMonth ? 1 : expenses[itr].numExpenses + 1;
+        
+        expenses[itr] = {
+          date:monthString,
+          expense:expenseTally,
+          numExpenses:numExpenses
+        };
+        
+        lastMonth = expense.date.getMonth() + 1;
+      });
+      
+      // iterate through results again and round expenses for visual formatting
+      expenses.forEach(function(listing) {
+        output.push({
+          date:listing.date,
+          expense:listing.expense.toFixed(2),
+          numExpenses:listing.numExpenses
+        })
+      });
+     
+      return reply(output);
+    })
+    .catch(function(err) {
+      return Boom.badImplementation(err);
+    });
+  },
+  
+  testParser:function(request) {
+    var dateArr;
+    
+    return new Promise(function(resolve, reject) {
+      try {
+        csv.parse(request.payload.file, {}, function(err, csvInput) {
+          for (var i=0; i <= csvInput.length; i++) {
+            if (i > 0) {  // don't validate header line
+            
+              // convert date input to ISO 8601 standard
+              dateArr = csvInput[i][0].split("/");
+              csvInput[i][0] = dateArr[2] + "-" + dateArr[0] + "-" + dateArr[1];
+        
+              csvInput[i][5] = parseFloat(csvInput[i][5]);
+              csvInput[i][7] = parseFloat(csvInput[i][7]);
+  
+              // better validation is needed here, but this is a basic PoC
+              if (!csvInput[i][0].match(/[0-9]{4}-[0-9]+-[0-9]+/)) {
+                throw Boom.badRequest("Your CSV file contains an invalid date");
+              }
+              else if (!parseFloat(csvInput[i][5])) {
+                throw Boom.badRequest("Your CSV file contains an invalid pre-tax amount");
+              }
+              else if (!parseFloat(csvInput[i][7])) {
+                throw Boom.badRequest("Your CSV file contains an invalid tax amount");
+              }
+            }
+          }
+          resolve(csvInput);
+        });
+      }
+      catch(e) {
+        reject(e);
+      }
+      
+    })
   }
   
 }

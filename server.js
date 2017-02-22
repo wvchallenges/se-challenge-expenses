@@ -19,7 +19,19 @@ server.start((err) => {
 server.route({
   path: '/expenses',
   method: 'POST',
-  handler: wave.createExpense,
+  handler: wave.createExpenses,
+  config: {
+    cors: {
+      origin: ['*'],
+      additionalHeaders: ['cache-control', 'x-requested-with']
+    }
+  }
+});
+
+server.route({
+  path: '/expenses',
+  method: 'GET',
+  handler: wave.readExpenses,
   config: {
     cors: {
       origin: ['*'],
