@@ -1,0 +1,23 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.with-errors {
+  color: red;
+}
+
+.final-total {
+  font-weight: bold;
+  text-align: right;
+}
+  
+.grand-total span {
+   border-bottom:2px solid black; 
+   padding-bottom:2px;
+   display: inline-block;
+}
