@@ -12,6 +12,9 @@
 1. Your app must parse the given file, and store the information in a relational database.
 1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
 
+### NOTE: Apology in advance that I didn't use a relational DB as I have been doing more work in Node.js & Mongo in recent time_
+
+
 ## Instructions on how to build/run application
 1. My application runs on Node.js (using Express) & MongoDB (using Mongoose).  I didn't use Angular here as the setup is fairly straight forward (so didn't demonstrate a full 'MEAN stack' setup). 
 2. To run, please have Node.js & MongoDB installed.  You can download the latest version from https://nodejs.org/en/download/ & https://docs.mongodb.com/manual/installation/.
