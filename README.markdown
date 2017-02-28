@@ -19,7 +19,7 @@
 4. Suggest to use a window app that provides a UI for MongoDB.  I like using Robomongo (You can donwload for free here: https://robomongo.org/)
 5. Go to Robomongo or similar app, connect to your local connection at 27017. 
 6. Please create a new DB called 'se-challenge-expenses'
-7. Clone this project, and cd to this folder.
+7. Clone this project, and cd to this folder.  __Please also create a blank folder name called 'uploads' in this folder__
 8. Run "npm install" to include all modules required.
 9. Run "npm start" to start server.
 10. Open up any browser, and load url: http://localhost:3000/
