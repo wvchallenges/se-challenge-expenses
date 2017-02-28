@@ -12,7 +12,7 @@
 1. Your app must parse the given file, and store the information in a relational database.
 1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
 
-### NOTE: Apology in advance that I didn't use a relational DB as I have been doing more work in Node.js & Mongo in recent time_
+### _Apology in advance that I didn't use a relational DB as I have been doing more work in Node.js & Mongo in recent time. I have not done actual DB relationship designs since university._
 
 
 ## Instructions on how to build/run application
