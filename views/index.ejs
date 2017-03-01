@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+	<script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	
+	<% if (typeof(errors) !== "undefined") { %>
+	<script>
+      //parse errors and insert error into error sections in form
+      $( document ).ready(function() {
+        var errs = jQuery.parseJSON( '<%- JSON.stringify(errors) %>' );
+        if (errs != null)
+        {
+          for (var i = 0; i < errs.length; i++)
+          {
+            var err_div = $("#error-"+errs[i].param);
+            var err_msg_elem = $("<div>" + errs[i].msg + "</div>");
+            err_div.append(err_msg_elem);
+          }
+        }
+      });
+   </script>
+   <% } %>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+	
+	<div id="ajaxloader"><div></div></div>
+	<form id="form" class="form-horizontal" action="/" method="POST" enctype="multipart/form-data">
+		<fieldset>
+
+		<!-- File Button --> 
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="csvupload">CSV Upload</label>
+		  <div class="col-md-4">
+			<input id="csvupload" name="csvupload" class="input-file" type="file">
+			<div class="help-block with-errors" id="error-csvupload"></div>
+		  </div>
+		</div>
+
+		<!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="Submit"></label>
+		  <div class="col-md-4">
+			<button id="Submit" name="Submit" class="btn btn-primary">Upload CSV to Append Records</button>
+			<% if (typeof(dataList) !== "undefined" && dataList.length > 0) { %>
+				<button id="Delete" name="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete All Records</button>
+			<% } %>
+		  </div>
+		</div>
+		
+		</fieldset>
+	</form>
+
+	<% if (typeof(dataList) !== "undefined") { %>
+	<table class="table table-bordered">
+        <tbody>
+            <tr>
+              <th><label>Date</label></th>
+              <th><label>Category</label></th>
+              <th><label>Employee Name</label></th>
+              <th><label>Employee Address</label></th>
+              <th><label>Expense Description</label></th>
+              <th><label>Pre-Tax Amount</label></th>
+              <th><label>Tax Name</label></th>
+              <th><label>Tax Amount</label></th>
+			  <th><label>Expense Total</label></th>
+            </tr>
+
+          <% for(var i=0; i < dataList.length; i++) { %>
+            <tr>
+              <td><%= dataList[i]["date"] %></td>
+              <td><%= dataList[i]["category"] %></td>
+              <td><%= dataList[i]["employee name"] %></td>
+              <td><%= dataList[i]["employee address"] %></td>
+              <td><%= dataList[i]["expense description"] %></td>
+              <td>$<%= dataList[i]["pre-tax amount"] %></td>
+              <td><%= dataList[i]["tax name"] %></td>
+              <td>$<%= dataList[i]["tax amount"] %></td>
+			  <td class="final-total">$<%= Number(dataList[i]["pre-tax amount"] + dataList[i]["tax amount"]).toFixed(2) %></td>
+            </tr>
+          <% } %>
+       
+			<tr>
+              <th colspan="8" class="final-total"><label>Final Total</label></th>
+			  <td class="final-total grand-total"><span><span>$<%= totalExpenseSum %></span></span></td>
+            </tr>
+		 </tbody>
+    </table>
+	<% } %>
+  </body>
+</html>
