@@ -1,0 +1,23 @@
+[package]
+name = "se-challenge-expenses"
+version = "0.1.0"
+authors = ["Alberto Leal <mailforalberto@gmail.com>"]
+
+[[bin]]
+name = "se-challenge-expenses"
+path = "backend/main.rs"
+
+[dependencies]
+horrorshow = "0.6.2"
+hyper = "0.10.9"
+multipart = "0.12.0"
+mime = "0.2.2"
+url = "1.4.0"
+lazy_static = "0.2.8"
+conduit-mime-types = "0.7.3"
+csv = "0.15.0"
+chrono = { version = "0.3", features = ["serde"] }
+serde_derive = "1.0.2"
+serde = "1.0.2"
+serde_json = "1.0.1"
+rusqlite = "0.11.0"
