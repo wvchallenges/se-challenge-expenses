@@ -1,0 +1,56 @@
+{
+  "name": "se-challenge-expenses",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wvchallenges/se-challenge-expenses.git",
+  "author": "Alberto Leal <mailforalberto@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "webpack": "webpack --config webpack.config.js",
+    "css": "postcss -w --log -c postcss.config.js -o '../assets/css/main.css' css/main.css"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.16.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "create-react-class": "^15.5.2",
+    "css-loader": "^0.28.1",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-react": "^6.10.3",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "style-loader": "^0.17.0",
+    "tachyons": "4.7.0",
+    "webpack": "^2.5.0"
+  }
+}
