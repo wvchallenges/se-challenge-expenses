@@ -1,48 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
   <html>
-    <head>
+  <head>
+
       <!--Import Google Icon Font-->
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-          <style>
-
- body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1 0 auto;
-  }
-  
-  </style>
-
-
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-       <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="js/jquery.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script> 
+      <link href="css/custom.css" rel="stylesheet">
     </head>
-
-
+<?php include 'header.php'; ?>
 <body>
-  <main>
-     <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo center">CSV-Import</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="./">Import</a></li>
-        <li><a href="./view.php">View Import</a></li>
-        </ul>
-    
-
-
-    </div>
-  </nav>
-
 <?php
 //php code starts here
 //Html echo starts here
@@ -80,17 +44,17 @@ echo" <table class=\"responsive-table\">
             echo 
             "<td>".$row['category']."</td>";
             echo 
-            "<td>".$row['employee name']."</td>";
+            "<td>".$row['employee_name']."</td>";
             echo 
-            "<td>".$row['employee address']."</td>";
+            "<td>".$row['employee_address']."</td>";
             echo 
-            "<td>".$row['expense description']."</td>";
+            "<td>".$row['expense_description']."</td>";
             echo 
-            "<td>".$row['pre-tax amount']."</td>";
+            "<td>".$row['pre_tax_amount']."</td>";
             echo 
-            "<td>".$row['tax name']."</td>";
+            "<td>".$row['tax_name']."</td>";
             echo 
-            "<td>".$row['tax amount']."</td>";
+            "<td>".$row['tax_amount']."</td>";
 echo"</tr>";
 
 
@@ -118,24 +82,7 @@ echo '</div></div></div>';
 ?>
 
 </main>
-
-  <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Example App in PHP & MySQL</h5>
-                
-              </div>
-              <div class="col l4 offset-l2 s12">
-               
-          <div class="footer-copyright">
-            <div class="container">
-            © For Wave
-           
-            </div>
-          </div>
-        </footer>
-
+<?php include 'footer.php'?>
     </body>
 
 

@@ -1,51 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
   <html>
-    <head>
+<head>
+
       <!--Import Google Icon Font-->
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-      <style>
-
- body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1 0 auto;
-  }
-  
-  </style>
-
-
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-       <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="js/jquery.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script> 
+      <link href="css/custom.css" rel="stylesheet">
     </head>
-
-
+<?php include 'header.php'; ?>
 <body>
-  <main>
-     <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo center">CSV-Import</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="./">Import</a></li>
-        <li><a href="./view.php">View Import</a></li>
-        </ul>
-    
-
-
-    </div>
-  </nav>
-        <div class="container">
-     
-</div>
-
+  
 <?php
 echo '<br><div class="container"><div class="row"><div class="card-panel"><h3 class="center-align flow-text">';
 //Supressing errors and log them
@@ -72,9 +34,9 @@ move_uploaded_file($file_loc,$moveto);
 
 // Build a query 
 
-$sql_mk_table = "CREATE TABLE IF NOT EXISTS `$tablename` (`date` varchar(10), `category` varchar(23),
- `employee name` varchar(12), `employee address` varchar(50), `expense description` varchar(33), 
- `pre-tax amount` varchar(10), `tax name` varchar(12), `tax amount` varchar(8)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+$sql_mk_table = "CREATE TABLE IF NOT EXISTS `$tablename` (`date` DATE, `category` varchar(40),
+ `employee_name` varchar(20), `employee_address` varchar(50), `expense_description` varchar(20), 
+ `pre_tax_amount` FLOAT, `tax_name` varchar(20), `tax_amount` FLOAT) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 
 //Start a Connection
@@ -88,7 +50,9 @@ INTO TABLE $tablename
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '\"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS";
+IGNORE 1 ROWS
+(@date,category,employee_name,employee_address,expense_description,pre_tax_amount,tax_name,tax_amount)
+SET date=STR_TO_DATE(@date,'%m/%d/%Y');";
 
 if($conn->query($sql_csv)===TRUE)
 {
@@ -124,23 +88,7 @@ echo '</div></div></div></h3>';
 
  </main>
 
-  <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Example App in PHP & MySQL</h5>
-                
-              </div>
-              <div class="col l4 offset-l2 s12">
-               
-          <div class="footer-copyright">
-            <div class="container">
-            © For Wave
-           
-            </div>
-          </div>
-        </footer>
-
+<?php include 'footer.php'?>
     </body>
 
 
