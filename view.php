@@ -1,12 +1,15 @@
 ﻿<!DOCTYPE html>
   <html>
-  <head>
+<head>
 
      
       <link href="css/custom.css" rel="stylesheet">
     </head>
 <?php include 'header.php'; ?>
+
 <body>
+  <main>
+   
 <?php
 //php code starts here
 //Html echo starts here
@@ -82,7 +85,8 @@ echo '</div></div></div>';
 ?>
 
 </main>
-<?php include 'footer.php'?>
+
+  <?php include 'footer.php'?>
     </body>
 
 
