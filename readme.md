@@ -1,6 +1,7 @@
 Setup:
 The App needs php and mysql to run
-Lets install the things we need Note: You need superuser acess to install these
+Let's install the things we need.
+Note: You need superuser acess to install these
 1) Install Apache
 Open Terminal and type in 
 "sudo apt-get install apache2"
@@ -17,16 +18,17 @@ and visit http://localhost/test.php if you see this works then php is installed 
 Open terminal and type in "mysql -u root -p"
 Make a new user by typing following
 "CREATE USER 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';"
+where USERNAME is your desired username and PASSWORD is your secure password
 
-where is USERNAME is your desired username and PASSWORD is your secure password
 Now type in
 "GRANT ALL PRIVILEGES ON * . * TO 'USERNAME'@'localhost';"
 To grant new useraccount all privilages 
+
 AppSetup:
 1) Unzip app.zip to "/var/www/app"
 2) Open db.php and change the values with new values which we created in 7th step.
 3) you can leave $dbname and $tablename to defaults if you dont need custom values
-4)Visit http://localhost/app/ if you see "Everything is working fine,You are ready to import." Note in green
+4) Visit http://localhost/app/ if you see "Everything is working fine,You are ready to import." Note in green
 you did everything right untill this step.if not check db.php and make sure everything is right.
 5)Click on teal button which says file and click upload.
 6)A Database will be created and the csv file will be imported into the database.
@@ -35,6 +37,7 @@ you did everything right untill this step.if not check db.php and make sure ever
 
 
 Mytake:
-Although the app is fairyly simple in its workings, I wanted to use few new funcitons and code in differnt way than i usally do 
-I choose a differnt css framework than usual and for the importing part i didn't want to loop a string cuz it felt slow and bit old style :D
-so i used loadfile for importing csv file into database which is faster (tested with a 100mb file),i found it fun to use end function instead of count to find out file extension after exploding the filename a small change form my coding routine but was fun nonetheless i implemented few basic checks to make sure the file is a csv and file does exist,i thought it was a good idea to remove file after importing so i did that.
+Although the app is fairly simple in its working, I wanted to use few new functions and code in different way than I usually do 
+I choose a differnt css framework than usual and 
+For the importing part I didn't want to loop a string cuz it felt slow and bit old style :D
+so I used loadfile for importing csv file into database which is faster (tested with a 100mb file), I found it fun to use end function instead of count to find out file extension after exploding the filename - a small change from my coding routine but was fun nonetheless. I implemented few basic checks to make sure the file is a csv and file does exist, I thought it was a good idea to remove file after importing so i did that.
