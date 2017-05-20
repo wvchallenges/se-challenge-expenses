@@ -2,7 +2,7 @@
   <html>
 <head>
 
-      <!--Import Google Icon Font-->
+      
       <link href="css/custom.css" rel="stylesheet">
     </head>
 <?php include 'header.php'; ?>
