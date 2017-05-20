@@ -59,26 +59,15 @@ echo" <table class=\"responsive-table\">
             echo 
             "<td>".$row['tax_amount']."</td>";
 echo"</tr>";
-
-
-
-        
+       
         }
         echo "</tbody></table>";
         $conn->close();
         
 }
-
-else
-{
+else{
   echo "No Import Found";
 }
-
-
-
-
-
-
 
 //Close html tags and html ends here 
 echo '</div></div></div>';

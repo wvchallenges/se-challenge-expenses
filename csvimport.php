@@ -2,7 +2,7 @@
   <html>
 <head>
 
-      
+
       <link href="css/custom.css" rel="stylesheet">
     </head>
 <?php include 'header.php'; ?>
@@ -50,16 +50,14 @@ INTO TABLE $tablename
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '\"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
+IGNORE 1 ROWS 
 (@date,category,employee_name,employee_address,expense_description,pre_tax_amount,tax_name,tax_amount)
-SET date=STR_TO_DATE(@date,'%m/%d/%Y');";
+SET date=STR_TO_DATE(@date,'%m/%d/%Y');"; //Changing date format
 
 if($conn->query($sql_csv)===TRUE)
 {
     echo"Data has been imported You can view it <a href='./view.php'> here </a>";
 }
-
-
 
 else
  {
@@ -81,10 +79,7 @@ else
 }
 
 echo '</div></div></div></h3>';
-
-
 ?>
-
 
  </main>
 
