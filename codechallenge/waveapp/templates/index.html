@@ -11,15 +11,15 @@
 </form>
 
 {% if reader %}
-    <table>
+    <table color="black">
         <tr>
-            <th>Date</th>
-            <th>Total Expenses</th>
+            <th color="white">Date</th>
+            <th color="white">Total Expenses</th>
         </tr>
         {% for key, value in monthlyTaxes.items %}
             <tr>
-                <td>{{ key }}</td>
-                <td>{{ value }}</td>
+                <td color="white" >{{ key }}</td>
+                <td color="white" >{{ value }}</td>
             </tr>
         {% endfor %}
     </table>
