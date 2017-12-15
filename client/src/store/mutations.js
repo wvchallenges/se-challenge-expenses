@@ -8,7 +8,11 @@
  *
  * ```
  * {
- *   file: File,
+ *   expenses: []{
+ *     date: string,
+ *     preTaxAmount: number,
+ *     taxAmount: number,
+ *   },
  * }
  * ```
  */
