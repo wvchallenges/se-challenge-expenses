@@ -5,7 +5,7 @@
     Take a deep dive into your company's employee expense data.
   </p>
   <div>
-    <router-link to="/dashboard">Expenses dashboard</router-link>
+    <router-link to="/report">Expenses report</router-link>
   </div>
   <div>
     <router-link to="/upload-report">Upload expense report</router-link>
