@@ -90,8 +90,6 @@ const formatDollarValue = dollarValue => {
  * ```
  */
 const rows = ({ expenses: { expenses } }) => {
-  console.log('Got expenses', expenses)
-  //const expenses = expenses.expenses
   const dates = expenses.map(({ date }) => {
     const [mm, yyyy] = [month(date), year(date)]
     return `${mm}/${yyyy}`
