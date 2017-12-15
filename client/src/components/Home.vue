@@ -8,7 +8,7 @@
     <router-link to="/report">Expenses report</router-link>
   </div>
   <div>
-    <router-link to="/upload-report">Upload expense report</router-link>
+    <router-link to="/upload">Upload expense report</router-link>
   </div>
 </div>
 </template>

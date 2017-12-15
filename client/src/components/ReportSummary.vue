@@ -155,7 +155,9 @@ export default {
   name: 'ReportSummary',
   data: () => init,
   computed: {
-    rows () { return rows(this); }
+    rows () {
+      return rows(this)
+    },
   },
 }
 </script>
