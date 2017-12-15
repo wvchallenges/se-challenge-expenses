@@ -23,8 +23,8 @@ const mutations = {
   ...expenses.mutations,
 }
 
-export default {
+export default new Vuex.Store({
   state,
   actions,
   mutations,
-}
+})

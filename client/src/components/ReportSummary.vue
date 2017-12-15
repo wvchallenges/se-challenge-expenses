@@ -16,40 +16,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
+
 /**
  * Initial data for the component.
  */
-const init = {
-  // An array of objects containing information uploaded about expenses from a CSV file.
-  expenses: [
-    {
-      date: '12/1/2017',
-      preTaxAmount: 312.32,
-      taxAmount: 31.45,
-    },
-    {
-      date: '12/24/2017',
-      preTaxAmount: 1015.82,
-      taxAmount: 200.0,
-    },
-    {
-      // Careful with the year!
-      date: '12/5/2016',
-      preTaxAmount: 45.62,
-      taxAmount: 5.50,
-    },
-    {
-      date: '2/19/2017',
-      preTaxAmount: 89.10,
-      taxAmount: 10.64,
-    },
-    {
-      date: '2/27/2015',
-      preTaxAmount: 100.0,
-      taxAmount: 12.50,
-    },
-  ],
-}
+const init = {}
 
 /**
  * Compute the month recorded in a date stored as a string formatted like 'mm/dd/yyyy'.
@@ -107,16 +80,6 @@ const formatDollarValue = dollarValue => {
  * Given the component's list of expenses, compute an array of objects that can be represented by
  * the component in a table.
  *
- * This function expects `expenses` to be an array of objects with the following shape:
- *
- * ```
- * {
- *   date: string,
- *   preTaxAmount: number,
- *   taxAmount: number,
- * }
- * ```
- *
  * It returns an array of objects that each have the following shape:
  *
  * ```
@@ -126,7 +89,9 @@ const formatDollarValue = dollarValue => {
  * }
  * ```
  */
-const rows = ({ expenses }) => {
+const rows = ({ expenses: { expenses } }) => {
+  console.log('Got expenses', expenses)
+  //const expenses = expenses.expenses
   const dates = expenses.map(({ date }) => {
     const [mm, yyyy] = [month(date), year(date)]
     return `${mm}/${yyyy}`
@@ -155,6 +120,7 @@ export default {
   name: 'ReportSummary',
   data: () => init,
   computed: {
+    ...mapState(['expenses']),
     rows () {
       return rows(this)
     },

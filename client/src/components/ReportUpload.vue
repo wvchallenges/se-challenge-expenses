@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import * as act from '@/store/actions'
+
+
 /**
  * Initial data for the component.
  */
@@ -25,13 +28,13 @@ export default {
   name: 'ReportUpload',
   data: () => init,
   methods: {
-    selectFile (event) {
+    selectFile(event) {
       this.selectedFile = event.target.files[0] || event.dataTransfer.files[0]
     },
-    uploadFile () {
-      // TODO - Wire up Vuex
-      console.log('Uploading')
+    uploadFile() {
+      this.$store.dispatch(act.UPLOAD_EXPENSE_REPORT, { file: this.selectedFile })
       this.selectedFile = null
+      this.$router.push('/report')
     },
   },
 }
