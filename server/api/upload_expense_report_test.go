@@ -38,7 +38,7 @@ const (
 
 	// This is an invalid copy of the first two lines of the example CSV file. The date has been removed.
 	invalidCSVFile string = `date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
-		Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06 `
+		Travel,Don Draper,"783 Park Ave, New York, NY 10021",Taxi ride, 350.00 ,NY Sales tax, 31.06`
 )
 
 func uploadCSVFile(endpoint *url.URL, csvFileContents []byte) (*http.Response, error) {
@@ -85,35 +85,37 @@ func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 	// 1. Parses the CSV file and returns an error if there is data missing or the formatting is incorrect.
 	// 2. Ensures that all of the data that we expect to be provided is present.
 	testCases := []struct {
-		CSVString   string
-		ShouldError bool
+		CSVString      string
+		ExpectedStatus int
+		ShouldError    bool
 	}{
 		{
-			CSVString:   exampleCSVFile,
-			ShouldError: false,
+			CSVString:      exampleCSVFile,
+			ExpectedStatus: http.StatusOK,
+			ShouldError:    false,
 		},
 		{
-			CSVString:   invalidCSVFile,
-			ShouldError: true,
+			CSVString:      invalidCSVFile,
+			ExpectedStatus: http.StatusBadRequest,
+			ShouldError:    true,
 		},
 	}
 
 	for caseNum, testCase := range testCases {
 		test.Logf("Running test case #%d", caseNum)
 		response, err := uploadCSVFile(serverURL, []byte(testCase.CSVString))
-		gotError := err != nil
-		if gotError != testCase.ShouldError {
-			test.Fatalf("Expected upload to produce an error? %v. Got error: %v", testCase.ShouldError, err)
+		if err != nil {
+			test.Fatalf("Expected upload to produce an error? %v. Got error: %v", testCase.ShouldError, err.Error())
 		}
-		if response.StatusCode != http.StatusOK {
-			test.Errorf("Expected status code %d. Got %d", http.StatusOK, response.StatusCode)
+		if response.StatusCode != testCase.ExpectedStatus {
+			test.Errorf("Expected status code %d. Got %d", testCase.ExpectedStatus, response.StatusCode)
 		}
 		responseData := uploadExpenseReportResponse{}
 		decodeError := json.NewDecoder(response.Body).Decode(&responseData)
 		if decodeError != nil {
 			test.Fatalf("Failed to decode the server's response. Error: %s", decodeError.Error())
 		}
-		gotError = responseData.Error != nil
+		gotError := responseData.Error != nil
 		if gotError != testCase.ShouldError {
 			if gotError {
 				test.Fatalf(
