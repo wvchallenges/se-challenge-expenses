@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"testing"
+	"time"
 
 	"github.com/zsck/se-challenge-expenses/server/model"
 )
@@ -127,6 +128,117 @@ func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 			} else {
 				test.Fatalf("Expected to get an error in response? %v. Got error: nil", testCase.ShouldError)
 			}
+		}
+	}
+}
+
+func testExtractEmployee(test *testing.T) {
+	testCases := []struct {
+		CSVRecord        []string
+		ExpectedEmployee model.Employee
+		ShouldError      bool
+	}{
+		{
+			CSVRecord: []string{
+				"12/1/2013",
+				"Travel",
+				"Don Draper",
+				"783 Park Ave, New York, NY 10021",
+				"Taxi ride",
+				"350.00",
+				"NY Sales tax",
+				"31.06",
+			},
+			ExpectedEmployee: model.Employee{
+				ID:      0,
+				Name:    "Don Draper",
+				Address: "783 Park Ave, New York, NY 10021",
+			},
+			ShouldError: false,
+		},
+		{
+			CSVRecord: []string{
+				"12/1/2013",
+				"Travel",
+				// MISSING NAME!
+				"783 Park Ave, New York, NY 10021",
+				"Taxi ride",
+				"350.00",
+				"NY Sales tax",
+				"31.06",
+			},
+			ExpectedEmployee: model.Employee{},
+			ShouldError:      true,
+		},
+	}
+
+	for _, testCase := range testCases {
+		employee, err := extractEmployee(testCase.CSVRecord)
+		gotError := err != nil
+		if gotError != testCase.ShouldError {
+			test.Errorf("Expected parsing to fail? %v. Got error? %v.", testCase.ShouldError, gotError)
+		}
+		if employee != testCase.ExpectedEmployee {
+			asJSON, _ := json.Marshal(employee)
+			test.Errorf("The parsed employee data does not match what was expected. Got %s", string(asJSON))
+		}
+	}
+}
+
+func testExtractExpense(test *testing.T) {
+	testCases := []struct {
+		CSVRecord       []string
+		ExpectedExpense model.Expense
+		ShouldError     bool
+	}{
+		{
+			CSVRecord: []string{
+				"12/1/2013",
+				"Travel",
+				"Don Draper",
+				"783 Park Ave, New York, NY 10021",
+				"Taxi ride",
+				"350.00",
+				"NY Sales tax",
+				"31.06",
+			},
+			ExpectedExpense: model.Expense{
+				ID:           0,
+				SubmittedBy:  0,
+				Date:         time.Date(2013, time.December, 1, 0, 0, 0, 0, nil),
+				Category:     "Travel",
+				Description:  "Taxi ride",
+				PreTaxAmount: 350.0,
+				TaxName:      "NY Sales tax",
+				TaxAmount:    31.06,
+			},
+			ShouldError: false,
+		},
+		{
+			CSVRecord: []string{
+				// MISSING DATE!
+				"Travel",
+				"Don Draper",
+				"783 Park Ave, New York, NY 10021",
+				"Taxi ride",
+				"350.00",
+				"NY Sales tax",
+				"31.06",
+			},
+			ExpectedExpense: model.Expense{},
+			ShouldError:     true,
+		},
+	}
+
+	for _, testCase := range testCases {
+		expense, err := extractExpense(testCase.CSVRecord)
+		gotError := err != nil
+		if gotError != testCase.ShouldError {
+			test.Errorf("Expected parsing to fail? %v. Got error? %v.", testCase.ShouldError, gotError)
+		}
+		if expense != testCase.ExpectedExpense {
+			asJSON, _ := json.Marshal(expense)
+			test.Errorf("The parsed expense data does not match what was expected. Got %s", string(asJSON))
 		}
 	}
 }
