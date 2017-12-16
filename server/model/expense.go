@@ -29,3 +29,19 @@ type Expense struct {
 	PreTaxAmount float64    `json:"preTaxAmount"`
 	TaxAmount    float64    `json:"taxAmount"`
 }
+
+// ExpenseLedger is implemented by types capable of recording information about submitted expenses.
+type ExpenseLedger interface {
+	Record(Expense) error
+}
+
+// MockExpenseLedger provides a simple way to create a mock implementation of ExpenseLedger using
+// any function that helps to test desired behavior.
+type MockExpenseLedger struct {
+	RecordFunc func(Expense) error
+}
+
+// Record calls on the mocked Record function provided to the MockExpenseLedger.
+func (mock MockExpenseLedger) Record(expense Expense) error {
+	return mock.RecordFunc(expense)
+}
