@@ -13,6 +13,7 @@ const (
 			category varchar(64) not null,
 			description text,
 			pre_tax_amount double,
+			tax_name varchar(32) not null,
 			tax_amount double,
 			foreign key (submitted_by) references employees (id)
 		);
@@ -27,6 +28,7 @@ type Expense struct {
 	Category     string     `json:"category"`
 	Description  string     `json:"description"`
 	PreTaxAmount float64    `json:"preTaxAmount"`
+	TaxName      string     `json:"taxName"`
 	TaxAmount    float64    `json:"taxAmount"`
 }
 
