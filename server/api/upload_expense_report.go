@@ -1,7 +1,10 @@
 package api
 
 import (
+	"encoding/csv"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -62,6 +65,87 @@ func NewExpenseReportUploader(employees model.EmployeeLedger, expenses model.Exp
 // CSV files are expected to have the following headers:
 // date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
 func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	errMissingReportField := "request must contain a `report` field whose value is a CSV file"
+	errUnableToOpenFile := "server unable to open uploaded file"
+	errFailedToParseCSV := "failed to parse the contents of the submitted CSV file"
+
+	res.Header().Set("Content-Type", "application/json")
+	toClient := json.NewEncoder(res)
+
+	if err := req.ParseMultipartForm(handler.MaxFileSize); err != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		errMsg := err.Error()
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: &errMsg,
+		})
+		return
+	}
+
+	files, found := req.MultipartForm.File[formKey]
+	if !found || len(files) == 0 {
+		res.WriteHeader(http.StatusBadRequest)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: &errMissingReportField,
+		})
+		return
+	}
+	uploadedFile, openErr := files[0].Open()
+	if openErr != nil {
+		res.WriteHeader(http.StatusInternalServerError)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: &errUnableToOpenFile,
+		})
+		return
+	}
+
+	parser := csv.NewReader(uploadedFile)
+	allRecords, parseErr := parser.ReadAll()
+	if parseErr != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: &errFailedToParseCSV,
+		})
+		return
+	}
+
+	employees := make(chan model.Employee, len(allRecords))
+	expenses := make(chan model.Expense, len(allRecords))
+	errors := make(chan error, 2*len(allRecords))
+	go extractEntities(allRecords, employees, expenses, errors)
+
+	for i := 0; i < len(allRecords); i++ {
+		gotEmployee := false
+		gotExpense := false
+
+		if employee, ok := <-employees; ok {
+			gotEmployee = true
+			if err := handler.employees.Record(employee); err != nil {
+				// Log the error; we can't do much about it without a more sophisticated resolution strategy.
+				fmt.Println("Error saving employee. ERROR: ", err.Error())
+			}
+		}
+		if expense, ok := <-expenses; ok {
+			gotExpense = true
+			if err := handler.expenses.Record(expense); err != nil {
+				// Log the error; we can't do much about it without a more sophisticated resolution strategy.
+				fmt.Println("Error saving expense. ERROR: ", err.Error())
+			}
+		}
+		if err, ok := <-errors; ok {
+			fmt.Println("CSV record parser encountered an erro. ERROR: ", err.Error())
+		}
+
+		// Once both channels have been closed, we can terminate the loop right away.
+		// This will allow us to avoid unnecessary iterations if an early termination occurs.
+		if !gotEmployee && !gotExpense {
+			break
+		}
+	}
+
+	toClient.Encode(uploadExpenseReportResponse{
+		Error: nil,
+	})
+
 }
 
 // extractEntities sifts thorugh the plain string records parsed from an uploaded CSV file and writes any employee
