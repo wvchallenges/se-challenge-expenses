@@ -108,77 +108,64 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 		return
 	}
 
-	employees := make(chan model.Employee, len(allRecords))
-	expenses := make(chan model.Expense, len(allRecords))
-	errors := make(chan error, 2*len(allRecords))
-	go extractEntities(allRecords, employees, expenses, errors)
-
-	for i := 0; i < len(allRecords); i++ {
-		gotEmployee := false
-		gotExpense := false
-
-		if employee, ok := <-employees; ok {
-			gotEmployee = true
-			if err := handler.employees.Record(employee); err != nil {
-				// Log the error; we can't do much about it without a more sophisticated resolution strategy.
-				fmt.Println("Error saving employee. ERROR: ", err.Error())
-			}
+	employees, expenses, errors := extractEntities(allRecords)
+	for _, employee := range employees {
+		if err := handler.employees.Record(employee); err != nil {
+			errors = append(errors, err)
 		}
-		if expense, ok := <-expenses; ok {
-			gotExpense = true
-			if err := handler.expenses.Record(expense); err != nil {
-				// Log the error; we can't do much about it without a more sophisticated resolution strategy.
-				fmt.Println("Error saving expense. ERROR: ", err.Error())
-			}
-		}
-		if err, ok := <-errors; ok {
-			fmt.Println("CSV record parser encountered an erro. ERROR: ", err.Error())
-		}
-
-		// Once both channels have been closed, we can terminate the loop right away.
-		// This will allow us to avoid unnecessary iterations if an early termination occurs.
-		if !gotEmployee && !gotExpense {
-			break
+	}
+	for _, expense := range expenses {
+		if err := handler.expenses.Record(expense); err != nil {
+			errors = append(errors, err)
 		}
 	}
 
-	toClient.Encode(uploadExpenseReportResponse{
-		Error: nil,
-	})
-
+	errMsg := "Encountered the following errors:\n"
+	for _, err := range errors {
+		errMsg += err.Error() + "\n"
+	}
+	if len(errMsg) > len("Encountered the following errors:\n") {
+		res.WriteHeader(http.StatusInternalServerError)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: &errMsg,
+		})
+	} else {
+		toClient.Encode(uploadExpenseReportResponse{
+			Error: nil,
+		})
+	}
 }
 
-// extractEntities sifts thorugh the plain string records parsed from an uploaded CSV file and writes any employee
-// and expense data it is able to extract from each record through the provided channels.
-func extractEntities(
-	csvRecords [][]string,
-	employees chan<- model.Employee,
-	expenses chan<- model.Expense,
-	errs chan<- error,
-) {
+// extractEntities sifts thorugh the plain string records parsed from an uploaded CSV file and returns any employee
+// and expense data it is able to extract from each record in an array.
+func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, []error) {
+	employees := make([]model.Employee, len(csvRecords))
+	expenses := make([]model.Expense, len(csvRecords))
+	errors := make([]error, 0)
 	for _, record := range csvRecords[1:] {
 		employee, err := extractEmployee(record)
 		if err != nil {
-			errs <- err
+			errors = append(errors, err)
 		} else {
-			employees <- employee
+			employees = append(employees, employee)
 		}
 
 		expense, err := extractExpense(record)
+		fmt.Println("record is", record, "Error is", err)
 		if err != nil {
-			errs <- err
+			errors = append(errors, err)
 		} else {
-			expenses <- expense
+			expenses = append(expenses, expense)
 		}
 	}
-	close(employees)
-	close(expenses)
-	close(errs)
+	return employees, expenses, errors
 }
 
 func extractEmployee(record []string) (model.Employee, error) {
 	if len(record) < len(csvFileHeaders) {
-		return model.Employee{}, errors.New("not enough columns in record")
+		err := errors.New("not enough columns in record")
+		fmt.Println("Returning err", err, err != nil)
+		return model.Employee{}, err
 	}
 	employee := model.Employee{
 		ID:      0,
@@ -189,6 +176,19 @@ func extractEmployee(record []string) (model.Employee, error) {
 }
 
 func extractExpense(record []string) (model.Expense, error) {
+	// Parse the date.
+	dateParts := strings.Split(record[0], "/")
+	if len(dateParts) != 3 {
+		return model.Expense{}, errors.New("invalid date format")
+	}
+	month, err1 := strconv.Atoi(strings.TrimSpace(dateParts[0]))
+	day, err2 := strconv.Atoi(strings.TrimSpace(dateParts[1]))
+	year, err3 := strconv.Atoi(strings.TrimSpace(dateParts[2]))
+	if err1 != nil || err2 != nil || err3 != nil {
+		fmt.Println(err1, err2, err3)
+		return model.Expense{}, errors.New("invalid date format")
+	}
+
 	// Parse the pre- and tax amounts.
 	if len(record) < len(csvFileHeaders) {
 		return model.Expense{}, errors.New("not enough columns in record")
@@ -202,19 +202,6 @@ func extractExpense(record []string) (model.Expense, error) {
 	taxAmount, parseErr := strconv.ParseFloat(taxStr, 64)
 	if parseErr != nil {
 		return model.Expense{}, parseErr
-	}
-
-	// Parse the date.
-	dateParts := strings.Split(record[0], "/")
-	if len(dateParts) != 3 {
-		return model.Expense{}, errors.New("invalid date format")
-	}
-	month, err1 := strconv.Atoi(strings.TrimSpace(dateParts[0]))
-	day, err2 := strconv.Atoi(strings.TrimSpace(dateParts[1]))
-	year, err3 := strconv.Atoi(strings.TrimSpace(dateParts[2]))
-	if err1 != nil || err2 != nil || err3 != nil {
-		fmt.Println(err1, err2, err3)
-		return model.Expense{}, errors.New("invalid date format")
 	}
 
 	utc, _ := time.LoadLocation("UTC")
