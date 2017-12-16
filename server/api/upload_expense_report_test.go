@@ -132,7 +132,7 @@ func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 	}
 }
 
-func testExtractEmployee(test *testing.T) {
+func TestExtractEmployee(test *testing.T) {
 	testCases := []struct {
 		CSVRecord        []string
 		ExpectedEmployee model.Employee
@@ -185,7 +185,8 @@ func testExtractEmployee(test *testing.T) {
 	}
 }
 
-func testExtractExpense(test *testing.T) {
+func TestExtractExpense(test *testing.T) {
+	utc, _ := time.LoadLocation("UTC")
 	testCases := []struct {
 		CSVRecord       []string
 		ExpectedExpense model.Expense
@@ -205,7 +206,7 @@ func testExtractExpense(test *testing.T) {
 			ExpectedExpense: model.Expense{
 				ID:           0,
 				SubmittedBy:  0,
-				Date:         time.Date(2013, time.December, 1, 0, 0, 0, 0, nil),
+				Date:         time.Date(2013, time.December, 1, 0, 0, 0, 0, utc),
 				Category:     "Travel",
 				Description:  "Taxi ride",
 				PreTaxAmount: 350.0,
