@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/zsck/se-challenge-expenses/server/model"
@@ -33,5 +34,9 @@ func NewExpenseReportUploader(employees model.EmployeeLedger, expenses model.Exp
 }
 
 func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	res.Write([]byte("Hello world"))
+	res.Header().Set("Content-Type", "application/json")
+	toClient := json.NewEncoder(res)
+	toClient.Encode(uploadExpenseReportResponse{
+		Error: nil,
+	})
 }
