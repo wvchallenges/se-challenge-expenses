@@ -1,8 +1,9 @@
 package api
 
 import (
+	"bytes"
 	"encoding/json"
-	"errors"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -44,7 +45,24 @@ const (
 )
 
 func uploadCSVFile(endpoint *url.URL, csvFileContents []byte) (*http.Response, error) {
-	return nil, errors.New("Not implemented yet")
+	var buffer bytes.Buffer
+	writer := multipart.NewWriter(&buffer)
+	fileWriter, err := writer.CreateFormFile("report", "report.csv")
+	if err != nil {
+		return nil, err
+	}
+	_, err = fileWriter.Write(csvFileContents)
+	if err != nil {
+		return nil, err
+	}
+	writer.Close()
+	request, err := http.NewRequest("POST", endpoint.String(), &buffer)
+	if err != nil {
+		return nil, err
+	}
+	request.Header.Set("Content-Type", writer.FormDataContentType())
+	client := &http.Client{}
+	return client.Do(request)
 }
 
 func TestExpenseReportUploaderCSVHandling(test *testing.T) {
