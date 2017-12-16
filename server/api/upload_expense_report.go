@@ -156,7 +156,7 @@ func extractEntities(
 	expenses chan<- model.Expense,
 	errs chan<- error,
 ) {
-	for _, record := range csvRecords {
+	for _, record := range csvRecords[1:] {
 		employee, err := extractEmployee(record)
 		if err != nil {
 			errs <- err
@@ -193,11 +193,13 @@ func extractExpense(record []string) (model.Expense, error) {
 	if len(record) < len(csvFileHeaders) {
 		return model.Expense{}, errors.New("not enough columns in record")
 	}
-	preTaxAmount, parseErr := strconv.ParseFloat(record[5], 64)
+	preTaxStr := strings.TrimSpace(strings.Replace(record[5], ",", "", -1))
+	preTaxAmount, parseErr := strconv.ParseFloat(preTaxStr, 64)
 	if parseErr != nil {
 		return model.Expense{}, parseErr
 	}
-	taxAmount, parseErr := strconv.ParseFloat(record[7], 64)
+	taxStr := strings.TrimSpace(strings.Replace(record[7], ",", "", -1))
+	taxAmount, parseErr := strconv.ParseFloat(taxStr, 64)
 	if parseErr != nil {
 		return model.Expense{}, parseErr
 	}
@@ -207,10 +209,11 @@ func extractExpense(record []string) (model.Expense, error) {
 	if len(dateParts) != 3 {
 		return model.Expense{}, errors.New("invalid date format")
 	}
-	month, err1 := strconv.Atoi(dateParts[0])
-	day, err2 := strconv.Atoi(dateParts[1])
-	year, err3 := strconv.Atoi(dateParts[2])
+	month, err1 := strconv.Atoi(strings.TrimSpace(dateParts[0]))
+	day, err2 := strconv.Atoi(strings.TrimSpace(dateParts[1]))
+	year, err3 := strconv.Atoi(strings.TrimSpace(dateParts[2]))
 	if err1 != nil || err2 != nil || err3 != nil {
+		fmt.Println(err1, err2, err3)
 		return model.Expense{}, errors.New("invalid date format")
 	}
 
