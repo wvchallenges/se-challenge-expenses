@@ -12,10 +12,15 @@ import (
 // 2. Attempt to parse the file as a CSV file containing information about employee expenses.
 // 3. Store information about employees.
 // 4. Store information about expenses.
-// 5. Respond with the parsed data formatted as JSON.
 type ExpenseReportUploader struct {
 	employees model.EmployeeLedger
 	expenses  model.ExpenseLedger
+}
+
+// uploadExpenseReportResponse is a simple container for the response produced by the ExpenseReportUploader,
+// which will be encoded to JSON.
+type uploadExpenseReportResponse struct {
+	Error *string `json:"error"`
 }
 
 // NewExpenseReportUploader creates a new ExpenseReportUploader with capabilities for storing information

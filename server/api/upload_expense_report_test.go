@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"net/http/httptest"
@@ -46,7 +47,7 @@ func uploadCSVFile(endpoint *url.URL, csvFileContents []byte) (*http.Response, e
 	return nil, errors.New("Not implemented yet")
 }
 
-func TestExpenseReportUploader(test *testing.T) {
+func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 	employeeLedger := model.MockEmployeeLedger{
 		RecordFunc: func(employee model.Employee) error {
 			return nil
@@ -63,6 +64,11 @@ func TestExpenseReportUploader(test *testing.T) {
 	serverURL, _ := url.Parse(server.URL)
 	defer server.Close()
 
+	// Each test case defined below will be run to test different pieces of behavior expected of the
+	// ExpenseReportUploader. Specifically, we're testing that the request handler:
+	//
+	// 1. Parses the CSV file and returns an error if there is data missing or the formatting is incorrect.
+	// 2. Ensures that all of the data that we expect to be provided is present.
 	testCases := []struct {
 		CSVString   string
 		ShouldError bool
@@ -79,10 +85,30 @@ func TestExpenseReportUploader(test *testing.T) {
 
 	for caseNum, testCase := range testCases {
 		test.Logf("Running test case #%d", caseNum)
-		_, err := uploadCSVFile(serverURL, []byte(testCase.CSVString))
+		response, err := uploadCSVFile(serverURL, []byte(testCase.CSVString))
 		gotError := err != nil
 		if gotError != testCase.ShouldError {
-			test.Errorf("Expected upload to produce an error? %v. Got error: %v", testCase.ShouldError, err)
+			test.Fatalf("Expected upload to produce an error? %v. Got error: %v", testCase.ShouldError, err)
+		}
+		if response.StatusCode != http.StatusOK {
+			test.Errorf("Expected status code %d. Got %d", http.StatusOK, response.StatusCode)
+		}
+		responseData := uploadExpenseReportResponse{}
+		decodeError := json.NewDecoder(response.Body).Decode(&responseData)
+		if decodeError != nil {
+			test.Fatalf("Failed to decode the server's response. Error: %s", decodeError.Error())
+		}
+		gotError = responseData.Error != nil
+		if gotError != testCase.ShouldError {
+			if gotError {
+				test.Fatalf(
+					"Expected to get an error in response? %v. Got error: %s",
+					testCase.ShouldError,
+					*responseData.Error,
+				)
+			} else {
+				test.Fatalf("Expected to get an error in response? %v. Got error: nil", testCase.ShouldError)
+			}
 		}
 	}
 }
