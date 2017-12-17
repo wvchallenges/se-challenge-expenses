@@ -15,6 +15,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	err = model.SetupTables(db)
+	if err != nil {
+		panic(err)
+	}
 
 	employees := model.NewEmployeeLedgerDB(db)
 	expenses := model.NewExpenseLedgerDB(db)
