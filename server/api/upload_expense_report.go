@@ -35,6 +35,7 @@ var csvFileHeaders = []string{
 // 2. Attempt to parse the file as a CSV file containing information about employee expenses.
 // 3. Store information about employees.
 // 4. Store information about expenses.
+// 5. Write back a list of the expenses parsed from the CSV.
 type ExpenseReportUploader struct {
 	employees model.EmployeeLedger
 	expenses  model.ExpenseLedger
@@ -47,7 +48,8 @@ type ExpenseReportUploader struct {
 // uploadExpenseReportResponse is a simple container for the response produced by the ExpenseReportUploader,
 // which will be encoded to JSON.
 type uploadExpenseReportResponse struct {
-	Error *string `json:"error"`
+	Error    *string         `json:"error"`
+	Expenses []model.Expense `json:"expense"`
 }
 
 // NewExpenseReportUploader creates a new ExpenseReportUploader with capabilities for storing information
@@ -75,25 +77,31 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	if err := req.ParseMultipartForm(handler.MaxFileSize); err != nil {
 		res.WriteHeader(http.StatusBadRequest)
 		errMsg := err.Error()
+		fmt.Println("ERROR 1:", err)
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: &errMsg,
+			Error:    &errMsg,
+			Expenses: []model.Expense{},
 		})
 		return
 	}
 
 	files, found := req.MultipartForm.File[formKey]
 	if !found || len(files) == 0 {
+		fmt.Println("ERROR 2")
 		res.WriteHeader(http.StatusBadRequest)
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: &errMissingReportField,
+			Error:    &errMissingReportField,
+			Expenses: []model.Expense{},
 		})
 		return
 	}
 	uploadedFile, openErr := files[0].Open()
 	if openErr != nil {
+		fmt.Println("ERROR 3:", openErr)
 		res.WriteHeader(http.StatusInternalServerError)
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: &errUnableToOpenFile,
+			Error:    &errUnableToOpenFile,
+			Expenses: []model.Expense{},
 		})
 		return
 	}
@@ -101,9 +109,11 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	parser := csv.NewReader(uploadedFile)
 	allRecords, parseErr := parser.ReadAll()
 	if parseErr != nil {
+		fmt.Println("ERROR 4:", parseErr)
 		res.WriteHeader(http.StatusBadRequest)
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: &errFailedToParseCSV,
+			Error:    &errFailedToParseCSV,
+			Expenses: []model.Expense{},
 		})
 		return
 	}
@@ -125,13 +135,16 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 		errMsg += err.Error() + "\n"
 	}
 	if len(errMsg) > len("Encountered the following errors:\n") {
+		fmt.Println("ERROR 4:", errMsg)
 		res.WriteHeader(http.StatusInternalServerError)
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: &errMsg,
+			Error:    &errMsg,
+			Expenses: []model.Expense{},
 		})
 	} else {
 		toClient.Encode(uploadExpenseReportResponse{
-			Error: nil,
+			Error:    nil,
+			Expenses: expenses,
 		})
 	}
 }
@@ -139,10 +152,12 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 // extractEntities sifts thorugh the plain string records parsed from an uploaded CSV file and returns any employee
 // and expense data it is able to extract from each record in an array.
 func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, []error) {
-	employees := make([]model.Employee, len(csvRecords))
-	expenses := make([]model.Expense, len(csvRecords))
+	employees := make([]model.Employee, 0)
+	expenses := make([]model.Expense, 0)
 	errors := make([]error, 0)
+	fmt.Println("Calling extractEntities with records\n", csvRecords)
 	for _, record := range csvRecords[1:] {
+		fmt.Println("Parsing record", record)
 		employee, err := extractEmployee(record)
 		if err != nil {
 			errors = append(errors, err)
@@ -151,7 +166,6 @@ func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, 
 		}
 
 		expense, err := extractExpense(record)
-		fmt.Println("record is", record, "Error is", err)
 		if err != nil {
 			errors = append(errors, err)
 		} else {

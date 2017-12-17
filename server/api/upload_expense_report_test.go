@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
 	"time"
 
@@ -125,6 +126,16 @@ func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 				)
 			} else {
 				test.Fatalf("Expected to get an error in response? %v. Got error: nil", testCase.ShouldError)
+			}
+		}
+		if !gotError {
+			expectedExpenses := strings.Count(testCase.CSVString, "\n")
+			test.Logf("Got expenses\n%v\n", responseData.Expenses)
+			if len(responseData.Expenses) != expectedExpenses {
+				test.Errorf("Expected to get %d expenses. Got %d.", expectedExpenses, len(responseData.Expenses))
+			}
+			if responseData.Expenses[0].PreTaxAmount != 350.0 {
+				test.Errorf("Parsing the CSV data seems to have resulted in unexpected values")
 			}
 		}
 	}
