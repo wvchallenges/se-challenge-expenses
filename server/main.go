@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 
+	_ "github.com/mattn/go-sqlite3"
+
 	"github.com/zsck/se-challenge-expenses/server/api"
 	"github.com/zsck/se-challenge-expenses/server/model"
 )
