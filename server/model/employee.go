@@ -37,6 +37,13 @@ type EmployeeLedgerDB struct {
 	db *sql.DB
 }
 
+// NewEmployeeLedgerDB constructs an EmployeeLedgerDB.
+func NewEmployeeLedgerDB(db *sql.DB) EmployeeLedgerDB {
+	return EmployeeLedgerDB{
+		db,
+	}
+}
+
 // Record saves an employee to the ledger's database and updates the employee's ID.
 func (ledger EmployeeLedgerDB) Record(employee *Employee) error {
 	_, err := ledger.db.Exec(

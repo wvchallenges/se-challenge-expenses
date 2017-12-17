@@ -51,6 +51,13 @@ type ExpenseLedgerDB struct {
 	db *sql.DB
 }
 
+// NewExpenseLedgerDB constructs a new ExpenseLedgerDB.
+func NewExpenseLedgerDB(db *sql.DB) ExpenseLedgerDB {
+	return ExpenseLedgerDB{
+		db,
+	}
+}
+
 // Record saves an expense to the ledger's database and updates the expense's ID.
 func (ledger ExpenseLedgerDB) Record(expense *Expense) error {
 	_, err := ledger.db.Exec(
