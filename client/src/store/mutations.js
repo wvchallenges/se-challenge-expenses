@@ -17,3 +17,18 @@
  * ```
  */
 export const RECORD_EXPENSE_REPORT = 'record-expense-report'
+
+/**
+ * error
+ *
+ * This mutation should be committed when an error needs to be communicated to the user.
+ *
+ * # Data
+ *
+ * ```
+ * {
+ *   error: string
+ * }
+ * ```
+ */
+export const ERROR = 'error'

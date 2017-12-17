@@ -1,43 +1,28 @@
 import * as act from '@/store/actions'
 import * as mut from '@/store/mutations'
-
+import { request } from 'request-promise'
 
 /**
  * Send a request to the server to have a CSV file parsed.
  */
-const uploadExpenseReport = ({ commit }, { file }) => {
-  // TODO - Talk to the server.
-  console.log('Uploading file', file.name)
-  commit(mut.RECORD_EXPENSE_REPORT, {
-    expenses: [
-      {
-        date: '12/1/2017',
-        preTaxAmount: 312.32,
-        taxAmount: 31.45,
+const uploadExpenseReport = async ({ commit }, { file }) => {
+  try {
+    const response = await request({
+      url: 'http://127.0.0.1:9001/report',
+      method: 'POST',
+      json: true,
+      formData: {
+        report: file,
       },
-      {
-        date: '12/24/2017',
-        preTaxAmount: 1015.82,
-        taxAmount: 200.0,
-      },
-      {
-        // Careful with the year!
-        date: '12/5/2016',
-        preTaxAmount: 45.62,
-        taxAmount: 5.50,
-      },
-      {
-        date: '2/19/2017',
-        preTaxAmount: 89.10,
-        taxAmount: 10.64,
-      },
-      {
-        date: '2/27/2015',
-        preTaxAmount: 100.0,
-        taxAmount: 12.50,
-      },
-    ],
-  })
+    })
+    if (response.body.error !== null) {
+      commit(mut.ERROR, { error: response.body.error })
+    } else {
+      commit(mut.RECORD_EXPENSE_REPORT, { expenses: response.body.expenses })
+    }
+  } catch (ex) {
+    commit(mut.ERROR, { error: ex.message })
+  }
 }
 
 /**
