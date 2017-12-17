@@ -1,14 +1,25 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
+
+	"github.com/zsck/se-challenge-expenses/server/api"
+	"github.com/zsck/se-challenge-expenses/server/model"
 )
 
-func helloWorld(res http.ResponseWriter, req *http.Request) {
-	res.Write([]byte("Hello, world!"))
-}
+const databaseFile string = "database.db"
 
 func main() {
-	http.HandleFunc("/", helloWorld)
+	db, err := sql.Open("sqlite3", databaseFile)
+	if err != nil {
+		panic(err)
+	}
+
+	employees := model.NewEmployeeLedgerDB(db)
+	expenses := model.NewExpenseLedgerDB(db)
+	uploadHandler := api.NewExpenseReportUploader(employees, expenses)
+
+	http.Handle("/report", uploadHandler)
 	http.ListenAndServe(":9001", nil)
 }
