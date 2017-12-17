@@ -115,12 +115,12 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 
 	employees, expenses, errors := extractEntities(allRecords)
 	for _, employee := range employees {
-		if err := handler.employees.Record(employee); err != nil {
+		if err := handler.employees.Record(&employee); err != nil {
 			errors = append(errors, err)
 		}
 	}
 	for _, expense := range expenses {
-		if err := handler.expenses.Record(expense); err != nil {
+		if err := handler.expenses.Record(&expense); err != nil {
 			errors = append(errors, err)
 		}
 	}

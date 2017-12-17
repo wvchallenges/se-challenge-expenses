@@ -65,12 +65,12 @@ func uploadCSVFile(endpoint *url.URL, csvFileContents []byte) (*http.Response, e
 
 func TestExpenseReportUploaderCSVHandling(test *testing.T) {
 	employeeLedger := model.MockEmployeeLedger{
-		RecordFunc: func(employee model.Employee) error {
+		RecordFunc: func(employee *model.Employee) error {
 			return nil
 		},
 	}
 	expenseLedger := model.MockExpenseLedger{
-		RecordFunc: func(expense model.Expense) error {
+		RecordFunc: func(expense *model.Expense) error {
 			return nil
 		},
 	}
