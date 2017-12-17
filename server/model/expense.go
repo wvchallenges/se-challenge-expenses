@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"time"
 )
 
@@ -18,6 +19,14 @@ const (
 			foreign key (submitted_by) references employees (id)
 		);
 		`
+
+	qInsertExpense string = `
+		insert into expense_reports (
+			submitted_by, date, category, description, pre_tax_amount, tax_name, tax_amount
+		) values (
+			?, ?, ?, ?, ?, ?, ?
+		);
+	`
 )
 
 // Expense contains information about a single expense submitted by an employee.
@@ -35,6 +44,36 @@ type Expense struct {
 // ExpenseLedger is implemented by types capable of recording information about submitted expenses.
 type ExpenseLedger interface {
 	Record(Expense) error
+}
+
+// ExpenseLedgerDB implements ExpenseLedger and stores records in a SQLite database.
+type ExpenseLedgerDB struct {
+	db *sql.DB
+}
+
+// Record saves an expense to the ledger's database and updates the expense's ID.
+func (ledger ExpenseLedgerDB) Record(expense *Expense) error {
+	_, err := ledger.db.Exec(
+		qInsertExpense,
+		expense.SubmittedBy,
+		expense.Date,
+		expense.Category,
+		expense.Description,
+		expense.PreTaxAmount,
+		expense.TaxName,
+		expense.TaxAmount,
+	)
+	if err != nil {
+		return err
+	}
+
+	var id int
+	err = ledger.db.QueryRow(qLastRowID).Scan(&id)
+	if err != nil {
+		return err
+	}
+	expense.ID = Identifier(id)
+	return nil
 }
 
 // MockExpenseLedger provides a simple way to create a mock implementation of ExpenseLedger using
