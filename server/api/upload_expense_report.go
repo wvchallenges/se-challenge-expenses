@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -77,7 +76,6 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	if err := req.ParseMultipartForm(handler.MaxFileSize); err != nil {
 		res.WriteHeader(http.StatusBadRequest)
 		errMsg := err.Error()
-		fmt.Println("ERROR 1:", err)
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    &errMsg,
 			Expenses: []model.Expense{},
@@ -87,7 +85,6 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 
 	files, found := req.MultipartForm.File[formKey]
 	if !found || len(files) == 0 {
-		fmt.Println("ERROR 2")
 		res.WriteHeader(http.StatusBadRequest)
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    &errMissingReportField,
@@ -97,7 +94,6 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	}
 	uploadedFile, openErr := files[0].Open()
 	if openErr != nil {
-		fmt.Println("ERROR 3:", openErr)
 		res.WriteHeader(http.StatusInternalServerError)
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    &errUnableToOpenFile,
@@ -109,7 +105,6 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	parser := csv.NewReader(uploadedFile)
 	allRecords, parseErr := parser.ReadAll()
 	if parseErr != nil {
-		fmt.Println("ERROR 4:", parseErr)
 		res.WriteHeader(http.StatusBadRequest)
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    &errFailedToParseCSV,
@@ -135,7 +130,6 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 		errMsg += err.Error() + "\n"
 	}
 	if len(errMsg) > len("Encountered the following errors:\n") {
-		fmt.Println("ERROR 4:", errMsg)
 		res.WriteHeader(http.StatusInternalServerError)
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    &errMsg,
@@ -155,9 +149,7 @@ func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, 
 	employees := make([]model.Employee, 0)
 	expenses := make([]model.Expense, 0)
 	errors := make([]error, 0)
-	fmt.Println("Calling extractEntities with records\n", csvRecords)
 	for _, record := range csvRecords[1:] {
-		fmt.Println("Parsing record", record)
 		employee, err := extractEmployee(record)
 		if err != nil {
 			errors = append(errors, err)
@@ -178,7 +170,6 @@ func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, 
 func extractEmployee(record []string) (model.Employee, error) {
 	if len(record) < len(csvFileHeaders) {
 		err := errors.New("not enough columns in record")
-		fmt.Println("Returning err", err, err != nil)
 		return model.Employee{}, err
 	}
 	employee := model.Employee{
@@ -199,7 +190,6 @@ func extractExpense(record []string) (model.Expense, error) {
 	day, err2 := strconv.Atoi(strings.TrimSpace(dateParts[1]))
 	year, err3 := strconv.Atoi(strings.TrimSpace(dateParts[2]))
 	if err1 != nil || err2 != nil || err3 != nil {
-		fmt.Println(err1, err2, err3)
 		return model.Expense{}, errors.New("invalid date format")
 	}
 
