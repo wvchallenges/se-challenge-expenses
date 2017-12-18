@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -27,5 +28,7 @@ func main() {
 	uploadHandler := api.NewExpenseReportUploader(employees, expenses)
 
 	http.Handle("/report", uploadHandler)
+
+	fmt.Println("Listening on 127.0.0.1:9001")
 	http.ListenAndServe(":9001", nil)
 }

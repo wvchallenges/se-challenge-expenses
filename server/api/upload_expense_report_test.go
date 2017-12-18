@@ -3,7 +3,6 @@ package api
 import (
 	"bytes"
 	"encoding/json"
-	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -43,22 +42,11 @@ const (
 )
 
 func uploadCSVFile(endpoint *url.URL, csvFileContents []byte) (*http.Response, error) {
-	var buffer bytes.Buffer
-	writer := multipart.NewWriter(&buffer)
-	fileWriter, err := writer.CreateFormFile("report", "report.csv")
+	request, err := http.NewRequest("POST", endpoint.String(), bytes.NewReader(csvFileContents))
 	if err != nil {
 		return nil, err
 	}
-	_, err = fileWriter.Write(csvFileContents)
-	if err != nil {
-		return nil, err
-	}
-	writer.Close()
-	request, err := http.NewRequest("POST", endpoint.String(), &buffer)
-	if err != nil {
-		return nil, err
-	}
-	request.Header.Set("Content-Type", writer.FormDataContentType())
+	request.Header.Set("Content-Type", "text/csv")
 	client := &http.Client{}
 	return client.Do(request)
 }

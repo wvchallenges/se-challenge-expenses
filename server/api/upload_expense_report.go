@@ -66,43 +66,13 @@ func NewExpenseReportUploader(employees model.EmployeeLedger, expenses model.Exp
 // CSV files are expected to have the following headers:
 // date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
 func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	errMissingReportField := "request must contain a `report` field whose value is a CSV file"
-	errUnableToOpenFile := "server unable to open uploaded file"
 	errFailedToParseCSV := "failed to parse the contents of the submitted CSV file"
 
 	res.Header().Set("Content-Type", "application/json")
 	toClient := json.NewEncoder(res)
 
-	if err := req.ParseMultipartForm(handler.MaxFileSize); err != nil {
-		res.WriteHeader(http.StatusBadRequest)
-		errMsg := err.Error()
-		toClient.Encode(uploadExpenseReportResponse{
-			Error:    &errMsg,
-			Expenses: []model.Expense{},
-		})
-		return
-	}
-
-	files, found := req.MultipartForm.File[formKey]
-	if !found || len(files) == 0 {
-		res.WriteHeader(http.StatusBadRequest)
-		toClient.Encode(uploadExpenseReportResponse{
-			Error:    &errMissingReportField,
-			Expenses: []model.Expense{},
-		})
-		return
-	}
-	uploadedFile, openErr := files[0].Open()
-	if openErr != nil {
-		res.WriteHeader(http.StatusInternalServerError)
-		toClient.Encode(uploadExpenseReportResponse{
-			Error:    &errUnableToOpenFile,
-			Expenses: []model.Expense{},
-		})
-		return
-	}
-
-	parser := csv.NewReader(uploadedFile)
+	parser := csv.NewReader(req.Body)
+	defer req.Body.Close()
 	allRecords, parseErr := parser.ReadAll()
 	if parseErr != nil {
 		res.WriteHeader(http.StatusBadRequest)
