@@ -8,22 +8,23 @@ import request from 'request-promise'
 const uploadExpenseReport = ({ commit }, { file }) => {
   const reader = new FileReader()
   reader.onload = (event) => {
+    console.log('Making request with data', event.target.result, '\ntype', typeof event.target.result)
     request({
       url: 'http://127.0.0.1:9001/report',
       method: 'POST',
-      headers: {
-        'content-type': 'text/csv',
-      },
       body: event.target.result,
     })
     .then((response) => {
-      if (response.body.error !== null) {
-        commit(mut.ERROR, { error: response.body.error })
+      const body = typeof response === 'string' ? JSON.parse(response) : response
+      console.log('Got a response', body)
+      if (body.error !== null) {
+        commit(mut.ERROR, { error: body.error })
       } else {
-        commit(mut.RECORD_EXPENSE_REPORT, { expenses: response.body.expenses })
+        commit(mut.RECORD_EXPENSE_REPORT, { expenses: body.expenses })
       }
     })
     .catch((ex) => {
+      console.log('Got an error: ', ex)
       commit(mut.ERROR, { error: ex.message })
     })
   }

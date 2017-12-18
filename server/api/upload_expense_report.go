@@ -1,9 +1,12 @@
 package api
 
 import (
+	"bytes"
 	"encoding/csv"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -48,7 +51,7 @@ type ExpenseReportUploader struct {
 // which will be encoded to JSON.
 type uploadExpenseReportResponse struct {
 	Error    *string         `json:"error"`
-	Expenses []model.Expense `json:"expense"`
+	Expenses []model.Expense `json:"expenses"`
 }
 
 // NewExpenseReportUploader creates a new ExpenseReportUploader with capabilities for storing information
@@ -69,11 +72,24 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	errFailedToParseCSV := "failed to parse the contents of the submitted CSV file"
 
 	res.Header().Set("Content-Type", "application/json")
+	res.Header().Set("Access-Control-Allow-Origin", "*")
 	toClient := json.NewEncoder(res)
 
-	parser := csv.NewReader(req.Body)
+	fileContents, readErr := ioutil.ReadAll(req.Body)
+	fmt.Println("Read CSV file\n", string(fileContents))
+	if readErr != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error:    &errFailedToParseCSV,
+			Expenses: []model.Expense{},
+		})
+		return
+	}
 	defer req.Body.Close()
+
+	parser := csv.NewReader(bytes.NewReader(fileContents))
 	allRecords, parseErr := parser.ReadAll()
+	fmt.Println("Parsed CSV and got error", parseErr, "and records\n", allRecords)
 	if parseErr != nil {
 		res.WriteHeader(http.StatusBadRequest)
 		toClient.Encode(uploadExpenseReportResponse{
@@ -84,13 +100,17 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 	}
 
 	employees, expenses, errors := extractEntities(allRecords)
+	fmt.Printf("Got %d employees, %d expenses, and %d errors\n", len(employees), len(expenses), len(errors))
+
 	for _, employee := range employees {
 		if err := handler.employees.Record(&employee); err != nil {
+			fmt.Println("error saving employee: ", err.Error())
 			errors = append(errors, err)
 		}
 	}
 	for _, expense := range expenses {
 		if err := handler.expenses.Record(&expense); err != nil {
+			fmt.Println("error saving expense: ", err.Error())
 			errors = append(errors, err)
 		}
 	}
@@ -106,6 +126,7 @@ func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *htt
 			Expenses: []model.Expense{},
 		})
 	} else {
+		fmt.Println("writing success!")
 		toClient.Encode(uploadExpenseReportResponse{
 			Error:    nil,
 			Expenses: expenses,
@@ -119,6 +140,12 @@ func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, 
 	employees := make([]model.Employee, 0)
 	expenses := make([]model.Expense, 0)
 	errors := make([]error, 0)
+
+	if len(csvRecords) <= 1 {
+		errors = append(errors, fmt.Errorf("not enough rows in CSV file"))
+		return employees, expenses, errors
+	}
+
 	for _, record := range csvRecords[1:] {
 		employee, err := extractEmployee(record)
 		if err != nil {
