@@ -37,6 +37,7 @@ const uploadExpenseReport = ({ commit }, { file }) => {
  * by the server.
  */
 const recordExpenseReport = (state, { expenses }) => {
+  console.log('Recording expenses', expenses)
   state.expenses.expenses = expenses
 }
 

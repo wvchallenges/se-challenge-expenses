@@ -25,41 +25,23 @@ import { mapState } from 'vuex'
 const init = {}
 
 /**
- * Compute the month recorded in a date stored as a string formatted like 'mm/dd/yyyy'.
+ * Given an array of values and a function that transforms any given value into some form that can be compared
+ * for equality, computes a sub-array of `values` with only unique values.
  *
- * # Example
+ * This function runs in linear- i.e. O(N)- time, where N is the length of the array of values.
  *
- * ```
- * month('12/20/2017') === 12
- * ```
- */
-const month = dateString => parseInt(dateString.split('/')[0], 10)
-
-/**
- * Compute the year recorded in a date stored as a string formatted like 'mm/dd/yyyy'.
- *
- * # Example
+ * # Examples
  *
  * ```
- * year('12/20/2017') === 2017
+ * unique([1,2,3,1,3,2], x => x) === [1,2,3]
  * ```
- */
-const year = dateString => parseInt(dateString.split('/')[2], 10)
-
-/**
- * Compares two dates for the purposes of sorting them in descending order such that dates farther in
- * the future appear before those farther into the past.
- */
-const compareDates = (dateStr1, dateStr2) => {
-  const d1 = dateStr1.split('/').reverse().map(value => parseInt(value, 10))
-  const d2 = dateStr2.split('/').reverse().map(value => parseInt(value, 10))
-  const maxIndex = Math.max(d1.length, d2.length)
-  for (let index = 0; index < maxIndex; index++) {
-    if (d1[index] < d2[index]) {
-      return true
-    }
+*/
+const unique = (values, identity) => {
+  let recorded = {}
+  for (const value of values) {
+    recorded[identity(value)] = value
   }
-  return false
+  return Object.values(recorded)
 }
 
 /**
@@ -90,28 +72,30 @@ const formatDollarValue = dollarValue => {
  * ```
  */
 const rows = ({ expenses: { expenses } }) => {
-  const dates = expenses.map(({ date }) => {
-    const [mm, yyyy] = [month(date), year(date)]
-    return `${mm}/${yyyy}`
-  })
-  const uniqueDates = Array.from(new Set(dates))
+  const dates = expenses.map(({ date }) => new Date(date))
+  const uniqueDates = unique(dates, date => `${date.getUTCMonth() + 1}/${date.getFullYear()}`)
   let records = []
 
+  console.log('Rows function got uniqueDates', uniqueDates)
   for (const date of uniqueDates) {
     const expensesForMonth = expenses.filter(expense => {
-      const expenseDate = `${month(expense.date)}/${year(expense.date)}`
-      return date === expenseDate
+      const expDate = new Date(expense.date)
+      const yearsEqual = expDate.getFullYear() === date.getFullYear()
+      const monthsEqual = expDate.getUTCMonth() === date.getUTCMonth()
+      return yearsEqual && monthsEqual
     })
+    console.log('Inspecting ', expensesForMonth.length, 'expenses')
     const totalExpenses = expensesForMonth.reduce((total, { preTaxAmount, taxAmount }) => {
       return total + preTaxAmount + taxAmount
     }, 0)
+    console.log('Computed sum', totalExpenses, 'for ', date)
     records.push({
       date,
       totalExpenses: formatDollarValue(totalExpenses),
     })
   }
 
-  return records.sort((r1, r2) => compareDates(r1.date, r2.date))
+  return records.sort()
 }
 
 export default {
