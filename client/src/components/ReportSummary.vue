@@ -49,13 +49,9 @@ const unique = (values, identity) => {
  */
 const formatDollarValue = dollarValue => {
   const twoDecimalPlaces = Math.round(dollarValue * 100) / 100.0
-  let [dollars, cents] = `${twoDecimalPlaces}`.split('.')
-  if (typeof cents === 'undefined') {
-    cents = '00'
-  } else {
-    cents = cents.padStart(2, '0')
-  }
-  return `$${dollars}.${cents}`
+  const [dollars, cents] = `${twoDecimalPlaces}`.split('.')
+  const fmtCents = cents === undefined ? '00' : cents.padStart(2, '0')
+  return `$${dollars}.${fmtCents}`
 }
 
 /**
@@ -76,7 +72,6 @@ const rows = ({ expenses: { expenses } }) => {
   const uniqueDates = unique(dates, date => `${date.getUTCMonth() + 1}/${date.getFullYear()}`)
   let records = []
 
-  console.log('Rows function got uniqueDates', uniqueDates)
   for (const date of uniqueDates) {
     const expensesForMonth = expenses.filter(expense => {
       const expDate = new Date(expense.date)
@@ -84,18 +79,17 @@ const rows = ({ expenses: { expenses } }) => {
       const monthsEqual = expDate.getUTCMonth() === date.getUTCMonth()
       return yearsEqual && monthsEqual
     })
-    console.log('Inspecting ', expensesForMonth.length, 'expenses')
     const totalExpenses = expensesForMonth.reduce((total, { preTaxAmount, taxAmount }) => {
       return total + preTaxAmount + taxAmount
     }, 0)
-    console.log('Computed sum', totalExpenses, 'for ', date)
+
     records.push({
       date,
       totalExpenses: formatDollarValue(totalExpenses),
     })
   }
 
-  return records.sort()
+  return records.sort((r1, r2) => r1.date < r2.date)
 }
 
 export default {
