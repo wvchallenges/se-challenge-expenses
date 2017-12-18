@@ -1,28 +1,33 @@
 import * as act from '@/store/actions'
 import * as mut from '@/store/mutations'
-import { request } from 'request-promise'
+import request from 'request-promise'
 
 /**
  * Send a request to the server to have a CSV file parsed.
  */
-const uploadExpenseReport = async ({ commit }, { file }) => {
-  try {
-    const response = await request({
+const uploadExpenseReport = ({ commit }, { file }) => {
+  const reader = new FileReader()
+  reader.onload = (event) => {
+    request({
       url: 'http://127.0.0.1:9001/report',
       method: 'POST',
-      json: true,
-      formData: {
-        report: file,
+      headers: {
+        'content-type': 'text/csv',
       },
+      body: event.target.result,
     })
-    if (response.body.error !== null) {
-      commit(mut.ERROR, { error: response.body.error })
-    } else {
-      commit(mut.RECORD_EXPENSE_REPORT, { expenses: response.body.expenses })
-    }
-  } catch (ex) {
-    commit(mut.ERROR, { error: ex.message })
+    .then((response) => {
+      if (response.body.error !== null) {
+        commit(mut.ERROR, { error: response.body.error })
+      } else {
+        commit(mut.RECORD_EXPENSE_REPORT, { expenses: response.body.expenses })
+      }
+    })
+    .catch((ex) => {
+      commit(mut.ERROR, { error: ex.message })
+    })
   }
+  reader.readAsText(file)
 }
 
 /**

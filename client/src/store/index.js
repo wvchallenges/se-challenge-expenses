@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import errors from '@/store/errors'
 import expenses from '@/store/expenses'
 
 
@@ -13,14 +14,17 @@ Vue.use(Vuex)
  */
 const state = {
   expenses: expenses.state,
+  errors: errors.state,
 }
 
 const actions = {
   ...expenses.actions,
+  ...errors.actions,
 }
 
 const mutations = {
   ...expenses.mutations,
+  ...errors.mutations,
 }
 
 export default new Vuex.Store({
