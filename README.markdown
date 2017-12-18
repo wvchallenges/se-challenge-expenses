@@ -1,59 +1,78 @@
 # Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+This application features a frontend (client) and a backend (server) component.
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+## Frontend
 
-Please use whatever programming language and framework you feel the most comfortable with.
+**Technologies**: JavaScript, Vue.js.
 
-Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+The frontend component is responsible for:
 
-## Project Description
-Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
+1. Accepting CSV files containing employee expense reports from the user,
+2. Uploading said files to the server for processing and storage, and
+3. Displaying a summary of the data parsed by the server.
 
-### What your web-based application must do:
+## Backend
 
-1. Your app must accept (via a form) a comma separated file with the following columns: date, category, employee name, employee address, expense description, pre-tax amount, tax name, and tax amount.
-1. You can make the following assumptions:
- 1. Columns will always be in that order.
- 2. There will always be data in each column.
- 3. There will always be a header line.
+**Technologies**: Go, SQLite
 
- An example input file named `data_example.csv` is included in this repo.
+The backend component is responsible for:
 
-1. Your app must parse the given file, and store the information in a relational database.
-1. After upload, your application should display a table of the total expenses amount per-month represented by the uploaded file.
+1. Handling and parsing the contents of files uploaded containing CSV data,
+2. Parsing said CSV data and extracting information about employees and expenses,
+3. Storing information about employees and expenses in a relational database, and
+4. Writing information about the expenses parsed from the CSV file to the client.
 
-Your application should be easy to set up, and should run on either Linux or Mac OS X. It should not require any non open-source software.
+## Setup
 
-There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
+### Install the required tools
 
-### Documentation:
+1. Install the [Go compiler and developer tools](https://golang.org/dl/).
+2. Install the [LTS version of Node.js](https://nodejs.org/en/).
+3. Install [SQLite 3](https://www.sqlite.org/)- you may wish to use your OS' package manager here.
+4. Clone this repository.
 
-Please modify `README.md` to add:
+### Preparing and running the client
 
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+Assuming you have cloned this project to `se-challenge-expenses`:
 
-## Submission Instructions
+```bash
+cd se-challenge-expenses/client
+npm install
+npm run dev
+```
 
-1. Fork this project on github. You will need to create an account if you don't already have one.
-1. Complete the project as described below within your fork.
-1. Push all of your changes to your fork on github and submit a pull request. 
-1. You should also email [dev.careers@waveapps.com](dev.careers@waveapps.com) and your recruiter to let them know you have submitted a solution. Make sure to include your github username in your email (so we can match applicants with pull requests.)
+If these steps succeeded, you should be able to navigate to `127.0.0.1:8080` in your web browser
+and start interacting with the frontend.
 
-## Alternate Submission Instructions (if you don't want to publicize completing the challenge)
-1. Clone the repository.
-1. Complete your project as described below within your local repository.
-1. Email a patch file to [dev.careers@waveapps.com](dev.careers@waveapps.com)
+### Preparing and running the server
 
-## Evaluation
-Evaluation of your submission will be based on the following criteria. 
+Assuming you have cloned this project to `se-challenge-expenses`:
 
-1. Did you follow the instructions for submission? 
-1. Did you document your build/deploy instructions and your explanation of what you did well?
-1. Were models/entities and other components easily identifiable to the reviewer? 
-1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
-1. Did you separate any concerns in your application? Why or why not?
-1. Does your solution use appropriate datatypes for the problem as described? 
+```bash
+cd se-challenge-expense/server
+go get github.com/mattn/go-sqlite3
+go build
+./server
+```
+
+If these stetps succeeded, you should see some output in your terminal indicating that the server
+is listening on `127.0.0.1:9001`.
+
+## Highlights
+
+The server component of this project has been designed in such a way that adding new functionality can
+be done in a way very similar to how the existing functionality has been positioned.  By abstracting
+functionality related to database operations into interfaces that are not coupled to any particular
+implementation strategy, it is possible to add more functionality by first defining new interfaces
+followed by any number of implementations thereof.  This approach also lends itself very well to
+testing, as mock implementations for each interface can be produced easily, allowing us to simulate
+different scenarios within our mocks and not necessarily have to deal with an actual database in our
+unit tests.
+
+While not particularly my area of expertise, I am also rather proud of the simple, functional approach
+that I was able to take to building components for the frontend.  Considering, for example, the
+`ReportSummary` component, we can see that the functionality supported by this component is
+implemented using simple, pure functions. This approach lends itself very well to code reuse and,
+again, testing, as pure functions can be tested without any concern for side-effects such as database
+interactions.
