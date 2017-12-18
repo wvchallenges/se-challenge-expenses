@@ -20,6 +20,7 @@ const uploadExpenseReport = ({ commit }, { file }) => {
       if (body.error !== null) {
         commit(mut.ERROR, { error: body.error })
       } else {
+        console.log('Dates', body.expenses.map(({ date }) => date))
         commit(mut.RECORD_EXPENSE_REPORT, { expenses: body.expenses })
       }
     })
