@@ -1,0 +1,24 @@
+{
+  "name": "se-challenge-expenses",
+  "version": "1.0.0",
+  "description": "Code challenge for Wave",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johndrwood/se-challenge-expenses.git"
+  },
+  "author": "John Wood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johndrwood/se-challenge-expenses/issues"
+  },
+  "homepage": "https://github.com/johndrwood/se-challenge-expenses#readme",
+  "devDependencies": {
+    "csvtojson": "^1.1.9",
+    "multer": "^1.3.0",
+    "nodemon": "^1.14.11"
+  }
+}
