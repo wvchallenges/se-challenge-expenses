@@ -1,0 +1,220 @@
+package api
+
+import (
+	"bytes"
+	"encoding/csv"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/zsck/se-challenge-expenses/server/model"
+)
+
+const defaultFileSize int64 = 1024 * 1024 // 1MB
+
+// The name of the key in the request form that should contain the uploaded CSV file.
+const formKey string = "report"
+
+var csvFileHeaders = []string{
+	"date",
+	"category",
+	"employee name",
+	"employee address",
+	"expense description",
+	"pre-tax amount",
+	"tax name",
+	"tax amount",
+}
+
+// ExpenseReportUploader is an HTTP request handler that will:
+//
+// 1. Read a file being uploaded in received requests.
+// 2. Attempt to parse the file as a CSV file containing information about employee expenses.
+// 3. Store information about employees.
+// 4. Store information about expenses.
+// 5. Write back a list of the expenses parsed from the CSV.
+type ExpenseReportUploader struct {
+	employees model.EmployeeLedger
+	expenses  model.ExpenseLedger
+
+	// MaxFileSize is the maximum number of bytes of memory to store uploaded files in.
+	// As per the Golang documentation, files exceeding this size will be partially stored on disk.
+	MaxFileSize int64
+}
+
+// uploadExpenseReportResponse is a simple container for the response produced by the ExpenseReportUploader,
+// which will be encoded to JSON.
+type uploadExpenseReportResponse struct {
+	Error    *string         `json:"error"`
+	Expenses []model.Expense `json:"expenses"`
+}
+
+// NewExpenseReportUploader creates a new ExpenseReportUploader with capabilities for storing information
+// about employees and expenses submitted by employees.
+func NewExpenseReportUploader(employees model.EmployeeLedger, expenses model.ExpenseLedger) ExpenseReportUploader {
+	return ExpenseReportUploader{
+		employees,
+		expenses,
+		defaultFileSize,
+	}
+}
+
+// ServeHTTP handles file uploads containing CSV files with employee and expense data in them.
+//
+// CSV files are expected to have the following headers:
+// date,category,employee name,employee address,expense description,pre-tax amount,tax name,tax amount
+func (handler ExpenseReportUploader) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	errFailedToParseCSV := "failed to parse the contents of the submitted CSV file"
+
+	res.Header().Set("Content-Type", "application/json")
+	res.Header().Set("Access-Control-Allow-Origin", "*")
+	toClient := json.NewEncoder(res)
+
+	fileContents, readErr := ioutil.ReadAll(req.Body)
+	fmt.Println("Read CSV file\n", string(fileContents))
+	if readErr != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error:    &errFailedToParseCSV,
+			Expenses: []model.Expense{},
+		})
+		return
+	}
+	defer req.Body.Close()
+
+	parser := csv.NewReader(bytes.NewReader(fileContents))
+	allRecords, parseErr := parser.ReadAll()
+	fmt.Println("Parsed CSV and got error", parseErr, "and records\n", allRecords)
+	if parseErr != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error:    &errFailedToParseCSV,
+			Expenses: []model.Expense{},
+		})
+		return
+	}
+
+	employees, expenses, errors := extractEntities(allRecords)
+	fmt.Printf("Got %d employees, %d expenses, and %d errors\n", len(employees), len(expenses), len(errors))
+
+	for _, employee := range employees {
+		if err := handler.employees.Record(&employee); err != nil {
+			fmt.Println("error saving employee: ", err.Error())
+			errors = append(errors, err)
+		}
+	}
+	for _, expense := range expenses {
+		if err := handler.expenses.Record(&expense); err != nil {
+			fmt.Println("error saving expense: ", err.Error())
+			errors = append(errors, err)
+		}
+	}
+
+	errMsg := "Encountered the following errors:\n"
+	for _, err := range errors {
+		errMsg += err.Error() + "\n"
+	}
+	if len(errMsg) > len("Encountered the following errors:\n") {
+		res.WriteHeader(http.StatusInternalServerError)
+		toClient.Encode(uploadExpenseReportResponse{
+			Error:    &errMsg,
+			Expenses: []model.Expense{},
+		})
+	} else {
+		fmt.Println("writing success!")
+		toClient.Encode(uploadExpenseReportResponse{
+			Error:    nil,
+			Expenses: expenses,
+		})
+	}
+}
+
+// extractEntities sifts thorugh the plain string records parsed from an uploaded CSV file and returns any employee
+// and expense data it is able to extract from each record in an array.
+func extractEntities(csvRecords [][]string) ([]model.Employee, []model.Expense, []error) {
+	employees := make([]model.Employee, 0)
+	expenses := make([]model.Expense, 0)
+	errors := make([]error, 0)
+
+	if len(csvRecords) <= 1 {
+		errors = append(errors, fmt.Errorf("not enough rows in CSV file"))
+		return employees, expenses, errors
+	}
+
+	for _, record := range csvRecords[1:] {
+		employee, err := extractEmployee(record)
+		if err != nil {
+			errors = append(errors, err)
+		} else {
+			employees = append(employees, employee)
+		}
+
+		expense, err := extractExpense(record)
+		if err != nil {
+			errors = append(errors, err)
+		} else {
+			expenses = append(expenses, expense)
+		}
+	}
+	return employees, expenses, errors
+}
+
+func extractEmployee(record []string) (model.Employee, error) {
+	if len(record) < len(csvFileHeaders) {
+		err := errors.New("not enough columns in record")
+		return model.Employee{}, err
+	}
+	employee := model.Employee{
+		ID:      0,
+		Name:    record[2],
+		Address: record[3],
+	}
+	return employee, nil
+}
+
+func extractExpense(record []string) (model.Expense, error) {
+	// Parse the date.
+	dateParts := strings.Split(record[0], "/")
+	if len(dateParts) != 3 {
+		return model.Expense{}, errors.New("invalid date format")
+	}
+	month, err1 := strconv.Atoi(strings.TrimSpace(dateParts[0]))
+	day, err2 := strconv.Atoi(strings.TrimSpace(dateParts[1]))
+	year, err3 := strconv.Atoi(strings.TrimSpace(dateParts[2]))
+	if err1 != nil || err2 != nil || err3 != nil {
+		return model.Expense{}, errors.New("invalid date format")
+	}
+
+	// Parse the pre- and tax amounts.
+	if len(record) < len(csvFileHeaders) {
+		return model.Expense{}, errors.New("not enough columns in record")
+	}
+	preTaxStr := strings.TrimSpace(strings.Replace(record[5], ",", "", -1))
+	preTaxAmount, parseErr := strconv.ParseFloat(preTaxStr, 64)
+	if parseErr != nil {
+		return model.Expense{}, parseErr
+	}
+	taxStr := strings.TrimSpace(strings.Replace(record[7], ",", "", -1))
+	taxAmount, parseErr := strconv.ParseFloat(taxStr, 64)
+	if parseErr != nil {
+		return model.Expense{}, parseErr
+	}
+
+	utc, _ := time.LoadLocation("UTC")
+	expense := model.Expense{
+		ID:           0,
+		SubmittedBy:  0,
+		Date:         time.Date(year, time.Month(month), day, 0, 0, 0, 0, utc),
+		Category:     record[1],
+		Description:  record[4],
+		PreTaxAmount: preTaxAmount,
+		TaxName:      record[6],
+		TaxAmount:    taxAmount,
+	}
+	return expense, nil
+}
