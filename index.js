@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const csv=require('csvtojson');
+const sqlite3 = require('sqlite3');
 
 var storage = multer.memoryStorage()
 const upload = multer({
@@ -8,6 +9,29 @@ const upload = multer({
   storage: storage,
   inMemory: true
 }); 
+
+// open database in memory
+var db = new sqlite3.Database('sample.db', (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the in-memory SQlite database.');
+});
+   
+db.run('CREATE TABLE expenses(name text)', [], function(err) {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Table created');
+});
+
+// close the database connection
+db.close((err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Close the database connection.');
+});
 
 const app = express();
 
