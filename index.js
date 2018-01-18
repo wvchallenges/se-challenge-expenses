@@ -43,60 +43,60 @@ var thing = function(result) {
             tax_name,
             tax_amount
         ) VALUES (
-            1,
-            "a",
-            "b",
-            "c",
-            "d",
-            1.0,
-            "e",
-            2.0
+            ?, ?, ?, ?, ?, ?, ?, ?
         )`;
 
     var getIt =
         `SELECT
             date,
-            category,
-            employee_name,
-            employee_address,
-            expense_description,
-            pre_tax_amount,
-            tax_name,
             tax_amount
         FROM
-            expenses`;
-    
-    /*db.run(stuff, [], function(err) {
+            expenses
+        ORDER BY
+            expense_id DESC
+        LIMIT
+            ${result.length}`;
+
+    // Queries scheduled here will be serialized.
+    db.run(stuff,[], function(err) {
         if (err) {
             return console.error(err.message);
         }
         console.log('Table created');
-    });*/
+    });
 
-    db.serialize(() => {
-        // Queries scheduled here will be serialized.
-        db.run(stuff,[], function(err) {
+    result.forEach((row) => {
+        db.run(other, row, function(err) {
             if (err) {
-                return console.error(err.message);
-            }
-            console.log('Table created');
-        })
-        .run(other, [], function(err) {
-            if (err) {
-              return console.log(err.message);
+                return console.log(err.message);
             }
             // get the last insert id
             console.log(`A row has been inserted with rowid ${this.lastID}`);
-        })
-        .all(getIt, [], function(err, rows) {
-            if (err) {
-                throw err;
-            }
-            rows.forEach((row) => {
-                console.log(row.tax_amount);
-              });
-        })
+        });
+
     });
+    
+var output = [];
+    db.all(getIt, [], function(err, rows) {
+        if (err) {
+            throw err;
+        }
+        rows.forEach((row) => {
+            row.date = new Date(row.date);
+            output.push(row);
+        });
+        output.sort(function(a, b) {
+            return a.date - b.date;
+        });
+
+        output.forEach(function() {
+
+        });
+    console.log(output);
+        
+    });
+
+
 
     // close the database connection
     db.close((err) => {
@@ -106,7 +106,7 @@ var thing = function(result) {
         console.log('Close the database connection.');
     });
 }
-thing();
+
 const app = express();
 
 app.get('/', (req, res) => {
@@ -125,22 +125,6 @@ app.post('/', upload.single('upload-file'), (req, res) => {
         thing(result);
         res.send(result);
     }); 
-    /*, function(err,result) {
-        if(err)return res.send("ERR")
-        res.send(result);
-    }); */
-
-/*.on('csv', (row)=> {
-        console.log(row);
-    })
-    .on('done', (err,result)=> {
-        if(err)return res.send("ERR")
-        console.log(result);
-        
-        res.send(result);
-    }); 
-*/
-
 });
 
 app.listen(3000);
