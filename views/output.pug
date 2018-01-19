@@ -1,0 +1,10 @@
+html
+    body
+        table
+            tr
+                th Month
+                th Total Expenses
+            each row in data
+                tr
+                    td= row.date
+                    td= row.pre_tax_amount

@@ -10,6 +10,20 @@ const upload = multer({
   inMemory: true
 }); 
 
+var month = new Array();
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+
 var thing = function(result, res) {
     // open database in memory
     var db = new sqlite3.Database('expenses.db', (err) => {
@@ -49,7 +63,7 @@ var thing = function(result, res) {
     var getIt =
         `SELECT
             date,
-            tax_amount
+            pre_tax_amount
         FROM
             expenses
         ORDER BY
@@ -83,6 +97,7 @@ var output = [];
         }
         rows.forEach((row) => {
             row.date = new Date(row.date);
+            row.pre_tax_amount = parseFloat(row.pre_tax_amount.toString().replace(/,/g, ''));
             output.push(row);
         });
         output.sort(function(a, b) {
@@ -94,14 +109,16 @@ out.push(output.shift());
 var thing = 0;
 output.forEach(function(row, index) {
     if (row.date.getMonth() === out[thing].date.getMonth() && row.date.getYear() === out[thing].date.getYear()) {
-        out[thing].tax_amount += row.tax_amount;
+        out[thing].pre_tax_amount += row.pre_tax_amount;
     } else {
+        out[thing].date = month[out[thing].date.getMonth()] + ' ' + out[thing].date.getFullYear();
         thing++;
         out.push(row);
     }
 })
+out[thing].date = month[out[thing].date.getMonth()] + ' ' + out[thing].date.getFullYear();
 
-res.send(out);
+res.render('output', {data: out});
         
     });
 
@@ -117,9 +134,10 @@ res.send(out);
 }
 
 const app = express();
-
+app.engine('pug', require('pug').__express);
+//app.set('views', '/Users/johwood/Sites/se-challenge-expenses/views');
+app.set('view engine', 'pug');
 app.get('/', (req, res) => {
-console.log(req);
   res.sendFile(__dirname + '/index.html');
 });
 
