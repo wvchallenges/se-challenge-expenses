@@ -10,7 +10,7 @@ const upload = multer({
   inMemory: true
 }); 
 
-var thing = function(result) {
+var thing = function(result, res) {
     // open database in memory
     var db = new sqlite3.Database('expenses.db', (err) => {
         if (err) {
@@ -89,10 +89,19 @@ var output = [];
             return a.date - b.date;
         });
 
-        output.forEach(function() {
+        var out = [];
+out.push(output.shift());
+var thing = 0;
+output.forEach(function(row, index) {
+    if (row.date.getMonth() === out[thing].date.getMonth() && row.date.getYear() === out[thing].date.getYear()) {
+        out[thing].tax_amount += row.tax_amount;
+    } else {
+        thing++;
+        out.push(row);
+    }
+})
 
-        });
-    console.log(output);
+res.send(out);
         
     });
 
@@ -110,6 +119,7 @@ var output = [];
 const app = express();
 
 app.get('/', (req, res) => {
+console.log(req);
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -122,8 +132,8 @@ app.post('/', upload.single('upload-file'), (req, res) => {
     })
     .on('done', (err)=> {
         if (err) return res.send("ERR");
-        thing(result);
-        res.send(result);
+        thing(result, res);
+
     }); 
 });
 
