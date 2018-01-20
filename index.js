@@ -49,10 +49,10 @@ const app = express();
 app.engine('pug', require('pug').__express);
 app.set('view engine', 'pug');
 
-var processData = function(csvData, res) {
+let processData = (csvData, res) => {
 
     // Connect to or create database
-    var db = new sqlite3.Database('expenses.db', (error) => {
+    let db = new sqlite3.Database('expenses.db', (error) => {
         if (error) {
             return console.error(error.message);
         }
@@ -78,7 +78,7 @@ var processData = function(csvData, res) {
         });
     
         // Query the data back from the database, retreiving only the same number of rows as what inserted
-        db.all(selectQuery + csvData.length, [], function(error, dataRows) {
+        db.all(selectQuery + csvData.length, [], (error, dataRows) => {
             if (error) {
                 return console.log(error.message);
             }
@@ -98,7 +98,7 @@ var processData = function(csvData, res) {
 
             // Create output array and push in first entry of formatted data
             let outputData = [];
-            var outputIndex = 0;
+            let outputIndex = 0;
             outputData.push(formattedData.shift());
             
             // Iterate through remaining rows:
@@ -108,12 +108,18 @@ var processData = function(csvData, res) {
                 if (row.date.getMonth() === outputData[outputIndex].date.getMonth() && row.date.getYear() === outputData[outputIndex].date.getYear()) {
                     outputData[outputIndex].pre_tax_amount += row.pre_tax_amount;
                 } else {
-                    outputData[outputIndex].date = month[outputData[outputIndex].date.getMonth()] + ' ' + outputData[outputIndex].date.getFullYear();
                     outputIndex++;
                     outputData.push(row);
                 }
-            })
-            outputData[outputIndex].date = month[outputData[outputIndex].date.getMonth()] + ' ' + outputData[outputIndex].date.getFullYear();
+            });
+
+            // Format output to be reader friendly
+            outputData = outputData.map((entry) => {
+                return {
+                    date: month[entry.date.getMonth()] + ' ' + entry.date.getFullYear(),
+                    pre_tax_amount: "$" + entry.pre_tax_amount
+                };
+            });
 
             // Render output
             res.render('output', {data: outputData});
@@ -129,21 +135,25 @@ var processData = function(csvData, res) {
     });
 }
 
+// Render file upload form on initial page load
 app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Receive the uploaded file and parse csv data into an array
 app.post('/', upload.single('upload-file'), (req, res) => {
-    var csvString = req.file.buffer.toString();
-    var csvData = [];
-    csv({noheader:false}).fromString(csvString)
-    .on('csv', (row)=> {
-        csvData.push(row);
-    })
-    .on('done', (err)=> {
-        if (err) return res.send("ERR");
-        processData(csvData, res);
-    }); 
+    if (req.file) {
+        let csvString = req.file.buffer.toString();
+        let csvData = [];
+        csv({noheader:false}).fromString(csvString)
+        .on('csv', (row)=> {
+            csvData.push(row);
+        })
+        .on('done', (err)=> {
+            if (err) return res.send("ERR");
+            processData(csvData, res);
+        });
+    }
 });
 
 app.listen(3000);
