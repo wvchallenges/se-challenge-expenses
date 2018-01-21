@@ -49,6 +49,47 @@ const app = express();
 app.engine('pug', require('pug').__express);
 app.set('view engine', 'pug');
 
+// Array method that sorts rows based on date while simultaneuously merging elements with common months into one element
+Array.prototype.sortAndMerge = function() {
+    do {
+        var didSwap = false;
+        for (let i = 0; i < this.length-1; ++i) {
+            if (this[i].date.getMonth() === this[i+1].date.getMonth() && this[i].date.getYear() === this[i+1].date.getYear()) {
+                this[i].pre_tax_amount += this[i+1].pre_tax_amount;
+                this.splice(i + 1, 1);
+            } else if (this[i].date > this[i+1].date) {
+                let temp = this[i];
+                this[i] = this[i + 1];
+                this[i + 1] = temp;
+                didSwap = true;
+            }
+        }
+    } while (didSwap === true);
+
+    return this;
+}
+
+let outputData = (dataRows, res) => {
+    // Format data into JS Date Objects and Floats
+    let output = dataRows.map((row) => {
+        return {
+            date: new Date(row.date),
+            pre_tax_amount: parseFloat(row.pre_tax_amount.toString().replace(/,/g, ''))
+        };
+    })
+    .sortAndMerge()
+    // Format outout into readable format
+    .map((entry) => {
+        return {
+            date: month[entry.date.getMonth()] + ' ' + entry.date.getFullYear(),
+            pre_tax_amount: "$" + entry.pre_tax_amount
+        };
+    });
+
+    // Render output
+    res.render('output', { data: output });
+}
+
 let processData = (csvData, res) => {
 
     // Connect to or create database
@@ -77,53 +118,13 @@ let processData = (csvData, res) => {
             });
         });
     
-        // Query the data back from the database, retreiving only the same number of rows as what inserted
+        // Query the data back from the database, retreiving only the same number of rows as most recent upload/insert
         db.all(selectQuery + csvData.length, [], (error, dataRows) => {
             if (error) {
                 return console.log(error.message);
             }
-
-            // Format data into JS Date Objects and Floats
-            let formattedData = [];
-            dataRows.forEach((row) => {
-                row.date = new Date(row.date);
-                row.pre_tax_amount = parseFloat(row.pre_tax_amount.toString().replace(/,/g, ''));
-                formattedData.push(row);
-            });
-            
-            //Sort data
-            formattedData.sort((a, b) => {
-                return a.date - b.date;
-            });
-
-            // Create output array and push in first entry of formatted data
-            let outputData = [];
-            let outputIndex = 0;
-            outputData.push(formattedData.shift());
-            
-            // Iterate through remaining rows:
-            //   - if month is the same then add expense amount into output data
-            //   - if not then create a new entry in output data
-            formattedData.forEach((row) => {
-                if (row.date.getMonth() === outputData[outputIndex].date.getMonth() && row.date.getYear() === outputData[outputIndex].date.getYear()) {
-                    outputData[outputIndex].pre_tax_amount += row.pre_tax_amount;
-                } else {
-                    outputIndex++;
-                    outputData.push(row);
-                }
-            });
-
-            // Format output to be reader friendly
-            outputData = outputData.map((entry) => {
-                return {
-                    date: month[entry.date.getMonth()] + ' ' + entry.date.getFullYear(),
-                    pre_tax_amount: "$" + entry.pre_tax_amount
-                };
-            });
-
-            // Render output
-            res.render('output', {data: outputData});
-                    
+            // Process data and render output
+            outputData(dataRows, res);
         });
     });
 
