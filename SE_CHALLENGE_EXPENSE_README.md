@@ -18,6 +18,9 @@ The following are the steps used to set up the environment to run the web applic
 3. Install Rails
 > `gem install rails`
 
+4. Install nodejs
+> `sudo apt-get install nodejs`
+
 ## Postgres
 
 1. Install Postgres
@@ -30,7 +33,7 @@ The following are the steps used to set up the environment to run the web applic
 > `psql`
 
 4. Create a new role named, es_challenge_expenses with permissions
-> `CREATE ROLE es_challange_expenses CREATEDB LOGIN PASSWORD 'password1`
+> `CREATE ROLE se_challenge_expenses LOGIN CREATEDB PASSWORD 'password1'`
 
 ## Gemfiles
 
@@ -39,3 +42,9 @@ The following are the steps used to set up the environment to run the web applic
 
 > Note: If you get errors about postgres, then try installing the following:
 `sudo apt-get install postgresql-client libpq5 libpq-dev` and `gem install pg`
+
+## Database
+
+## Done
+
+Now run the server
