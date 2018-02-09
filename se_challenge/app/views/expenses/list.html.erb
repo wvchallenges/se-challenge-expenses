@@ -1,0 +1,34 @@
+<%= link_to 'Expense Index', expenses_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Category</th>
+      <th>Employee Name</th>
+      <th>Employee Address</th>
+      <th>Expense Description</th>
+      <th>Pre-tax Amount</th>
+      <th>Tax Name</th>
+      <th>Tax Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expense.data.each do |d| %>
+      <tr>
+        <td><%= d['date'] %></td>
+        <td><%= d['category'] %></td>
+        <td><%= d['employee_name'] %></td>
+        <td><%= d['employee_address'] %></td>
+        <td><%= d['expense_description'] %></td>
+        <td><%= d['pre_tax_amount'] %></td>
+        <td><%= d['tax_name'] %></td>
+        <td><%= d['tax_amount'] %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan=7>Pre-tax Amount Total</td>
+      <td><%= @expense.total %></td>
+    </tr>
+  </tbody>
+</table>
