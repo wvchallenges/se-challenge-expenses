@@ -1,0 +1,5 @@
+flask
+flask_sqlalchemy
+jinja2
+werkzeug
+mysql-connector-python
