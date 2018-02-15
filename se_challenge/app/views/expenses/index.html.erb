@@ -1,0 +1,33 @@
+<div class="app_wrapper">
+  <p id="notice"><%= notice %></p>
+
+  <%= form_tag({:action => :import_csv}, multipart: true, class: 'upload_csv') do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag( "Import" ) %>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Created</th>
+        <th>Total</th>
+        <th>Remove</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |e| %>
+        <tr>
+          <td><%= e.id %></td>
+          <td><%= e.created_at %></td>
+          <td><%= e.total %></td>
+          <td><%= link_to 'Destroy', expense_path(e), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'View', action: 'list', id: e.id %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
