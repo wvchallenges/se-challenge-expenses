@@ -43,8 +43,28 @@ The following are the steps used to set up the environment to run the web applic
 > Note: If you get errors about postgres, then try installing the following:
 `sudo apt-get install postgresql-client libpq5 libpq-dev` and `gem install pg`
 
-## Database
+## Rails
 
-## Done
+1. Within the **se-challenge-expenses** directory `cd` in to **se_challenges**
+2. Create the database
+> rake db:create
+3. Run the migration
+> rake db:migrate
+4. Run the application server
+> rails s
+5. Go to **localhost:3000** in your browser
 
-Now run the server
+FINISHED!
+
+# About the application
+
+The main application has two sections:
+
+## index
+
+This contains a list of all imported CSV files. From here you can also import new files and delete and view previously imported files.
+
+## list
+
+This displays the imported CSV file with the total amount.
+

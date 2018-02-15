@@ -13,6 +13,8 @@ class ExpensesController < ApplicationController
 
   def destroy
     Expense.destroy(params[:id])
+
+    redirect_to action: "index"
   end
 
   def import_csv

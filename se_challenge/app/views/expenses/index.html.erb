@@ -17,13 +17,13 @@
       </tr>
     </thead>
     <tbody>
-      <% @expenses.each do |d| %>
+      <% @expenses.each do |e| %>
         <tr>
-          <td><%= d.id %></td>
-          <td><%= d.created_at %></td>
-          <td><%= d.total %></td>
-          <td></td>
-          <td><%= link_to 'View', action: 'list', id: d.id %></td>
+          <td><%= e.id %></td>
+          <td><%= e.created_at %></td>
+          <td><%= e.total %></td>
+          <td><%= link_to 'Destroy', expense_path(e), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'View', action: 'list', id: e.id %></td>
         </tr>
       <% end %>
     </tbody>
