@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Expenses App</title>
+        <meta name="description" content="Carol Zhang's submission for Wave code challenge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--<link rel="apple-touch-icon" href="favicon.ico">-->
+        <!--<link rel="icon" href="favicon.ico">-->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+{{data}}
+<table border="1">
+    <tr>
+        <td> date </td>
+        <td> {{ expense.date }} </td>
+    </tr>
+    <tr>
+        <td> category </td>
+        <td> {{ expense.category }} </td>
+    </tr>
+    <tr>
+        <td> employee_name </td>
+        <td> {{ expense.name }} </td>
+    </tr>
+    <tr>
+        <td> employee_address </td>
+        <td> {{ expense.address }} </td>
+    </tr>
+    <tr>
+        <td> expense_description </td>
+        <td> {{ expense.description }} </td>
+    </tr>
+    <tr>
+        <td> pre_tax </td>
+        <td> {{ expense.pretax }} </td>
+    </tr>
+    <tr>
+        <td> tax_name </td>
+        <td> {{ expense.taxname }} </td>
+    </tr>
+    <tr>
+        <td> tax </td>
+        <td> {{ expense.tax }} </td>
+    </tr>
+</table>
+
+</body>
+</html>

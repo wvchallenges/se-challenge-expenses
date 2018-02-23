@@ -31,10 +31,11 @@ def upload_csv(request):
             )
             try:
                 new_record.save()
+                data = 'it worked!'
             except Exception as e:
                 data = 'cant save yo'
                 messages.error(request, "Unable to upload file. " + repr(e))
-        return render(request, "expenses/index.html", {'data': data})
+    return render(request, "expenses/upload_csv.html", {'data': data})
 
 
 # fetches stored model & display
