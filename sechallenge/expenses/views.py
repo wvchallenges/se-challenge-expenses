@@ -34,8 +34,11 @@ def upload_csv(request):
                 data = 'it worked!'
             except Exception as e:
                 data = 'cant save yo'
-                messages.error(request, "Unable to upload file. " + repr(e))
-    return render(request, "expenses/upload_csv.html", {'data': data})
+                messages.error(request, 'Unable to upload file. ' + repr(e))
+    return render(request, 'expenses/upload_csv.html', {'expense': row})
 
 
 # fetches stored model & display
+def view_expenses():
+
+    return render('expense_detail.html', record = record)
