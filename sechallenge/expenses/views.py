@@ -1,20 +1,40 @@
 from django.shortcuts import render
 import csv
-import codecs
+from django.contrib import messages
+from .models import Expenses
 
 
+# display upload form
 def index(request):
-    if request.POST and request.FILES:
-        csvfile = request.FILES['csv_file']
-        dialect = csv.Sniffer().sniff(codecs.EncodedFile(csvfile, "utf-8").read(1024))
-        csvfile.open()
-        reader = csv.reader(codecs.EncodedFile(csvfile, "utf-8"), delimiter=',', dialect=dialect)
+    return render(request, "expenses/index.html", locals())
 
-    return render(request, "index.html", locals())
 
+# parse uploaded CSV & insert into DB
 def upload_csv(request):
-    data = {}
-    if "GET" == request.method:
-        return render(request, "expenses/upload_csv.html", data)
+    data = ''
+    if request.POST.get('csv_file') and request.FILES:
+        file = request.FILES['file']
+        if not file.name.endswith('.csv'):
+            messages.error(request, 'File is not a CSV')
+        decoded_file = file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+        for row in reader:
+            new_record = Expenses(
+                date=row[0],
+                category=row[1],
+                name=row[2],
+                address=row[3],
+                description=row[4],
+                pretax=float(row[5].replace(',', '')),
+                taxname=row[6],
+                tax=float(row[7].replace(',', '')),
+            )
+            try:
+                new_record.save()
+            except Exception as e:
+                data = 'cant save yo'
+                messages.error(request, "Unable to upload file. " + repr(e))
+        return render(request, "expenses/index.html", {'data': data})
 
 
+# fetches stored model & display
