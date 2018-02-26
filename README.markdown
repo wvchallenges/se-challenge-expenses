@@ -1,15 +1,21 @@
-# Wave Software Development Challenge
-Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
+# Wave Software Development Challenge by Carol Zhang
 
-The purpose of this exercise is to create something that we can work on together during the onsite. We do this so that you get a chance to collaborate with Wavers during the interview in a situation where you know something better than us (it's your code, after all!) 
+## Getting Started
+This project is done in Django. Make sure Django is installed by running
 
-There isn't a hard deadline for this exercise; take as long as you need to complete it. However, in terms of total time spent actively working on the challenge, we ask that you not spend more than a few hours, as we value your time and are happy to leave things open to discussion in the onsite interview.
+`$ python -m django --version`
 
-Please use whatever programming language and framework you feel the most comfortable with.
+Assuming Django is installed, `cd` into the project directory and run 
 
-Feel free to email [dev.careers@waveapps.com](dev.careers@waveapps.com) if you have any questions.
+`$ python manage.py runserver`
 
-## Project Description
+In another window, initiate the database
+
+`$ python manage.py migrate`
+
+Go to [http://localhost:8000/expenses/](http://localhost:8000/expenses/) in the browser, and you should see the file upload form.
+
+## Original Project Description
 Imagine that Wave has just acquired a new company. Unfortunately, the company has never stored their data in a database, and instead uses a comma separated text file. We need to create a way for the new subsidiary to import their data into a database. Your task is to create a web interface that accepts file uploads, and then stores them in a relational database.
 
 ### What your web-based application must do:
