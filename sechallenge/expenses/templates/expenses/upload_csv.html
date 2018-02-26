@@ -11,6 +11,21 @@
         <!--<link rel="icon" href="favicon.ico">-->
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+    .chart {
+        transform: scale(0.5);
+        transform-origin: 0 0;
+    }
+
+    .chart div {
+      font: 40px sans-serif;
+      background-color: steelblue;
+      padding: 3px;
+      margin: 1px;
+      color: white;
+      height: 80px;
+    }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -29,9 +44,17 @@
     {% endfor %}
     </tbody>
 </table>
+    <h2>Expenses by month visualized</h2>
+    <div class="chart">
+    {% for expense in expenses_list %}
+
+        <div style="width: {{ expense.s }}px;">{{ expense.month }}: ${{ expense.s }}</div>
+    {% endfor %}
+    </div>
 {% else %}
 <p>No expenses found. Try <a href="/index.html">uploading again</a></p>
 {% endif %}
 </div>
 </body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 </html>
