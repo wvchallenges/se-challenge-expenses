@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container">
+
 <form action="{% url 'upload_csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
@@ -28,5 +30,6 @@
     </div>
     <p>{{data}}</p>
 </form>
+</div>
 </body>
 </html>

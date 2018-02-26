@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from django.http import Http404
 from django.contrib import messages
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
 from .models import Expenses
 import csv
 import datetime
@@ -33,11 +36,18 @@ def upload_csv(request):
                 new_record.save()
             except Exception as e:
                 messages.error(request, 'Unable to upload file. ' + repr(e))
-    # return view_expenses(). don't return new view
-    return render(request, 'expenses/upload_csv.html', locals())
+    # after data uploaded, calculate monthly expenses
+    return view_monthly_expenses(request)
 
 
 # fetches stored model & display
-# def view_expenses():
-#
-#     return render(request, 'expenses/upload_csv.html', {'expense': data})
+def view_monthly_expenses(request):
+    try:
+        expenses_list = Expenses.objects.annotate(month=TruncMonth('date')).values('month').annotate(s=Sum('pretax'))
+    except Expenses.DoesNotExist:
+        raise Http404("Expense does not exist")
+    # if data successfully uploaded, calculate expenses by month
+
+    context = {'expenses_list': expenses_list}
+    return render(request, 'expenses/upload_csv.html', context)
+

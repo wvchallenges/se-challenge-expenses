@@ -13,41 +13,25 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<p>{{data}}</p>
-<table border="1">
-    <tr>
-        <td> date </td>
-        <td> {{ expense.date }} </td>
-    </tr>
-    <tr>
-        <td> category </td>
-        <td> {{ expense.category }} </td>
-    </tr>
-    <tr>
-        <td> employee_name </td>
-        <td> {{ expense.name }} </td>
-    </tr>
-    <tr>
-        <td> employee_address </td>
-        <td> {{ expense.address }} </td>
-    </tr>
-    <tr>
-        <td> expense_description </td>
-        <td> {{ expense.description }} </td>
-    </tr>
-    <tr>
-        <td> pre_tax </td>
-        <td> {{ expense.pretax }} </td>
-    </tr>
-    <tr>
-        <td> tax_name </td>
-        <td> {{ expense.taxname }} </td>
-    </tr>
-    <tr>
-        <td> tax </td>
-        <td> {{ expense.tax }} </td>
-    </tr>
+<div class="container">
+{% if expenses_list %}
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <th>Date</th>
+        <th>Total Expense (pre-tax)</th>
+    </thead>
+    <tbody>
+    {% for expense in expenses_list %}
+        <tr>
+            <td> {{ expense.month }} </td>
+            <td><p class="text-right">${{ expense.s }}</p> </td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
-
+{% else %}
+<p>No expenses found. Try <a href="/index.html">uploading again</a></p>
+{% endif %}
+</div>
 </body>
 </html>
