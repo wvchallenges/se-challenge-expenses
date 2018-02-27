@@ -1,7 +1,7 @@
 # Wave Software Development Challenge by Carol Zhang
 
 ## Getting Started
-This project is done in Django. Make sure Django is installed by running
+This project is done in Django. Make sure Django is installed _and up-to-date_ by running
 
 `$ python -m django --version`
 
