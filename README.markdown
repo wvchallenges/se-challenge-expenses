@@ -9,9 +9,6 @@ Assuming Django is installed, `cd` into the project directory and run
 
 `$ python manage.py runserver`
 
-In another window, initiate the database
-
-`$ python manage.py migrate`
 
 Go to [http://localhost:8000/expenses/](http://localhost:8000/expenses/) in the browser, and you should see the file upload form.
 
