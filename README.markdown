@@ -29,12 +29,27 @@ Your application should be easy to set up, and should run on either Linux or Mac
 
 There are many ways that this application could be built; we ask that you build it in a way that showcases one of your strengths. If you you enjoy front-end development, do something interesting with the interface. If you like object-oriented design, feel free to dive deeper into the domain model of this problem. We're happy to tweak the requirements slightly if it helps you show off one of your strengths.
 
-### Documentation:
+## Documentation:
 
-Please modify `README.md` to add:
+### Scope and Implementation
+The challenge has been completed. The implementation was done in Java/Spring Boot. The packaging tool is maven. Below will be a detail description on how to build and brign up the server. The given criterias where completed to best of my knowledge and limited time. I have also add a basic navie security module to project, which can be extended in the future. The current implementation extendable and can be extended to different type of data file. 
+This project will require a DB, the data base used was MYSQL.
+### Build & Executed
+After cloneing the repo. change the directory to expenseeeport
+`$ mkdir expenseeport`
 
-1. Instructions on how to build/run your application
-1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+Start a MY SQLDB image using docker. 
+'$ docker run -d --name sech-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=dbuser    -e MYSQL_PASSWORD=pass mysql:latest'
+
+After the DB is up clean an install the package by running the below command.
+linux/OSX : '$ ./mvnw clean install'
+windows: '$ mvnw.bat clean install'
+
+Start the applicationby running the below command.
+
+linux/OSX : '$ ./mvnw spring-boot:run'
+windowsa: '$ mvnw.bat spring-boot:run'
+
 
 ## Submission Instructions
 
