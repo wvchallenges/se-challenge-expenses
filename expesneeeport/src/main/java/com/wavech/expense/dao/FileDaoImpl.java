@@ -14,7 +14,7 @@ public class FileDaoImpl implements  FileDao {
 
 
     public static final String INSERT_EMPLOYEE = "insert into employee (fname,lname,address1,city,state,zipcode) values (?, ?, ? ,?, ?, ?) ON DUPLICATE KEY UPDATE address1 = ? , city = ? , state = ? , zipcode = ?";
-    private static final String INSERT_TRASCATION = "insert into transaction_rec (date, category, description,amount,taxName,taxAmount,type, emp_id) Select ? , ?, ?, ?, ?, ?, ? , id from employee where fname = 'a' and lname='b'";
+    private static final String INSERT_TRASCATION = "insert into transaction_rec (date, category, description,amount,taxName,taxAmount,type, emp_id) Select ? , ?, ?, ?, ?, ?, ? , id from employee where fname = ? and lname= ? ";
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -38,7 +38,9 @@ public class FileDaoImpl implements  FileDao {
                     transaction1.getAmount(),
                     transaction1.getTaxName(),
                     transaction1.getTaxAmount(),
-                    FileType.CSV.ordinal());
+                    FileType.CSV.ordinal(),
+                    transaction1.getEmployee().getfName(),
+                    transaction1.getEmployee().getlName());
         }
 
     }

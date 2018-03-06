@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>expesneeeport</name>
-	<description>Expense Report application which display the results from a CSV file and persists in a RDBMS</description>
+	<description>Expense Report application which display the results from a CSV " and persists in a RDBMS</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
