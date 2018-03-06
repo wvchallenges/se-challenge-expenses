@@ -36,19 +36,19 @@ The challenge has been completed. The implementation was done in Java/Spring Boo
 This project will require a DB, the data base used was MYSQL.
 ### Build & Executed
 After cloneing the repo. change the directory to expenseeeport
-`$ mkdir expenseeport`
+```$ mkdir expenseeport```
 
 Start a MY SQLDB image using docker. 
-'$ docker run -d --name sech-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=dbuser    -e MYSQL_PASSWORD=pass mysql:latest'
+```$ docker run -d --name sech-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=dbuser    -e MYSQL_PASSWORD=pass mysql:latest```
 
 After the DB is up clean an install the package by running the below command.
-linux/OSX : '$ ./mvnw clean install'
-windows: '$ mvnw.bat clean install'
+linux/OSX : ```$ ./mvnw clean install```
+windows: ```$ mvnw.bat clean install```
 
 Start the applicationby running the below command.
 
-linux/OSX : '$ ./mvnw spring-boot:run'
-windowsa: '$ mvnw.bat spring-boot:run'
+linux/OSX : ```$ ./mvnw spring-boot:run```
+windowsa: ```$ mvnw.bat spring-boot:run```
 
 
 ## Submission Instructions
