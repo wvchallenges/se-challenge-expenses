@@ -46,14 +46,17 @@ Start a MY SQLDB image using docker.
 After the DB is up clean an install the package by running the below command.
 
 linux/OSX : 
+
 ```$ ./mvnw clean install```
 
 windows:
+
 ```$ mvnw.bat clean install```
 
 Start the applicationby running the below command.
 
 linux/OSX :
+
 ```$ ./mvnw spring-boot:run```
 
 windowsa: 
