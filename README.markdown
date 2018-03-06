@@ -41,7 +41,7 @@ After cloneing the repo. change the directory to expenseeeport
 
 Start a MY SQLDB image using docker. 
 
-```$ docker run -d --name sech-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=dbuser    -e MYSQL_PASSWORD=pass mysql:latest```
+```$ docker run -d --name sech-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=dbuser    -e MYSQL_PASSWORD=pass -p 3306:3306 mysql:latest```
 
 After the DB is up clean an install the package by running the below command.
 
