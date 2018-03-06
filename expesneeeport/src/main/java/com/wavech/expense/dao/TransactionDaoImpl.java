@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class TransactionDaoImpl implements TransactionDao {
 
-    public static final String SELECT_TRANSACTION = "Select  monthname(date), max(taxAmount) as totalTaxAmount, max(amount) as totalAmount from transaction_rec  group by monthname(date)";
+    public static final String SELECT_TRANSACTION = "Select  monthname(date), sum(taxAmount) as totalTaxAmount, sum(amount) as totalAmount from transaction_rec  group by monthname(date)";
     @Autowired
     JdbcTemplate jdbcTemplate;
 
