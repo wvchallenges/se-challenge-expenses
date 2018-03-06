@@ -63,7 +63,8 @@ windowsa:
 
 ```$ mvnw.bat spring-boot:run```
 
-
+user/pass:
+Currently the app use a default embeded user/password => gopi/pass . Use this to log in to the application.
 ## Submission Instructions
 
 1. Fork this project on github. You will need to create an account if you don't already have one.
