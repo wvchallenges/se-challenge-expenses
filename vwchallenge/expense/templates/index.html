@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <title>PYTHON WORLD</title>
+	{% load staticfiles %}
+	<script src="{% static "csrf.js" %}"></script>
+    <!-- <script src="{% static "index.js" %}"></script> -->
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> Logo</a>
+            </div>
+            <!-- Navbar links -->
+				<!-- Search -->
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+				</form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- FILE CONTAINER -->
+    <div class="container"> <br />
+        <h1 style=" text-align: center;" > wv challenge expense </h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style=" text-align: center;"  ><strong>Upload files</strong> <small> </small></div>
+                    <div class="panel-body">
+                        <div class = "row">
+                        <form id="csv_upload" action="/expense/upload_csv/" method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+                            {% csrf_token %}
+                            <div class = "col-md-3 ">
+                                <label  class="col-md-3" style="tex-align:center;">File: </label> 
+                            </div>
+                            <div class = "col-md-3">
+                                <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+                            </div>
+                            <div class = "col-md-3 pull-right">
+                                <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload"></span>Upload </button>                             
+                            </div>
+                        </form>
+                        </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <!--/FILE CONTAINER  -->
+
+
+    <!-- TABLE CONTAINER  --> 
+    <div class="container">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" style="text-align: center;">EXPENSE SUMMARY</h3>
+                        </div>
+                    </div>
+                        {%if cost%}
+                            {% if cost.ret_err %}
+                                <h3 style=" text-align: center;" > oops, something is wrong: {{ cost.err_msg }} </h3> 
+                            {% else %}
+                                <table class="table" id="dev-table">
+                                <thead  >
+                                    <tr>
+                                        <th style="text-align: center; ">date</th>
+                                        <th style="text-align: center; ">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for iterm in cost.record %}
+                                    <tr style=" text-align: center; " >
+                                        <td>{{ iterm.time }}</td>
+                                        <td>{{ iterm.value }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </table>
+                            {% endif  %}
+                        {% else %}
+                            <h3 style=" text-align: center;" > please upload expense file </h3>
+                        {% endif %}
+                    </div>
+                </div>
+             </div>
+            </div>
+        </div>
+    <!-- ./TABLE CONTAINER -->
+	
+	<footer class="fixed-bottom" >
+        <div class="small-print" style="text-align: center;" >
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        		<p>Copyright &copy; Example.com 2015 </p>
+        	</div>
+        </div>
+	</footer>
+	
+    <!-- jQuery -->
+    <script src="{% static "js/jquery-1.11.3.min.js" %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+	<!-- IE10 viewport bug workaround -->
+	<script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+	<!-- Placeholder Images -->
+	<script src="{% static "js/holder.min.js" %}"></script>
+	
+</body>
+
+</html>
