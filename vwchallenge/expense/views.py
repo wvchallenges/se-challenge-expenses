@@ -60,10 +60,11 @@ def upload_csv(request):
             log.error(request,'File is not CSV type')
             ret_data['ret_err'] = 1
             ret_data['err_msg'] = "File is not CSV type"
+            log.error( "File is not CSV type");
             return render(request, 'index.html', {'cost': ret_data})
         #if file is too large, return
         if csv_file.multiple_chunks():
-            log.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            log.error("Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
             ret_data['ret_err'] = 1
             ret_data['err_msg'] = "Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),)
             return render(request, 'index.html', {'cost': ret_data} )
@@ -74,7 +75,7 @@ def upload_csv(request):
         reader = csv.reader(io_string, delimiter=str(u';'), quotechar=str(u'|'))
         header_ = next(reader)
         header_cols = convert_header(header_)
-        #print header_cols
+        log.info(header_cols)
         
         for line in reader:
             i = 0
@@ -96,20 +97,20 @@ def upload_csv(request):
                     raw_data = raw_data[0:num_str_start_index-1]+clean_num_str+raw_data[num_str_start_index+len(num_str)+1:]
 
             fields = raw_data.split(",")
-            
             for field in fields:
                 key = header_cols[i]
                 data_dict[key] = field
                 i += 1
             data_dict['date'] = datetime.datetime.strptime(data_dict['date'], '%m/%d/%Y').strftime('%Y-%m-%d')
             data_dict['file_tag'] = file_tag
+            
+            #writing to DB
             expense = Expense(**data_dict)
-
             try:
                 expense.save()
             except Exception as e:
                 ret_data['ret_err'] = 1
-                ret_data['err_msg'] = "unable to save DB" +repr(e)
+                ret_data['err_msg'] = "unable to save DB, please contact your admin" 
                 log.error("unable to save DB: " +repr(e) )                    
                 pass
             
@@ -118,7 +119,7 @@ def upload_csv(request):
     except Exception as e:
         log.error("Unable to upload file. "+repr(e))
         ret_data['ret_err'] = 1
-        ret_data['err_msg'] = "Unable to upload file. "+repr(e)
+        ret_data['err_msg'] = "Unable to upload file, sth is wrong with data format"
 
     if not ret_data['ret_err']:
         qs = Expense.objects.filter(file_tag = file_tag).extra(select = {
@@ -130,7 +131,7 @@ def upload_csv(request):
             data = monthly_cost(qs)
       
             #prepare data for templates
-            time_stamps = list(data.keys())
+            time_stamps = data.keys()
             time_stamps = sorted(time_stamps, key=lambda x:datetime.datetime.strptime(x, '%Y-%m'))
             for iterm in time_stamps:
                 record={}
@@ -141,6 +142,7 @@ def upload_csv(request):
         else:
             ret_data['ret_err'] = 1  
             ret_data['err_msg'] = "could not find data record in DB"
+            log.error("could not find data record in DB")
 
     return render(request, "index.html", {'cost': ret_data})
  

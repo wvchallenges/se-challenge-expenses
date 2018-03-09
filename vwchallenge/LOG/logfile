@@ -1,1 +1,7 @@
 [08/Mar/2018 20:54:13] INFO [expense.views:116] save file to DB: 46156f7a-5ff1-4ace-8a70-b1b852211d9c
+[09/Mar/2018 00:28:40] INFO [expense.views:78] [u'date', u'category', u'employee_name', u'expense_description', u'pre_tax_amount', u'tax_name', u'tax_amount']
+[09/Mar/2018 00:28:41] INFO [expense.views:117] save file to DB: 10bcb45f-aacf-4817-91fb-d72fdf2e8287
+[09/Mar/2018 00:30:31] INFO [expense.views:78] [u'date', u'category', u'employee_name', u'expense_description', u'pre_tax_amount', u'tax_name', u'tax_amount']
+[09/Mar/2018 00:30:31] INFO [expense.views:117] save file to DB: 1201c3f2-dee0-4ef1-a778-b436af9a7634
+[09/Mar/2018 00:35:56] INFO [expense.views:78] [u'date', u'category', u'employee_name', u'expense_description', u'pre_tax_amount', u'tax_name', u'tax_amount']
+[09/Mar/2018 00:35:57] INFO [expense.views:117] save file to DB: f118a269-8514-4db1-90ad-8d24a71f2f30
