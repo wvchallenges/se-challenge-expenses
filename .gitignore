@@ -100,5 +100,7 @@ venv.bak/
 # mkdocs documentation
 /site
 
-
+#keep configuration file local
+settings.py
+migrations/
 
