@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'vwchallenge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'expense',
-        'USER': 'root',
-        'PASSWORD': 'koias123',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'PORT': '',
     }
 }
