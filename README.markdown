@@ -1,3 +1,22 @@
+# HOW TO RUN
+Install [Python 3](https://www.python.org/downloads/)
+
+Install requirements
+```
+cd backend
+pip install requirements.txt
+```
+
+Run backend server
+```
+cd mysite
+./manage.py runserver 0.0.0.0:8000
+```
+
+
+
+
+
 # Wave Software Development Challenge
 Applicants for the [Software developer](https://wave.bamboohr.co.uk/jobs/view.php?id=1) role at Wave must complete the following challenge, and submit a solution prior to the onsite interview. 
 

@@ -1,0 +1,8 @@
+DATE        = 'date'
+CATEGORY    = 'category'
+EMP_NAME    = 'employee name'
+EMP_ADDR    = 'employee address'
+DESC        = 'expense description'
+PRE_TAX_AMT = 'pre-tax amount'
+TAX_NAME    = 'tax name'
+TAX_AMT     = 'tax amount'
