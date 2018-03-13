@@ -1,19 +1,54 @@
-# HOW TO RUN
+# What is this?
+
+This is a web application written in Angular 5 for the front end, and Django 2.0 for the backend. The database is sqlite3 for ease of installation. 
+
+# What does it do?
+This application will allow you to upload a csv file and view the contents in a table. 
+
+If the csv file's contents have been successfully loaded, you will automatically be shown the table.
+
+This application will only allow you to add data to the database, you can not delete (each CSV upload will add to the database).
+
+
+# Run Backend
 Install [Python 3](https://www.python.org/downloads/)
 
 Install requirements
 ```
 cd backend
-pip install requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Run backend server
 ```
 cd mysite
-./manage.py runserver 0.0.0.0:8000
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver 0.0.0.0:8000
 ```
 
+# Run Frontend
+In a separate shell, to run the webapp
 
+Install dependencies
+```
+cd webapp
+npm install 
+```
+
+Run app
+```
+npm run start
+```
+
+The application should be up and running! Brows to [http://localhost:4200](http://localhost:4200) to use the app.
+
+
+# Pretty Pictures
+
+![Upload](./images/upload.png?raw=true "Upload")
+
+![Results](./images/results.png?raw=true "Results")
 
 
 
