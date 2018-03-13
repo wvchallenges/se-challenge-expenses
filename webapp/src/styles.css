@@ -1,0 +1,18 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    display: flex;
+    min-height: 100vh;
+    height: 100%;
+    flex-direction: column;
+    background:lightgray;
+    font-family: 'Roboto', sans-serif;
+}
+.spacer {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.centerText{
+    text-align: center;
+}

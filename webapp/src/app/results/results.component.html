@@ -1,0 +1,44 @@
+<mat-table [dataSource]="tableData">
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.category}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="employee_name">
+    <mat-header-cell *matHeaderCellDef> Employee Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.employee_name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="employee_address">
+    <mat-header-cell *matHeaderCellDef> Employee Address </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.employee_address}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="expense_description">
+    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.expense_description}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="pre_tax_amount">
+    <mat-header-cell *matHeaderCellDef> Pre Tax Amount </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.pre_tax_amount}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="tax_name">
+    <mat-header-cell *matHeaderCellDef> Tax Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.tax_name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="tax_amount">
+    <mat-header-cell *matHeaderCellDef> Tax Amount </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.tax_amount}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

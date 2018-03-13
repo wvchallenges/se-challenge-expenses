@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-toolbar class="centerText">
+      <span class='spacer'></span>
+      Upload CSV
+      <span class='spacer'></span>
+  </mat-toolbar>
+  <mat-card-content>
+
+    <br>
+
+    <app-input-file (FileSelect)="onFileSelect($event)" [accept]="'.csv'">
+    <span class="nofiles">Choose file</span>
+    <span class="selected">Files selected</span>
+    </app-input-file>
+    
+    <br>
+    <br>
+
+    <button class='headerButton' (click)="submit()" color='link' mat-raised-button>Upload</button>
+  </mat-card-content>
+</mat-card>
