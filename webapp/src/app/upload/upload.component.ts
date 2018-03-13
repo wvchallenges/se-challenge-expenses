@@ -11,17 +11,24 @@ import { Router } from '@angular/router';
 })
 export class UploadComponent implements OnInit {
 
+  private file: File;
   constructor(
     private services: Services,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
 
   onFileSelect(files: FileList) {
-    this.services.uploadFile(files[0]).subscribe(
-      (success) => this.router.navigate['/results'],
+    if (files.length > 0) {
+       this.file = files[0];
+      }
+  }
+
+  submit() {
+    this.services.uploadFile(this.file).subscribe(
+      (success) => this.router.navigate(['/results']),
       (error) => console.log(error));
   }
 }

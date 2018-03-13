@@ -21,6 +21,6 @@ export class Services {
     }
 
     public getUploadedData() {
-        return this.http.get('/api/food');
+        return this.http.get(BASE_URL + '/api/expenses/');
     }
 }

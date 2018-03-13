@@ -14,7 +14,7 @@ import { InputFileComponent } from './input-file/input-file.component';
 // Angular material stuff
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule, MatToolbarModule, MatButtonModule,
-        MatCardModule, MatInputModule, MatFormFieldModule, MatListModule, MatIconModule } from '@angular/material';
+        MatCardModule, MatInputModule, MatFormFieldModule, MatListModule, MatIconModule, MatTableModule } from '@angular/material';
 import { UploadComponent } from './upload/upload.component';
 
 const appRoutes: Routes = [
@@ -42,6 +42,7 @@ const appRoutes: Routes = [
     MatGridListModule,
     MatIconModule,
     BrowserAnimationsModule,
+    MatTableModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule
 
