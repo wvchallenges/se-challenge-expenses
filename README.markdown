@@ -46,9 +46,9 @@ The application should be up and running! Brows to [http://localhost:4200](http:
 
 # Pretty Pictures
 
-![Upload](./images/upload.png?raw=true "Upload")
+![Upload](./images/upload.PNG?raw=true "Upload")
 
-![Results](./images/results.png?raw=true "Results")
+![Results](./images/results.PNG?raw=true "Results")
 
 
 
