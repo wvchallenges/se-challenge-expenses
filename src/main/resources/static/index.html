@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.38.1/handsontable.full.min.css">
+        <link rel="stylesheet" type="text/css" href="https://handsontable.com/static/css/main.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.38.1/handsontable.full.min.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <h2 id="title">Upload file form</h2>
+        <form id="csvform" action="csv" method="post" enctype="multipart/form-data" onsubmit="buttonOnClick">
+            Select CSV to upload:
+            <input id="fileinput" name="csvFile" type="file">
+            <input id="submitbutton" name="submit" type="submit" value="Upload CSV" hidden>
+        </form>
+        <div id="table"></div>
+    </body>
+</html>
