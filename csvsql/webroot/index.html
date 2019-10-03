@@ -1,0 +1,99 @@
+<!--
+ /// index.html
+ /// se-challenge-expenses solution in Swift
+ /// by Xiaoquan (Rockford) Wei, Feb 26, 2018
+
+ /// a Perfect Web Server prefers a pure json style scheme.
+ /// By such a design, the web server can apply such an architecture:
+ /// - model.swift, a pure data model file to serve data model
+ /// - main.swift, a http server route controller
+ /// - index.html, a static html page to view the data
+
+ -->
+<HTML><HEAD><META CHARSET="UTF-8">
+  <TITLE>CSV To SQL DEMO</TITLE>
+  <script type="text/javascript">
+
+    // upload the csv file into server, will load it back to page if succeed
+    function upload() {
+      var input = document.getElementById("csvfile");
+      var data = new FormData();
+      data.append('file', input.files[0], "data.csv");
+      fetch("/upload", {method: "post", body: data})
+      .then(res => res.json())
+      .then((json) => {
+            loadRecord();
+            });
+    }
+
+    // fetching summary data into the page
+    function loadSummary() {
+      fetch("/summary")
+      .then(res => res.json())
+      .then((json) => {
+            var tbl = document.getElementById("tableSummary");
+            json.forEach(function(record) {
+                         var row = tbl.insertRow(-1);
+                         var month = row.insertCell(0);
+                         month.innerText = record.month;
+                         var preTax = row.insertCell(1);
+                         preTax.align = "right";
+                         preTax.innerText = record.preTax;
+                         var taxAmount = row.insertCell(2);
+                         taxAmount.align = "right";
+                         taxAmount.innerText = record.taxAmount;
+                         });
+            });
+    }
+
+  // fetching all records into the page
+  function loadRecord() {
+    fetch("/record")
+    .then(res => res.json())
+    .then((json) => {
+          var tbl = document.getElementById("tableRecord");
+          json.forEach(function(record) {
+                       var row = tbl.insertRow(-1);
+                       var dt = row.insertCell(0);
+                       dt.innerText = record.date;
+                       var cat = row.insertCell(1);
+                       cat.innerText = record.category;
+                       var employeeName = row.insertCell(2);
+                       employeeName.innerText = record.employeeName;
+                       var employeeAddress = row.insertCell(3);
+                       employeeAddress.innerText = record.employeeAddress;
+                       var description = row.insertCell(4);
+                       description.innerText = record.description;
+                       var preTax = row.insertCell(5);
+                       preTax.align = "right";
+                       preTax.innerText = record.preTax;
+                       var taxName = row.insertCell(6);
+                       taxName.innerText = record.taxName;
+                       var taxAmount = row.insertCell(7);
+                       taxAmount.align = "right";
+                       taxAmount.innerText = record.taxAmount;
+                       });
+          });
+  }
+  </script>
+</HEAD>
+<BODY>
+  <H1>CSV To SQL Demo</H1>
+  <p><form>
+    <input type=file name="csvfile" id="csvfile">
+    <input type=button onclick="upload()" value="upload">
+  </form></p>
+  <p><a href="/halt">STOP THE DEMO SERVER</a></p>
+    <HR>
+    <p><input type=button onclick="loadSummary()" value=Summary></p>
+    <TABLE id=tableSummary border=1>
+      <TR><TH>date</TH><TH align=right>pre tax</TH><TH align=right>amount</TH></TR>
+    </TABLE>
+    <HR>
+    <p><TABLE id=tableRecord border=1>
+        <TR><TH>date</TH><TH>category</TH><TH>employee name</TH>
+          <TH>employee address</TH><TH>expense description</TH>
+          <TH align=right>pre tax</TH><TH>tax name</TH>
+          <TH align=right>amount</TH></TR>
+      </TABLE>
+</BODY></HTML>

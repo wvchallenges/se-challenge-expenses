@@ -34,7 +34,48 @@ There are many ways that this application could be built; we ask that you build 
 Please modify `README.md` to add:
 
 1. Instructions on how to build/run your application
+
+Before building/running this Swift, please read [Perfect: A Server Side Swift](perfect.org) for installation guide.
+
+For Xcode 9.0+ (macOS), or Swift 4.0+ (Ubuntu 16.04)
+
+```
+$ cd csvsql 
+$ swift run
+```
+
+The server will run at [http://localhost:8181](http://localhost:8181).
+
+If success, you can upload the sample CSV and try "summary" on the web page.
+To stop the demo server, simply just click [Stop the demo server](http://localhost:8181/halt), as on the same html page.
+
+⚠️**Alternatively**⚠️, the easiest way to build & run this demo is [docker](docker.com)
+
+```
+$ docker run -it -v $PWD/csvsql:/home -w /home -p 8181:8181 rockywei/swift:4.0 /bin/bash -c "swift run"
+```
+
 1. A paragraph or two about what you are particularly proud of in your implementation, and why.
+
+Nothing specially, it is a very common demo for a typical Perfect backend, which doesn't include other powerful Perfect features such as AI / Machine Learning / Live Messaging / Big Data Mining:
+
+``` swift
+/// a Perfect Web Server prefers a pure json style scheme.
+/// By such a design, the web server can apply such an architecture:
+/// - model.swift, a pure data model file to serve data model
+/// - main.swift, a http server route controller
+/// - index.html, a static html page to view the data
+```
+
+The solution took about 3 hours:
+
+- Document reading.
+- Prototyping.
+- Final implementation.
+- Testing.
+- API documentation, which was taken over 90 minutes.
+
+
 
 ## Submission Instructions
 
@@ -52,8 +93,26 @@ Please modify `README.md` to add:
 Evaluation of your submission will be based on the following criteria. 
 
 1. Did you follow the instructions for submission? 
+
+- Yes
+
+
 1. Did you document your build/deploy instructions and your explanation of what you did well?
+
+- Yes.
+
 1. Were models/entities and other components easily identifiable to the reviewer? 
+
+- Yes. All codes have been well documented in the source.
+
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
+
+- Yes, Perfect prefers a pure json backend style.
+
 1. Did you separate any concerns in your application? Why or why not?
+
+It is too small a demo so couldn't including other important/scaling features in hours, typically, such as file size control, malicious detection, ORM, google-protocol buffer for huge data trunk traffic, OAuth and JWT token control, legacy single sign-on such as SPNEGO, or distribution storage / indexing, full text searching, etc.
+
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+- Yes, however, SQLite is a simplified implementation of ANSI SQL, so it should be a bit complicated if production.
