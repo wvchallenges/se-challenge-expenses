@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>{{record.file_name}}</h1>
+    <table border="1">
+    <tr>
+        <td> date </td>
+        <td> {{ record.date }} </td>
+    </tr>
+    <tr>
+        <td> category </td>
+        <td> {{ record.category }} </td>
+    </tr>
+    <tr>
+        <td> employee_name </td>
+        <td> {{ record.employee_name }} </td>
+    </tr>
+    <tr>
+        <td> employee_address </td>
+        <td> {{ record.employee_address }} </td>
+    </tr>
+    <tr>
+        <td> expense_description </td>
+        <td> {{ record.expense_description }} </td>
+    </tr>
+    <tr>
+        <td> pre_tax </td>
+        <td> {{ record.pre_tax }} </td>
+    </tr>
+    <tr>
+        <td> tax_name </td>
+        <td> {{ record.tax_name }} </td>
+    </tr>
+    <tr>
+        <td> tax </td>
+        <td> {{ record.tax }} </td>
+    </tr>
+</table>
+<a href="/upload/{{record.id}}/expense-detail" >Expense Detail</a>
+</body>
+</html>
