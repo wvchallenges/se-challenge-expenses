@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <style>
+        html,
+        body,
+        .login-box {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="valign-wrapper row login-box">
+        <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+           <form action="/login" method="post">
+                <div class="card-content">
+                <h5 id="title" style="margin-bottom: 1px">Login Form</h5>
+                <div class="input-field">
+                    <input  id="username" name="username" type="text" class="validate">
+                    <label for="username">Username</label>
+                </div>
+                <div class="input-field">
+                    <input  id="password" name="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+                </div>
+                <div class="card-action right-align">
+                    <button class="btn waves-effect waves-light light-blue lighten-3" type="submit" name="action">Login
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+</body>
+</html>

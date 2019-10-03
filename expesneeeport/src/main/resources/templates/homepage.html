@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+
+<body>
+<nav>
+    <div class="nav-wrapper light-blue lighten-3">
+        <a href="#" class="brand-logo">Expense Report Tool.</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a class = "modal-trigger" href="#modal1">About</a></li>
+            <li><a class = "modal-trigger" href="#modal1">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>About</h4>
+        <p>This is a sample application which uses Spring Boot and Thymeleaf template. Theapplication acepts a file and then loads
+           it to the rational data base. A report is generated which can be viewed below.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">OK</a>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card #e0e0e0 grey lighten-2">
+                <div class="card-content black-text">
+                    <span class="card-title">Upload CSV Expense File</span>
+                    <p>Choose a file or drag on the file to upload the CSV expense report.</p>
+                    <input type="file" id="fileId" />
+
+                </div>
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn green" href="javascript:commonService.upload()">Upload<i class="material-icons">publish</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <div class="card #e0e0e0 grey lighten-2">
+                <div class="card-content black-text">
+                    <span class="card-title">Total Expense for month.</span>
+                    <table class="responsive-table highlight">
+                        <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total Pre-Tax Amount</th>
+                            <th>Total Tax Amount</th>
+                            <th>Grand Total</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="monthReport1 : ${monthReport}">
+                            <td th:text="${monthReport1.month}"></td>
+                            <td th:text="${monthReport1.totalAmount}"></td>
+                            <td th:text="${monthReport1.totalTaxAmount}"></td>
+                            <td th:text="${monthReport1.totalTaxAmount + monthReport1.totalAmount}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="card #e0e0e0 grey lighten-2">
+                <div class="card-content black-text">
+                    <span class="card-title">Monthly Graph -Total expense.</span>
+                    <canvas id="chartId" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer light-blue lighten-3" >
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Dev Challenge - Basic CSV data fileUpload Service  </h5>
+                <p class="grey-text text-lighten-4">The link provided in this footer were useful in build a quick UI</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="http://materializecss.com/getting-started.html">Materialize CSS</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://jquery.com/">JQuery</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://spring.io/">SpringIO</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2018 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#">gopiraj</a>
+        </div>
+    </div>
+    </footer>
+
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+
+    (function ($) {
+        $(function () {
+
+            //initialize all modals
+            $('.modal').modal();
+
+            //or by click on trigger
+            $('.trigger-modal').modal();
+
+        });
+    })(jQuery);
+
+    var commonService = (function() {
+    var ctx = document.getElementById("chartId");
+    var load = function()
+    {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: 'Total Cost $',
+                    data: getMonthReport(),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        })
+    };
+
+    var upload = function () {
+        this.load();
+        var formData = new FormData();
+        formData.append("file", document.getElementById("fileId").files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/upload");
+        xhr.send(formData);
+        xhr.onload = function() {
+            this.load();
+
+        }
+
+    };
+
+    var allMonths = ['January','February','March', 'April','May','June','July','August','September','October','November','December'];
+
+    var sortMonth =  function(month)  {   if (month) {
+
+        return month.sort(function(a,b){
+            return allMonths.indexOf(a.month) - allMonths.indexOf(b.month);
+        })
+        }
+        else {
+        return [{}];
+        }
+    };
+
+    return {"load": load, "upload": upload, "sortMonth": sortMonth};
+    })();
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var getMonthReport = function () {
+        var array = commonService.sortMonth(/*[[${monthReport}]]*/)
+        array.forEach(function (value) { console.log(value.month); })
+        var array =    array.map(
+            function (obj)  {
+                return obj.totalAmount + obj.totalTaxAmount;
+            });
+        return array;
+    };
+    commonService.load();
+
+    /*]]>*/
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+
+
+</html>
