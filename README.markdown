@@ -57,3 +57,64 @@ Evaluation of your submission will be based on the following criteria.
 1. What design decisions did you make when designing your models/entities? Why (i.e. were they explained?)
 1. Did you separate any concerns in your application? Why or why not?
 1. Does your solution use appropriate datatypes for the problem as described? 
+
+
+------- Commnents from LIN -----------
+First of all, I wish to thank all people who had spent time on this code challenge. This is the best interview that I have had by now.
+
+I was using thinkphp in past 3 years, and actually, I implemented a very similar functionality in previous project, in which doctor import/export their time schedule from excel file. I know people in Wave are using python/Django, so I spent some time to warn up with python/Django and then start this project. Well, this could be a bad decision since it took me longer time to submit the code. However, this could also be a great decision since I realize the beauty of python/Django, and feeling love with it. 
+
+While I am using php, one of the hardest question is how to separate front-end with backend. Javascript based technologies, such as React and Angula JS, is pushing more power on front-end, which blur the margin between frontend and backend. Django provides strong emphasize on backend, such as controlling html flow in view and model, and this makes it easier for expertise to work together on both side, especially great for AI and dating mining support on backend. 
+System and App Version:
+	Ubuntu 16.04.4 LTS
+ 	Python Version: 2.7.12
+ 	Django Version 1.11
+ 	MySQL: 5.7.2
+ 	IDE: VIM 
+
+How to Start the App:
+we need to create a database in MySQL (I would recommend phpmyadmin for MySQL), and then setup DB configurations at setings.py
+vwchallenge$ vim vwchallenge/settings.py
+	update DB username and password:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': {THE DB NAME WE CREATE BEFORE},
+            'USER': {YOUR DB USERNAME},
+            'PASSWORD': {YOUR DB PASSWORD},
+            'PORT': '',
+        }
+    }
+
+Initial the data, and start the server
+    ../vwchallenge$ python manay.py makemigrations
+    ../vwchallenge$ python manay.py migrate
+    ../vwchallenge$ python manay.py runserver 
+
+The App should be up at: 172.0.0.1:8000
+
+The system uses default 8080 port, however, you can always specify your port number after runserver command.
+
+For App implementation, I process the CSV file in memory, and write the data to DB after proper validations. Then, I query expense records from DB, calculate the monthly cost, and populate the data to template.The App will refuse to process csv file if it believes the file is too large. 
+
+I use "file_tag" (a python generated uuid) to identify an uploaded csv file, and keep other model entities safe and open --- only define basic type validation and make them open to receive data. By this design, we could provide a friendly App and continuously provide valuable restrictions based on client's feedback. Over limited form validation might make the App hard to use, and use Product Owner's feedback to define validation could make dev flow much more efficient.
+
+Logs, one of the most beautiful gifts from python, should be fully used in the App. The logging configuration is defined in settings.py. I created a LOG directory under project root for testing purpose. However, in production deployment, it should be place in non-www directory and be grant with www-data permission. Meanwhile, we could use Celery to monitor the loging directory. Log files are easily eating out storage space.
+
+What to do Next: 
+Is the App ready for production? No…there are couple of enhancement we could do to make it better:
+1.	There some cases, such as handling address format, could be implement in more pythonic way, which will make code easier to understand and simple to maintain.
+2.	The App process csv file directly, without checking if it is a duplicated file or not. We could implement a separate module to check file redundancy, and inform user the duplicated file before he/she wish to submit. This will save a lot time/resource in writing data to DB as well. 
+3.	Make the App a widget. Instead of present the App as a standalone App, we could make the App as a widget, which could be easily imported in other projects.
+4.	Instead of processing csv file in memory, we could save the CSV file in disc, and process its data there. This would help to remove the file size limitations, and meanwhile, help to keep file backup for customer.
+5.	There are many great python libs in handling csv file, such as Panda, Django-import-export, etc. These libs covers many corner cases with regarding to data type and validation, and provide supportings in EXCEL and many other file format. It might be a better approach to integrate these libs in production code.   
+
+
+
+
+ 
+
+
+
+
+
