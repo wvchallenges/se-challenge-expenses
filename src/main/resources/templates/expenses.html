@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Monthly Expenses</title>
+</head>
+<body>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(expenses)}">
+        <h2>Total Expenses Amount Per-Month</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Month</th>
+                <th>Expenses</th>
+            </tr>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.monthYear}">Month</td>
+                <td th:text="${expense.expenses}">Expenses</td>
+            </tr>
+        </table>
+ 
+    </div>
+</div>
+ 
+</body>
+</html>
