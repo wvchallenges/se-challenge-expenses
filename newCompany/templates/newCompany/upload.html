@@ -1,0 +1,7 @@
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="databaseCSV" />
+  <button type="submit"> Upload </button>
+</form>
+{% endblock %}

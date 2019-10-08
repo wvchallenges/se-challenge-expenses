@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <th> Month</th>
+    <th> Tax Amount</th>
+  </tr>
+  {% for row in monthly_tax %}
+  <tr>
+    <td>{{row.month}}</td>
+    <td>{{row.total}}</td>
+  </tr>
+  {% endfor %}
+</table>

@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <th> Date</th>
+    <th> Category</th>
+    <th> Employee Name</th>
+    <th> Employee Address</th>
+    <th> Expense Description</th>
+    <th> Pre-Tax Amount</th>
+    <th> Tax Name</th>
+    <th> Tax Amount</th>
+  </tr>
+  {% for row in all_data %}
+  <tr>
+    <td>{{row.Date}}</td>
+    <td>{{row.Category}}</td>
+    <td>{{row.EmployeeName}}</td>
+    <td>{{row.EmployeeAddress}}</td>
+    <td>{{row.ExpenseDesc}}</td>
+    <td>{{row.PreTaxAmt}}</td>
+    <td>{{row.TaxName}}</td>
+    <td>{{row.TaxAmt}}</td>
+  </tr>
+  {% endfor %}
+</table>
