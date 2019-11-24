@@ -1,0 +1,10 @@
+// Custom bootstrap variables must be set or imported before bootstrap itself.
+@import "bootstrap";
+
+td {
+  padding: .5em;
+}
+
+td {
+  border: 1px solid black;
+}
