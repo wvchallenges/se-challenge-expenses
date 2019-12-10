@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'waveapp/style.css' %}" />
+
+<form action="/waveapp/" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+    <input type="file" name="csv_file" />
+    <input type="submit" value="Upload" />
+
+</form>
+
+{% if reader %}
+    <table color="black">
+        <tr>
+            <th color="white">Date</th>
+            <th color="white">Total Expenses</th>
+        </tr>
+        {% for key, value in monthlyTaxes.items %}
+            <tr>
+                <td color="white" >{{ key }}</td>
+                <td color="white" >{{ value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p> Nothin here folks! </p>
+{% endif %}
