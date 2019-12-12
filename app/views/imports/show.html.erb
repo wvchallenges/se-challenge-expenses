@@ -1,0 +1,26 @@
+<h1 class="display-4">Imported data</h1>
+<hr class="m-y-2">
+
+<p class="lead">Total monthly expenses imported from <mark><%= import.original_filename %></mark></p>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-stripe">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th class="text-md-right">Total pretax amount</th>
+          <th class="text-md-right">Total tax amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% import.monthly_expenses.each do |exp| %>
+          <tr>
+            <td><%= exp.month %></td>
+            <td class="text-md-right"><%= number_to_currency(exp.total_pretax_amount) %></td>
+            <td class="text-md-right"><%= number_to_currency(exp.total_tax_amount) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

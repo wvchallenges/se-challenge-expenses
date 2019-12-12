@@ -1,0 +1,27 @@
+<h1 class="display-4">Import data</h1>
+<hr class="m-y-2">
+
+<% unless import.errors.empty? %>
+  <% import.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<p class="lead">Upload new company data<small class="text-muted"> (in CSV format)</small>.</p>
+<%= form_for import do |f| %>
+  <div class="row">
+    <div class="col-md-8">
+      <label class="custom-file" style="display:block">
+        <%= f.hidden_field :original_filename, class: "original-filename" %>
+        <%= f.file_field :file, accept: "text/csv", class: "custom-file-input" %>
+        <span class="custom-file-control"></span>
+      </label>
+    </div>
+
+    <div class="col-md-4">
+      <%= f.submit 'Import', class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
