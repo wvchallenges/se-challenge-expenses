@@ -1,0 +1,12 @@
+input[type="submit"] {
+    margin-top: 10px;
+}
+
+span.alert {
+    display: inline-block;
+    margin: 10px 0;
+}
+
+#back_link {
+    padding: 8px;
+}
