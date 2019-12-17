@@ -1,0 +1,48 @@
+source 'https://rubygems.org'
+
+gem 'rails', '4.2.6'
+gem 'pg'
+gem 'database_cleaner'
+gem 'turbolinks'
+
+gem 'jbuilder', '~> 2.0'
+
+# ELASTICSEARCH
+gem 'chewy', '~> 0.8'
+gem 'responders', '~> 2.0'
+gem 'logstasher', '~> 0.9.0'
+
+# DATA GENERATIONS
+gem 'faker', '~> 1.6.3'
+gem 'awesome_print'
+
+# VIEWS
+gem 'jquery-rails'
+gem 'haml'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'react-rails'
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'rspec'
+  gem 'factory_girl_rails'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem "binding_of_caller"
+  gem 'better_errors'
+end
+
+group :development do
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
+  gem 'guard-rspec', require: false
+end
+

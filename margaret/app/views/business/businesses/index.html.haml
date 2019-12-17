@@ -1,0 +1,26 @@
+- if @business.errors.any?
+  = row do
+    .alert.alert-danger
+      %ul
+        - @business.errors.each do |field, msg|
+          = "#{field.capitalize} #{msg}"
+
+= row do
+  %h4 All Businesses
+
+= row(row_class: 'row control-buttons', col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+  .col-lg-6.col-md-12.col-xs-12
+    = form_for @business, as: :business, method: :post, url: business_businesses_path, html: {class: 'form-inline'} do |f|
+      = f.text_field :name, placeholder: 'Name', label: false, class: 'form-control'
+      = f.text_field :address, placeholder: 'Address', label: false, class: 'form-control'
+      %button.btn.btn-primary.form-control{type: 'submit'} Add new 
+  .col-lg-6.col-md-12.col-xs-12
+    = react_component('BusinessSearch')
+
+= row(col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+  %ul.list-group
+    - @businesses.each do |business|
+      %li.list-group-item
+        = link_to business.name, business_business_path(business)
+        %span.label.label-default.label-pill.pull-right
+          = "#{business.reports.count} reports with #{business.report_entries.count} entries"

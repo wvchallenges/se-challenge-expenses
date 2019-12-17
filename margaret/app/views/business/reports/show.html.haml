@@ -1,0 +1,34 @@
+= row do
+  %ol.breadcrumb
+    %li
+      %a{href: business_businesses_path} All Businesses
+    %li
+      %a{href: business_business_path(@business)}= "Back to #{@business.name}"
+
+= row do
+  .business-title
+    %h4= "#{@business.name}"
+    .business-address
+      = "Uploaded on #{ftime(@report.created_at)}"
+
+.reports-box
+  = row(col_class: 'col-xs-12 col-sm-6 col-lg-12') do
+    .panel.panel-default
+      .panel-heading
+        = link_to('Download as .csv', render_report_business_business_report_path(@report, business_id: @business.id, format: 'csv'), class: 'btn btn-info')
+        = link_to('Download as .xls', render_report_business_business_report_path(@report, business_id: @business.id, format: 'xls'), class: 'btn btn-info')
+        %span.pull-right
+          = "Uploaded on #{ftime(@report.created_at)}"
+      .panel-body
+        %table.table.table-striped
+          %thead
+            %th Date 
+            %th Category
+            %th Employee Name
+            %th Address
+            %th Description
+            %th Pre-tax Amount
+            %th Tax Name
+            %th Tax Amount
+          %tbody
+            = render partial: 'shared/report_entry', collection: @report.entries

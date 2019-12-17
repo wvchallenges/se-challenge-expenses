@@ -1,0 +1,9 @@
+%tr
+  %td=fdate(report_entry.date)
+  %td=report_entry.category
+  %td=report_entry.employee_name
+  %td=report_entry.employee_address
+  %td=report_entry.expense_description
+  %td=number_to_amount(report_entry.amount_before_tax)
+  %td=report_entry.tax_name
+  %td=number_to_amount(report_entry.tax_amount)

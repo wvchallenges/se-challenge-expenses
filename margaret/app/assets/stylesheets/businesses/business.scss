@@ -1,0 +1,38 @@
+.control-buttons {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.field_with_errors {
+  @extend .has-error;
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+}
+
+.business-title {
+  margin-bottom: 30px;
+  font-height: 1.25em;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.business-address {
+  font-height: 0.75em;
+  font-style: italic;
+}
+
+.reports-cta {
+  font-height: 3.0em;
+  font-style: bold;
+  margin: 30px;
+  vertical-align: middle;
+  width: auto;
+}
+
+.reports-box {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
