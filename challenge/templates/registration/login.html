@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block maincontent %}
+{% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}Please correct the error below.{% else %}Please correct the errors below.{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors or form.this_is_the_login_form.errors %}
+{% for error in form.non_field_errors|add:form.this_is_the_login_form.errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div class="well">
+  <form action="{{ app_path }}" method="post" id="login-form" class="form">
+    {% csrf_token %}
+      {{ form }}
+      <input type="hidden" name="this_is_the_login_form" value="1" />
+      <input type="hidden" name="next" value="{{ next }}" />
+      <label>&nbsp;</label><input type="submit" value="Log in" class="btn btn-success"/>
+  </form>
+
+</div>
+{% endblock %}

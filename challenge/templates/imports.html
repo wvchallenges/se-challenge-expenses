@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block maincontent %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Uploader</th>
+			<th>Record Count</th>
+			<th>View</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for import in imports %}
+			<tr>
+				<td>{{ import.date }}</td>
+				<td><a href="mailto:{{ import.imported_by.email }}">{{ import.imported_by.email }}</a></td>
+				<td>{{ import.expense_set.count }}</td>
+				<td><a href="{% url 'show_import' import.id %}" class="btn btn-primary">View Details</a></td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
