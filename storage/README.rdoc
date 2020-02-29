@@ -1,0 +1,15 @@
+Instructions:
+
+ruby-version: ruby 2.2.1p85
+
+bundle install
+rake db:migrate
+rails s
+
+Description:
+
+After making the upload work, I spent some time with semantic ui to make it look "ok". I felt maybe I could make it a one page app. Since I don't know how to use react js yet, I decided to use UJS to make it real time.
+
+I had to update the expense amounts everytime a file is uploaded. I decided to add the new values from the newly uploaded file to the values already recorded on the page. With this, the page should show some fancy (default semantic ui) transitions after the file is uploaded and saved in the database.
+
+I only used sqlite3 instead of MySQL because it only creates uneccessary setup in this challenge.

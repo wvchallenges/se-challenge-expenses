@@ -1,0 +1,37 @@
+<% if @grouped_expenses.count > 0 %>
+  var string_add_as_float = function(one, two) {
+    return (parseFloat(one) + parseFloat(two)).toFixed(2)
+  };
+
+  var update_row = function(id, month, pre_tax, tax, total, new_row) {
+    expense_row = $('#' + id)
+    if(expense_row.length > 0) {
+      old_pre_tax = expense_row.children('.pre_tax').text()
+      old_tax = expense_row.children('.tax').text()
+      old_total = expense_row.children('.total').text()
+
+      new_pre_tax = string_add_as_float(pre_tax, old_pre_tax)
+      new_tax = string_add_as_float(tax, old_tax)
+      new_total = string_add_as_float(total, old_total)
+
+      expense_row.children('.pre_tax').text(new_pre_tax).transition('pulse')
+      expense_row.children('.tax').text(new_tax).transition('pulse')
+      expense_row.children('.total').text(new_total).transition('pulse')
+    } else {
+      $('#expenses tr:last').after(new_row)
+      $('#expenses tr:last').transition('drop')
+    }
+  };
+  <% @grouped_expenses.each do |expense| %>
+    id = '<%= "#{expense[:id]}"%>'
+    month = '<%= "#{expense[:month]}"%>'
+    pre_tax = '<%= "#{expense[:pre_tax]}"%>'
+    tax = '<%= "#{expense[:tax]}"%>'
+    total = '<%= "#{expense[:total]}"%>'
+    new_row = '<%= j render "expenses/new_row", expense: expense, hidden: true %>'
+    expense_row = $('#' + id)
+    update_row(id, month, pre_tax, tax, total, new_row)
+  <% end %>
+<% else %>
+  console.log('No records uploaded')
+<% end %>

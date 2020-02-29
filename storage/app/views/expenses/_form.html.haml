@@ -1,0 +1,8 @@
+%h3.ui.header
+  Upload Expenses
+= form_tag @expense, remote: true, html: {class: "ui form", multipart: true} do |f|
+  .field
+    = file_field_tag :file
+  .field
+    %button.ui.button Submit 
+    

@@ -1,0 +1,10 @@
+%table#expenses.ui.very.basic.striped.celled.table
+  %thead
+    %tr
+      %th Month
+      %th Pre Tax Expense
+      %th Expense Tax
+      %th Total Expense
+  %tbody
+    - expenses.each do |expense|
+      = render 'expenses/new_row', expense: expense, hidden: false
