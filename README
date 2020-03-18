@@ -1,0 +1,39 @@
+Code challenge solution splited into 3 separated projects:
+
+  1. Clean HTML frontend project
+  2. .NET server side project
+  3. Python implementation project
+
+### HTML project ###
+Deploy `wave-challenge/html/app/` to any web server and open index.html. I think it would be different issues if you will open index.html directly with `file://` protocol. I'm using `gruntjs` and `nodejs` to start web server. You can use my development environment:
+
+    sudo apt-get install nodejs npm
+    cd wave-challenge/html/
+    npm install
+    bower install
+    grunt serve
+
+It would run `http://localhost:9000` web server.
+
+### .NET project ###
+Open `wave-challenge/csharp/WaveChallenge/WaveChallenge.sln` in VS2013 or higher. Run solution and make sure that `nuget` restore options enabled in VS configuration. Solution will start `Owin` base web server on `http://localhost:50231` address and will serve required functionality of uploading and showing total grouped data by months.
+
+### Python project ###
+Ideally create separate virual env and install dev dependencies. Make sure that at least *python 2.7* have already installed. I developed under Ubuntu 14.04.
+
+    sudo pip install virtualenvwrapper 
+    mkvirtualenv wave-challenge
+    workon wave-challenge
+    cd wave-challenge/python
+    pip install -r requirements.txt
+
+Run `django` web server using standard command `python manage.py runserver` on `http://127.0.0.1:8000/` address.
+
+### Common notes ###
+Make sure that Linux logged user has an access to `wave-challenge/db/Db.sqlite3` that is using as a common db for both .NET and python implementations.
+
+All (9000, 8000, 50231) ports should be free during the running server side projects. 
+
+Web servers are running with CORS support to all domains.
+
+Projects tested under Chrome 38.0.2125.111 (64-bit) and Firefox 33.
