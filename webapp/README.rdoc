@@ -1,0 +1,15 @@
+Before running the application:
+* First ensure that you have rails installed. This was built with rails 4.1.0, so running `gem install rails -v 4.1.0`.
+* Once that succeeds, cd into se-challenge/wave and run `bundle install` in order to install all gems.
+
+To run the application:
+* Run bundle install
+* Run rake db:migrate
+* Run rails s
+* Visit : localhost:3000/uploads
+
+Note:
+In the csv file I replaced the spaces with _ to be able to map the columns properly with the DB.
+
+What I enjoyed the most:
+I enjoyed coding the data model and the logic in the controller that talks to it, I always like to find the cleanest way, less coding, efficient and easier for other developers to read.
