@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load i18n %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block page_title %}{% trans "Employee Tracker" %}{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}{% endblock %}">
+        <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        {% block syndication %}{% endblock %}
+        <!--<script type="text/javascript" src=""></script>-->
+    </head>
+
+    <body>
+        {% block header %}
+            <header id="SiteHeader">
+                <div id="PrimaryNavigation" class="lay-out">
+                    <div class="lay-in">
+                        <div id="SiteLogo">
+                            <a href="/" class="site-logo-lnk" title="Emp-Trac">Emp-Trac</a>
+                            <a href="{% url 'expense_help' %}">{% trans "Help" %}</a>
+                        </div>
+                        <nav class="site-ctrl">
+                            {% comment %}
+                            <a href="{% url 'expense_upload' %}">{% trans "Upload Expenses" %}</a>
+                            <a href="{% url 'expense_list' %}">{% trans "View Expenses" %}</a>
+                            <a href="/admin">{% trans "Admin" %}</a>
+                            <a href="{% url 'expense_monthly_summary' %}">{% trans "Monthly Summary" %}</a>
+                            {% endcomment %}
+
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <hr>
+        {% endblock header %}
+
+        {% block body %}
+            {% block content %}{% endblock %}
+        {% endblock body %}
+
+        {% block footer %}
+            <hr>
+            <footer id="SiteFooter" class="lay-out">
+                <div class="lay-in">
+                    <p>{% trans "Copyright &copy; Emp-Trac 2014" %}</p>
+                </div>
+            </footer>
+        {% endblock footer %}
+
+        {% block page_javascript %}{% endblock %}
+    </body>
+</html>

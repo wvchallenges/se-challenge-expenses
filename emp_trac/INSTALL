@@ -1,0 +1,11 @@
+se-challenge (emp_trac)
+
+To install, make sure you have git, and Python 2.7 or greater installed. Then run
+these command from the command prompt:
+
+[sudo] pip install -r requirements.txt -U
+git clone https://github.com/radlws/se-challenge.git
+cd se-challenge/emp_trac/
+./manage.py migrate && ./manage.py runserver
+
+

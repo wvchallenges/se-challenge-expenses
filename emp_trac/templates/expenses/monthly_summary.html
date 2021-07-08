@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load date_tags %}
+
+{% block content %}
+<h1>Employee Expenses</h1>
+<table>
+    <thead>
+    <th>Month/Year</th>
+    <th>Total Expenses</th>
+    </thead>
+    {% for item in report %}
+    <tr>
+        <td>{{ item.month|date_from_string|date:"F Y" }}</td>
+        <td>{{ item.total_amount__sum}}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td>No Report yet.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

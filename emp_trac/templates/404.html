@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block page_title %}{{ block.super }} - 404 {% trans "Page Not Found" %}{% endblock %}
+
+{% block body_class %}{{ block.super }} not-found-page{% endblock %}
+
+{% block content %}
+    <h1>{% trans "The page you are looking for could not be found." %}</h1>
+    <p>{% trans "For one reason or another (mis-typed URL, faulty referral from another site, out-of-date search engine listing or we simply deleted a file) the page you were after is not here." %}</p>
+    <div class="warning-note">
+        <p>{% trans "Page Can't be Found (Error 404)" %}</p>
+    </div>
+{% endblock %}
