@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+
+<head>
+  <meta charset='utf-8'>
+  <meta name="keywords" content="community">
+  <meta name="description" content="question">
+
+  <meta content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0' name='viewport'>
+  <title>FileManager</title>
+  <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="public/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="lib/css/app.css">
+</head>
+<body>
+  <div data-ng-include="'templates/navigation.html'"></div>
+  <section id='content'>
+      <div class='container'>
+          <div data-ui-view autoscroll="false"></div>
+      </div>
+  </section>
+  <div data-ng-include="'templates/footer.html'"></div>
+  <script type="text/javascript" src="lib/js/app.js"></script>
+</body>
+</html>

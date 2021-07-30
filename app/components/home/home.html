@@ -1,0 +1,36 @@
+<section>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Data</h4>
+          <ul class="list-group">
+            <div id="tasks"></div>
+          </ul>
+        </div>
+      </div>
+
+    Filter: <input type="text" ng-model="customerFilter.name" />
+    <br /><br />
+    <table class="table table-striped">
+        <tr>
+            <th ng-click="doSort('date')">Date</th>
+            <th ng-click="doSort('category')">Category</th>
+            <th ng-click="doSort('employeeName')">Employee Name</th>
+            <th ng-click="doSort('expenseDescription')">Expense Description</th>
+            <th ng-click="doSort('preTaxAmount')">Pre-Tax</th>
+            <th ng-click="doSort('taxName')">Tax Name</th>
+            <th ng-click="doSort('taxAmount')">Tax Amount</th>
+        </tr>
+        <tr ng-repeat="files in savedFiles | filter:customerFilter | orderBy:sortBy:reverse">
+            <td>{{ files.date | date }}</td>
+            <td>{{ files.category }}</td>
+            <td>{{ files.employeeName }}</td>
+            <td>{{ files.expenseDescription }}</td>
+            <td>{{ files.preTaxAmount }}</td>
+            <td>{{ files.taxName }}</td>
+            <td>{{ files.taxAmount }}</td>
+        </tr>
+    </table>
+    <br />
+    <span>Total accounts: {{ savedFiles.length }}</span>
+
+</section>

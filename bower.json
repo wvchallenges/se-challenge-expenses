@@ -1,0 +1,20 @@
+{
+  "name": "community",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "angular": "1.2.14",
+    "angular-route": "1.2.14",
+    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "angular-resource": "~1.2.23",
+    "bootstrap": "~3.3.1"
+  },
+  "devDependencies": {
+    "angular-scenario": "*"
+  },
+  "resolutions": {
+    "angular": "1.2.14",
+    "jquery": "~2.1.0",
+    "bootstrap": "3.1.0"
+  }
+}
